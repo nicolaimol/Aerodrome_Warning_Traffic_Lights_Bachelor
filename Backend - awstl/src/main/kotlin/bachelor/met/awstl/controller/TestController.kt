@@ -13,6 +13,7 @@ class TestController {
     @GetMapping("hei")
     @CrossOrigin(origins = ["http://localhost:8080", "http://localhost:3000"])
     fun getHei(): ResponseEntity<Any> {
+        println("Hei fra frontend")
         return ResponseEntity.ok("Hei fra backend")
     }
 }
