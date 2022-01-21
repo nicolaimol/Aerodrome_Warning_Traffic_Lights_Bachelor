@@ -1,8 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axio from 'axios';
 import logo from './logo.svg';
 import './App.css';
+import axios from 'axios';
 
 function App() {
+
+  const [melding, setMelding] = useState("")
+
+  axios.get("http://localhost:8080/api/hei")
+  .then(response => {
+    console.log(response)
+    setMelding(response.data);
+  })
+
   return (
     <div className="App">
       <header className="App-header">
@@ -16,7 +27,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          {melding}
         </a>
       </header>
     </div>
