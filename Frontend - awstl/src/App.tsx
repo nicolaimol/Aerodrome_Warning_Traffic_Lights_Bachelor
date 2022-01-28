@@ -8,7 +8,7 @@ function App() {
 
   const [melding, setMelding] = useState("")
 
-  axios.get("http://localhost:8080/api/hei")
+  axios.get("/api/hei")
   .then(response => {
     console.log(response)
     setMelding(response.data);
