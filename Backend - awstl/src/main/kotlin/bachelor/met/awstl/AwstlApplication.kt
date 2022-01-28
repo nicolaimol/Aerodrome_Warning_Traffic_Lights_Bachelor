@@ -1,11 +1,27 @@
 package bachelor.met.awstl
 
+import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.builder.SpringApplicationBuilder
 import org.springframework.boot.runApplication
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 
 @SpringBootApplication
-class AwstlApplication
+class AwstlApplication: SpringBootServletInitializer() {
+
+	override fun configure(application: SpringApplicationBuilder): SpringApplicationBuilder {
+		return application.sources(AwstlApplication::class.java)
+		//return super.configure(application)
+	}
+
+
+}
 
 fun main(args: Array<String>) {
-	runApplication<AwstlApplication>(*args)
+	SpringApplication.run(AwstlApplication::class.java, *args)
+	//runApplication<AwstlApplication>(*args)
 }
+
+
+
+

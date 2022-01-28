@@ -5,14 +5,14 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.0.0-SNAPSHOT</version>
+		<version>2.6.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>bachelor.met</groupId>
 	<artifactId>awstl</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>awstl</name>
+	<name>awlt</name>
 	<description>Aerodrome warning Traffic lights</description>
 	<properties>
 		<java.version>11</java.version>
@@ -65,11 +65,13 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 			<scope>provided</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -84,6 +86,12 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<executions>
+                    <execution>
+                        <phase>package</phase>
+                        
+                    </execution>
+                </executions>
 			</plugin>
 			<plugin>
 				<groupId>org.jetbrains.kotlin</groupId>
@@ -94,7 +102,7 @@
 					</args>
 					<compilerPlugins>
 						<plugin>spring</plugin>
-						<plugin>jpa</plugin>
+						<!--<plugin>jpa</plugin>-->
 					</compilerPlugins>
 				</configuration>
 				<dependencies>
@@ -111,7 +119,9 @@
 				</dependencies>
 			</plugin>
 		</plugins>
+		<finalName>awtl</finalName>
 	</build>
+	<!--
 	<repositories>
 		<repository>
 			<id>spring-milestones</id>
@@ -148,5 +158,5 @@
 			</releases>
 		</pluginRepository>
 	</pluginRepositories>
-
+	-->
 </project>
