@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: awtl-frontend
-        image: myherik/awtls-frontend:latest
+        image: myherik/awtl-frontend:latest
         ports:
             - containerPort: 80
 ---
