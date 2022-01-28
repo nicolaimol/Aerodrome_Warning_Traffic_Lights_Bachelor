@@ -1,1 +1,1 @@
-# Aerodrome_Warning_Traffic_Lights_Bachelor
+# Aerodrome Warning Traffic Lights Bachelorproject Oslo Metropolitan Univeristy and Meteorologisg Institutt
