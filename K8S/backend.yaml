@@ -17,6 +17,9 @@ spec:
         image: s341833/awtl-backend:latest
         ports:
             - containerPort: 8080
+        env:
+        - name: TEST_ENV
+          value: "Hei fra env"
 ---
 apiVersion: v1
 kind: Service

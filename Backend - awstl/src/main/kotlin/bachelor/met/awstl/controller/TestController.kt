@@ -2,6 +2,9 @@ package bachelor.met.awstl.controller
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.core.env.Environment
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
@@ -20,4 +23,13 @@ class TestController {
         logger.info("Hei fra frontend")
         return ResponseEntity.ok("Hei fra backend")
     }
+
+    @GetMapping(value = ["/env"])
+    fun env():ResponseEntity<Any> {
+        logger.info(env?.getProperty("print.message"))
+        return ResponseEntity.ok(env?.getProperty("print.message"))
+    }
+
+    @Autowired
+    var env: Environment? = null
 }
