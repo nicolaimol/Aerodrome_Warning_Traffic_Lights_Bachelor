@@ -46,7 +46,7 @@ function Testlist() {
       const [melding, setMelding] = useState(object);
     
       useEffect(() => {
-        axios.get("https://aa043aa717wu6655h.api.met.no/weatherapi/locationforecast/2.0/complete?altitude=100&lat=60&lon=10")
+        axios.get("/api/test")
         .then(response => {
           console.log(response)
           setMelding(response.data);
