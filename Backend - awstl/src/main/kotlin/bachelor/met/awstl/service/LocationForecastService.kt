@@ -11,23 +11,27 @@ import org.springframework.web.client.getForObject
 @Service
 class LocationForecastService(val template: RestTemplate) {
 
-    @Value("\${lf}")
+    @Value("\${location.forecast}")
     var url:String = ""
 
     val logger = LoggerFactory.getLogger(LocationForecastService::class.java)
 
-    fun getForecast(): LocationForecastDto? {
+
+    /***
+     * gets weather from api.met.no based on altitude, latitude and longitude
+     * returns weather parsed to kotlin class elements from json
+     */
+    fun getForecast(altitude: String, lat: String, lon: String): LocationForecastDto? {
 
         var queryParams: HashMap<String,Any> = HashMap();
-        queryParams["altitude"] = "100"
-        queryParams["lat"]="60"
-        queryParams["lon"]="10"
+        queryParams["altitude"] = altitude
+        queryParams["lat"]=lat
+        queryParams["lon"]=lon
 
         logger.info("Getting data from $url")
 
         return template.getForObject(url, LocationForecastDto::class.java, queryParams)
 
-        //return null
     }
 
 
