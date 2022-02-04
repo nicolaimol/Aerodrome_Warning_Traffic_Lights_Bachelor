@@ -4,6 +4,17 @@ import './Testlist.css';
 
 function Testlist() {
 
+  /*
+      let colour ="";
+      if (melding.properties.timeseries[0].data.instant.details.air_temperature > 0 ) {
+          colour = "green";
+      } else if (melding.properties.timeseries[0].data.instant.details.air_temperature < 0) {
+          colour = "red";
+      } else {
+          colour = "yellow";
+      }
+  */
+
     interface timeseriesList {
         time:string,
         data:{
@@ -44,7 +55,9 @@ function Testlist() {
         }
       };
       const [melding, setMelding] = useState(object);
-    
+      const [temp,  setTemp] = useState(0);
+
+
       useEffect(() => {
         axios.get("/api/test")
         .then(response => {
@@ -54,30 +67,23 @@ function Testlist() {
         })
       }, [])
 
-      let colour ="";
-      if (melding.properties.timeseries[0].data.instant.details.air_temperature > 0 ) {
-          colour = "green";
-      } else if (melding.properties.timeseries[0].data.instant.details.air_temperature < 0) {
-          colour = "red";
-      } else {
-          colour = "yellow";
-      }
-
       const classes = 'Testlist ${colour}';
 
-  return <div className='Testlist' style={{"backgroundColor": `${colour}`}}>
-        <table>
-            <tr>
-                <th>Klokke</th>
-                <th>Temperatur</th>
-            </tr>
+  return <div className='Testlist'>
+            <input type="range" min="-20" max="20" value={temp} onChange={e => setTemp(Number(e.target.value))}></input><span>{temp}</span>
+            <table>
+                <tr>
+                    <th>Klokke</th>
+                    <th>Temperatur</th>
+                </tr>
 
-            {melding.properties.timeseries.map((item, i) => {
-            return <tr><td>{item.time}</td><td>{item.data.instant.details.air_temperature}</td></tr>
-        })}
-        
-      </table>
-    </div>;
+                {melding.properties.timeseries.map((item, i) => {
+                return <tr style={{"backgroundColor": `${item.data.instant.details.air_temperature > temp ? "green" 
+                  : (item.data.instant.details.air_temperature < temp) ? "red" : "yellow"}`}}><td>{item.time}</td><td>{item.data.instant.details.air_temperature}</td></tr>
+            })}
+            
+          </table>
+        </div>;
 }
 
 export default Testlist;
