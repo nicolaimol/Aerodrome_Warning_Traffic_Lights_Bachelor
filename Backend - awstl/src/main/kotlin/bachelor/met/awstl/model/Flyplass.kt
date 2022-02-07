@@ -4,7 +4,7 @@ import javax.persistence.Entity
 import javax.persistence.Id
 
 @Entity
-class Flyplass {
+class Flyplass() {
 
     @Id
     lateinit var id: String
@@ -16,7 +16,7 @@ class Flyplass {
 
     lateinit var rwy: String
 
-    constructor(id: String, navn: String, altitude: String, lat: String, lon: String, rwy: String) {
+    constructor(id: String, navn: String, altitude: String, lat: String, lon: String, rwy: String) : this() {
         this.id = id
         this.navn = navn
         this.altitude = altitude
