@@ -19,4 +19,4 @@ newgrp microk8s
 
 microk8s config > ~/.kube/config
 microk8s start 
-microk8s enable ingress dns dashboard
+microk8s enable ingress dns dashboard storage
