@@ -20,6 +20,18 @@ spec:
         env:
         - name: TEST_ENV
           value: "Hei fra env"
+        - name: MYSQL_HOST
+          value: "mysql-clusterip"
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: mysql-user-pass
+              key: username
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-user-pass
+              key: password
 ---
 apiVersion: v1
 kind: Service
