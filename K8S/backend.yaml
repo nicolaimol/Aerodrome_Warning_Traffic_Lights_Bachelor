@@ -37,6 +37,13 @@ spec:
             secretKeyRef:
               name: mysql-usr-pass
               key: password
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: redis-pass
+              key: password
+        - name: REDIS_HOST
+          value: "redis-clusterip"
 ---
 apiVersion: v1
 kind: Service
