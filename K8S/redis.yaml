@@ -17,6 +17,12 @@ spec:
           image: s341833/redis:latest
           ports:
             - containerPort: 6379
+          env: 
+            - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: redis-pass
+              key: password
 ---
 apiVersion: v1
 kind: Service
