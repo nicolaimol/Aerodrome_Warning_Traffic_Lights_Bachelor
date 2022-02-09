@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -6,6 +6,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
+import axios from 'axios';
 
 function Testinputs() {
 
@@ -15,8 +16,8 @@ function Testinputs() {
     const [respons, setrespons] = useState("");
 
     let handleSubmit = async (e: { preventDefault: () => void; }) => {
-
-        try {
+        /**
+         * try {
           let res = await fetch("", {
             method: "POST",
             body: JSON.stringify({
@@ -36,6 +37,22 @@ function Testinputs() {
         } catch (err) {
           console.log(err);
         }
+        */
+
+        useEffect(() => {
+            axios.post('/api/input', {
+              input1: input1, 
+              input2: input2,
+              input3: input3
+            })
+            .then((response) => {
+              console.log(response);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+        });
+        
       };
 
   return <Card sx={{ maxWidth: 345 }}>

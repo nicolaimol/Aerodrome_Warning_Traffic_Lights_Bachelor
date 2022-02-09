@@ -5,8 +5,27 @@ import Hello from './components/Hello';
 import Navbar from './components/Navbar';
 import Banner from './components/Banner';
 import Testinputs from './components/Testinputs';
+import axios from 'axios';
+
 
 function App() {
+
+  interface inputs {
+    input1: string;
+    input2: string;
+    input3: string;
+  }
+
+  useEffect(() => {
+    axios.get('/api/input')
+    .then((response) => {
+      console.log(response);
+    })
+  })
+
+
+
+
   return (
     <>
       <Navbar />
@@ -22,3 +41,4 @@ function App() {
 }
 
 export default App;
+
