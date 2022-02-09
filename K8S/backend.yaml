@@ -22,6 +22,11 @@ spec:
           value: "Hei fra env"
         - name: MYSQL_HOST
           value: "mysql-clusterip"
+        - name: MYSQL_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: mysql-db-url
+              key: database
         - name: MYSQL_USER
           valueFrom:
             secretKeyRef:
@@ -30,8 +35,15 @@ spec:
         - name: MYSQL_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: mysql-user-pass
+              name: mysql-usr-pass
               key: password
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: redis-pass
+              key: password
+        - name: REDIS_HOST
+          value: "redis-clusterip"
 ---
 apiVersion: v1
 kind: Service

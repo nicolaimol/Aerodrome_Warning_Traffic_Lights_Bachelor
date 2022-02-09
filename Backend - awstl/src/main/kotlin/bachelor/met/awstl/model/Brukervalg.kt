@@ -6,7 +6,7 @@ import javax.persistence.JoinColumn
 import javax.persistence.ManyToOne
 
 @Entity
-class Brukervalg {
+class Brukervalg() {
 
     @Id
     lateinit var id: String
@@ -19,7 +19,7 @@ class Brukervalg {
     var crossvind: Double = 0.0
 
 
-    constructor(id: String, favoritt: Flyplass, vind: Double, crossvind: Double) {
+    constructor(id: String, favoritt: Flyplass, vind: Double, crossvind: Double) : this() {
         this.id = id
         this.favoritt = favoritt
         this.vind = vind
