@@ -8,7 +8,14 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import axios from 'axios';
 
+import { useDispatch } from 'react-redux'
+import allActions from '../Actions';
+import iInput from '../model/input';
+import iInputAction from '../model/inputAction';
+
 function Testinputs() {
+
+    const dispatch = useDispatch();
 
     const [input1, setI1] = useState("");
     const [input2, setI2] = useState("");
@@ -38,13 +45,15 @@ function Testinputs() {
           console.log(err);
         }
         */
-            axios.post('/api/input', {
+            const body: iInput = {
               input1: input1, 
               input2: input2,
               input3: input3
-            })
-            .then((response) => {
-              console.log(response);
+            }
+            axios.post('/api/input', body)
+            .then((response:any) => {
+              console.log(response.data);
+              dispatch(allActions.inputActions.setInput(response.data));
             })
             .catch((err) => {
                 console.log(err);
@@ -52,22 +61,27 @@ function Testinputs() {
         
       };
 
-  return <Card sx={{ maxWidth: 345 }}>
-  <CardContent>
-    <Typography gutterBottom variant="h5" component="div">
-      Hear ye Hear ye 'tis but an input test
-    </Typography>
-    <Typography variant="body2" color="text.secondary">
-    <TextField id="outlined-basic" label="Required" variant="outlined" required value={input1} onChange={(e) => setI1(e.target.value)}/>
-    <TextField id="filled-basic" label="Regn" variant="filled" value={input2} onChange={(e) => setI2(e.target.value)} />
-    <TextField id="standard-basic" label="Temperatur" variant="standard" value={input3} onChange={(e) => setI3(e.target.value)}/>
-    </Typography>
-  </CardContent>
-  <CardActions>
-    <Button onClick={handleSubmit} size="small">Send</Button>
-  </CardActions>
-</Card>;
-}
+  return (
+      <div style={{"width": "100%", display: "flex", justifyContent: "center", alignItems: "center", height: "100%"}}>
+        <Card sx={{ maxWidth: 345 }}>
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="div">
+              Hear ye Hear ye 'tis but an input test
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+
+            </Typography>
+                          <TextField id="outlined-basic" label="Required" variant="outlined" required value={input1} onChange={(e) => setI1(e.target.value)}/>
+              <TextField id="filled-basic" label="Regn" variant="filled" value={input2} onChange={(e) => setI2(e.target.value)} />
+              <TextField id="standard-basic" label="Temperatur" variant="standard" value={input3} onChange={(e) => setI3(e.target.value)}/>
+          </CardContent>
+          <CardActions>
+            <Button onClick={handleSubmit} size="small">Send</Button>
+          </CardActions>
+        </Card>
+      </div>
+        )
+        }
 
 export default Testinputs;
 
