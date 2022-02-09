@@ -4,10 +4,13 @@ import bachelor.met.awstl.dto.LocationForecastDto
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.cache.annotation.Cacheable
+import org.springframework.data.redis.core.RedisHash
+import org.springframework.data.redis.core.TimeToLive
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.client.getForEntity
 import org.springframework.web.client.getForObject
+import java.util.concurrent.TimeUnit
 
 @Service
 class LocationForecastService(val template: RestTemplate) {
@@ -22,7 +25,7 @@ class LocationForecastService(val template: RestTemplate) {
      * gets weather from api.met.no based on altitude, latitude and longitude
      * returns weather parsed to kotlin class elements from json
      */
-    @Cacheable(value = ["locfor"], key = "#lat")
+    @Cacheable(value = ["locfor"], key = "#lat", cacheNames = ["data"])
     fun getForecast(altitude: String, lat: String, lon: String): LocationForecastDto? {
 
         var queryParams: HashMap<String,Any> = HashMap();
