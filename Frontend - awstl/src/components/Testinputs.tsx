@@ -38,8 +38,6 @@ function Testinputs() {
           console.log(err);
         }
         */
-
-        useEffect(() => {
             axios.post('/api/input', {
               input1: input1, 
               input2: input2,
@@ -50,8 +48,7 @@ function Testinputs() {
             })
             .catch((err) => {
                 console.log(err);
-            })
-        });
+            });
         
       };
 
