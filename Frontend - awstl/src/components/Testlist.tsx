@@ -2,26 +2,11 @@ import React, { useState, useEffect} from 'react';
 import axios from 'axios';
 import './Testlist.css';
 
+import timeseriesList from '../model/timeseriesList'
+import forecast from '../model/forecast'
+
 function Testlist() {
 
-    interface timeseriesList {
-        time:string,
-        data:{
-          instant:{
-            details:{
-              air_temperature:number
-            }
-          }
-        }
-      }
-    
-      interface forecast {
-    
-        properties:{
-          timeseries: timeseriesList[]
-        }
-    
-      }
     
       let list:timeseriesList[] = [];
     
