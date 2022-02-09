@@ -4,17 +4,6 @@ import './Testlist.css';
 
 function Testlist() {
 
-  /*
-      let colour ="";
-      if (melding.properties.timeseries[0].data.instant.details.air_temperature > 0 ) {
-          colour = "green";
-      } else if (melding.properties.timeseries[0].data.instant.details.air_temperature < 0) {
-          colour = "red";
-      } else {
-          colour = "yellow";
-      }
-  */
-
     interface timeseriesList {
         time:string,
         data:{
@@ -67,7 +56,6 @@ function Testlist() {
         })
       }, [])
 
-      const classes = 'Testlist ${colour}';
 
   return <div className='Testlist'>
             <input type="range" min="-20" max="20" value={temp} onChange={e => setTemp(Number(e.target.value))}></input><span>{temp}</span>
