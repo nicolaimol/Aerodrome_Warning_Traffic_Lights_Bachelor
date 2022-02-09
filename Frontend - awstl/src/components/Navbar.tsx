@@ -10,9 +10,17 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 
+import {Link} from 'react-router-dom'
+
 import MetLogo from '../media/met-logo.svg';
 
-const pages = ['Hjem']; // Legg til alle menu-items her
+const pages = ['Hjem', "Liste", "Input", "HentInput"]; // Legg til alle menu-items her
+const links = new Map();
+links.set("Hjem", "/")
+links.set("HentInput", "/vis")
+links.set("Liste", "/list")
+links.set("Input", "/input")
+
 
 const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -73,7 +81,7 @@ const Navbar = () => {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                  <Typography textAlign="center"><Link to={links.get(page)}>{page}</Link></Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -90,13 +98,14 @@ const Navbar = () => {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
+              <Link key={page} to={links.get(page)}>
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page}
-              </Button>
+              </Button></Link>
             ))}
           </Box>
         </Toolbar>
