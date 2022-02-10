@@ -39,7 +39,7 @@ class TestInputController (val inputRepo: IInputRepo)  {
         val db = Input(res, input.input1, input.input2, input.input3)
         inputRepo.save(db);
 
-        val cookie: ResponseCookie = ResponseCookie.from("terskel", res).maxAge(Duration.ofMinutes(60)).build()
+        val cookie: ResponseCookie = ResponseCookie.from("terskel", res).maxAge(Duration.ofMinutes(30)).build()
         response.addCookie(Cookie("terskel", res))
         return ResponseEntity
             .ok()

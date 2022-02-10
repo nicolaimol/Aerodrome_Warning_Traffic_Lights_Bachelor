@@ -1,5 +1,6 @@
 package bachelor.met.awstl.config
 
+import bachelor.met.awstl.dto.LocationForecastDto
 import org.springframework.boot.autoconfigure.cache.RedisCacheManagerBuilderCustomizer
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -12,8 +13,10 @@ class RedisConfig {
     @Bean
     fun redisCacheManagerBuilderCustomizer() = RedisCacheManagerBuilderCustomizer { builder ->
         val configurationMap = HashMap<String, RedisCacheConfiguration>()
-        configurationMap["data"] = RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofSeconds(60))
-        configurationMap["user"] = RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(30))
+        configurationMap["locfor"] = RedisCacheConfiguration.defaultCacheConfig(Thread.currentThread().contextClassLoader)
+            .entryTtl(Duration.ofMinutes(1))
+        //configurationMap["data"] = RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofSeconds(60))
+        //configurationMap["user"] = RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(30))
         builder.withInitialCacheConfigurations(configurationMap)
     }
 }

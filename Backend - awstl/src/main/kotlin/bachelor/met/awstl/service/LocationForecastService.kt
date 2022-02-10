@@ -25,7 +25,7 @@ class LocationForecastService(val template: RestTemplate) {
      * gets weather from api.met.no based on altitude, latitude and longitude
      * returns weather parsed to kotlin class elements from json
      */
-    @Cacheable(value = ["locfor"], key = "#lat", cacheNames = ["data"])
+    @Cacheable(value = ["locfor"], key = "#lat")
     fun getForecast(altitude: String, lat: String, lon: String): LocationForecastDto? {
 
         var queryParams: HashMap<String,Any> = HashMap();
