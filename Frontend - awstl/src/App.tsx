@@ -11,6 +11,13 @@ import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import allActions from './Actions'
 import ShowInput from './components/ShowInput';
+import Arbeider from './components/Arbeider';
+import RaskVaer from './components/RaskVaer';
+import Bakkemannskap from './components/Bakkemannskap';
+import Flygeleder from './components/Flygeleder';
+import Pilot from './components/Pilot';
+import { Container } from '@mui/material';
+import Hjem from './pages/Hjem';
 
 
 function App() {
@@ -40,12 +47,14 @@ function App() {
   return (
     <>
       <Navbar />
+      
       <Routes>
         <Route path="/list" element={<Testlist />} />
         <Route path="/input" element={<Testinputs />} />
         <Route path="/vis" element={<ShowInput />} />
-        <Route path="/" element={<Hello />} />
+        <Route path="/" element={<Hjem />} />
       </Routes>
+
     </>
 
       

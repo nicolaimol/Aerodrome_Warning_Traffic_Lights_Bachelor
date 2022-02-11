@@ -13,6 +13,7 @@ import MenuItem from '@mui/material/MenuItem';
 import {Link} from 'react-router-dom'
 
 import MetLogo from '../media/met-logo.svg';
+import { InputLabel, Select } from '@mui/material';
 
 const pages = ['Hjem', "Liste", "Input", "HentInput"]; // Legg til alle menu-items her
 const links = new Map();
