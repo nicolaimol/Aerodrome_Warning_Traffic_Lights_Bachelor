@@ -3,7 +3,7 @@ import axios from 'axios';
 import './Testlist.css';
 
 import timeseriesList from '../model/timeseriesList'
-import forecast from '../model/forecast'
+import forecast2 from '../model/forecast2'
 
 function Testlist() {
 
@@ -23,7 +23,7 @@ function Testlist() {
         }
       )
     
-      let object: forecast = {
+      let object: forecast2 = {
         properties:{
           timeseries: list
         }
