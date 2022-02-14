@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping(value =["/api"])
-class TestController {
+class TestController(val repo: IFlyplassRepo) {
 
     val logger: Logger = LoggerFactory.getLogger(TestController::class.java)
 
@@ -63,6 +63,11 @@ class TestController {
         userRepo.deleteAll()
 
         return ResponseEntity.ok().build()
+    }
+
+    @GetMapping(value = ["/airport"])
+    fun getAirport(): ResponseEntity<Any> {
+        return ResponseEntity.ok(repo.findAll())
     }
 
     @Autowired

@@ -19,6 +19,8 @@ class RedisConfig {
             .entryTtl(Duration.ofMinutes(5))
         configurationMap["flyplass"] = RedisCacheConfiguration.defaultCacheConfig(Thread.currentThread().contextClassLoader)
             .entryTtl(Duration.ofHours(24))
+        configurationMap["nowcast"] = RedisCacheConfiguration.defaultCacheConfig(Thread.currentThread().contextClassLoader)
+            .entryTtl(Duration.ofMinutes(5))
         builder.withInitialCacheConfigurations(configurationMap)
     }
 }
