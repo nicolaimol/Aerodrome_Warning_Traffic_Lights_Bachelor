@@ -9,8 +9,10 @@ function RaskVaer() {
 
   const [vdata, setVData] = useState(null);
 
+  const favoritt = "ENDU";
+
   useEffect(() => {
-    axios.get('api her')
+    axios.get('/api/nowcast?ICAO=' + {favoritt})
     .then((response) => {
       console.log(response);
       setVData(response.data);

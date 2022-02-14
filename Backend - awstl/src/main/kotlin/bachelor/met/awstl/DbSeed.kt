@@ -20,7 +20,7 @@ class DbSeed(private val repo: IFlyplassRepo) {
         var line: String? = ""
         var index = 0
         try {
-            BufferedReader(FileReader("src/main/resources/static/flyplasser_norge_csv.csv")).use { reader ->
+            BufferedReader(FileReader("Backend - awstl/src/main/resources/static/flyplasser_norge_csv.csv")).use { reader ->
                 while (reader.readLine().also { line = it } != null) {
                     if (index == 0) {
                         index++
