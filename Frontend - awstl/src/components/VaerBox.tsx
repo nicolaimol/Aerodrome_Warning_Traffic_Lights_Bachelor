@@ -3,35 +3,30 @@ import StarIcon from '@mui/icons-material/Star';
 import CloudIcon from '@mui/icons-material/Cloud';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import React from 'react'
+import flyplassInfo from '../model/flyplassInfo';
+import weatherNow from '../model/weatherNow';
+import vaerboksForecast from '../model/vaerboksForecast';
+import weatherNowAirport from '../model/weatherNowAirport'
 
+function VaerBox(props:weatherNowAirport) {
 
-interface FlyplassInfo {
-    navn: string;
-    beskrivelse: string;
-    styrke: string;
-    retning: string;
-    ikonNavn: string;
-}  
-
-function VaerBox(props:FlyplassInfo) {
-
-    let ikonpath:string = "../weatherIcons/";
-    ikonpath += props.ikonNavn;
+    let ikonpath:string = "/weatherIcons/";
+    ikonpath += props.properties.timeseries[0].data.next_1_hours.summary.symbol_code + ".svg";
 
 
   return (
     <>
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ maxWidth: 345, mb: 5 }}>
         <CardHeader
             avatar={
             <StarIcon></StarIcon>
             }
-            title={props.navn}
+            title={props.airports.navn}
         />
         <div style={{ display: 'flex', justifyContent: 'center'}}>
             <CardContent>
             <Box>
-                    <img src={ikonpath} alt={props.ikonNavn} />
+                    <img src={ikonpath} alt={props.properties.timeseries[0].data.next_1_hours.summary.symbol_code} />
             </Box>
             <Box>
                 <ArrowRightAltIcon sx={{ fontSize: 100 }}></ArrowRightAltIcon>
@@ -43,7 +38,7 @@ function VaerBox(props:FlyplassInfo) {
         </div>
         <div style={{ display: 'flex', justifyContent: 'center'}}>
             <Typography>
-                Vind er {props.styrke} m/s retning {props.retning}
+                Vind er {props.properties.timeseries[0].data.instant.details.wind_speed} m/s retning {props.properties.timeseries[0].data.instant.details.wind_from_direction}
             </Typography>
         </div>
         

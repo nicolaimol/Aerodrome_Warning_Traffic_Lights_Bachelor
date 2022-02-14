@@ -16,8 +16,19 @@ import RaskVaer from './components/RaskVaer';
 import Bakkemannskap from './components/Bakkemannskap';
 import Flygeleder from './components/Flygeleder';
 import Pilot from './components/Pilot';
+import Footer from './components/Footer'
 import { Container } from '@mui/material';
 import Hjem from './pages/Hjem';
+
+
+/***
+ * Fargepalett!!!
+ * 
+ * Blå skrift: #0090a8
+ * Bakgrunn: #dff2f6
+ * Mørkeblå kort: #0494ac
+ * Footer: #496c80
+ */
 
 
 function App() {
@@ -54,6 +65,8 @@ function App() {
         <Route path="/vis" element={<ShowInput />} />
         <Route path="/" element={<Hjem />} />
       </Routes>
+
+      <Footer />
 
     </>
 
