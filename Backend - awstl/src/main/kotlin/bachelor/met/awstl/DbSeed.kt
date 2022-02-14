@@ -52,6 +52,6 @@ class DbSeed(private val repo: IFlyplassRepo) {
             list.clear()
         }
 
-        //repo.saveAll(list);
+        repo.saveAll(list);
     }
 }
