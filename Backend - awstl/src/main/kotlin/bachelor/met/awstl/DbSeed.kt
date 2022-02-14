@@ -41,7 +41,7 @@ class DbSeed(private val repo: IFlyplassRepo) {
                         item[5]
                     )
                     list.add(flyplass)
-                    logger.info(flyplass.toString())
+                    //logger.info(flyplass.toString())
 
                 }
             }
