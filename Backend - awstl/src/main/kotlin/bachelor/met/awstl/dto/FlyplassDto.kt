@@ -1,5 +1,7 @@
 package bachelor.met.awstl.dto
 
-class FlyplassDto(var navn: String, var icao: String, var rwy: String) {
+import java.io.Serializable
+
+class FlyplassDto(var navn: String, var icao: String, var rwy: String): Serializable {
 
 }
