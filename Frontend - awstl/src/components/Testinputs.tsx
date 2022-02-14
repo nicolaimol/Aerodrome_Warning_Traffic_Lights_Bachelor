@@ -12,8 +12,20 @@ import { useDispatch } from 'react-redux'
 import allActions from '../Actions';
 import iInput from '../model/input';
 import iInputAction from '../model/inputAction';
+import { MenuItem, InputLabel, Select, SelectChangeEvent, FormControl } from '@mui/material';
+import Box from '@mui/system/Box';
 
 function Testinputs() {
+
+  // Kode for input flyplasstest
+
+  const [flyplass, setFlyplass] = React.useState('');
+  const handleFlyplassChange = (event: SelectChangeEvent) => {
+    setFlyplass(event.target.value as string);
+  }
+
+
+  // Kode for input test
 
     const dispatch = useDispatch();
 
@@ -79,6 +91,25 @@ function Testinputs() {
             <Button onClick={handleSubmit} size="small">Send</Button>
           </CardActions>
         </Card>
+
+        {/* 'velg flyplass' boks */}
+        <Box sx={{ m: 1, minWidth: 150 }}>
+          <FormControl fullWidth>
+              <InputLabel id="selectFlyplassLabel">Velg flyplass</InputLabel>
+              <Select
+                labelId="selectFlyplassLabel"
+                id="selectFlyplass"
+                value={flyplass}
+                label="Flyplass"
+                onChange={handleFlyplassChange}
+                >
+                <MenuItem value={10}>Gardermoen</MenuItem> {/* Skal selvfølgelig hentes fra backend */}
+                <MenuItem value={20}>Torp</MenuItem>
+                <MenuItem value={30}>Sola</MenuItem>
+              </Select>
+            </FormControl>
+        </Box>
+        
       </div>
         )
         }
