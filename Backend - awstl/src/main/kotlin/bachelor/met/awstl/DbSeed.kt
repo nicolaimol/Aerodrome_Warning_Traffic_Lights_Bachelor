@@ -5,6 +5,7 @@ import javax.annotation.PostConstruct
 import bachelor.met.awstl.model.Flyplass
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
+import org.springframework.util.ResourceUtils
 import java.io.BufferedReader
 import java.io.FileReader
 import java.lang.Exception
@@ -20,7 +21,8 @@ class DbSeed(private val repo: IFlyplassRepo) {
         var line: String? = ""
         var index = 0
         try {
-            BufferedReader(FileReader("Backend - awstl/src/main/resources/static/flyplasser_norge_csv.csv")).use { reader ->
+            //BufferedReader(FileReader("src/main/resources/flyplasser_norge_csv.csv")).use { reader ->
+            BufferedReader(FileReader(ResourceUtils.getFile("classpath:flyplasser_norge_csv.csv"))).use { reader ->
                 while (reader.readLine().also { line = it } != null) {
                     if (index == 0) {
                         index++
