@@ -10,10 +10,10 @@ function RaskVaer() {
 
   const [vdata, setVData] = useState<vaerboksForecast | null>(null);
 
-  const favoritt = "ENDU";
+  const favoritt = "ENML";
 
   useEffect(() => {
-    axios.get('http://localhost:8080/api/nowcast?icao=ENDU')
+    axios.get('http://localhost:8080/api/nowcast?icao=ENML')
     .then((response) => {
       setVData(response.data);
     })
@@ -29,7 +29,7 @@ function RaskVaer() {
                 Været akkurat nå
             </Typography>
         </AppBar>
-        <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-bet'}}>
+        <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
           { vdata != null && 
             vdata.nowcasts.map((flyplass, index) => {
               return <VaerBox key={index} properties={flyplass.properties} airports={vdata.airports[index]} ></VaerBox>
