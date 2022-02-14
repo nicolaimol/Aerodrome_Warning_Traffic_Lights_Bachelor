@@ -2,22 +2,24 @@ import { Container, AppBar, Typography } from '@mui/material'
 import React, { useState, useEffect } from 'react';
 import VaerBox from './VaerBox'
 import axios from 'axios'
+import vaerboksForecast from '../model/vaerboksForecast';
 
 
 
 function RaskVaer() {
 
-  const [vdata, setVData] = useState(null);
+  const [vdata, setVData] = useState<vaerboksForecast | null>(null);
 
   const favoritt = "ENDU";
 
   useEffect(() => {
-    axios.get('/api/nowcast?ICAO=' + {favoritt})
+    axios.get('http://localhost:8080/api/nowcast?icao=ENDU')
     .then((response) => {
-      console.log(response);
       setVData(response.data);
     })
-  })
+  },[])
+
+  console.log(vdata);
 
   return (
     <>
@@ -27,7 +29,11 @@ function RaskVaer() {
                 Været akkurat nå
             </Typography>
         </AppBar>
-        <VaerBox navn="Gardermoen" beskrivelse="Hei" temperatur={1} styrke="100" retning="øst" ikonNavn="clearsky_polartwilight.svg"/>
+        { vdata != null && 
+        vdata.nowcasts.map((flyplass, index) => {
+          return <VaerBox key={index} properties={flyplass.properties} airports={vdata.airports[index]} ></VaerBox>
+        })}
+        { /* <VaerBox navn="Gardermoen" beskrivelse="Hei" temperatur={1} styrke="100" retning="øst" ikonNavn="clearsky_polartwilight.svg"/> */ }
     </Container>
     </>
   )
