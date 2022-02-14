@@ -13,7 +13,7 @@ import org.springframework.web.client.getForObject
 import java.util.concurrent.TimeUnit
 
 @Service
-class LocationForecastService(val template: RestTemplate) {
+class LocationForecastService(val template: RestTemplate, val flyplass: FlyplassService) {
 
     @Value("\${location.forecast}")
     var url:String = ""
@@ -25,13 +25,15 @@ class LocationForecastService(val template: RestTemplate) {
      * gets weather from api.met.no based on altitude, latitude and longitude
      * returns weather parsed to kotlin class elements from json
      */
-    @Cacheable(value = ["locfor"], key = "#lat")
-    fun getForecast(altitude: String, lat: String, lon: String): LocationForecastDto? {
+    @Cacheable(value = ["locfor"], key = "#icao")
+    fun getForecast(icao: String): LocationForecastDto? {
+
+        val airport = flyplass.getFlyplass(icao) ?: throw Exception("Airport not found")
 
         var queryParams: HashMap<String,Any> = HashMap();
-        queryParams["altitude"] = altitude
-        queryParams["lat"]=lat
-        queryParams["lon"]=lon
+        queryParams["altitude"] = airport.altitude
+        queryParams["lat"] = airport.lat
+        queryParams["lon"] = airport.lon
 
         logger.info("Getting data from $url")
 
