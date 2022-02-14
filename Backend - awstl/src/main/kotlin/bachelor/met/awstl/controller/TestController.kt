@@ -43,7 +43,7 @@ class TestController {
             return ResponseEntity.badRequest().build()
         }
 
-        val flyplass = Flyplass("ENGM", "Gardermoen", "100", "60", "10", "01")
+        val flyplass = Flyplass("ENGM", "Gardermoen", "OSL", "100", "60", "10", "01/19")
         val ut = flyplassRepo.save(flyplass)
 
         var id: String
