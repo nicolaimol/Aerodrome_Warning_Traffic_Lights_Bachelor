@@ -35,7 +35,7 @@ const Navbar = () => {
   };
 
   return (
-    <AppBar position="static" style={{ background: '#2E3B55' }}>
+    <AppBar position="static" style={{ background: 'white' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters> {/* Logo for burgermeny */}
           <Typography
@@ -58,7 +58,7 @@ const Navbar = () => {
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
-              color="inherit"
+              sx={{ color: '#0090a8' }}
             >
               <MenuIcon /> {/* Burger ikonet */}
             </IconButton>
@@ -77,7 +77,7 @@ const Navbar = () => {
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: 'block', md: 'none' },
+                display: { xs: 'block', md: 'none'}
               }}
             >
               {pages.map((page) => (
@@ -103,7 +103,7 @@ const Navbar = () => {
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{ my: 2, color: '#0090a8', display: 'block' }}
               >
                 {page}
               </Button></Link>
