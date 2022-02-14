@@ -1,10 +1,21 @@
 import { Container, AppBar, Typography } from '@mui/material'
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import VaerBox from './VaerBox'
+import axios from 'axios'
+
+
 
 function RaskVaer() {
 
-  
+  const [vdata, setVData] = useState(null);
+
+  useEffect(() => {
+    axios.get('api her')
+    .then((response) => {
+      console.log(response);
+      setVData(response.data);
+    })
+  })
 
   return (
     <>
