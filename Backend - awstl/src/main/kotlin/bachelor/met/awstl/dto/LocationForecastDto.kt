@@ -9,4 +9,6 @@ class LocationForecastDto: Serializable {
     lateinit var type: String
     lateinit var geometry: Geomerty
     lateinit var properties: Properties
+
+
 }

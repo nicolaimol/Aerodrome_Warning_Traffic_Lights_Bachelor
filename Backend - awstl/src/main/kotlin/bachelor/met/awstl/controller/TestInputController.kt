@@ -44,6 +44,7 @@ class TestInputController (val inputRepo: IInputRepo)  {
         return ResponseEntity
             .ok()
             .header(HttpHeaders.SET_COOKIE, cookie.toString())
+            .header("Access-Control-Allow-Credentials", "true")
             .body(input)
 
     }

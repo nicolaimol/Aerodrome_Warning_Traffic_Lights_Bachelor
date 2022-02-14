@@ -15,8 +15,10 @@ class RedisConfig {
         val configurationMap = HashMap<String, RedisCacheConfiguration>()
         configurationMap["locfor"] = RedisCacheConfiguration.defaultCacheConfig(Thread.currentThread().contextClassLoader)
             .entryTtl(Duration.ofMinutes(1))
-        //configurationMap["data"] = RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofSeconds(60))
-        //configurationMap["user"] = RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(30))
+        configurationMap["tafmetar"] = RedisCacheConfiguration.defaultCacheConfig(Thread.currentThread().contextClassLoader)
+            .entryTtl(Duration.ofMinutes(5))
+        configurationMap["flyplass"] = RedisCacheConfiguration.defaultCacheConfig(Thread.currentThread().contextClassLoader)
+            .entryTtl(Duration.ofHours(24))
         builder.withInitialCacheConfigurations(configurationMap)
     }
 }
