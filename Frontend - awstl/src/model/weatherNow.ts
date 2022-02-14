@@ -1,19 +1,10 @@
-interface weatherNow {
-    data:{
-        instant:{
-            details:{
-                air_temperature:number
-                wind_from_direction:number
-                wind_speed:number
+import weatherTimeseries from './weatherTimeseries'
 
-            }
-        }
+interface weatherNow {
+    properties: {
+        timeseries: weatherTimeseries[]
     }
-    next_1_hours:{
-        summary:{
-            symbol_code:string
-        }
-    }
+    
 
 }
 
