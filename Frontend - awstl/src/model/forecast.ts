@@ -3,7 +3,7 @@ import weatherNow from "./weatherNow";
 
 interface forecast {
     properties:{
-        timeseries: timeseriesList[]
+        timeseries: weatherNow[]
     }
 }
 
