@@ -29,10 +29,13 @@ function RaskVaer() {
                 Været akkurat nå
             </Typography>
         </AppBar>
-        { vdata != null && 
-        vdata.nowcasts.map((flyplass, index) => {
-          return <VaerBox key={index} properties={flyplass.properties} airports={vdata.airports[index]} ></VaerBox>
-        })}
+        <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-bet'}}>
+          { vdata != null && 
+            vdata.nowcasts.map((flyplass, index) => {
+              return <VaerBox key={index} properties={flyplass.properties} airports={vdata.airports[index]} ></VaerBox>
+            })}
+        </div>
+        
         { /* <VaerBox navn="Gardermoen" beskrivelse="Hei" temperatur={1} styrke="100" retning="øst" ikonNavn="clearsky_polartwilight.svg"/> */ }
     </Container>
     </>
