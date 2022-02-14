@@ -5,7 +5,7 @@ import React from 'react'
 function Bakkemannskap() {
 
   return (
-        <Card sx={{ maxWidth: 350, mt: 5 }} style={{ background: '#2E3B55' }}>
+        <Card sx={{ maxWidth: 350, mt: 5 }} style={{ background: '#0494ac' }}>
             <CardContent>
                 <Typography variant="h5" color="white">
                     Bakkemannskap
@@ -18,7 +18,7 @@ function Bakkemannskap() {
                 </Box>
                 
                 <Box textAlign='center'>
-                    <Button variant="contained" color='success' >Sjekk</Button>
+                    <Button variant="contained" sx={{background: 'white', color: '#0090a8' }}>Sjekk</Button>
                 </Box>
             </CardContent>
         </Card>

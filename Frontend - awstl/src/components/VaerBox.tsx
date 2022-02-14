@@ -3,17 +3,10 @@ import StarIcon from '@mui/icons-material/Star';
 import CloudIcon from '@mui/icons-material/Cloud';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import React from 'react'
+import flyplassInfo from '../model/flyplassInfo';
 
 
-interface FlyplassInfo {
-    navn: string;
-    beskrivelse: string;
-    styrke: string;
-    retning: string;
-    ikonNavn: string;
-}  
-
-function VaerBox(props:FlyplassInfo) {
+function VaerBox(props:flyplassInfo) {
 
     let ikonpath:string = "../weatherIcons/";
     ikonpath += props.ikonNavn;
@@ -21,7 +14,7 @@ function VaerBox(props:FlyplassInfo) {
 
   return (
     <>
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ maxWidth: 345, mb: 5 }}>
         <CardHeader
             avatar={
             <StarIcon></StarIcon>
