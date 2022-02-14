@@ -17,7 +17,7 @@ class DbSeed(private val repo: IFlyplassRepo) {
     fun run() {
         if (repo.count() > 0) return
         val list: MutableList<Flyplass> = ArrayList()
-        var line = ""
+        var line: String? = ""
         var index = 0
         try {
             BufferedReader(FileReader("src/main/resources/static/flyplasser_norge_csv.csv")).use { reader ->
@@ -26,7 +26,7 @@ class DbSeed(private val repo: IFlyplassRepo) {
                         index++
                         continue
                     }
-                    val item = line.split("[;]".toRegex()).toTypedArray()
+                    val item = line!!.split("[;]".toRegex()).toTypedArray()
                     val flyplass = Flyplass(
                         item[1],
                         item[0],
@@ -42,6 +42,7 @@ class DbSeed(private val repo: IFlyplassRepo) {
                     )
                     list.add(flyplass)
                     logger.info(flyplass.toString())
+
                 }
             }
         } catch (e: Exception) {
