@@ -9,6 +9,4 @@ import java.util.*
 @Repository
 interface IFlyplassRepo: JpaRepository<Flyplass, String> {
 
-    @Cacheable(value = ["flyplass"], key = "#id")
-    override fun findById(id: String):Optional<Flyplass>
 }
