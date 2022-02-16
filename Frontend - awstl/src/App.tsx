@@ -43,7 +43,7 @@ function App() {
       dispatch(allActions.inputActions.setInput(response.data));
     })
     */
-  })
+  }, [])
 
 /*
 
