@@ -16,7 +16,7 @@ import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 @Service
-class NowcastService(val restTemplate: RestTemplate, val repo: IFlyplassRepo) {
+class NowcastService(val restTemplate: RestTemplate, val sercice: FlyplassService) {
 
     @Value("\${nowcast}")
     var url = ""
@@ -37,10 +37,10 @@ class NowcastService(val restTemplate: RestTemplate, val repo: IFlyplassRepo) {
 
             logger.info("henter nowcast for $icao standard")
             val airports = arrayOf(
-                repo.findById(icao.uppercase()),
-                repo.findById(stdFlyplasser[1]),
-                repo.findById(stdFlyplasser[2]),
-                repo.findById(stdFlyplasser[3]))
+                sercice.getFlyplass(icao.uppercase()),
+                sercice.getFlyplass(stdFlyplasser[1]),
+                sercice.getFlyplass(stdFlyplasser[2]),
+                sercice.getFlyplass(stdFlyplasser[3]))
 
             getWeather(airports, dto)
 
@@ -51,10 +51,10 @@ class NowcastService(val restTemplate: RestTemplate, val repo: IFlyplassRepo) {
         } else {
             logger.info("henter nowcast for $icao med standard")
             val airports = arrayOf(
-                repo.findById(icao.uppercase()),
-                repo.findById("ENGM"),
-                repo.findById("ENBR"),
-                repo.findById("ENVA"))
+                sercice.getFlyplass(icao.uppercase()),
+                sercice.getFlyplass("ENGM"),
+                sercice.getFlyplass("ENBR"),
+                sercice.getFlyplass("ENVA"))
 
             getWeather(airports, dto)
 
@@ -64,21 +64,21 @@ class NowcastService(val restTemplate: RestTemplate, val repo: IFlyplassRepo) {
     }
 
     private fun getWeather(
-        airports: Array<Optional<Flyplass>>,
+        airports: Array<Flyplass>,
         dto: NowcastDto
     ) {
         for (airport in airports) {
             val query = HashMap<String, String>()
-            query["altitude"] = airport.get().altitude
-            query["lat"] = airport.get().lat
-            query["lon"] = airport.get().lon
+            query["altitude"] = airport.altitude
+            query["lat"] = airport.lat
+            query["lon"] = airport.lon
 
             try {
-                getForAirport(airport.get().icao, query)?.let {
+                getForAirport(airport.icao, query)?.let {
                     it.properties.timeseries = it.properties.timeseries.copyOfRange(0, 1);
                     dto.nowcasts.add(it)
                 }
-                dto.airports.add(FlyplassToFlyplassDto.convert(airport.get()))
+                dto.airports.add(FlyplassToFlyplassDto.convert(airport))
             } catch (e: Exception) {
                 logger.error(e.message)
                 e.printStackTrace()
