@@ -1,6 +1,5 @@
 package bachelor.met.awstl.config
 
-import bachelor.met.awstl.dto.LocationForecastDto
 import org.springframework.boot.autoconfigure.cache.RedisCacheManagerBuilderCustomizer
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
