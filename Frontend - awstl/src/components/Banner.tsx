@@ -70,6 +70,7 @@ export default function Banner() {
             disablePortal
             id="combo-box-flyplasser"
             classes={classes}
+            //onChange={(event, value) => }
             options={relevantFlyplassData.sort((a, b) => -b.label.charAt(0).toString().localeCompare(a.label.charAt(0).toString()))}
             groupBy={(relevantFlyplassData) => relevantFlyplassData.label.charAt(0).toString()}
             sx={{ width: 300, backgroundColor: '#FFFFFF'}}
