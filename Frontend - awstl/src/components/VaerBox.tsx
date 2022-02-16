@@ -38,7 +38,10 @@ function VaerBox(props:weatherNowAirport) {
                     <img src={ikonpath} alt={props.properties.timeseries[0].data.next_1_hours.summary.symbol_code} />
             </Box>
             <Box>
-                <ArrowRightAltIcon sx={{ fontSize: 100 }}></ArrowRightAltIcon>
+                <div style={{ transform: `rotate(${props.properties.timeseries[0].data.instant.details.wind_from_direction - 90}deg)`}}>
+                    <ArrowRightAltIcon sx={{ fontSize: 100}}></ArrowRightAltIcon>
+                </div>
+                
                 
             </Box>
             
