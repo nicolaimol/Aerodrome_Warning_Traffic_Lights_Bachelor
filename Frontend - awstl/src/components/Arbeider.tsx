@@ -1,9 +1,6 @@
 import { Box } from '@mui/material'
 import '../App.css';
 import React from 'react'
-import Bakkemannskap from './Bakkemannskap';
-import Flygeleder from './Flygeleder';
-import Pilot from './Pilot';
 import ArbeiderKort from './ArbeiderKort';
 
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
@@ -27,7 +24,7 @@ function Arbeider() {
         */}
       
       {arbeiderne.map((personen) => {
-        return <ArbeiderKort arbeider={personen[0]} ikonComp={personen[1]} />
+        return <ArbeiderKort arbeider={personen[0].toString()} ikonComp={personen[1]} />
       })}
         
     </Box>
