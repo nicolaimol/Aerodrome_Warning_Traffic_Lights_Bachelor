@@ -15,12 +15,13 @@ function VaerBox(props:weatherNowAirport) {
     <>
     <Card sx={{ maxWidth: 345, mb: 5, width: "20%" }}>
         <CardHeader
-            avatar={
-            <StarIcon></StarIcon>
-            }
+        sx={{ color: '#0090a8'}}
+        /*
+            avatar={ <StarIcon></StarIcon> } Denne skal kun på favoritt!!
+        */
             title={props.airports.navn}
         />
-        <div style={{ display: 'flex', justifyContent: 'center'}}>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
             <CardContent>
             <Box style={{ display: 'flex', justifyContent: 'center'}}>
                     <img style={{width: '50%'}} src={ikonpath} alt={props.properties.timeseries[0].data.next_1_hours.summary.symbol_code} />
@@ -36,9 +37,9 @@ function VaerBox(props:weatherNowAirport) {
 
             <Box style={{ display: 'flex', justifyContent: 'space-evenly', flexDirection: 'row', alignItems: 'center'}}>
                 <div style={{ transform: `rotate(${props.properties.timeseries[0].data.instant.details.wind_from_direction - 90}deg)`}}>
-                    <ArrowRightAltIcon sx={{ fontSize: 100}}></ArrowRightAltIcon>
+                    <ArrowRightAltIcon sx={{ fontSize: 100 }}></ArrowRightAltIcon>
                 </div>
-                <div style={{display: 'flex', flexDirection: 'column'}}>
+                <div style={{display: 'flex', flexDirection: 'column', color: '#0090a8'}}>
                     <Typography>
                         {props.properties.timeseries[0].data.instant.details.wind_speed}m/s 
                     </Typography>

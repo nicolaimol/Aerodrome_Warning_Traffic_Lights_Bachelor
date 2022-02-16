@@ -5,8 +5,6 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import flyplasser from '../model/flyplasser'
 
-
-
 export default function Banner() {
 
   const [flyplasserList, setFlyplasserList] = useState<flyplasser[]>([]);
@@ -31,17 +29,21 @@ export default function Banner() {
     <>
     <div style={{ height: '50vh', width: '100%', backgroundColor: '#dff2f6'}}>
       <Container sx={{ color: '#0090a8' }}>
-        <div>
+        <div style={{ display: 'flex', justifyContent: 'space-evenly', flexDirection: 'row', alignItems: 'center'}}>
           <Typography sx={{ pt: 5}} component="h1" variant="h3" color="inherit" gutterBottom>
             Aerodrome Warning Traffic Light System
           </Typography>
-          <Autocomplete
+          <div>
+            <Autocomplete
             disablePortal
             id="combo-box-flyplasser"
-            options={relevantFlyplassData}
+            options={relevantFlyplassData.sort((a, b) => -b.label.charAt(0).toString().localeCompare(a.label.charAt(0).toString()))}
+            groupBy={(relevantFlyplassData) => relevantFlyplassData.label.charAt(0).toString()}
             sx={{ width: 300 }}
             renderInput={(params) => <TextField {...params} label="Flyplass" />}
           />
+          </div>
+          
         </div>
 
       <Typography variant="h5" color="inherit" paragraph>
