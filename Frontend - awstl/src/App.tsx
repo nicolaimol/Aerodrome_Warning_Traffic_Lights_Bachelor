@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import Testlist from './components/Testlist';
-import Hello from './components/Hello';
 import Navbar from './components/Navbar';
-import Banner from './components/Banner';
 import Testinputs from './components/Testinputs';
 import axios from 'axios';
 
@@ -11,11 +9,6 @@ import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import allActions from './Actions'
 import ShowInput from './components/ShowInput';
-import Arbeider from './components/Arbeider';
-import RaskVaer from './components/RaskVaer';
-import Bakkemannskap from './components/Bakkemannskap';
-import Flygeleder from './components/Flygeleder';
-import Pilot from './components/Pilot';
 import Footer from './components/Footer'
 import { Container } from '@mui/material';
 import Hjem from './pages/Hjem';

@@ -2,10 +2,6 @@ import { Card, CardContent, Typography, Box, Button } from '@mui/material'
 import React from 'react'
 import arbeiderInfo from '../model/arbeiderInfo'
 
-import SupportAgentIcon from '@mui/icons-material/SupportAgent';
-import EngineeringIcon from '@mui/icons-material/Engineering';
-import FlightIcon from '@mui/icons-material/Flight';
-
 function ArbeiderKort(props:arbeiderInfo) {
 /*
     let ikonElement = '<' + `${props.ikonNavn}` + ' sx={{ fontSize: 100 }}></ ' + `${props.ikonNavn}` + '>';

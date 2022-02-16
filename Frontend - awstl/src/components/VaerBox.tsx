@@ -1,11 +1,7 @@
-import { Card, CardContent, Typography, TextField, CardActions, Button, CardHeader, Box, SvgIcon as MuiSvgIcon, SvgIconProps, styled} from '@mui/material'
+import { Card, CardContent, Typography, CardHeader, Box} from '@mui/material'
 import StarIcon from '@mui/icons-material/Star';
-import CloudIcon from '@mui/icons-material/Cloud';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import React from 'react'
-import flyplassInfo from '../model/flyplassInfo';
-import weatherNow from '../model/weatherNow';
-import vaerboksForecast from '../model/vaerboksForecast';
 import weatherNowAirport from '../model/weatherNowAirport'
 
 function VaerBox(props:weatherNowAirport) {
