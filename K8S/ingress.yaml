@@ -121,3 +121,10 @@ spec:
             name: awtl-backend-clusterip
             port:
               number: 80
+      - pathType: Prefix
+        path: "/metrics"
+        backend:
+          service:
+            name: nginx-metrics-clusterip
+            port:
+              number: 80
