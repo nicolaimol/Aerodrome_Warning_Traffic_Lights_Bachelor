@@ -1,4 +1,3 @@
-import timeseriesList from "./timeseriesList";
 import weatherNow from "./weatherNow";
 import airports from './airports';
 
