@@ -9,19 +9,11 @@ function VaerBox(props:weatherNowAirport) {
     let ikonpath:string = "/weatherIcons/";
     ikonpath += props.properties.timeseries[0].data.next_1_hours.summary.symbol_code + ".svg";
 
-    let temperatureColor = "";
-
-    if (props.properties.timeseries[0].data.instant.details.air_temperature < 0) {
-        temperatureColor = 'blue';
-    } else {
-        temperatureColor = 'red';
-    }
-
-
+    let temperatureColor = props.properties.timeseries[0].data.instant.details.air_temperature < 0 ? '#006edb' : '#c80a0a';
 
   return (
     <>
-    <Card sx={{ maxWidth: 345, mb: 5 }}>
+    <Card sx={{ maxWidth: 345, mb: 5, width: "20%" }}>
         <CardHeader
             avatar={
             <StarIcon></StarIcon>
@@ -30,32 +22,43 @@ function VaerBox(props:weatherNowAirport) {
         />
         <div style={{ display: 'flex', justifyContent: 'center'}}>
             <CardContent>
-            <Box>
-                    <img src={ikonpath} alt={props.properties.timeseries[0].data.next_1_hours.summary.symbol_code} />
+            <Box style={{ display: 'flex', justifyContent: 'center'}}>
+                    <img style={{width: '50%'}} src={ikonpath} alt={props.properties.timeseries[0].data.next_1_hours.summary.symbol_code} />
             </Box>
+
             <Box>
+                <div style={{ display: 'flex', justifyContent: 'center'}}>
+                    <Typography sx={{color: `${temperatureColor}`, fontSize: 38}}>
+                        {props.properties.timeseries[0].data.instant.details.air_temperature}°C
+                    </Typography>
+                </div> 
+            </Box>
+
+            <Box style={{ display: 'flex', justifyContent: 'space-evenly', flexDirection: 'row', alignItems: 'center'}}>
                 <div style={{ transform: `rotate(${props.properties.timeseries[0].data.instant.details.wind_from_direction - 90}deg)`}}>
                     <ArrowRightAltIcon sx={{ fontSize: 100}}></ArrowRightAltIcon>
                 </div>
-                
+                <div style={{display: 'flex', flexDirection: 'column'}}>
+                    <Typography>
+                        {props.properties.timeseries[0].data.instant.details.wind_speed}m/s 
+                    </Typography>
+                    <Typography>
+                        {props.properties.timeseries[0].data.instant.details.wind_from_direction < 0 
+                        ? 360 + props.properties.timeseries[0].data.instant.details.wind_from_direction 
+                        : props.properties.timeseries[0].data.instant.details.wind_from_direction}°
+                    </Typography>
+                </div>
                 
             </Box>
             
         </CardContent>
         
         </div>
-        <div style={{ display: 'flex', justifyContent: 'center'}}>
-            <Typography 
-            sx={{color: `${temperatureColor}`, fontSize: 24}}>
-            {props.properties.timeseries[0].data.instant.details.air_temperature}°C
-        </Typography>
-        </div> 
+        
         
         <div style={{ display: 'flex', justifyContent: 'center'}}>
             
-            <Typography>
-                Vind er {props.properties.timeseries[0].data.instant.details.wind_speed} m/s retning {props.properties.timeseries[0].data.instant.details.wind_from_direction}
-            </Typography>
+            
         </div>
         
         

@@ -29,12 +29,14 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    axios.get('/api/input')
+    /*
+    axios.get('http://localghost:8080/api/input')
     .then((response) => {
       console.log(response);
       dispatch(allActions.inputActions.setInput(response.data));
     })
-  })
+    */
+  }, [])
 
 /*
 
