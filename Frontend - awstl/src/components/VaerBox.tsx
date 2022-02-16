@@ -13,6 +13,15 @@ function VaerBox(props:weatherNowAirport) {
     let ikonpath:string = "/weatherIcons/";
     ikonpath += props.properties.timeseries[0].data.next_1_hours.summary.symbol_code + ".svg";
 
+    let temperatureColor = "";
+
+    if (props.properties.timeseries[0].data.instant.details.air_temperature < 0) {
+        temperatureColor = 'blue';
+    } else {
+        temperatureColor = 'red';
+    }
+
+
 
   return (
     <>
@@ -29,7 +38,10 @@ function VaerBox(props:weatherNowAirport) {
                     <img src={ikonpath} alt={props.properties.timeseries[0].data.next_1_hours.summary.symbol_code} />
             </Box>
             <Box>
-                <ArrowRightAltIcon sx={{ fontSize: 100 }}></ArrowRightAltIcon>
+                <div style={{ transform: `rotate(${props.properties.timeseries[0].data.instant.details.wind_from_direction - 90}deg)`}}>
+                    <ArrowRightAltIcon sx={{ fontSize: 100}}></ArrowRightAltIcon>
+                </div>
+                
                 
             </Box>
             
@@ -37,6 +49,14 @@ function VaerBox(props:weatherNowAirport) {
         
         </div>
         <div style={{ display: 'flex', justifyContent: 'center'}}>
+            <Typography 
+            sx={{color: `${temperatureColor}`, fontSize: 24}}>
+            {props.properties.timeseries[0].data.instant.details.air_temperature}°C
+        </Typography>
+        </div> 
+        
+        <div style={{ display: 'flex', justifyContent: 'center'}}>
+            
             <Typography>
                 Vind er {props.properties.timeseries[0].data.instant.details.wind_speed} m/s retning {props.properties.timeseries[0].data.instant.details.wind_from_direction}
             </Typography>
