@@ -105,6 +105,12 @@ data:
           - targets: ['awtl-backend-clusterip']
             labels:
               application: 'backend'
+      - job_name: 'frontend'
+        metrics_path: '/metrics'
+        static_configs:
+          - targets: ['nginx-metrics-clusterip']
+            labels:
+              application: 'frontend'
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -180,3 +186,39 @@ data:
         rewrite ^/prometheus/(.*)$ /$1 break;
       }
     }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-metrics-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-metrics
+  template:
+    metadata:
+      labels:
+        app: nginx-metrics
+    spec:
+      containers:
+        - name: nginx-metrics
+          image: nginx/nginx-prometheus-exporter:0.10.0
+          ports:
+            - containerPort: 9113
+          args:
+            - -nginx.scrape-uri=http://awtl-frontend-clusterip/nginx_status
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-metrics-clusterip
+spec:
+  type: ClusterIP
+  selector:
+    app: nginx-metrics
+  ports:
+    - name: nginx-metrics
+      protocol: TCP
+      port: 80
+      targetPort: 9113
