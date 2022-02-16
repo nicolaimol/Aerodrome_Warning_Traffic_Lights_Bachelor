@@ -1,8 +1,10 @@
 import { Container, AppBar, Typography } from '@mui/material'
 import React, { useState, useEffect } from 'react';
+import {useSelector, useDispatch} from 'react-redux'
 import VaerBox from './VaerBox'
 import axios from 'axios'
 import vaerboksForecast from '../model/vaerboksForecast';
+import allActions from '../Actions'
 
 
 
@@ -12,11 +14,20 @@ function RaskVaer() {
 
   const favoritt = "ENML";
 
+  const nowcast = useSelector((state:any) => state.nowcast.value)
+  const dispatch = useDispatch()
+
   useEffect(() => {
-    axios.get('http://localhost:8080/api/nowcast?icao=ENML')
-    .then((response) => {
-      setVData(response.data);
-    })
+    if (nowcast === null || nowcast === undefined) {
+      axios.get('http://localhost:8080/api/nowcast?icao=ENDU')
+      .then((response) => {
+        setVData(response.data);
+        dispatch(allActions.nowcastAction.setNowcast(response.data))
+
+      })
+    } else {
+      setVData(nowcast)
+    }
   },[])
 
   console.log(vdata);
