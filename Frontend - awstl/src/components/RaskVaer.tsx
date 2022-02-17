@@ -40,7 +40,7 @@ function RaskVaer() {
                 Været akkurat nå
             </Typography>
         </AppBar>
-        <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+        <div style={{ display: 'flex', justifyContent: 'space-evenly', flexFlow: 'row wrap', alignItems: 'center'}}>
           { vdata != null && 
             vdata.nowcasts.map((flyplass, index) => {
               return <VaerBox key={index} properties={flyplass.properties} airports={vdata.airports[index]} ></VaerBox>
