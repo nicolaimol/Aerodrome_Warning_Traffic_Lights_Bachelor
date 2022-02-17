@@ -16,7 +16,7 @@ function Arbeider() {
 
   return (
     <>
-    <Box id="arbeiderBox" sx={{ mt: 8, mb: 5 }} style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', width: '100%' }}>
+    <Box id="arbeiderBox" sx={{ mt: 8, mb: 5 }} style={{ display: 'flex', justifyContent: 'space-evenly', flexFlow: 'row wrap', alignItems: 'center'}}>
 
       {/* <Bakkemannskap />
         <Flygeleder />
