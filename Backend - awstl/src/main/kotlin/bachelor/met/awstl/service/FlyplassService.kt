@@ -1,5 +1,7 @@
 package bachelor.met.awstl.service
 
+import bachelor.met.awstl.dto.FlyplassDto
+import bachelor.met.awstl.mapper.FlyplassToFlyplassDto
 import bachelor.met.awstl.model.Flyplass
 import bachelor.met.awstl.repo.IFlyplassRepo
 import org.springframework.cache.annotation.Cacheable
@@ -9,15 +11,15 @@ import org.springframework.stereotype.Service
 class FlyplassService(val repo: IFlyplassRepo) {
 
     @Cacheable(value = ["flyplass"], key = "#icao")
-    fun getFlyplass(icao: String): Flyplass? {
-
-        if (icao.equals("engm", ignoreCase = true)) {
-            return Flyplass("engm", "Gardermoen", "OSL", "100", "60", "10", "01/19")
-        }
-
+    fun getFlyplass(icao: String): Flyplass {
         val flyplass = repo.getById(icao);
 
         return flyplass;
+    }
+
+    @Cacheable(value = ["flyplass"])
+    fun getAllFlyplass(): List<Flyplass> {
+        return repo.findAll()
     }
 
     @Cacheable(value = ["flyplassvalid"], key = "#icao")

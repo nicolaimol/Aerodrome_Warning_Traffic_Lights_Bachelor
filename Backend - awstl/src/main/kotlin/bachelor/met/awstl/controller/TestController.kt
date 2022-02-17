@@ -66,11 +66,6 @@ class TestController(val repo: IFlyplassRepo) {
         return ResponseEntity.ok().build()
     }
 
-    @GetMapping(value = ["/airport"])
-    fun getAirport(): ResponseEntity<Any> {
-        return ResponseEntity.ok(repo.findAll())
-    }
-
     @Autowired
     var env: Environment? = null
 }
