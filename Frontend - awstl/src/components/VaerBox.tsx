@@ -13,7 +13,7 @@ function VaerBox(props:weatherNowAirport) {
 
   return (
     <>
-    <Card sx={{ maxWidth: 345, mb: 5, width: "20%" }}>
+    <Card sx={{ minWidth: 250, mb: 5, width: "20%" }}>
         <CardHeader
         sx={{ color: '#0090a8'}}
         /*
