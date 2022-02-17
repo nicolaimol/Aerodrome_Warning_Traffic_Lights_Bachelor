@@ -18,7 +18,7 @@ function ArbeiderKort(props:arbeiderInfo) {
 
 
   return (
-    <Card sx={{ maxWidth: 350, minWidth: 200, width:"25%", mt: 5, backgroundColor: '#0494ac'}}>
+    <Card sx={{ minWidth: 300, width:"30%", mt: 5, backgroundColor: '#0494ac'}}>
             <CardContent>
                 <Typography sx={{ color: 'white' }} variant="h5">
                     {props.arbeider}
