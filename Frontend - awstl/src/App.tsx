@@ -7,10 +7,8 @@ import axios from 'axios';
 
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import allActions from './Actions'
 import ShowInput from './components/ShowInput';
-import Footer from './components/Footer'
-import { Container } from '@mui/material';
+import Footer from './components/Footer';
 import Hjem from './pages/Hjem';
 
 
@@ -37,17 +35,6 @@ function App() {
     })
     */
   }, [])
-
-/*
-
-      <Banner />
-      {<div className="inputs">
-        <Testinputs />
-      </div>}
-      
-      <Hello />
-      <Testlist />
-*/
 
 
   return (
