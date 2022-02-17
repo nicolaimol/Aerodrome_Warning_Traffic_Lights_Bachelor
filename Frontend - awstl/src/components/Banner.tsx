@@ -59,13 +59,13 @@ export default function Banner() {
 
   return (
     <>
-    <div style={{ height: '50vh', width: '100%', backgroundColor: '#dff2f6'}}>
+    <div style={{ minHeight: '50vh', width: '100%', backgroundColor: '#dff2f6'}}>
       <Container sx={{ color: '#0090a8' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-evenly', flexDirection: 'row', alignItems: 'center'}}>
-          <Typography sx={{ pt: 5}} component="h1" variant="h3" color="inherit" gutterBottom>
+        <div style={{ display: 'flex', justifyContent: 'space-evenly', flexFlow: 'row wrap', alignItems: 'center'}}>
+          <Typography style={{ maxWidth: '60%'}} sx={{ pt: 5}} component="h1" variant="h3" color="inherit" gutterBottom>
             Aerodrome Warning Traffic Light System
           </Typography>
-          <div className='AutoCompleteCustom'>
+          <div className='AutoCompleteCustom' style={{ paddingBottom: '2em' }}>
             <Autocomplete
             disablePortal
             id="combo-box-flyplasser"
@@ -74,13 +74,13 @@ export default function Banner() {
             options={relevantFlyplassData.sort((a, b) => -b.label.charAt(0).toString().localeCompare(a.label.charAt(0).toString()))}
             groupBy={(relevantFlyplassData) => relevantFlyplassData.label.charAt(0).toString()}
             sx={{ width: 300, backgroundColor: '#FFFFFF'}}
-            renderInput={(params) => <TextField {...params} style={{ backgroundColor: "pink !important" }} label="Velg flyplass" />}
+            renderInput={(params) => <TextField {...params} label="Velg flyplass" />}
           />
           </div>
           
         </div>
 
-      <Typography variant="h5" color="inherit" paragraph>
+      <Typography sx={{ pb: 5}} variant="h5" color="inherit" paragraph>
         Dette er en tjeneste for å fortelle om det er trygt med aktivitet på en flyplass i Norge.
       </Typography>
     </Container>
