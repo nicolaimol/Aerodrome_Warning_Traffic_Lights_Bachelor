@@ -4,10 +4,12 @@ import { Autocomplete, Container, TextField } from '@mui/material';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import flyplasser from '../model/flyplasser';
-
+import {useDispatch, useSelector} from 'react-redux'
+import allActions from '../Actions'
 import { createStyles, makeStyles } from '@mui/styles';
+import airports from '../model/airports'
 
-const useStyles = makeStyles((theme) => ({ // Må vel ha kilde på denne?!?!
+const useStyles = makeStyles((theme) => ({
   root: {
     
     "& .MuiInputLabel-outlined:not(.MuiInputLabel-shrink)": {
@@ -41,14 +43,26 @@ export default function Banner() {
 
   const classes = useStyles();
 
+  const dispatch = useDispatch();
+  const handleChange = (event: React.ChangeEvent<any>, value: any) => {
+    console.log(value)
+    dispatch(allActions.airportAction.setAirport({icao: value.icao, navn: value.label}))
+  }
+
+  const airportRedux = useSelector((state:any) => state.airport.value)
+
   useEffect(() => {
-      axios.get('/api/airport')
+
+    console.log("update")
+ 
+      axios.get('http://localhost:8080/api/airport')
       .then((response) => {
         setFlyplasserList(response.data);
       })
+      
   },[])
 
-  console.log(flyplasserList);
+  //console.log(flyplasserList);
 
   let relevantFlyplassData = [];
 
@@ -70,6 +84,7 @@ export default function Banner() {
             disablePortal
             id="combo-box-flyplasser"
             classes={classes}
+            onChange={handleChange}
             //onChange={(event, value) => }
             options={relevantFlyplassData.sort((a, b) => -b.label.charAt(0).toString().localeCompare(a.label.charAt(0).toString()))}
             groupBy={(relevantFlyplassData) => relevantFlyplassData.label.charAt(0).toString()}
