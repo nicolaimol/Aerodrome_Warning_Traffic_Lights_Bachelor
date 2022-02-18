@@ -7,7 +7,7 @@ import flyplasser from '../model/flyplasser';
 
 import { createStyles, makeStyles } from '@mui/styles';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme) => ({ // Må vel ha kilde på denne?!?!
   root: {
     
     "& .MuiInputLabel-outlined:not(.MuiInputLabel-shrink)": {
@@ -42,7 +42,7 @@ export default function Banner() {
   const classes = useStyles();
 
   useEffect(() => {
-      axios.get('http://localhost:8080/api/airport')
+      axios.get('/api/airport')
       .then((response) => {
         setFlyplasserList(response.data);
       })
