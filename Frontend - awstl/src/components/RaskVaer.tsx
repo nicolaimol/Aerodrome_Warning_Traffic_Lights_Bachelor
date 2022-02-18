@@ -35,17 +35,13 @@ function RaskVaer() {
 
   useEffect(() => {
     if (time > 0 && airportRedux != null && airportRedux != undefined) {
-      axios.get(`http://localhost:8080/api/nowcast?icao=${airportRedux?.icao}`)
+      axios.get(`/api/nowcast?icao=${airportRedux?.icao}`)
         .then((response: any) => {
           setVData(response.data);
           dispatch(allActions.nowcastAction.setNowcast(response.data))
           console.log("henter fra server")
       })
-    } else {
-      console.log("her er else")
-      console.log(time)
-      console.log(airportRedux == undefined)
-    }
+    } 
     setTime(1)
     
     /*
@@ -53,13 +49,10 @@ function RaskVaer() {
         */
   }, [airportRedux])
 
-  //console.log(vdata);
-  //console.log(airport)
 
   return (
     <>
     <Container>
-        <p>{airportRedux?.icao || "ingen valgt"}</p>
         <AppBar sx={{ mb: 10 }} position='static' style= {{ background: 'white', textAlign: 'center' }}>
             <Typography sx={{ color: '#0090a8', fontSize: 30}}>
                 Været akkurat nå
