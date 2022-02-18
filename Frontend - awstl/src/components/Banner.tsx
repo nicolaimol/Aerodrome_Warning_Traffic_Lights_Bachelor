@@ -46,7 +46,9 @@ export default function Banner() {
   const dispatch = useDispatch();
   const handleChange = (event: React.ChangeEvent<any>, value: any) => {
     console.log(value)
-    dispatch(allActions.airportAction.setAirport({icao: value.icao, navn: value.label}))
+    if (value !== null) {
+      dispatch(allActions.airportAction.setAirport({icao: value.icao, navn: value.label}))
+    }
   }
 
   const airportRedux = useSelector((state:any) => state.airport.value)
@@ -85,8 +87,7 @@ export default function Banner() {
             id="combo-box-flyplasser"
             classes={classes}
             onChange={handleChange}
-            //onChange={(event, value) => }
-            options={relevantFlyplassData.sort((a, b) => -b.label.charAt(0).toString().localeCompare(a.label.charAt(0).toString()))}
+            options={relevantFlyplassData.sort((a, b) => -b.label.localeCompare(a.label))}
             groupBy={(relevantFlyplassData) => relevantFlyplassData.label.charAt(0).toString()}
             sx={{ width: 300, backgroundColor: '#FFFFFF'}}
             renderInput={(params) => <TextField {...params} label="Velg flyplass" />}
