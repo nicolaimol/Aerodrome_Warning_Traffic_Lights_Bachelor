@@ -25,12 +25,12 @@ jobs:
     - name: Build and push Frontend
       uses: docker/build-push-action@v2
       with:
-        file: "./Frontend - Awstl/Dockerfile"
+        file: "./Frontend - awstl/Dockerfile"
         push: true
         tags: s341833/awtl-frontend:latest
     - name: Build and push Backend
       uses: docker/build-push-action@v2
       with:
-        file: "./Backend - Awstl/Dockerfile"
+        file: "./Backend - awstl/Dockerfile"
         push: true
         tags: s341833/awtl-backend:latest
