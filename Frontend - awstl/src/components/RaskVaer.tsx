@@ -5,16 +5,18 @@ import VaerBox from './VaerBox'
 import axios from 'axios'
 import vaerboksForecast from '../model/vaerboksForecast';
 import allActions from '../Actions'
+import airports from '../model/airports'
+import { convertToObject } from 'typescript';
 
 
 
 function RaskVaer() {
 
   const [vdata, setVData] = useState<vaerboksForecast | null>(null);
-
-  const favoritt = "ENML";
+  const [time, setTime] = useState<number>(0)
 
   const nowcast = useSelector((state:any) => state.nowcast.value)
+  const airportRedux = useSelector((state:any) => state.airport.value)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -23,18 +25,41 @@ function RaskVaer() {
       .then((response) => {
         setVData(response.data);
         dispatch(allActions.nowcastAction.setNowcast(response.data))
-
+        console.log("henter fra server")
       })
     } else {
+      console.log("har fra redux")
       setVData(nowcast)
     }
   },[])
 
-  console.log(vdata);
+  useEffect(() => {
+    if (time > 0 && airportRedux != null && airportRedux != undefined) {
+      axios.get(`http://localhost:8080/api/nowcast?icao=${airportRedux?.icao}`)
+        .then((response: any) => {
+          setVData(response.data);
+          dispatch(allActions.nowcastAction.setNowcast(response.data))
+          console.log("henter fra server")
+      })
+    } else {
+      console.log("her er else")
+      console.log(time)
+      console.log(airportRedux == undefined)
+    }
+    setTime(1)
+    
+    /*
+    
+        */
+  }, [airportRedux])
+
+  //console.log(vdata);
+  //console.log(airport)
 
   return (
     <>
     <Container>
+        <p>{airportRedux?.icao || "ingen valgt"}</p>
         <AppBar sx={{ mb: 10 }} position='static' style= {{ background: 'white', textAlign: 'center' }}>
             <Typography sx={{ color: '#0090a8', fontSize: 30}}>
                 Været akkurat nå
