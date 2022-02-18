@@ -17,11 +17,6 @@ function Arbeider() {
   return (
     <>
     <Box id="arbeiderBox" sx={{ mt: 8, mb: 5 }} style={{ display: 'flex', justifyContent: 'space-evenly', flexFlow: 'row wrap', alignItems: 'center'}}>
-
-      {/* <Bakkemannskap />
-        <Flygeleder />
-        <Pilot />
-        */}
       
       {arbeiderne.map((personen) => {
         return <ArbeiderKort arbeider={personen[0].toString()} ikonComp={personen[1]} />
