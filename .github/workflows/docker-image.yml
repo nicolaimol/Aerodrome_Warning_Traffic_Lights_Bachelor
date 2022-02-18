@@ -31,6 +31,6 @@ jobs:
     - name: Build and push Backend
       uses: docker/build-push-action@v2
       with:
-        file: "./Backend - awstl/"
+        context: "./Backend - awstl/"
         push: true
         tags: s341833/awtl-backend:latest
