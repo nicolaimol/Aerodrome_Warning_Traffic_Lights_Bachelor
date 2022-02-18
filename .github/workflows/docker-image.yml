@@ -14,9 +14,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-#    - name: Set up Docker Buildx
-#      id: buildx
-#      uses: docker/setup-buildx-action@v1  
+    - name: Set up Docker Buildx
+      id: buildx
+      uses: docker/setup-buildx-action@v1  
     - name: Login to DockerHub
       uses: docker/login-action@v1
       with:
@@ -25,12 +25,14 @@ jobs:
     - name: Build and push Frontend
       uses: docker/build-push-action@v2
       with:
-        context: "./Frontend - Awstl"
+        env: pathF="./Frontend - Awstl"
+        context: ${pathF}
         push: true
         tags: s341833/awtl-frontend:latest
     - name: Build and push Backend
       uses: docker/build-push-action@v2
       with:
-        context: "./Backend - Awstl"
+        env: pathB="./Backend - Awstl"
+        context: ${pathB}
         push: true
         tags: s341833/awtl-backend:latest
