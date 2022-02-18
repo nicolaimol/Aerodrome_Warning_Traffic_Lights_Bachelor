@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 import ShowInput from './components/ShowInput';
 import Footer from './components/Footer';
 import Hjem from './pages/Hjem';
+import Trafikklys from './pages/Trafikklys';
 
 
 /***
@@ -20,6 +21,17 @@ import Hjem from './pages/Hjem';
  * Mørkeblå kort: #0494ac
  * Footer: #496c80
  */
+
+/**
+ * Ved push husk å endre API kall bort fra localhost
+ * 
+ * Dette er på 
+ * 
+ * Banner.tsx
+ * RaskVaer.tsx
+ * 
+ */
+
 
 
 function App() {
@@ -45,6 +57,7 @@ function App() {
         <Route path="/list" element={<Testlist />} />
         <Route path="/input" element={<Testinputs />} />
         <Route path="/vis" element={<ShowInput />} />
+        <Route path="/trafikklys" element={<Trafikklys />} />
         <Route path="/" element={<Hjem />} />
       </Routes>
 

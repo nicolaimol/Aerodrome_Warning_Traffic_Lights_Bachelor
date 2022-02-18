@@ -15,9 +15,10 @@ import {Link} from 'react-router-dom'
 import MetLogo from '../media/met-logo.svg';
 import { InputLabel, Select } from '@mui/material';
 
-const pages = ['Hjem', "Liste", "Input", "HentInput"]; // Legg til alle menu-items her
+const pages = ['Hjem', "Trafikklys", "Liste", "Input", "HentInput"]; // Legg til alle menu-items her
 const links = new Map();
 links.set("Hjem", "/")
+links.set("Trafikklys", "/trafikklys")
 links.set("HentInput", "/vis")
 links.set("Liste", "/list")
 links.set("Input", "/input")
