@@ -4,8 +4,9 @@ FROM maven:3.8.4-jdk-11 as maven
 
 WORKDIR /usr/src/app
 COPY . /usr/src/app
-#RUN --mount=type=cache,target=/root/.m2  mvn clean package -Dmaven.test.skip
-RUN mvn clean package
+RUN ls pom.xml
+RUN --mount=type=cache,target=/root/.m2  mvn clean package -Dmaven.test.skip
+#RUN mvn clean package
 
 FROM tomcat:9.0.58-jre11-openjdk-slim-buster
 WORKDIR /usr/local/tomcat/webapps/
