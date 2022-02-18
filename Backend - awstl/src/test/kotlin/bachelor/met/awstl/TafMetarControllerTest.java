@@ -3,6 +3,7 @@ package bachelor.met.awstl;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;
 
+import bachelor.met.awstl.controller.TafMetarController;
 import bachelor.met.awstl.dto.TafMetarDto;
 import bachelor.met.awstl.service.TafMetarService;
 import org.junit.jupiter.api.Test;

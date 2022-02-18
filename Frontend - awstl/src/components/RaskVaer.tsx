@@ -21,7 +21,7 @@ function RaskVaer() {
 
   useEffect(() => {
     if (nowcast === null || nowcast === undefined) {
-      axios.get('api/nowcast?icao=ENDU')
+      axios.get('http://localhost:8080/api/nowcast?icao=ENDU')
       .then((response) => {
         setVData(response.data);
         dispatch(allActions.nowcastAction.setNowcast(response.data))

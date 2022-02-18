@@ -57,7 +57,7 @@ export default function Banner() {
 
     console.log("update")
  
-      axios.get('/api/airport')
+      axios.get('http://localhost:8080/api/airport')
       .then((response) => {
         setFlyplasserList(response.data);
       })
