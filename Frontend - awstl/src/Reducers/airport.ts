@@ -1,4 +1,4 @@
-import iAirportAction from "../model/airportAction";
+import iAirportAction from "../model/actions/airportAction";
 
 const airport = (state = {}, action: iAirportAction) => {
     switch (action.type) {
