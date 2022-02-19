@@ -1,4 +1,4 @@
-import vaerboksForecast from './vaerboksForecast'
+import vaerboksForecast from '../vaerboksForecast'
 
 interface iNowcastAction {
     type: string,

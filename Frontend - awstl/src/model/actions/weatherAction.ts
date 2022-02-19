@@ -1,4 +1,4 @@
-import forecast from './forecast'
+import forecast from '../forecast'
 
 interface iWeatherAction {
     type: string,

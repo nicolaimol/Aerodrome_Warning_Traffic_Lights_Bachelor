@@ -1,4 +1,4 @@
-import iInputAction from "../model/inputAction";
+import iInputAction from "../model/actions/inputAction";
 
 const input = (state = {input1: "", input2: "", input3: ""}, action: iInputAction) => {
     switch (action.type) {
