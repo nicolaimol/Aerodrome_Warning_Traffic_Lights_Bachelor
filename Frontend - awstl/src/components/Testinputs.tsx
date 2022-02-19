@@ -11,7 +11,7 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux'
 import allActions from '../Actions';
 import iInput from '../model/input';
-import iInputAction from '../model/inputAction';
+import iInputAction from '../model/actions/inputAction';
 import { MenuItem, InputLabel, Select, SelectChangeEvent, FormControl } from '@mui/material';
 import Box from '@mui/system/Box';
 
