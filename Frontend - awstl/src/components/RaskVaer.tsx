@@ -19,9 +19,16 @@ function RaskVaer() {
   const airportRedux = useSelector((state:any) => state.airport.value)
   const dispatch = useDispatch()
 
+  let url = ""
+  if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+    url = 'http://localhost:8080/api/nowcast?icao='
+} else {
+    url = '/api/nowcast?icao='
+}
+
   useEffect(() => {
     if (nowcast === null || nowcast === undefined) {
-      axios.get('http://localhost:8080/api/nowcast?icao=ENDU')
+      axios.get(`${url}ENDU`)
       .then((response) => {
         setVData(response.data);
         dispatch(allActions.nowcastAction.setNowcast(response.data))
@@ -35,7 +42,7 @@ function RaskVaer() {
 
   useEffect(() => {
     if (time > 0 && airportRedux != null && airportRedux != undefined) {
-      axios.get(`/api/nowcast?icao=${airportRedux?.icao}`)
+      axios.get(`${url}${airportRedux?.icao}`)
         .then((response: any) => {
           setVData(response.data);
           dispatch(allActions.nowcastAction.setNowcast(response.data))
