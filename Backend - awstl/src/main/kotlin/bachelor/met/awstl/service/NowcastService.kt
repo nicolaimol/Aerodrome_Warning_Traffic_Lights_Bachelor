@@ -82,7 +82,7 @@ class NowcastService(val restTemplate: RestTemplate, val sercice: FlyplassServic
             } catch (e: Exception) {
                 logger.error(e.message)
                 e.printStackTrace()
-                throw Exception("something went wrong")
+                throw Exception(e.message)
             }
         }
     }
