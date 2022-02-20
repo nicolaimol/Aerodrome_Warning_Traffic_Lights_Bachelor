@@ -19,9 +19,9 @@ class NowcastController(val service: NowcastService) {
 
             return ResponseEntity.ok(ret)
         } catch (e: Exception) {
-            logger.error(e.message)
-            e.printStackTrace()
-            return ResponseEntity.badRequest().build()
+            //logger.error(e.message)
+            //e.printStackTrace()
+            return ResponseEntity.badRequest().body(e.message)
         }
     }
 
