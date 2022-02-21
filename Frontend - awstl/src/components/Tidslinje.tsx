@@ -21,10 +21,6 @@ ChartJS.register(
   Legend
 );
 
-//import { getLabelForValue } from 'chart.js/helpers';
-
-const ylabel = ['Rød', 'Grønn', 'Gul'];
-
 const options = {
     responsive: true,
     interaction: {
@@ -40,8 +36,7 @@ const options = {
             color: ['red', 'yellow', 'green'],
             precision: 0,
             callback: function(value:any, index:number) {
-                console.log(value)
-                let string = ""
+                
                 if (value > 2) {
                     return "Grønn"
                 } else if (value === 2) {
@@ -58,7 +53,7 @@ const options = {
 const labels = ['1', '2', '3', '1', '2', '3', '1', '2', '3', '1', '2', '3', '1', '2', '3', '1', '2', '3'];
 const dataset = [1,2,2,2,3,3,2,3,1,1,1,2,2]
 
-
+// Gradient til strekene som hopper fra 1 verdi til en annen på tidslinjen
 const getGradient = (ctx: any, chartArea: any) => {
     let width, height, gradient;
     const chartWidth = chartArea.right - chartArea.left;
@@ -76,7 +71,7 @@ const getGradient = (ctx: any, chartArea: any) => {
     return gradient
 }
 
-/*export*/ const data = {
+const data = {
   labels,
   datasets: [
     {
