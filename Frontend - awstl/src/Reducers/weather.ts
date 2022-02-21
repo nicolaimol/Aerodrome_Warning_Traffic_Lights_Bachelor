@@ -1,4 +1,4 @@
-import IWeatherAction from "../model/weatherAction"
+import IWeatherAction from "../model/actions/weatherAction"
 
 const weather = (state = {}, action: IWeatherAction) => {
 

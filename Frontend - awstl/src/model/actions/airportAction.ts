@@ -1,4 +1,4 @@
-import airports from './airports'
+import airports from '../airports'
 
 interface iAirportAction {
     type: string,

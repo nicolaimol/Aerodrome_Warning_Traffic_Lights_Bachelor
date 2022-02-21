@@ -50,20 +50,25 @@ function App() {
 
 
   return (
-    <>
+    <div className="outer" style={{display: 'flex', minHeight: "100vh", flexDirection: "column"}}>
       <Navbar />
+
+      <div style={{flexGrow: 1}}>
+        <Routes>
+          <Route path="/list" element={<Testlist />} />
+          <Route path="/input" element={<Testinputs />} />
+          <Route path="/vis" element={<ShowInput />} />
+          <Route path="/trafikklys" element={<Trafikklys />} />
+          <Route path="/" element={<Hjem />} />
+        </Routes>
+      </div>
+        
       
-      <Routes>
-        <Route path="/list" element={<Testlist />} />
-        <Route path="/input" element={<Testinputs />} />
-        <Route path="/vis" element={<ShowInput />} />
-        <Route path="/trafikklys" element={<Trafikklys />} />
-        <Route path="/" element={<Hjem />} />
-      </Routes>
+      
 
       <Footer />
 
-    </>
+    </div>
 
       
   );

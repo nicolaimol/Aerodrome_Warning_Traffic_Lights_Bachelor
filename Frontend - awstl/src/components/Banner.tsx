@@ -51,13 +51,19 @@ export default function Banner() {
     }
   }
 
+  let url = "";
+  if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+    url = 'http://localhost:8080/api/airport'
+} else {
+    url = '/api/airport'
+}
+
   const airportRedux = useSelector((state:any) => state.airport.value)
 
   useEffect(() => {
 
     console.log("update")
- 
-      axios.get('http://localhost:8080/api/airport')
+      axios.get(url)
       .then((response) => {
         setFlyplasserList(response.data);
       })

@@ -1,4 +1,4 @@
-import INowcastAction from "../model/nowcastAction"
+import INowcastAction from "../model/actions/nowcastAction"
 
 const nowcast = (state = {}, action: INowcastAction) => {
 

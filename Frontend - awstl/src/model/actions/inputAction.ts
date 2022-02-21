@@ -1,4 +1,4 @@
-import iInput from './input'
+import iInput from '../input'
 
 interface iInputAction {
     type: string,
