@@ -1,38 +1,37 @@
 import * as React from 'react';
-import Typography from '@mui/material/Typography';
-import { Autocomplete, Container, TextField } from '@mui/material';
 import { useState, useEffect } from 'react';
+
+// API kall
 import axios from 'axios';
-import flyplasser from '../model/flyplasser';
+
+// Redux
 import {useDispatch, useSelector} from 'react-redux'
 import allActions from '../Actions'
-import { createStyles, makeStyles } from '@mui/styles';
-import airports from '../model/airports'
 
-const useStyles = makeStyles((theme) => ({
+// Interface
+import flyplasser from '../model/flyplasser';
+
+// Material UI
+import Typography from '@mui/material/Typography';
+import { Autocomplete, Container, TextField } from '@mui/material';
+import { createStyles, makeStyles } from '@mui/styles';
+
+const useStyles = makeStyles((theme) => ({ // Lager style til AutoComplete komponent 
   root: {
     
-    "& .MuiInputLabel-outlined:not(.MuiInputLabel-shrink)": {
-      
-      //color: '#0090a8'
-    },
-
-    '& .MuiInputLabel-outlined': { color: '#0090a8' }
+    '& .MuiInputLabel-outlined': { color: '#0090a8' } // Tekstfarge
   },
   inputRoot: {
-    color: "#0090a8",
+    color: "#0090a8", // Farge etter input
 
-    '&[class*="MuiOutlinedInput-root"] .MuiAutocomplete-input:first-child': {
-      
-    },
     "& .MuiOutlinedInput-notchedOutline": {
-      borderColor: "#0090a8"
+      borderColor: "#0090a8" // Farge på kant rundt input feltet
     },
     "&:hover .MuiOutlinedInput-notchedOutline": {
-      borderColor: "#0494ac"
+      borderColor: "#0494ac" // Farge på kant rundt input feltet ved hover
     },
     "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-      borderColor: "#496c80"
+      borderColor: "#496c80" // Farge på kant rundt input feltet ved fokus
     }
   }
 }));
@@ -70,8 +69,6 @@ export default function Banner() {
       })
       
   },[])
-
-  //console.log(flyplasserList);
 
   let relevantFlyplassData = [];
 

@@ -1,37 +1,31 @@
-import { Card, CardContent, Typography, Box, Button } from '@mui/material'
 import React from 'react'
+
+// Interface
 import arbeiderInfo from '../model/arbeiderInfo'
 
-function ArbeiderKort(props:arbeiderInfo) {
-/*
-    let ikonElement = '<' + `${props.ikonNavn}` + ' sx={{ fontSize: 100 }}></ ' + `${props.ikonNavn}` + '>';
-*/
-    /*
-    if (props.arbeider === 'flygeleder') {
-        ikonElement = '<SupportAgentIcon sx={{ fontSize: 100 }}></ SupportAgentIcon>';
-    } else if (props.arbeider === 'bakkemannskap') {
-        ikonElement = '<EngineeringIcon sx={{ fontSize: 100 }}></ EngineeringAgentIcon>';
-    } else {
-        ikonElement = '<FlightIcon sx={{ fontSize: 100 }}></ FlightIcon>';
-    }
-    */
+// Material UI
+import { Card, CardContent, Typography, Box, Button } from '@mui/material'
 
+
+function ArbeiderKort(props:arbeiderInfo) { {/** Tar inn props med interface til arbeiderinfo */}
 
   return (
     <Card sx={{ minWidth: 300, width:"30%", mt: 5, backgroundColor: '#0494ac'}}>
             <CardContent>
+                {/** Tittel */}
                 <Typography sx={{ color: 'white' }} variant="h5">
                     {props.arbeider}
                 </Typography>
+                {/** Undertittel */}
                 <Typography sx={{ mb: 10, color: "white"}}>
                     Her ser du mest relevant informasjon om du er {props.arbeider}
                 </Typography>
+                {/** Ikon */}
                 <Box sx={{ mb: 10, color: 'white' }} textAlign='center'>
                     {props.ikonComp}
                 </Box>
-                
+                {/** Knapp */}
                 <Box textAlign='center'>
-                    
                     <Button variant="contained" sx={{background: 'white', color: '#0090a8' }} >Sjekk</Button>
                 </Box>
             </CardContent>
