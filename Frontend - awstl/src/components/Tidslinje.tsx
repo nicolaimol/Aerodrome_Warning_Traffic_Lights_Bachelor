@@ -33,17 +33,21 @@ const options = {
     },
     scales: {
       y: {
+        grid: {
+          color: ['red', 'yellow', 'green'],
+        },
         ticks: {
+            color: ['red', 'yellow', 'green'],
             precision: 0,
             callback: function(value:any, index:number) {
                 console.log(value)
                 let string = ""
                 if (value > 2) {
-                    return "green"
+                    return "Grønn"
                 } else if (value === 2) {
-                    return "yellow"
+                    return "Gul"
                 }
-                return "red"
+                return "Rød"
             }
         }
       },
