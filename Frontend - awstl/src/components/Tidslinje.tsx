@@ -42,9 +42,9 @@ const getGradient = (ctx: any, chartArea: any) => {
         width = chartWidth;
         height = chartHeight;
         gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
-        gradient.addColorStop(0, "red");
+        gradient.addColorStop(0.7, "red");
         gradient.addColorStop(0.5, "yellow");
-        gradient.addColorStop(1, "green");
+        gradient.addColorStop(0.3, "green");
     }
     return gradient
 }
@@ -81,10 +81,10 @@ function Tidslinje() {
                     return it.data.instant.details.air_temperature
                 }))
                 setLabels(herVer.map((it: any) => {
-                    return it.time
+                    return new Date(it.time).toLocaleString()
                 }))
                 setDataset(herVer.map((it: any) => {
-                    return it.data.instant.details.air_temperature > temp ? 3 :
+                    return it.data.instant.details.air_temperature < temp ? 3 :
                         it.data.instant.details.air_temperature == temp ? 2: 1
                 }))
             })
@@ -93,7 +93,7 @@ function Tidslinje() {
     useEffect(() => {
         if (ver !== undefined) {
             setDataset(ver.map((it: any) => {
-                return it > temp ? 3 :
+                return it < temp ? 3 :
                     it == temp ? 2: 1
             }))
         }
@@ -123,22 +123,22 @@ function Tidslinje() {
                 suggestedMax: 4,
                 suggestedMin: 0,
                 grid: {
-                    color: ['red', 'yellow', 'green'],
+                    color: ['green', 'yellow', 'red'],
                 },
                 ticks: {
                     font: {
                         size: 30
                     },
-                    color: ['red', 'yellow', 'green'],
+                    color: ['green', 'yellow', 'red'],
                     precision: 0,
                     callback: function(value:any, index:number, ctx: any) {
 
                         let string = ""
-                        if (value === 3) {
+                        if (value === 1) {
                             return "Grønn"
                         } else if (value === 2) {
                             return "Gul"
-                        } else if (value === 1) {
+                        } else if (value === 3) {
                             return "Rød"
                         }
 
@@ -169,7 +169,7 @@ function Tidslinje() {
                     return getGradient(ctx, chartArea )
                 },
                 backgroundColor: dataset.map((it:any) => {
-                    return it > 2 ? "rgba(0,255,0, 0.5)": it == 2 ? "rgba(255,255,0, 0.5)" : "rgba(255,0,0, 0.5)"
+                    return it < 2 ? "rgba(0,255,0, 0.5)": it == 2 ? "rgba(255,255,0, 0.5)" : "rgba(255,0,0, 0.5)"
 
                 }),
                 color: dataset.map((it:any) => {
