@@ -70,6 +70,11 @@ function Tidslinje() {
                     return it.time
                 }))
                 setDataset(herVer.map((it: any) => {
+                    console.log(it.data.instant.details.air_temperature)
+
+                    console.log(it.data.instant.details.air_temperature > temp ? 3 :
+                        it.data.instant.details.air_temperature === temp ? 2: 1)
+
                     return it.data.instant.details.air_temperature > temp ? 3 :
                         it.data.instant.details.air_temperature == temp ? 2: 1
                 }))
@@ -92,6 +97,11 @@ function Tidslinje() {
             mode: 'index' as const,
             intersect: false,
         },
+        plugins: {
+            legend: {
+                display: false
+            }
+        },
         onClick: function (evt: any, ctx: any) {
             console.log(ctx)
             alert(`Du valgte ${labels[ctx[0].index]} med temp ${ver[ctx[0].index]}`)
@@ -107,8 +117,7 @@ function Tidslinje() {
                     min: 1,
                     color: ['red', 'yellow', 'green'],
                     precision: 0,
-                    callback: function(value:any, index:number, ticks: any) {
-                        //console.log(ticks)
+                    callback: function(value:any, index:number) {
                         let string = ""
                         if (value > 2) {
                             return "Grønn"
@@ -159,7 +168,7 @@ function Tidslinje() {
 
         <div>
             <input type="range" min="-20" max="20" value={temp} onChange={e => setTemp(Number(e.target.value))}></input><span>{temp}</span>
-        <div style={{width: "100%", overflow: 'scroll'}}>
+        <div style={{width: "100%", overflowX: 'scroll'}}>
             <div style={{width: '200vw', height: '500px'}}>
                 {/* @ts-ignore*/}
                 <Line options={options} data={data} />
