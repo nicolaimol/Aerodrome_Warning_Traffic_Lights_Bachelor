@@ -32,6 +32,8 @@ class LocationForecastController(val service: LocationForecastService) {
     fun getLocationForecastIcao(@RequestParam(name = "icao")icao: String): ResponseEntity<Any> {
         val res = service.getForecast(icao)
 
+        res?.properties?.timeseries = res?.properties?.timeseries?.filterIndexed {index, _ -> index < 58}!!.toTypedArray()
+
         return ResponseEntity.ok(res)
     }
 }
