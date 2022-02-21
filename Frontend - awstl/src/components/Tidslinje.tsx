@@ -90,6 +90,7 @@ const getGradient = (ctx: any, chartArea: any) => {
 
           return getGradient(ctx, chartArea )
       },
+      pointRadius: 15,
       color: dataset.map((it:any) => {
           return it > 2 ? "green" : "red"
       }),
