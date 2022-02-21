@@ -99,6 +99,8 @@ function Tidslinje() {
         }
     }, [temp])
 
+    const [ctxSave, setCtxsave] = useState([])
+
     const options = {
         maintainAspectRatio: false,
         responsive: true,
@@ -117,32 +119,38 @@ function Tidslinje() {
         },
         scales: {
             y: {
+                beginAtZero: false,
+                suggestedMax: 4,
+                suggestedMin: 0,
                 grid: {
                     color: ['red', 'yellow', 'green'],
                 },
                 ticks: {
-                    stepSize: 1,
-                    max: 3,
-                    min: 1,
                     font: {
                         size: 30
                     },
                     color: ['red', 'yellow', 'green'],
                     precision: 0,
-                    callback: function(value:any, index:number) {
+                    callback: function(value:any, index:number, ctx: any) {
+
                         let string = ""
-                        if (value > 2) {
+                        if (value === 3) {
                             return "Grønn"
                         } else if (value === 2) {
                             return "Gul"
+                        } else if (value === 1) {
+                            return "Rød"
                         }
-                        return "Rød"
+
+                        return
+
                     },
+
+
                     grace: '10%'
                 }
             },
         },
-
     };
 
     const data = {
@@ -165,7 +173,7 @@ function Tidslinje() {
 
                 }),
                 color: dataset.map((it:any) => {
-                    return it > 2 ? "green" : "red"
+                    return it > 2 ? "rgba(0,255,0, 0.5)": it == 2 ? "rgba(255,255,0, 0.5)" : "rgba(255,0,0, 0.5)"
                 }),
                 tension: 0.1
             },
@@ -179,6 +187,7 @@ function Tidslinje() {
     return (
 
         <div>
+            <h3>{airport.icao}</h3>
             <input type="range" min="-20" max="20" value={temp} onChange={e => setTemp(Number(e.target.value))}></input><span>{temp}</span>
         <div style={{width: "100%", overflowX: 'scroll'}}>
             <div style={{width: '200vw', height: '500px'}}>
