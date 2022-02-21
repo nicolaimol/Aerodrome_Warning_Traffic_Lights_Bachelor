@@ -149,7 +149,7 @@ function Tidslinje() {
     // @ts-ignore
     return (
 
-        <div style={{width: "100%", overflow: 'scroll'}}>
+        <div style={{width: "100%", overflowX: 'scroll'}}>
             <input type="range" min="-20" max="20" value={temp} onChange={e => setTemp(Number(e.target.value))}></input><span>{temp}</span>
             <div style={{width: '200vw', height: '500px'}}>
                 {/* @ts-ignore*/}
