@@ -63,7 +63,6 @@ export default function Banner() {
   useEffect(() => {
 
     console.log("update")
- 
       axios.get(url)
       .then((response) => {
         setFlyplasserList(response.data);
