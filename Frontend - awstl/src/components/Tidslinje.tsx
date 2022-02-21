@@ -102,9 +102,13 @@ function Tidslinje() {
                     color: ['red', 'yellow', 'green'],
                 },
                 ticks: {
+                    stepSize: 1,
+                    max: 3,
+                    min: 1,
                     color: ['red', 'yellow', 'green'],
                     precision: 0,
-                    callback: function(value:any, index:number) {
+                    callback: function(value:any, index:number, ticks: any) {
+                        //console.log(ticks)
                         let string = ""
                         if (value > 2) {
                             return "Grønn"
@@ -153,13 +157,15 @@ function Tidslinje() {
     // @ts-ignore
     return (
 
-        <div style={{width: "100%", overflow: 'scroll'}}>
+        <div>
             <input type="range" min="-20" max="20" value={temp} onChange={e => setTemp(Number(e.target.value))}></input><span>{temp}</span>
+        <div style={{width: "100%", overflow: 'scroll'}}>
             <div style={{width: '200vw', height: '500px'}}>
                 {/* @ts-ignore*/}
                 <Line options={options} data={data} />
             </div>
 
+        </div>
         </div>
 
   )
