@@ -25,7 +25,7 @@ ChartJS.register(
 
 const ylabel = ['Rød', 'Grønn', 'Gul'];
 
-export const options = {
+const options = {
     responsive: true,
     interaction: {
       mode: 'index' as const,
@@ -44,12 +44,6 @@ export const options = {
                     return "yellow"
                 }
                 return "red"
-                /*
-                if (getLabelForValue(context.value) == 2) {
-                    return 2
-                }
-
-                 */
             }
         }
       },
@@ -58,21 +52,50 @@ export const options = {
   };
 
 const labels = ['1', '2', '3', '1', '2', '3', '1', '2', '3', '1', '2', '3', '1', '2', '3', '1', '2', '3'];
+const dataset = [1,2,2,2,3,3,2,3,1,1,1,2,2]
 
-export const data = {
+
+const getGradient = (ctx: any, chartArea: any) => {
+    let width, height, gradient;
+    const chartWidth = chartArea.right - chartArea.left;
+    const chartHeight = chartArea.bottom - chartArea.top;
+    if (!gradient || width !== chartWidth || height !== chartHeight) {
+        // Create the gradient because this is either the first render
+        // or the size of the chart has changed
+        width = chartWidth;
+        height = chartHeight;
+        gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
+        gradient.addColorStop(0, "red");
+        gradient.addColorStop(0.5, "yellow");
+        gradient.addColorStop(1, "green");
+    }
+    return gradient
+}
+
+/*export*/ const data = {
   labels,
   datasets: [
     {
       label: 'Dataset 1',
-      data: [1,2,2,2,3,3,2,3,1,1,1,2,2],
-      borderColor: 'rgb(255, 99, 132)',
-      backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      data: dataset,
+      borderColor: function (context: any) {
+          const chart = context.chart
+          const {ctx, chartArea} = chart
+
+          if (!chartArea) return
+
+          return getGradient(ctx, chartArea )
+      },
+      color: dataset.map((it:any) => {
+          return it > 2 ? "green" : "red"
+      }),
     },
   ],
 };
 
+
 function Tidslinje() {
-  // @ts-ignore
+
     return (
     <Line options={options} data={data} />
   )
