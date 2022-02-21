@@ -15,6 +15,7 @@ import {
     useEffect
 } from "react";
 import axios from 'axios'
+import { useSelector } from 'react-redux';
 
 
 ChartJS.register(
@@ -50,11 +51,16 @@ const getGradient = (ctx: any, chartArea: any) => {
 
 function Tidslinje() {
 
+    var airport:any = useSelector<string>((state:any) => state.airport.value)
+    if (airport == undefined) {
+        airport = {icao: "ENGM"}
+    }
+
     let url = ""
     if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') { // Uavhengig om det er local testing eller deployment så fungerer API kall
-        url = "http://localhost:8080/api/locationforecast?icao=enbr"
+        url = "http://localhost:8080/api/locationforecast?icao="
     } else {
-        url = "/api/locationforecast?icao=enbr"
+        url = "/api/locationforecast?icao="
     }
 
     const [ver, setVer] = useState<any>()
@@ -66,7 +72,8 @@ function Tidslinje() {
     //let dataset = [1,2,2,2,3,3,2,3,1,1,1,2,2]
 
     useEffect(()=> {
-        axios.get(url)
+        console.log(airport)
+        axios.get(url + airport.icao)
             .then((response:any) => {
                 //console.log(response)
                 const herVer = response.data.properties.timeseries
@@ -77,11 +84,6 @@ function Tidslinje() {
                     return it.time
                 }))
                 setDataset(herVer.map((it: any) => {
-                    console.log(it.data.instant.details.air_temperature)
-
-                    console.log(it.data.instant.details.air_temperature > temp ? 3 :
-                        it.data.instant.details.air_temperature === temp ? 2: 1)
-
                     return it.data.instant.details.air_temperature > temp ? 3 :
                         it.data.instant.details.air_temperature == temp ? 2: 1
                 }))
