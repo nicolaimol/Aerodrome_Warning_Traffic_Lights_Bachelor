@@ -3,6 +3,8 @@ import React from 'react'
 import TrafikklysBox from '../components/TrafikklysBox'
 import VisSatteTerskelverdier from '../components/VisSatteTerskelverdier'
 
+import Tidslinje from '../components/Tidslinje'
+
 function Trafikklys() {
   return (
     <>
@@ -10,7 +12,10 @@ function Trafikklys() {
       <div style={{ display: 'flex', justifyContent: 'space-evenly', flexFlow: 'row wrap', alignItems: 'center'}}>
         <VisSatteTerskelverdier />
         <TrafikklysBox />
-      </div>        
+      </div>
+      <div>
+        <Tidslinje />
+      </div>
     </Container>
     </>
   )
