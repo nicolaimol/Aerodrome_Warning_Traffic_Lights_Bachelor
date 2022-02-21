@@ -124,6 +124,9 @@ function Tidslinje() {
                     stepSize: 1,
                     max: 3,
                     min: 1,
+                    font: {
+                        size: 30
+                    },
                     color: ['red', 'yellow', 'green'],
                     precision: 0,
                     callback: function(value:any, index:number) {
