@@ -51,6 +51,7 @@ const getGradient = (ctx: any, chartArea: any) => {
 function Tidslinje() {
 
     const [ver, setVer] = useState<any>()
+    const [temp,  setTemp] = useState(0);
     const [labels, setLabels] = useState<any[]>([1,2,2,2,3,3,2,3,1,1,1,2,2])
     const [dataset, setDataset] = useState<any[]>([1,2,2,2,3,3,2,3,1,1,1,2,2])
 
@@ -71,11 +72,11 @@ function Tidslinje() {
                 setDataset(herVer.map((it: any) => {
                     console.log(it.data.instant.details.air_temperature)
 
-                    console.log(it.data.instant.details.air_temperature > 0 ? 3 :
-                        it.data.instant.details.air_temperature === 0 ? 2: 1)
+                    console.log(it.data.instant.details.air_temperature > temp ? 3 :
+                        it.data.instant.details.air_temperature === temp ? 2: 1)
 
-                    return it.data.instant.details.air_temperature > 0 ? 3 :
-                        it.data.instant.details.air_temperature == 0 ? 2: 1
+                    return it.data.instant.details.air_temperature > temp ? 3 :
+                        it.data.instant.details.air_temperature == temp ? 2: 1
                 }))
             })
     }, [])
@@ -101,9 +102,9 @@ function Tidslinje() {
                     precision: 0,
                     callback: function(value:any, index:number) {
                         let string = ""
-                        if (value > 0) {
+                        if (value > temp) {
                             return "Grønn"
-                        } else if (value === 0) {
+                        } else if (value === temp) {
                             return "Gul"
                         }
                         return "Rød"
@@ -131,11 +132,11 @@ function Tidslinje() {
                     return getGradient(ctx, chartArea )
                 },
                 backgroundColor: dataset.map((it:any) => {
-                    return it > 2 ? "rgba(0,255,0, 0.5)": it == 2 ? "rgba(255,255,0, 0.5)" : "rgba(255,0,0, 0.5)"
+                    return it > temp ? "rgba(0,255,0, 0.5)": it == temp ? "rgba(255,255,0, 0.5)" : "rgba(255,0,0, 0.5)"
 
                 }),
                 color: dataset.map((it:any) => {
-                    return it > 0 ? "green" : "red"
+                    return it > temp ? "green" : "red"
                 }),
                 tension: 0.1
             },
@@ -149,6 +150,7 @@ function Tidslinje() {
     return (
 
         <div style={{width: "100%", overflow: 'scroll'}}>
+            <input type="range" min="-20" max="20" value={temp} onChange={e => setTemp(Number(e.target.value))}></input><span>{temp}</span>
             <div style={{width: '200vw', height: '500px'}}>
                 {/* @ts-ignore*/}
                 <Line options={options} data={data} />
