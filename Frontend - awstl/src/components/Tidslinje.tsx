@@ -88,6 +88,11 @@ function Tidslinje() {
             mode: 'index' as const,
             intersect: false,
         },
+        plugins: {
+            legend: {
+                display: false
+            }
+        },
         onClick: function (evt: any, ctx: any) {
             console.log(ctx)
             alert(`Du valgte ${labels[ctx[0].index]} med temp ${ver[ctx[0].index]}`)
