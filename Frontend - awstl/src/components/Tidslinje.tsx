@@ -70,16 +70,20 @@ function Tidslinje() {
                     return it.time
                 }))
                 setDataset(herVer.map((it: any) => {
-                    console.log(it.data.instant.details.air_temperature)
-
-                    console.log(it.data.instant.details.air_temperature > temp ? 3 :
-                        it.data.instant.details.air_temperature === temp ? 2: 1)
-
                     return it.data.instant.details.air_temperature > temp ? 3 :
                         it.data.instant.details.air_temperature == temp ? 2: 1
                 }))
             })
     }, [])
+
+    useEffect(() => {
+        if (ver !== undefined) {
+            setDataset(ver.map((it: any) => {
+                return it > temp ? 3 :
+                    it == temp ? 2: 1
+            }))
+        }
+    }, [temp])
 
     const options = {
         maintainAspectRatio: false,
@@ -102,9 +106,9 @@ function Tidslinje() {
                     precision: 0,
                     callback: function(value:any, index:number) {
                         let string = ""
-                        if (value > temp) {
+                        if (value > 2) {
                             return "Grønn"
-                        } else if (value === temp) {
+                        } else if (value === 2) {
                             return "Gul"
                         }
                         return "Rød"
@@ -132,11 +136,11 @@ function Tidslinje() {
                     return getGradient(ctx, chartArea )
                 },
                 backgroundColor: dataset.map((it:any) => {
-                    return it > temp ? "rgba(0,255,0, 0.5)": it == temp ? "rgba(255,255,0, 0.5)" : "rgba(255,0,0, 0.5)"
+                    return it > 2 ? "rgba(0,255,0, 0.5)": it == 2 ? "rgba(255,255,0, 0.5)" : "rgba(255,0,0, 0.5)"
 
                 }),
                 color: dataset.map((it:any) => {
-                    return it > temp ? "green" : "red"
+                    return it > 2 ? "green" : "red"
                 }),
                 tension: 0.1
             },
