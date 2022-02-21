@@ -9,10 +9,12 @@ function Trafikklys() {
   return (
     <>
     <Container>
+      {/*
       <div style={{ display: 'flex', justifyContent: 'space-evenly', flexFlow: 'row wrap', alignItems: 'center'}}>
         <VisSatteTerskelverdier />
         <TrafikklysBox />
       </div>
+      */}
       <div>
         <Tidslinje />
       </div>
