@@ -50,6 +50,13 @@ const getGradient = (ctx: any, chartArea: any) => {
 
 function Tidslinje() {
 
+    let url = ""
+    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') { // Uavhengig om det er local testing eller deployment så fungerer API kall
+        url = "http://localhost:8080/api/locationforecast?icao=enbr"
+    } else {
+        url = "/api/locationforecast?icao=enbr"
+    }
+
     const [ver, setVer] = useState<any>()
     const [temp,  setTemp] = useState(0);
     const [labels, setLabels] = useState<any[]>([1,2,2,2,3,3,2,3,1,1,1,2,2])
@@ -59,7 +66,7 @@ function Tidslinje() {
     //let dataset = [1,2,2,2,3,3,2,3,1,1,1,2,2]
 
     useEffect(()=> {
-        axios.get("http://localhost:8080/api/locationforecast?icao=enbr")
+        axios.get(url)
             .then((response:any) => {
                 //console.log(response)
                 const herVer = response.data.properties.timeseries
