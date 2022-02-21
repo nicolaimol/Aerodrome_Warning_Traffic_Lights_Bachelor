@@ -3,12 +3,15 @@ package bachelor.met.awstl.controller
 import bachelor.met.awstl.dto.locationforecast.Timeseries
 import bachelor.met.awstl.service.LocationForecastService
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(value = ["http://localhost:3001"])
 class LocationForecastController(val service: LocationForecastService) {
 
 
@@ -23,5 +26,12 @@ class LocationForecastController(val service: LocationForecastService) {
 
         return ResponseEntity.ok(res)
 
+    }
+
+    @GetMapping(value = ["/locationforecast"])
+    fun getLocationForecastIcao(@RequestParam(name = "icao")icao: String): ResponseEntity<Any> {
+        val res = service.getForecast(icao)
+
+        return ResponseEntity.ok(res)
     }
 }

@@ -1,4 +1,4 @@
-package bachelor.met.awstl;
+package bachelor.met.awstl.controller;
 
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;
