@@ -21,7 +21,7 @@ ChartJS.register(
   Legend
 );
 
-import { getLabelForValue } from 'chart.js/helpers';
+//import { getLabelForValue } from 'chart.js/helpers';
 
 const ylabel = ['Rød', 'Grønn', 'Gul'];
 
@@ -34,8 +34,22 @@ export const options = {
     scales: {
       y: {
         ticks: {
-            callback: function(context:any) {
-                if (getLabelForValue(context.value) == 2)
+            precision: 0,
+            callback: function(value:any, index:number) {
+                console.log(value)
+                let string = ""
+                if (value > 2) {
+                    return "green"
+                } else if (value === 2) {
+                    return "yellow"
+                }
+                return "red"
+                /*
+                if (getLabelForValue(context.value) == 2) {
+                    return 2
+                }
+
+                 */
             }
         }
       },
@@ -58,7 +72,8 @@ export const data = {
 };
 
 function Tidslinje() {
-  return (
+  // @ts-ignore
+    return (
     <Line options={options} data={data} />
   )
 }
