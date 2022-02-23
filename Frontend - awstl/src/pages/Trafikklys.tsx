@@ -9,13 +9,8 @@ function Trafikklys() {
   return (
     <>
     <Container>
-      {/*
       <div style={{ display: 'flex', justifyContent: 'space-evenly', flexFlow: 'row wrap', alignItems: 'center'}}>
-        
-        <TrafikklysBox />
-      </div>
-      */}
-      <VisSatteTerskelverdier 
+        <VisSatteTerskelverdier 
       airTemp={0}
       precipitationAmmount={20}
       windSpeed={30}
@@ -29,6 +24,10 @@ function Trafikklys() {
       probIce={20}
       crosswind={50}
       />
+        <TrafikklysBox />
+      </div>
+      
+
       <div>
         <Tidslinje />
       </div>
