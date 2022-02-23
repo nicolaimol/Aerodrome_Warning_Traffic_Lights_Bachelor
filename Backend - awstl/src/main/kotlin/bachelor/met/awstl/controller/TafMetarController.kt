@@ -5,15 +5,23 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
-
+/**
+ * Controller for receiving taf and metar
+ * enpoints
+ *  /api/tafmetar?icao=
+ *  icao is required for receiving data
+ *
+ * logic to get data is done in injected TafMetrarSerice
+ */
 @RestController
-@RequestMapping("/api/tafmetar")
+@RequestMapping("/api")
 class TafMetarController(val service: TafMetarService) {
 
-    @GetMapping("/{icao}")
-    fun getTafMetar(@PathVariable("icao") icao: String): ResponseEntity<Any> {
+    @GetMapping("/tafmetar")
+    fun getTafMetar(@RequestParam("icao") icao: String): ResponseEntity<Any> {
 
         try {
             val tafmetar = service.getMetar(icao)
