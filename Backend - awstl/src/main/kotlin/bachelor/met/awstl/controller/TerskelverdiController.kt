@@ -61,4 +61,8 @@ class TerskelverdiController(val service: TerskelverdiService) {
         }
     }
 
+    @GetMapping(value = ["/all"])
+    fun getAll(): ResponseEntity<Any> {
+        return ResponseEntity.ok(service.getAll())
+    }
 }
