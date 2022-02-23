@@ -8,6 +8,9 @@ interface terskelData{
     dewpoint: number; // temperatur luftfuktighet kondenserer (dew_point_temperature)
     humidity: number; // luftfuktighet (relative_humidity)
     fog: number; // tåke (fog_area_fraction)
+    
+    probIce: number;
+    crosswind: number;
 
 
     // VI SKAL OGSÅ HA IS% OG CROSSWIND MEN DISSE VERDIENE REGNES UT AV temp+fuktighet og v.retning+v.styrke+rullebaneretning
