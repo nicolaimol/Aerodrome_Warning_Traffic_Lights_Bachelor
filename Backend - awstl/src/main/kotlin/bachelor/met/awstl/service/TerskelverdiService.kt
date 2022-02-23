@@ -33,9 +33,9 @@ class TerskelverdiService(val repo: ITerskelverdiRepo) {
 
     fun getTerskelverdi(base: String): TerskelverdiDto {
 
-        val id = Base64.getDecoder().decode(base).toString()
+        val id = Base64.getDecoder().decode(base)
 
-        val terskel = repo.findById(id)
+        val terskel = repo.findById(String(id))
 
         if (terskel.isPresent) {
             val entity = terskel.get()
