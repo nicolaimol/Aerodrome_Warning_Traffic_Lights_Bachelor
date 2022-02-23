@@ -48,9 +48,9 @@ class TerskelverdiService(val repo: ITerskelverdiRepo) {
     }
 
     fun updateTerskelverdi(base: String, dto: TerskelverdiDto) {
-        val id = Base64.getDecoder().decode(base).toString()
+        val id = Base64.getDecoder().decode(base)
 
-        val prev = repo.findById(id)
+        val prev = repo.findById(String(id))
         if (prev.isPresent) {
             val obj = prev.get()
 
@@ -63,6 +63,10 @@ class TerskelverdiService(val repo: ITerskelverdiRepo) {
             logger.error("$id is not found i db")
             throw Exception("Could not find")
         }
+    }
+
+    fun getAll(): List<Terskelverdi> {
+        return repo.findAll()
     }
 }
 
