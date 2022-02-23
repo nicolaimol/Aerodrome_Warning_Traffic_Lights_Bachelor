@@ -51,7 +51,7 @@ const getGradient = (ctx: any, chartArea: any) => {
 
 function Tidslinje() {
 
-    let horizontalScroll = (e: any) => {
+    /*let horizontalScroll = (e: any) => {
         e.preventDefault();
         const container = document.getElementById('scrollableDiv');
         const containerScrollPosition = container?.scrollLeft;
@@ -60,6 +60,18 @@ function Tidslinje() {
             left: containerScrollPosition + e.deltaY,
       })
     }
+     */
+    let scroll = document.getElementById("scrollableDiv")
+
+    scroll?.addEventListener("wheel", (evt: any) => {
+        evt.preventDefault()
+        if (Math.abs(evt.deltaY) > Math.abs(evt.deltaX)) {
+            scroll!!.scrollLeft += evt.deltaY;
+        } else {
+            scroll!!.scrollLeft += evt.deltaX;
+        }
+
+    })
 
     var airport:any = useSelector<string>((state:any) => state.airport.value)
     if (airport == undefined) {
@@ -199,7 +211,7 @@ function Tidslinje() {
         <div>
             <h3>{airport.icao}</h3>
             <input type="range" min="-20" max="20" value={temp} onChange={e => setTemp(Number(e.target.value))}></input><span>{temp}</span>
-        <div id='scrollableDiv' onWheel={horizontalScroll} style={{width: "100%", overflowX: 'scroll'}}>
+        <div id='scrollableDiv' style={{width: "100%", overflowX: 'scroll'}}>
             <div style={{width: '200vw', height: '500px'}}>
                 {/* @ts-ignore*/}
                 <Line options={options} data={data} />
