@@ -5,6 +5,10 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.client.RestTemplate
 
+/**
+ * Config fto inject RestClient in project
+ * Setting required header for api.met.no
+ */
 @Configuration
 class RestConfig {
 
