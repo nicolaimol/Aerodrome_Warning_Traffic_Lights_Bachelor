@@ -1,4 +1,5 @@
-import { Typography, Paper } from '@mui/material'
+import { Typography, Paper, Box } from '@mui/material'
+import { borderRadius } from '@mui/system'
 import React from 'react'
 
 function TrafikklysBox() {
@@ -8,10 +9,19 @@ function TrafikklysBox() {
         <Typography variant='h4' gutterBottom>
             Trafikklys
         </Typography>
-        <Paper elevation={3} sx={{ mb: 5}} style={{ height: '20vh' }} >
+        <Paper elevation={3} sx={{ mb: 5}} style={{ color: '#0090a8', minHeight: '20vh', display: 'flex', justifyContent: 'space-evenly', flexDirection: 'column', alignItems: 'center'}} >
         <Typography variant='h6' gutterBottom>
-            lorem ipsum dolor sit amet, consectetur adipis lorem ipsum dolor lorem ipsum dolor sit
+            Akkurat nå er det Grønt lys
         </Typography>
+        <Box style={{borderRadius: '50%', backgroundColor: 'red', height: '100px', width: '100px'}}>
+
+        </Box>
+        <Box style={{borderRadius: '50%', backgroundColor: 'yellow', height: '100px', width: '100px'}}>
+          
+        </Box>
+        <Box style={{borderRadius: '50%', backgroundColor: 'green', height: '100px', width: '100px'}}>
+          
+        </Box>
         </Paper>
     </div>
     </>
