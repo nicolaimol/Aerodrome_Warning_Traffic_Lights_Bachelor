@@ -11,7 +11,7 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux'
 import allActions from '../Actions';
 import iInput from '../model/input';
-import iInputAction from '../model/actions/inputAction';
+//import iInputAction from '../model/actions/inputAction';
 import { MenuItem, InputLabel, Select, SelectChangeEvent, FormControl } from '@mui/material';
 import Box from '@mui/system/Box';
 
@@ -65,7 +65,7 @@ function Testinputs() {
             axios.post('/api/input', body)
             .then((response:any) => {
               console.log(response.data);
-              dispatch(allActions.inputActions.setInput(response.data));
+              //dispatch(allActions.inputActions.setInput(response.data));
             })
             .catch((err) => {
                 console.log(err);

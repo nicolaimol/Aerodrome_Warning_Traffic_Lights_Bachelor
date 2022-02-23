@@ -1,11 +1,11 @@
-import input from "./input";
+import terskel from "./terskel";
 import weather from "./weather";
 import { combineReducers } from 'redux'
 import nowcast from "./nowcast";
 import airport from './airport'
 
 export const rootReducer = combineReducers({
-    input,
+    terskel,
     weather,
     nowcast,
     airport

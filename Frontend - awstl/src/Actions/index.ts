@@ -1,10 +1,10 @@
-import inputActions from "./inputActions";
+import terskelActions from "./terskelActions";
 import nowcastAction from "./nowcastAction";
 import weatherActions from "./weatherActions";
 import airportAction from "./airportAction";
 
 const allActions = {
-    inputActions,
+    terskelActions,
     weatherActions,
     nowcastAction,
     airportAction

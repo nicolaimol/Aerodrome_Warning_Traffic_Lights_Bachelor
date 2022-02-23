@@ -1,6 +1,6 @@
-import iInputAction from "../model/actions/inputAction";
+import iTerskelAction from "../model/actions/terskelAction";
 
-const input = (state = {input1: "", input2: "", input3: ""}, action: iInputAction) => {
+const terskel = (state = {}, action: iTerskelAction) => {
     switch (action.type) {
         case "SET_INPUT": 
             return {
@@ -10,7 +10,7 @@ const input = (state = {input1: "", input2: "", input3: ""}, action: iInputActio
         case "CLEAR_INPUT":
             return {
                 ...state,
-                value: {input1: "", input2: "", input3: ""}
+                value: {}
             }
         default:
             return {
@@ -19,4 +19,4 @@ const input = (state = {input1: "", input2: "", input3: ""}, action: iInputActio
     }
 }
 
-export default input;
+export default terskel;
