@@ -1,4 +1,4 @@
-import { Container } from '@mui/material'
+import { AppBar, Container, Typography } from '@mui/material'
 import React from 'react'
 import TrafikklysBox from '../components/TrafikklysBox'
 import VisSatteTerskelverdier from '../components/VisSatteTerskelverdier'
@@ -29,6 +29,11 @@ function Trafikklys() {
       
 
       <div>
+      <AppBar sx={{ mb: 10 }} position='static' style= {{ background: 'white', textAlign: 'center' }}>
+            <Typography sx={{ color: '#0090a8', fontSize: 30}}>
+                Tidslinje for de neste 72 timer
+            </Typography>
+        </AppBar>
         <Tidslinje />
       </div>
     </Container>
