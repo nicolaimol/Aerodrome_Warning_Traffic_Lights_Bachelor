@@ -66,7 +66,7 @@ function Tidslinje() {
     scroll?.addEventListener("wheel", (evt: any) => {
         evt.preventDefault()
         if (Math.abs(evt.deltaY) > Math.abs(evt.deltaX)) {
-            scroll!!.scrollLeft += evt.deltaY;
+            scroll!!.scrollLeft -= evt.deltaY;
         } else {
             scroll!!.scrollLeft += evt.deltaX;
         }
