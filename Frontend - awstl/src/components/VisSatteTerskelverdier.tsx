@@ -32,7 +32,7 @@ function VisSatteTerskelverdier(props:terskelData) {
         </Typography>
         <Paper elevation={3} sx={{ mb: 5}} style={{ minHeight: '20vh' }} >
         {terskelverdier.map((verdi) => {
-          return <Typography gutterBottom>
+          return <Typography gutterBottom style={{ color: '#0090a8'}}>
             {verdi[0]}: {verdi[1]}{verdi[2]}
           </Typography>
         })}
