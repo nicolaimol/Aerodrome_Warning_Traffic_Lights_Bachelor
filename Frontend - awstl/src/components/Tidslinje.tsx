@@ -51,6 +51,16 @@ const getGradient = (ctx: any, chartArea: any) => {
 
 function Tidslinje() {
 
+    let horizontalScroll = (e: any) => {
+        e.preventDefault();
+        const container = document.getElementById('scrollableDiv');
+        const containerScrollPosition = container?.scrollLeft;
+        container?.scrollTo({
+            top: 0,
+            left: containerScrollPosition + e.deltaY,
+      })
+    }
+
     var airport:any = useSelector<string>((state:any) => state.airport.value)
     if (airport == undefined) {
         airport = {icao: "ENGM"}
@@ -189,7 +199,7 @@ function Tidslinje() {
         <div>
             <h3>{airport.icao}</h3>
             <input type="range" min="-20" max="20" value={temp} onChange={e => setTemp(Number(e.target.value))}></input><span>{temp}</span>
-        <div style={{width: "100%", overflowX: 'scroll'}}>
+        <div id='scrollableDiv' onWheel={horizontalScroll} style={{width: "100%", overflowX: 'scroll'}}>
             <div style={{width: '200vw', height: '500px'}}>
                 {/* @ts-ignore*/}
                 <Line options={options} data={data} />
