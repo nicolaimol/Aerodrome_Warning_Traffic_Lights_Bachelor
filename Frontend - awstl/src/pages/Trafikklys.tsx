@@ -10,7 +10,7 @@ function Trafikklys() {
   return (
     <>
     <Container>
-      <div style={{ display: 'flex', justifyContent: 'space-evenly', flexFlow: 'row wrap', alignItems: 'center'}}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', flexFlow: 'row wrap', alignItems: 'center'}}>
         <VisSatteTerskelverdier 
       airTemp={0}
       precipitationAmmount={20}
