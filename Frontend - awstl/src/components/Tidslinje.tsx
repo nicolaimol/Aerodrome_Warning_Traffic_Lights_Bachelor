@@ -15,7 +15,8 @@ import {
     useEffect
 } from "react";
 import axios from 'axios'
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import allActions from '../Actions';
 
 
 ChartJS.register(
@@ -83,15 +84,16 @@ function Tidslinje() {
     //let labels = [1,2,2,2,3,3,2,3,1,1,1,2,2];
     //let dataset = [1,2,2,2,3,3,2,3,1,1,1,2,2]
 
+    const dispatch = useDispatch()
+
     useEffect(()=> {
         console.log(airport)
         axios.get(url + airport.icao)
             .then((response:any) => {
                 //console.log(response)
                 const herVer = response.data.properties.timeseries
-                setVer(herVer.map((it: any) => {
-                    return it.data.instant.details.air_temperature
-                }))
+                dispatch(allActions.grafikkAction.setGrafikk(herVer[0]))
+                setVer(herVer)
                 setLabels(herVer.map((it: any) => {
                     let string = new Date(it.time).toLocaleString();
                     let list = string.split(",")
@@ -140,8 +142,8 @@ function Tidslinje() {
             }
         },
         onClick: function (evt: any, ctx: any) {
-            console.log(ctx)
-            alert(`Du valgte ${labels[ctx[0].index]} med temp ${ver[ctx[0].index]}`)
+            dispatch(allActions.grafikkAction.setGrafikk(ver[ctx[0].index]))
+            //alert(`Du valgte ${labels[ctx[0].index]} med temp ${ver[ctx[0].index]}`)
         },
         scales: {
             y: {
