@@ -58,11 +58,12 @@ export default function Banner() {
 }
 
   const airportRedux = useSelector((state:any) => state.airport.value)
+  const listAirport = airportRedux != null ?
+      {icao: airportRedux.icao, label: airportRedux.navn} :
+      {icao: "ENDU", label: "Bardufoss Lufthavn"}
 
   useEffect(() => {
 
-    console.log("update")
- 
       axios.get(url) // Henter alle flyplasser
       .then((response) => {
         setFlyplasserList(response.data); // Setter alle flyplassene i en liste
@@ -79,7 +80,7 @@ export default function Banner() {
 
   return (
     <>
-    <div style={{ minHeight: '50vh', width: '100%', backgroundColor: '#dff2f6'}}> {/** banneret tar uansett halvparten av skjermen, men om den behøver mer vil den utvides */}
+    <div style={{ minHeight: 'fit-content', width: '100%', backgroundColor: '#dff2f6'}}> {/** banneret tar uansett halvparten av skjermen, men om den behøver mer vil den utvides */}
       <Container sx={{ color: '#0090a8' }}>
         <div style={{ display: 'flex', justifyContent: 'space-evenly', flexFlow: 'row wrap', alignItems: 'center'}}> {/** Denne div-en inneholder tittel og AutoComplete komponent */}
         {/** Tittel */}
@@ -95,6 +96,9 @@ export default function Banner() {
             classes={classes}
             // redux endring av flyplasshåndtering
             onChange={handleChange}
+            // setter flyplassen som valgt i listen
+            value={listAirport}
+            isOptionEqualToValue={(option, value) => option.icao === value.icao}
             // Listen med valg settes inn her. For å gjøre det enklere sorteres den alfabetisk
             options={relevantFlyplassData.sort((a, b) => -b.label.localeCompare(a.label))}
             // Listen grupperes også etter første bokstav
