@@ -121,7 +121,7 @@ function Tidslinje() {
     useEffect(() => {
         if (ver !== undefined) {
             setDataset(ver.map((it: any) => {
-                return it < temp ? 3 :
+                return it.data.instant.details.air_temperature < temp ? 3 :
                     it == temp ? 2: 1
             }))
         }
