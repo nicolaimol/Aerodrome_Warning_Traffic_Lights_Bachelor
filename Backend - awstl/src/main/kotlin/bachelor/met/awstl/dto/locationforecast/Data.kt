@@ -7,4 +7,8 @@ import java.io.Serializable
 class Data: Serializable {
 
     lateinit var instant: Instant
+    var next_1_hours: NextOneHours? = null
+    var next_6_hours: NextOneHours? = null
+    var next_12_hours: NextOneHours? = null
+
 }
