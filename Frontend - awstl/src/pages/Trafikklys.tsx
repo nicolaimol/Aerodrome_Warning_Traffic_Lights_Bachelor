@@ -4,6 +4,7 @@ import TrafikklysBox from '../components/TrafikklysBox'
 import VisSatteTerskelverdier from '../components/VisSatteTerskelverdier'
 
 import Tidslinje from '../components/Tidslinje'
+import GrafikkTrafikklys from '../components/GrafikkTrafikklys'
 
 function Trafikklys() {
   return (
@@ -36,6 +37,7 @@ function Trafikklys() {
         </AppBar>
         <Tidslinje />
       </div>
+      <GrafikkTrafikklys />
     </Container>
     </>
   )
