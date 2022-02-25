@@ -211,7 +211,7 @@ function Tidslinje() {
         <div>
             <h3>{airport.icao}</h3>
             <input type="range" min="-20" max="20" value={temp} onChange={e => setTemp(Number(e.target.value))}></input><span>{temp}</span>
-        <div id='scrollableDiv' style={{width: "100%", overflowX: 'scroll'}}>
+        <div id='scrollableDiv' style={{width: "100%", overflowX: 'scroll', marginBottom: "5em"}}>
             <div style={{width: '200vw', height: '500px'}}>
                 {/* @ts-ignore*/}
                 <Line options={options} data={data} />
