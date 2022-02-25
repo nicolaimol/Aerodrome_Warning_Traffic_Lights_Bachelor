@@ -18,7 +18,6 @@ function VisSatteTerskelverdier(props:terskelData) {
     ['Issansynlighet', props.probIce, '%'],
     ['Crosswind', props.crosswind, 'm/s']];
 
-    console.log(terskelverdier);
 
   
 
