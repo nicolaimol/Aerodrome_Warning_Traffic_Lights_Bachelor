@@ -11,15 +11,25 @@ interface weatherTimeseries {
         next_1_hours:{
             summary:{
                 symbol_code:string
+            },
+            details: {
+                precipitation_amount: number
             }
-        },next_6_hours:{
+        },
+        next_6_hours:{
             summary:{
                 symbol_code:string
+            },
+            details: {
+                precipitation_amount: number
             }
         },
         next_12_hours:{
             summary:{
                 symbol_code:string
+            },
+            details: {
+                precipitation_amount: number
             }
         }
     }
