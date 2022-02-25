@@ -51,16 +51,6 @@ const getGradient = (ctx: any, chartArea: any) => {
 
 function Tidslinje() {
 
-    /*let horizontalScroll = (e: any) => {
-        e.preventDefault();
-        const container = document.getElementById('scrollableDiv');
-        const containerScrollPosition = container?.scrollLeft;
-        container?.scrollTo({
-            top: 0,
-            left: containerScrollPosition + e.deltaY,
-      })
-    }
-     */
     let scroll = document.getElementById("scrollableDiv")
 
     scroll?.addEventListener("wheel", (evt: any) => {
@@ -75,7 +65,7 @@ function Tidslinje() {
 
     var airport:any = useSelector<string>((state:any) => state.airport.value)
     if (airport == undefined) {
-        airport = {icao: "ENGM"}
+        airport = {icao: "ENDU"}
     }
 
     let url = ""
@@ -103,7 +93,21 @@ function Tidslinje() {
                     return it.data.instant.details.air_temperature
                 }))
                 setLabels(herVer.map((it: any) => {
-                    return new Date(it.time).toLocaleString()
+                    let string = new Date(it.time).toLocaleString();
+                    let list = string.split(",")
+                    //console.table(list)
+
+                    let dato = list[0].split(".")
+                    dato.splice(2, 1)
+                    let datoString = dato.join(".")
+                    //console.log(datoString)
+                    list[0] = datoString
+
+                    let tid = list[1].split(":")
+                    tid.splice(1, 2)
+                    let tidString = tid.join()
+                    list[1] = tidString
+                    return list.join(", kl:")
                 }))
                 setDataset(herVer.map((it: any) => {
                     return it.data.instant.details.air_temperature < temp ? 3 :
