@@ -11,18 +11,26 @@ function GrafikkTrafikklys() {
 
 
     const weather = useSelector((state:any) => state.grafikk.value)
+    let airport = useSelector((state:any) => state.airport.value)
+    if (airport == undefined) {
+        airport = {icao: "ENDU", navn: "Bardufoss Lufthan"}
+    }
 
     const [temperatureColor, setTemperatureColor] = useState<any>(null)
     const [ikonpath, setIkonpath] = useState<string>("")
+    const [nedbor, setNedbor] = useState<string>("")
 
     useEffect(() => {
-        console.log(weather)
         let ikonpath2:string =  "/weatherIcons/";
         if (weather?.data.next_1_hours != null)  ikonpath2 +=weather?.data.next_1_hours.summary.symbol_code + ".svg"; // Setter riktig ikon avhengig data
         else if (weather?.data.next_6_hours != null)  ikonpath2 +=weather?.data.next_6_hours.summary.symbol_code + ".svg"; // Setter riktig ikon avhengig data
         else  ikonpath2 +=weather?.data.next_12_hours.summary.symbol_code + ".svg"; // Setter riktig ikon avhengig data
         setIkonpath(ikonpath2)
         setTemperatureColor(weather?.data.instant.details.air_temperature < 0 ? '#006edb' : '#c80a0a'); // Er det pluss eller minus grader? farge avhenger av dette
+
+        if (weather?.data.next_1_hours != null) setNedbor(weather?.data.next_1_hours.details.precipitation_amount + "mm neste 1 time")
+        else if (weather?.data.next_6_hours != null) setNedbor(weather?.data.next_6_hours.details.precipitation_amount + "mm neste 6 timer")
+        else if (weather?.data.next_12_hours != null) setNedbor(weather?.data.next_12_hours.details.precipitation_amount + "mm neste 12 timer")
     }, [weather])
     
 
@@ -36,6 +44,12 @@ function GrafikkTrafikklys() {
         {/** Ikonet */}
         {weather != undefined &&
             <div style={{width: "100%", display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+                <Typography sx={{fontSize: 30}} style={{display: 'flex', justifyContent: 'center', width: '100%'}}>
+                    {airport?.navn}
+                </Typography>
+                <Typography style={{display: 'flex', justifyContent: 'center', width: '100%'}}>
+                    {new Date(weather.time).toLocaleString()}
+                </Typography>
                 <Box style={{ display: 'flex', justifyContent: 'center', maxHeight: '100px'}} >
                     <img style={{width: '50%'}} src={ikonpath} alt={ikonpath} />
                 </Box>
@@ -49,7 +63,7 @@ function GrafikkTrafikklys() {
                 </Box>
 
                 <Box style={{ display: 'flex', justifyContent: 'space-evenly', flexDirection: 'row', alignItems: 'center'}}>
-                    <div style={{ transform: `rotate(${weather.data.instant.details.wind_from_direction - 90}deg)`}}>
+                    <div style={{ transform: `rotate(${weather.data.instant.details.wind_from_direction + 90}deg)`}}>
                         <ArrowRightAltIcon sx={{ fontSize: 100 }}></ArrowRightAltIcon>
                     </div>
                     <div style={{display: 'flex', flexDirection: 'column', color: '#0090a8'}}>
@@ -61,6 +75,9 @@ function GrafikkTrafikklys() {
                                 ? 360 + weather.data.instant.details.wind_from_direction
                                 : weather.data.instant.details.wind_from_direction}°
                         </Typography>
+                        {nedbor != "" &&
+                            <Typography>{nedbor}</Typography>
+                        }
                     </div>
                 </Box>
             </div>
