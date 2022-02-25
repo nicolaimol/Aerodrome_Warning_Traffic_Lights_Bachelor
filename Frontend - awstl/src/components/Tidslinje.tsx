@@ -81,6 +81,26 @@ function Tidslinje() {
     const [labels, setLabels] = useState<any[]>([1,2,2,2,3,3,2,3,1,1,1,2,2])
     const [dataset, setDataset] = useState<any[]>([1,2,2,2,3,3,2,3,1,1,1,2,2])
 
+
+    const [int, setInt] = useState<any>(null)
+
+    const start = () => {
+        console.log("start")
+        setInt(setInterval(update, 1000))
+    }
+
+    let index = 0;
+    const update = () => {
+        dispatch(allActions.grafikkAction.setGrafikk(ver[index]))
+        index++;
+        if (index >= ver.length) index = 0;
+        console.log(index)
+    }
+
+    const stop = () => {
+        clearInterval(int)
+    }
+
     //let labels = [1,2,2,2,3,3,2,3,1,1,1,2,2];
     //let dataset = [1,2,2,2,3,3,2,3,1,1,1,2,2]
 
@@ -217,13 +237,15 @@ function Tidslinje() {
         <div>
             <h3>{airport.icao}</h3>
             <input type="range" min="-20" max="20" value={temp} onChange={e => setTemp(Number(e.target.value))}></input><span>{temp}</span>
-        <div id='scrollableDiv' style={{width: "100%", overflowX: 'scroll', marginBottom: "5em"}}>
-            <div style={{width: '200vw', height: '500px'}}>
-                {/* @ts-ignore*/}
-                <Line options={options} data={data} />
-            </div>
+            <div id='scrollableDiv' style={{width: "100%", overflowX: 'scroll', marginBottom: "5em"}}>
+                <div style={{width: '200vw', height: '500px'}}>
+                    {/* @ts-ignore*/}
+                    <Line options={options} data={data} />
+                </div>
 
-        </div>
+            </div>
+            <button onClick={start}>ANIMASJON</button>
+            <button onClick={stop}>STOPP</button>
         </div>
 
   )
