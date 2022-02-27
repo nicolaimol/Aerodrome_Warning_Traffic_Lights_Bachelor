@@ -16,16 +16,16 @@ function VaerBox(props:weatherNowAirport) { // Værboksen tar inn props med 'wea
 
   return (
     <>
-    <Card sx={{ minWidth: 250, mb: 5, width: "20%" }}>
+    <Card sx={{ minWidth: 250, mb: 5, width: "20%", height: "fit-content" }}>
         <CardHeader
-        sx={{ color: '#0090a8'}}
+        sx={{ color: '#0090a8', height: "5em"}}
         /*
             avatar={ <StarIcon></StarIcon> } Denne skal kun på favoritt!!
         */
        /** Kortets tittel (denne printes) */
             title={props.airports.navn}
         />
-        <div style={{ display: 'flex', justifyContent: 'center' }}> {/** Div med hele kortet */}
+        <div style={{ display: 'flex', justifyContent: 'center'}}> {/** Div med hele kortet */}
             <CardContent>
                 {/** Ikonet */}
                 <Box style={{ display: 'flex', justifyContent: 'center'}}>
@@ -41,7 +41,7 @@ function VaerBox(props:weatherNowAirport) { // Værboksen tar inn props med 'wea
                 </Box>
                 {/** Box med vindretning, vindfart og vindretning pil */}
                 <Box style={{ display: 'flex', justifyContent: 'space-evenly', flexDirection: 'row', alignItems: 'center'}}>
-                    <div style={{ transform: `rotate(${props.properties.timeseries[0].data.instant.details.wind_from_direction - 90}deg)`}}>
+                    <div style={{ transform: `rotate(${props.properties.timeseries[0].data.instant.details.wind_from_direction + 90}deg)`}}>
                         <ArrowRightAltIcon sx={{ fontSize: 100 }}></ArrowRightAltIcon>
                     </div>
                     <div style={{display: 'flex', flexDirection: 'column', color: '#0090a8'}}>
