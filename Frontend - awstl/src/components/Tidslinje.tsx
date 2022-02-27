@@ -92,8 +92,7 @@ function Tidslinje() {
     let index = 0;
     const update = () => {
         dispatch(allActions.grafikkAction.setGrafikk(ver[index]))
-        index++;
-        if (index >= ver.length) index = 0;
+        index = (index + 1) % ver.length
         console.log(index)
     }
 
