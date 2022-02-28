@@ -1,6 +1,5 @@
 import { Box, List, ListItem, ListItemIcon, ListItemText, Divider, Button, SwipeableDrawer } from '@mui/material';
-import InboxIcon from '@mui/icons-material/Inbox';
-import MailIcon from '@mui/icons-material/Mail';
+import SettingsIcon from '@mui/icons-material/Settings';
 import React from 'react'
 
 import TerskelForm from './TerskelForm';
@@ -54,7 +53,7 @@ function DrawerTerskelverdier() {
     <div>
       {(['left'] as const).map((anchor) => (
         <React.Fragment key={anchor}>
-          <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
+          <Button onClick={toggleDrawer(anchor, true)}><SettingsIcon /></Button>
           <SwipeableDrawer
             anchor={anchor}
             open={state[anchor]}
