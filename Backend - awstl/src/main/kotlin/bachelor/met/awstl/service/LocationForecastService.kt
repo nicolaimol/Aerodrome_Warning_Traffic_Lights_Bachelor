@@ -28,7 +28,7 @@ class LocationForecastService(val template: RestTemplate, val flyplass: Flyplass
     @Cacheable(value = ["locfor"], key = "#icao")
     fun getForecast(icao: String): LocationForecastDto? {
 
-        val airport = flyplass.getFlyplass(icao) ?: throw Exception("Airport not found")
+        val airport = flyplass.getFlyplass(icao)!!
 
         var queryParams: HashMap<String,Any> = HashMap();
         queryParams["altitude"] = airport.altitude
