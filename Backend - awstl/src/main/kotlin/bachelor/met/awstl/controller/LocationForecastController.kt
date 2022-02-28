@@ -1,6 +1,7 @@
 package bachelor.met.awstl.controller
 
 import bachelor.met.awstl.service.LocationForecastService
+import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController
 @CrossOrigin(value = ["http://localhost:3001"])
 class LocationForecastController(val service: LocationForecastService) {
 
-
+    val logger = LoggerFactory.getLogger(LocationForecastController::class.java)
 
     @GetMapping("/test")
     fun getLocationForecast(): ResponseEntity<Any> {
@@ -44,7 +45,7 @@ class LocationForecastController(val service: LocationForecastService) {
 
             return ResponseEntity.ok(res)
         } catch (e: Exception) {
-
+            logger.error(e.message)
             return ResponseEntity.badRequest().body(e.message)
         }
     }
