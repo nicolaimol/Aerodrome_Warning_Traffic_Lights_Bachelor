@@ -5,11 +5,14 @@ import VisSatteTerskelverdier from '../components/VisSatteTerskelverdier'
 
 import Tidslinje from '../components/Tidslinje'
 import GrafikkTrafikklys from '../components/GrafikkTrafikklys'
+import TerskelForm from '../components/TerskelForm'
+import DrawerTerskelverdier from '../components/DrawerTerskelverdier'
 
 function Trafikklys() {
   return (
     <>
     <Container>
+      <DrawerTerskelverdier />
       <div style={{ display: 'flex', justifyContent: 'space-between', flexFlow: 'row wrap', alignItems: 'center'}}>
         <VisSatteTerskelverdier 
       airTemp={0}
@@ -38,6 +41,8 @@ function Trafikklys() {
         <Tidslinje />
       </div>
       <GrafikkTrafikklys />
+
+      <TerskelForm />
     </Container>
     </>
   )
