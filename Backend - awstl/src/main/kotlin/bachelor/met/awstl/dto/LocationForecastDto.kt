@@ -6,9 +6,9 @@ import java.io.Serializable
 import java.util.*
 
 class LocationForecastDto: Serializable {
-    lateinit var type: String
-    lateinit var geometry: Geomerty
-    lateinit var properties: Properties
+    var type: String? = null
+    var geometry: Geomerty ? = null
+    var properties: Properties ? = null
 
 
 }
