@@ -28,8 +28,8 @@ class LocationForecastController(val service: LocationForecastService) {
 
         val res = service.getForecast("engm")
 
-        res?.properties?.timeseries =
-            res?.properties?.timeseries?.filterIndexed { index, _ -> index < 10 }!!.toTypedArray()
+        res!!.properties!!.timeseries =
+            res.properties!!.timeseries!!.filterIndexed { index, _ -> index < 10 }.toTypedArray()
 
         return ResponseEntity.ok(res)
 
@@ -37,10 +37,15 @@ class LocationForecastController(val service: LocationForecastService) {
 
     @GetMapping(value = ["/locationforecast"])
     fun getLocationForecastIcao(@RequestParam(name = "icao")icao: String): ResponseEntity<Any> {
-        val res = service.getForecast(icao)
+        try {
+            val res = service.getForecast(icao)
 
-        res?.properties?.timeseries = res?.properties?.timeseries?.filterIndexed {index, _ -> index < 58}!!.toTypedArray()
+            res!!.properties!!.timeseries = res.properties!!.timeseries!!.filterIndexed {index, _ -> index < 58}.toTypedArray()
 
-        return ResponseEntity.ok(res)
+            return ResponseEntity.ok(res)
+        } catch (e: Exception) {
+
+            return ResponseEntity.badRequest().body(e.message)
+        }
     }
 }

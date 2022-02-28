@@ -4,6 +4,6 @@ import java.io.Serializable
 
 class Geomerty: Serializable {
 
-    lateinit var type: String
-    lateinit var coordinates: Array<Int>
+    var type: String? = null
+    var coordinates: Array<Int>? = null
 }

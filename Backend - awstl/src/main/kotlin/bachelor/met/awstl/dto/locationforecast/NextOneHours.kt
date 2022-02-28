@@ -4,6 +4,6 @@ import java.io.Serializable
 
 class NextOneHours: Serializable {
 
-    lateinit var summary: Summary
-    lateinit var details: HashMap<String, Double>
+    var summary: Summary? = null
+    var details: HashMap<String, Double> ? = null
 }
