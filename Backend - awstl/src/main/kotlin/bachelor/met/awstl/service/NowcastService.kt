@@ -27,9 +27,13 @@ class NowcastService(val restTemplate: RestTemplate, val sercice: FlyplassServic
     fun getNowcast(icao: String): NowcastDto {
         val dto = NowcastDto();
         val stdFlyplasser = arrayListOf("ENGM", "ENBR", "ENVA")
+
+        val valid = sercice.validateIcao(icao)
+        if (!valid) throw Exception("Icao $icao is not valid")
+
         if (icao.uppercase() in stdFlyplasser) {
 
-            stdFlyplasser.removeAt(stdFlyplasser.indexOf(icao))
+            stdFlyplasser.removeAt(stdFlyplasser.indexOf(icao.uppercase()))
 
             stdFlyplasser.add(0, icao)
             stdFlyplasser.add("ENZV")
