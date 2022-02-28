@@ -39,7 +39,7 @@ class NowcastControllerAccepanceTest {
 
         }
 
-        val engm = Flyplass("engm", "Oslo Lufthavn, Gardermoen",
+        val engm = Flyplass("ENGM", "Oslo Lufthavn, Gardermoen",
             "OSL", "100", "60", "10", "01/19")
 
         val enbr = Flyplass("ENBR", "Bergen Lufthavn, Flesland",
