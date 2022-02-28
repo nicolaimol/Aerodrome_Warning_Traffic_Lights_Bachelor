@@ -16,7 +16,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 
 @ContextConfiguration(classes = [NowcastController::class])
 @WebMvcTest(NowcastController::class)
-internal class NowcastControllerTest {
+internal class NowcastControllerIntegrationTest {
 
     @Autowired
     var mockMvc: MockMvc? = null
