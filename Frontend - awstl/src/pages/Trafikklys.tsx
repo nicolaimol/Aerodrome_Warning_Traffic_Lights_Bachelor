@@ -5,7 +5,6 @@ import VisSatteTerskelverdier from '../components/VisSatteTerskelverdier'
 
 import Tidslinje from '../components/Tidslinje'
 import GrafikkTrafikklys from '../components/GrafikkTrafikklys'
-import TerskelForm from '../components/TerskelForm'
 import DrawerTerskelverdier from '../components/DrawerTerskelverdier'
 
 function Trafikklys() {
@@ -41,8 +40,6 @@ function Trafikklys() {
         <Tidslinje />
       </div>
       <GrafikkTrafikklys />
-
-      <TerskelForm />
     </Container>
     </>
   )
