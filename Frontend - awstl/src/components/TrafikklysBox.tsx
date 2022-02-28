@@ -5,7 +5,7 @@ import React from 'react'
 function TrafikklysBox() {
   return (
     <>
-    <div style={{ display: 'flex', justifyContent: 'space-evenly', flexFlow: 'column wrap', width: '40%'}}>
+    <div style={{ display: 'flex', justifyContent: 'space-evenly', flexFlow: 'column wrap', width: '40%', color: '#0090a8'}}>
         <Typography variant='h4' gutterBottom>
             Trafikklys
         </Typography>
