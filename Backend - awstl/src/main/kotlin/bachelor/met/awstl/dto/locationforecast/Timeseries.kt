@@ -4,6 +4,6 @@ import java.io.Serializable
 
 class Timeseries: Serializable {
 
-    lateinit var time: String
-    lateinit var data: Data
+    var time: String? = null
+    var data: Data? = null
 }
