@@ -37,7 +37,7 @@ class TafMetarService(val template: RestTemplate) {
             return ret;
         }
 
-        throw Exception("No content")
+        throw Exception("Error in geting taf metar")
 
     }
 
