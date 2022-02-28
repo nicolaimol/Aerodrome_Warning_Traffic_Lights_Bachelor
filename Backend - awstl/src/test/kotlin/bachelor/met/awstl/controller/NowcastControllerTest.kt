@@ -1,24 +1,20 @@
 package bachelor.met.awstl.controller
 
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
-import bachelor.met.awstl.controller.NowcastController
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.test.web.servlet.MockMvc
-import org.springframework.boot.test.mock.mockito.MockBean
-import bachelor.met.awstl.service.NowcastService
-import kotlin.Throws
 import bachelor.met.awstl.dto.NowcastDto
+import bachelor.met.awstl.service.NowcastService
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
+import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.MediaType
+import org.springframework.test.context.ContextConfiguration
+import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
-import java.lang.IllegalArgumentException
-import org.springframework.test.web.servlet.ResultMatcher
-import org.springframework.test.web.servlet.MvcResult
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
-import java.lang.Exception
 
+@ContextConfiguration(classes = [NowcastController::class])
 @WebMvcTest(NowcastController::class)
 internal class NowcastControllerTest {
 

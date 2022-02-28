@@ -1,7 +1,6 @@
 package bachelor.met.awstl.controller
 
 import bachelor.met.awstl.dto.TafMetarDto
-import bachelor.met.awstl.service.NowcastService
 import bachelor.met.awstl.service.TafMetarService
 import org.hamcrest.Matchers
 import org.junit.jupiter.api.Test
@@ -10,13 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.MediaType
+import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
-
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
+@ContextConfiguration(classes = [TafMetarController::class])
 @WebMvcTest(TafMetarController::class)
 internal class TafMetarControllerTest {
 
