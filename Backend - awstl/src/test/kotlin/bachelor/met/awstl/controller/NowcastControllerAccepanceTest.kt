@@ -62,30 +62,33 @@ class NowcastControllerAccepanceTest {
 
     @Test
     fun getNowcastSuccess() {
-        mockMvc!!.perform(MockMvcRequestBuilders
-            .get("/api/nowcast")
-            .param("icao", "engm")
-            .contentType(MediaType.APPLICATION_JSON)
+        mockMvc!!.perform(
+            MockMvcRequestBuilders
+                .get("/api/nowcast")
+                .param("icao", "engm")
+                .contentType(MediaType.APPLICATION_JSON)
         )
             .andExpect(status().isOk)
     }
 
     @Test
     fun getNowcastBadRequest() {
-        mockMvc!!.perform(MockMvcRequestBuilders
-            .get("/api/nowcast")
-            .param("icao", "test")
-            .contentType(MediaType.APPLICATION_JSON)
+        mockMvc!!.perform(
+            MockMvcRequestBuilders
+                .get("/api/nowcast")
+                .param("icao", "test")
+                .contentType(MediaType.APPLICATION_JSON)
         )
             .andExpect(status().isBadRequest)
-            .andExpect(content().string("Icao test is not valid"))
+            .andExpect(content().string("Airport with icao TEST not found"))
     }
 
     @Test
     fun getNowcastNoParam() {
-        mockMvc!!.perform(MockMvcRequestBuilders
-            .get("/api/nowcast")
-            .contentType(MediaType.APPLICATION_JSON)
+        mockMvc!!.perform(
+            MockMvcRequestBuilders
+                .get("/api/nowcast")
+                .contentType(MediaType.APPLICATION_JSON)
         )
             .andExpect(status().isBadRequest)
             .andDo(MockMvcResultHandlers.print())

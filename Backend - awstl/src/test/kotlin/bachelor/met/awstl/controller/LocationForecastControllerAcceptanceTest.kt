@@ -72,5 +72,16 @@ class LocationForecastControllerAcceptanceTest {
             .andExpect(content().string("Airport with icao test not found"))
     }
 
+    @Test
+    fun getLocationForecastNoParam() {
+
+        mockMvc!!.perform(
+            MockMvcRequestBuilders
+                .get("/api/locationforecast")
+                .contentType(MediaType.APPLICATION_JSON)
+        )
+            .andExpect(status().isBadRequest)
+    }
+
 
 }

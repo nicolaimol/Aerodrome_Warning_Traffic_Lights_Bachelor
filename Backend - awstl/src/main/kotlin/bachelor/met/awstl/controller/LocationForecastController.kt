@@ -1,5 +1,6 @@
 package bachelor.met.awstl.controller
 
+import bachelor.met.awstl.exception.AirportNotFoundException
 import bachelor.met.awstl.service.LocationForecastService
 import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
@@ -44,9 +45,13 @@ class LocationForecastController(val service: LocationForecastService) {
             res!!.properties!!.timeseries = res.properties!!.timeseries!!.filterIndexed {index, _ -> index < 58}.toTypedArray()
 
             return ResponseEntity.ok(res)
-        } catch (e: Exception) {
+        } catch (e: AirportNotFoundException) {
             logger.error(e.message)
             return ResponseEntity.badRequest().body(e.message)
+        } catch (e: Exception) {
+            logger.error(e.message)
+            e.printStackTrace()
+            return ResponseEntity.internalServerError().body(e.message)
         }
     }
 }

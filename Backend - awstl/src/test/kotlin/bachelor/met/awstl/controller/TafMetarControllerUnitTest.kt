@@ -1,6 +1,7 @@
 package bachelor.met.awstl.controller
 
 import bachelor.met.awstl.dto.TafMetarDto
+import bachelor.met.awstl.exception.AirportNotFoundException
 import bachelor.met.awstl.service.TafMetarService
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -36,11 +37,21 @@ class TafMetarControllerUnitTest {
     @Test
     fun getTafMetarBadRequest() {
 
-        Mockito.`when`(service!!.getMetar("test")).thenThrow(IllegalArgumentException("feil"))
+        Mockito.`when`(service!!.getMetar("test")).thenThrow(AirportNotFoundException("feil"))
         val result = controller!!.getTafMetar("test")
 
         assertThat(result.statusCode).isEqualByComparingTo(HttpStatus.BAD_REQUEST)
         assertThat(result.body).isEqualTo("feil")
+    }
 
+    @Test
+    fun getTafMetarInternalError() {
+
+        Mockito.`when`(service!!.getMetar("test")).thenThrow(IllegalArgumentException("feil"))
+
+        val result = controller!!.getTafMetar("test")
+
+        assertThat(result.statusCode).isEqualByComparingTo(HttpStatus.INTERNAL_SERVER_ERROR)
+        assertThat(result.body).isEqualTo("feil")
     }
 }

@@ -1,5 +1,6 @@
 package bachelor.met.awstl.controller
 
+import bachelor.met.awstl.exception.AirportNotFoundException
 import bachelor.met.awstl.service.NowcastService
 import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
@@ -27,9 +28,13 @@ class NowcastController(val service: NowcastService) {
             val ret = service.getNowcast(icao)
 
             return ResponseEntity.ok(ret)
-        } catch (e: Exception) {
+        } catch (e: AirportNotFoundException) {
             logger.error(e.message)
             return ResponseEntity.badRequest().body(e.message)
+        } catch (e: Exception) {
+            logger.error(e.message)
+            e.printStackTrace()
+            return ResponseEntity.internalServerError().body(e.message)
         }
     }
 

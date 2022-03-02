@@ -3,6 +3,7 @@ package bachelor.met.awstl.controller
 import bachelor.met.awstl.dto.LocationForecastDto
 import bachelor.met.awstl.dto.locationforecast.Properties
 import bachelor.met.awstl.dto.locationforecast.Timeseries
+import bachelor.met.awstl.exception.AirportNotFoundException
 import bachelor.met.awstl.service.LocationForecastService
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -42,25 +43,34 @@ class LocationForecastControllerUnitTest {
         }
         properties.timeseries = list.toTypedArray()
 
-        Mockito.`when`(service?.getForecast("test")).thenReturn(dto)
+        Mockito.`when`(service!!.getForecast("test")).thenReturn(dto)
 
-        val res = controller?.getLocationForecastIcao("test")
+        val res = controller!!.getLocationForecastIcao("test")
 
-        println(res)
 
-        assertThat(res?.body).isEqualTo(dto)
-        assertThat(res?.statusCode).isEqualByComparingTo(HttpStatus.OK)
+        assertThat(res.body).isEqualTo(dto)
+        assertThat(res.statusCode).isEqualByComparingTo(HttpStatus.OK)
     }
 
     @Test
     fun getLocationForeacastBadRequest() {
 
+        Mockito.`when`(service!!.getForecast("test")).thenThrow(AirportNotFoundException("feil"))
+
+        val result = controller!!.getLocationForecastIcao("test")
+
+        assertThat(result.statusCode).isEqualByComparingTo(HttpStatus.BAD_REQUEST)
+        assertThat(result.body).isEqualTo("feil")
+
+    }
+
+    @Test
+    fun getLocationForecastInternalError() {
         Mockito.`when`(service!!.getForecast("test")).thenThrow(IllegalArgumentException("feil"))
 
-        val result = controller?.getLocationForecastIcao("test")
+        val result = controller!!.getLocationForecastIcao("test")
 
-        assertThat(result?.statusCode).isEqualByComparingTo(HttpStatus.BAD_REQUEST)
-        assertThat(result?.body).isEqualTo("feil")
-
+        assertThat(result.statusCode).isEqualByComparingTo(HttpStatus.INTERNAL_SERVER_ERROR)
+        assertThat(result.body).isEqualTo("feil")
     }
 }

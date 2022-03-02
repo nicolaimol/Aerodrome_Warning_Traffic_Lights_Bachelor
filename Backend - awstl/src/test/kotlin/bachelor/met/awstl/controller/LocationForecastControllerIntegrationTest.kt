@@ -3,6 +3,7 @@ package bachelor.met.awstl.controller
 import bachelor.met.awstl.dto.LocationForecastDto
 import bachelor.met.awstl.dto.locationforecast.Properties
 import bachelor.met.awstl.dto.locationforecast.Timeseries
+import bachelor.met.awstl.exception.AirportNotFoundException
 import bachelor.met.awstl.service.LocationForecastService
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
@@ -27,7 +28,7 @@ internal class LocationForecastControllerIntegrationTest {
     var service: LocationForecastService? = null
 
     @Test
-    fun locationForecastSuccess() {
+    fun getLocationForecastSuccess() {
         val properties = Properties()
 
         val dto = LocationForecastDto()
@@ -46,26 +47,57 @@ internal class LocationForecastControllerIntegrationTest {
 
         Mockito.`when`(service?.getForecast("test")).thenReturn(dto)
 
-        mockMvc?.perform(
-            MockMvcRequestBuilders
-                .get("/api/locationforecast")
-                .param("icao", "test")
-                .contentType(MediaType.APPLICATION_JSON)
-        )?.andExpect(status().isOk)
-    }
-
-    @Test
-    fun locationForecastBadRequest() {
-
-        Mockito.`when`(service?.getForecast("test")).thenThrow(IllegalArgumentException("feil"))
-
-        mockMvc?.perform(
+        mockMvc!!.perform(
             MockMvcRequestBuilders
                 .get("/api/locationforecast")
                 .param("icao", "test")
                 .contentType(MediaType.APPLICATION_JSON)
         )
-            ?.andExpect(status().isBadRequest)
-            ?.andExpect(content().string("feil"))
+            .andExpect(status().isOk)
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
     }
+
+    @Test
+    fun getLocationForecastBadRequest() {
+
+        Mockito.`when`(service?.getForecast("test")).thenThrow(AirportNotFoundException("feil"))
+
+        mockMvc!!.perform(
+            MockMvcRequestBuilders
+                .get("/api/locationforecast")
+                .param("icao", "test")
+                .contentType(MediaType.APPLICATION_JSON)
+        )
+            .andExpect(status().isBadRequest)
+            .andExpect(content().string("feil"))
+    }
+
+    @Test
+    fun getLocationForecastInternalError() {
+
+        Mockito.`when`(service!!.getForecast("test")).thenThrow(IllegalArgumentException("feil"))
+
+        mockMvc!!.perform(
+            MockMvcRequestBuilders
+                .get("/api/locationforecast")
+                .param("icao", "test")
+                .contentType(MediaType.APPLICATION_JSON)
+        )
+            .andExpect(status().isInternalServerError)
+            .andExpect(content().string("feil"))
+
+    }
+
+    @Test
+    fun getLocationForecastNoParam() {
+
+        mockMvc!!.perform(
+            MockMvcRequestBuilders
+                .get("/api/locationforecast")
+                .contentType(MediaType.APPLICATION_JSON)
+        )
+            .andExpect(status().isBadRequest)
+
+    }
+
 }

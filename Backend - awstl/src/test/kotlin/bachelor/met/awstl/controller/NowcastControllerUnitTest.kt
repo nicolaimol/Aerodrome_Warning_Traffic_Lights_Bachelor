@@ -1,6 +1,7 @@
 package bachelor.met.awstl.controller
 
 import bachelor.met.awstl.dto.NowcastDto
+import bachelor.met.awstl.exception.AirportNotFoundException
 import bachelor.met.awstl.service.NowcastService
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
@@ -36,11 +37,21 @@ class NowcastControllerUnitTest {
 
     @Test
     fun getNowcastBadRequest() {
-        Mockito.`when`(service!!.getNowcast("test")).thenThrow(IllegalArgumentException("feil"))
+        Mockito.`when`(service!!.getNowcast("test")).thenThrow(AirportNotFoundException("feil"))
 
         val result = controller!!.getNowCast("test")
 
         assertThat(result.statusCode).isEqualByComparingTo(HttpStatus.BAD_REQUEST)
+        assertThat(result.body).isEqualTo("feil")
+    }
+
+    @Test
+    fun getNowcastInternalError() {
+        Mockito.`when`(service!!.getNowcast("test")).thenThrow(IllegalArgumentException("feil"))
+
+        val result = controller!!.getNowCast("test")
+
+        assertThat(result.statusCode).isEqualByComparingTo(HttpStatus.INTERNAL_SERVER_ERROR)
         assertThat(result.body).isEqualTo("feil")
     }
 }
