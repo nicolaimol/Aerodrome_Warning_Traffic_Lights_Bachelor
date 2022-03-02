@@ -26,7 +26,7 @@ function VisSatteTerskelverdier(props:terskelData) {
 
   return (
     <>
-    <div style={{ display: 'flex', justifyContent: 'center', flexFlow: 'column wrap', width: '40%', color: '#0090a8'}}>
+    <div style={{ display: 'flex', justifyContent: 'center', flexFlow: 'column wrap', width: '40%', color: '#0090a8', minWidth: '300px'}}>
         <Typography variant='h4' gutterBottom>
             Satte terskelverdier
         </Typography>
