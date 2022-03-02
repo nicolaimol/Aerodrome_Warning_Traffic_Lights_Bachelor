@@ -1,6 +1,7 @@
 package bachelor.met.awstl.controller
 
 import bachelor.met.awstl.dto.NowcastDto
+import bachelor.met.awstl.exception.AirportNotFoundException
 import bachelor.met.awstl.service.NowcastService
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
@@ -13,6 +14,7 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @ContextConfiguration(classes = [NowcastController::class])
 @WebMvcTest(NowcastController::class)
@@ -26,38 +28,58 @@ internal class NowcastControllerIntegrationTest {
 
 
     @Test
-    fun nowCastSuccess(){
+    fun getNowcastSuccess(){
         val expect = NowcastDto()
         Mockito.`when`(service?.getNowcast("test")).thenReturn(expect)
-        mockMvc!!.perform(
-            MockMvcRequestBuilders
-                .get("/api/nowcast")
-                .param("icao", "test")
-                .contentType(MediaType.APPLICATION_JSON)
-        ).andExpect(MockMvcResultMatchers.status().isOk)
-    }
 
-    @Test
-    fun nowCastBadRequestt() {
-        Mockito.`when`(service!!.getNowcast("test")).thenThrow(IllegalArgumentException("feil"))
         mockMvc!!.perform(
             MockMvcRequestBuilders
                 .get("/api/nowcast")
                 .param("icao", "test")
                 .contentType(MediaType.APPLICATION_JSON)
         )
-            .andExpect(MockMvcResultMatchers.status().isBadRequest)
+            .andExpect(status().isOk)
+    }
+
+    @Test
+    fun getNowcastBadRequest() {
+
+        Mockito.`when`(service!!.getNowcast("test")).thenThrow(AirportNotFoundException("feil"))
+
+        mockMvc!!.perform(
+            MockMvcRequestBuilders
+                .get("/api/nowcast")
+                .param("icao", "test")
+                .contentType(MediaType.APPLICATION_JSON)
+        )
+            .andExpect(status().isBadRequest)
+            .andExpect(content().string("feil"))
+    }
+
+    @Test
+    fun getNowcastInternalError() {
+
+        Mockito.`when`(service!!.getNowcast("test")).thenThrow(IllegalArgumentException("feil"))
+
+        mockMvc!!.perform(
+            MockMvcRequestBuilders
+                .get("/api/nowcast")
+                .param("icao", "test")
+                .contentType(MediaType.APPLICATION_JSON)
+        )
+            .andExpect(status().isInternalServerError)
             .andExpect(content().string("feil"))
     }
 
 
     @Test
-    fun nowcastWithoutParam() {
+    fun getNowcastWithoutParam() {
+
         mockMvc!!.perform(
             MockMvcRequestBuilders
                 .get("/api/nowcast")
                 .contentType(MediaType.APPLICATION_JSON)
         )
-            .andExpect(MockMvcResultMatchers.status().isBadRequest)
+            .andExpect(status().isBadRequest)
     }
 }
