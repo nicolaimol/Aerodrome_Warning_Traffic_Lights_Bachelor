@@ -1,6 +1,7 @@
 package bachelor.met.awstl.controller
 
 import bachelor.met.awstl.dto.TafMetarDto
+import bachelor.met.awstl.exception.AirportNotFoundException
 import bachelor.met.awstl.service.TafMetarService
 import org.hamcrest.Matchers
 import org.junit.jupiter.api.Test
@@ -32,37 +33,56 @@ internal class TafMetarControllerIntegrationTest {
 
         Mockito.`when`(service!!.getMetar("test")).thenReturn(TafMetarDto("taf", "metar"))
 
-        mockMvc?.perform(MockMvcRequestBuilders
-            .get("/api/tafmetar")
-            .param("icao", "test")
-            .contentType(MediaType.APPLICATION_JSON)
+        mockMvc!!.perform(
+            MockMvcRequestBuilders
+                .get("/api/tafmetar")
+                .param("icao", "test")
+                .contentType(MediaType.APPLICATION_JSON)
         )
-            ?.andExpect(status().isOk)
-            ?.andExpect(MockMvcResultMatchers.jsonPath("$.taf", Matchers.`is`("taf")))
-            ?.andExpect(MockMvcResultMatchers.jsonPath("$.metar", Matchers.`is`("metar")))
+            .andExpect(status().isOk)
+            .andExpect(MockMvcResultMatchers.jsonPath("$.taf", Matchers.`is`("taf")))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.metar", Matchers.`is`("metar")))
     }
 
     @Test
     fun getTafMetarBadRequest() {
+        Mockito.`when`(service!!.getMetar("test")).thenThrow(AirportNotFoundException("feil"))
+
+        mockMvc!!.perform(
+            MockMvcRequestBuilders
+                .get("/api/tafmetar")
+                .param("icao", "test")
+                .contentType(MediaType.APPLICATION_JSON)
+        )
+            .andExpect(status().isBadRequest)
+            .andExpect(content().string("feil"))
+    }
+
+    @Test
+    fun getTafMetarInternalError() {
+
         Mockito.`when`(service!!.getMetar("test")).thenThrow(IllegalArgumentException("feil"))
 
-        mockMvc?.perform(MockMvcRequestBuilders
-            .get("/api/tafmetar")
-            .param("icao", "test")
-            .contentType(MediaType.APPLICATION_JSON)
+        mockMvc!!.perform(
+            MockMvcRequestBuilders
+                .get("/api/tafmetar")
+                .param("icao", "test")
+                .contentType(MediaType.APPLICATION_JSON)
         )
-            ?.andExpect(status().isBadRequest)
-            ?.andExpect(content().string("feil"))
+            .andExpect(status().isInternalServerError)
+            .andExpect(content().string("feil"))
+
     }
 
     @Test
     fun getTafMetarNoParam() {
 
-        mockMvc?.perform(MockMvcRequestBuilders
-            .get("/api/tafmetar")
-            .contentType(MediaType.APPLICATION_JSON)
+        mockMvc!!.perform(
+            MockMvcRequestBuilders
+                .get("/api/tafmetar")
+                .contentType(MediaType.APPLICATION_JSON)
         )
-            ?.andExpect(status().isBadRequest)
+            .andExpect(status().isBadRequest)
 
     }
 }
