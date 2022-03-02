@@ -33,7 +33,7 @@ class DbSeed(private val repo: IFlyplassRepo) {
                         item[1].uppercase(),
                         item[0],
                         item[2],
-                        item[3],
+                        item[4],
                         String.format("%.3f", item[6].split("[,]".toRegex()).toTypedArray()[0].toDouble())
                             .replace(",", "."),
                         String.format(
@@ -43,7 +43,6 @@ class DbSeed(private val repo: IFlyplassRepo) {
                         item[5]
                     )
                     list.add(flyplass)
-                    //logger.info(flyplass.toString())
 
                 }
             }
