@@ -2,6 +2,7 @@ import { Paper, Typography } from '@mui/material'
 import React, { useState } from 'react'
 
 import terskelData from '../model/terskelData'
+import DrawerTerskelverdier from './DrawerTerskelverdier';
 
 function VisSatteTerskelverdier(props:terskelData) {
 
@@ -29,17 +30,20 @@ function VisSatteTerskelverdier(props:terskelData) {
         <Typography variant='h4' gutterBottom>
             Satte terskelverdier
         </Typography>
-        <Paper elevation={3} sx={{ mb: 5}} style={{ minHeight: '20vh' }} >
-        {terskelverdier.map((verdi) => {
+        <Paper elevation={3} sx={{ mb: 5}} style={{ minHeight: '20vh', display: 'flex', justifyContent: 'space-evenly' }} >
+          <div>
+            {terskelverdier.map((verdi) => {
           return <Typography key={verdi[0]} gutterBottom style={{ color: '#0090a8'}}>
             {verdi[0]}: {verdi[1]}{verdi[2]}
           </Typography>
-        })}
-        {/**
-        <Typography variant='h6' gutterBottom>
-            lorem ipsum dolor sit amet, consectetur adipis lorem ipsum dolor lorem ipsum dolor sit
-        </Typography>
-        */}
+          })}
+          </div>
+          <div>
+            <DrawerTerskelverdier />
+          </div>
+        
+        
+        
         </Paper>
         
     </div>
