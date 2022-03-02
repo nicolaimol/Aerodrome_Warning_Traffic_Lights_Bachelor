@@ -1,5 +1,7 @@
 package bachelor.met.awstl.dto
 
+import bachelor.met.awstl.mapper.FlyplassToFlyplassDto
+import bachelor.met.awstl.model.Flyplass
 import bachelor.met.awstl.model.Terskelverdi
 
 class TerskelverdiDto(){
@@ -14,6 +16,8 @@ class TerskelverdiDto(){
     var humidity: Double = 0.0
     var fog: Double = 0.0
 
+    var flyplass: FlyplassDto? = null
+
     constructor(
         terskel: Terskelverdi
     ): this() {
@@ -26,5 +30,6 @@ class TerskelverdiDto(){
         this.dewpoint = terskel.dewpoint
         this.humidity = terskel.humidity
         this.fog = terskel.fog
+        this.flyplass = FlyplassToFlyplassDto.convert(terskel.flyplass!!)
     }
 }
