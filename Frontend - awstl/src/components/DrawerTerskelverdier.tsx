@@ -31,7 +31,6 @@ function DrawerTerskelverdier() {
         <Box
           sx={{ minWidth: 300, width: '50vw' }}
           role="presentation"
-          onClick={toggleDrawer(anchor, false)}
           onKeyDown={toggleDrawer(anchor, false)}
         >
             <div style={{ marginLeft: '25px'}}>
