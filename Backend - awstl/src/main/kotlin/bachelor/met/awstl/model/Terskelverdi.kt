@@ -3,6 +3,8 @@ package bachelor.met.awstl.model
 import bachelor.met.awstl.dto.TerskelverdiDto
 import javax.persistence.Entity
 import javax.persistence.Id
+import javax.persistence.JoinColumn
+import javax.persistence.ManyToOne
 
 @Entity
 class Terskelverdi() {
@@ -19,6 +21,10 @@ class Terskelverdi() {
     var dewpoint: Double = 0.0
     var humidity: Double = 0.0
     var fog: Double = 0.0
+
+    @ManyToOne
+    @JoinColumn(name = "flyplass_icao")
+    var flyplass: Flyplass? = null
 
     constructor(
         id: String,
