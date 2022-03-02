@@ -30,7 +30,7 @@ class DbSeed(private val repo: IFlyplassRepo) {
                     }
                     val item = line!!.split("[;]".toRegex()).toTypedArray()
                     val flyplass = Flyplass(
-                        item[1],
+                        item[1].uppercase(),
                         item[0],
                         item[2],
                         item[3],

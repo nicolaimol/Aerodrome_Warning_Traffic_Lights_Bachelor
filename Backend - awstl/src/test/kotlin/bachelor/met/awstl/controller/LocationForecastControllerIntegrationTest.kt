@@ -18,7 +18,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @ContextConfiguration(classes = [LocationForecastController::class])
 @WebMvcTest(LocationForecastController::class)
-internal class LocationForecatControllerTest {
+internal class LocationForecastControllerIntegrationTest {
 
     @Autowired
     var mockMvc: MockMvc? = null

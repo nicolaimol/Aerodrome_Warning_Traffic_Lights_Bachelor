@@ -18,7 +18,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @ContextConfiguration(classes = [TafMetarController::class])
 @WebMvcTest(TafMetarController::class)
-internal class TafMetarControllerTest {
+internal class TafMetarControllerIntegrationTest {
 
     @Autowired
     var mockMvc: MockMvc? = null

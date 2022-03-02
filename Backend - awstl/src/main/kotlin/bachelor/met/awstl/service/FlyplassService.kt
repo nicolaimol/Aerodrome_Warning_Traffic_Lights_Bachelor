@@ -12,9 +12,13 @@ class FlyplassService(val repo: IFlyplassRepo) {
 
     @Cacheable(value = ["flyplass"], key = "#icao")
     fun getFlyplass(icao: String): Flyplass {
-        val flyplass = repo.getById(icao);
 
-        return flyplass;
+        try {
+            return repo.getById(icao.uppercase())
+        }
+        catch (e: Exception) {
+            throw Exception("Airport with icao $icao not found")
+        }
     }
 
     @Cacheable(value = ["flyplass"])
@@ -24,7 +28,7 @@ class FlyplassService(val repo: IFlyplassRepo) {
 
     @Cacheable(value = ["flyplassvalid"], key = "#icao")
     fun validateIcao(icao: String): Boolean {
-        return repo.findById(icao).isPresent
+        return repo.findById(icao.uppercase()).isPresent
     }
 
 }
