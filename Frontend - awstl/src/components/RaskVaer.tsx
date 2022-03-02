@@ -27,7 +27,11 @@ function RaskVaer() {
 
   let url = ""
   if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') { // Uavhengig om det er local testing eller deployment så fungerer API kall
-    url = 'http://localhost:8080/api/nowcast?icao='
+      if (process.env.URL_ENV = "prod") {
+          url = '/api/nowcast?icao='
+      } else {
+          url = 'http://localhost:8080/api/nowcast?icao='
+      }
 } else {
     url = '/api/nowcast?icao='
 }

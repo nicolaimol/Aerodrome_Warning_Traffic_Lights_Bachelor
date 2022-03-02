@@ -52,10 +52,14 @@ export default function Banner() {
 
   let url = "";
   if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') { // For lokal testing og deployment endrer api kall
-    url = 'http://localhost:8080/api/airport'
-} else {
-    url = '/api/airport'
-}
+    if (process.env.URL_ENV == "prod") {
+      url = '/api/airport'
+    } else {
+      url = 'http://localhost:8080/api/airport'
+    }
+  } else {
+      url = '/api/airport'
+  }
 
   const airportRedux = useSelector((state:any) => state.airport.value)
   const listAirport = airportRedux != null ?

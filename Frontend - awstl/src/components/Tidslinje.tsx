@@ -71,7 +71,11 @@ function Tidslinje() {
 
     let url = ""
     if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') { // Uavhengig om det er local testing eller deployment så fungerer API kall
-        url = "http://localhost:8080/api/locationforecast?icao="
+        if (process.env.URL_ENV) {
+            url = "/api/locationforecast?icao="
+        } else {
+            url = "http://localhost:8080/api/locationforecast?icao="
+        }
     } else {
         url = "/api/locationforecast?icao="
     }
