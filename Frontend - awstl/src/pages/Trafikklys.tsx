@@ -11,7 +11,7 @@ function Trafikklys() {
   return (
     <>
     <Container>
-      <DrawerTerskelverdier />
+      
       <div style={{ display: 'flex', justifyContent: 'space-between', flexFlow: 'row wrap', alignItems: 'center'}}>
         <VisSatteTerskelverdier 
       airTemp={0}
