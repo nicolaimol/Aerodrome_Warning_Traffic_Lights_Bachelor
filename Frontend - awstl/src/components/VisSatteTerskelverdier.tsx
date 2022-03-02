@@ -41,9 +41,6 @@ function VisSatteTerskelverdier(props:terskelData) {
           <div>
             <DrawerTerskelverdier />
           </div>
-        
-        
-        
         </Paper>
         
     </div>
