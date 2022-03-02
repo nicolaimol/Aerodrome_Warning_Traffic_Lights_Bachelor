@@ -22,6 +22,8 @@ import Trafikklys from './pages/Trafikklys';
 
 function App() {
 
+
+
   return (
     <div className="outer" style={{display: 'flex', minHeight: "100vh", flexDirection: "column"}}>
       <Navbar />

@@ -51,8 +51,9 @@ export default function Banner() {
   }
 
   let url = "";
+  console.log(process.env.URL_ENV)
   if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') { // For lokal testing og deployment endrer api kall
-    if (process.env.URL_ENV == "prod") {
+    if (process.env.REACT_APP_URL_ENV == "prod") {
       url = '/api/airport'
     } else {
       url = 'http://localhost:8080/api/airport'
