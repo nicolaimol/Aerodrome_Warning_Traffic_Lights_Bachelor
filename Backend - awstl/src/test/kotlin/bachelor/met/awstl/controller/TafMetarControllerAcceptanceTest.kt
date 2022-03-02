@@ -53,10 +53,11 @@ class TafMetarControllerAcceptanceTest {
 
     @Test
     fun getTafMetarSuccess() {
-        mockMvc!!.perform(MockMvcRequestBuilders
-            .get("/api/tafmetar")
-            .param("icao", "engm")
-            .contentType(MediaType.APPLICATION_JSON)
+        mockMvc!!.perform(
+            MockMvcRequestBuilders
+                .get("/api/tafmetar")
+                .param("icao", "engm")
+                .contentType(MediaType.APPLICATION_JSON)
         )
             .andExpect(status().isOk)
 
@@ -64,14 +65,15 @@ class TafMetarControllerAcceptanceTest {
 
     @Test
     fun getTafMetarBadRequest() {
-        mockMvc!!.perform(MockMvcRequestBuilders
-            .get("/api/tafmetar")
-            .param("icao", "test")
-            .contentType(MediaType.APPLICATION_JSON)
+        mockMvc!!.perform(
+            MockMvcRequestBuilders
+                .get("/api/tafmetar")
+                .param("icao", "test")
+                .contentType(MediaType.APPLICATION_JSON)
         )
             .andExpect(status().isBadRequest)
             .andDo(MockMvcResultHandlers.print())
-            .andExpect(content().string("Error in geting taf metar"))
+            .andExpect(content().string("Airport with icao test not found"))
     }
 
     @Test
