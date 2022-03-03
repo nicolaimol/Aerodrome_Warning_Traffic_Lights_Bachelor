@@ -8,6 +8,9 @@ import ShowInput from './components/ShowInput';
 import Footer from './components/Footer';
 import Hjem from './pages/Hjem';
 import Trafikklys from './pages/Trafikklys';
+import axios from 'axios'
+import { useDispatch} from 'react-redux'
+import allActions from './Actions';
 
 
 /***
@@ -22,6 +25,44 @@ import Trafikklys from './pages/Trafikklys';
 
 function App() {
 
+    const dispatch = useDispatch()
+
+    let url = ""
+    if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
+        if (process.env.REACT_APP_URL_ENV == "prod") {
+            url = "/api/terskel"
+        }
+        else {
+            url = "http://localhost:8080/api/terskel"
+        }
+    } else {
+        url = "/api/terskel"
+    }
+
+    const defaultVerdier = {
+        airTemp: 0,
+        precipitationAmmount: 20,
+        windSpeed: 30,
+        windGust: 40,
+        probThunder: 0,
+        humidity: 2,
+        fog: 40,
+        probIce: 20,
+        crosswind: 50,
+    };
+
+    axios.get(url)
+        .then((response: any) => {
+            const flyplass = response.data.flyplass
+            delete response.data.flyplass
+
+            dispatch(allActions.airportAction.setAirport(flyplass))
+            dispatch(allActions.terskelActions.setTerskel(response.data))
+        })
+        .catch((error: any) => {
+            dispatch(allActions.airportAction.setAirport({icao: "endu", navn: "Bardufoss Lufthand"}))
+            dispatch(allActions.terskelActions.setTerskel(defaultVerdier))
+        })
 
 
   return (
