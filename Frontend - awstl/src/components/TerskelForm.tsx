@@ -1,5 +1,5 @@
 import { Slider } from '@mui/material';
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import allActions from '../Actions';
 import * as buffer from "buffer";
@@ -7,58 +7,29 @@ import axios from 'axios'
 
 function TerskelForm() {
 
-    let url = ""
-    if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
-        if (process.env.REACT_APP_URL_ENV == "prod") {
-            url = "/api/terskel"
-        }
-        else {
-            url = "http://localhost:8080/api/terskel"
-        }
-    } else {
-        url = "/api/terskel"
-    }
-
     const terskel = useSelector((state: any) => state.terskel.value)
     const airport = useSelector((state: any) => state.airport.value)
 
     const [formVerdier, setFormVerdier] = useState(terskel);
-    //const [formVerdier, setFormVerdier] = useState(defaultVerdier);
+    const dispatch = useDispatch()
 
     const handleSliderEndring = (navn: string) => (e: Event, verdi: any) => {
-
         setFormVerdier({
             ...formVerdier,
             [navn]: verdi,
-        });
+        })
+
     }
+
+    const handleChange = useEffect(() => {
+        dispatch(allActions.terskelActions.setTerskel(formVerdier))
+
+    }, [formVerdier])
+
+
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
-        console.log(formVerdier);
-    }
-
-    const dispatch = useDispatch()
-    const update = () => {
-        dispatch(allActions.terskelActions.setTerskel(formVerdier))
-
-        const obj = formVerdier
-
-        obj.flyplass = airport
-
-        console.log(obj)
-
-
-
-        axios.post(url, obj)
-            .then((response) => {
-                console.log(response)
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-
-
     }
 
 
@@ -325,7 +296,6 @@ function TerskelForm() {
           valueLabelDisplay="off"
         />
       </div>
-      <button type={"button"} onClick={update}>Update</button>
     </form>
     </>
   )
