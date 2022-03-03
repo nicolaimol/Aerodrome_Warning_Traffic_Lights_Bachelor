@@ -15,6 +15,8 @@ class TerskelverdiDto(){
     var dewpoint: Double = 0.0
     var humidity: Double = 0.0
     var fog: Double = 0.0
+    var probIce: Double = 0.0
+    var crosswind: Double = 0.0
 
     var flyplass: FlyplassDto? = null
 
@@ -30,6 +32,8 @@ class TerskelverdiDto(){
         this.dewpoint = terskel.dewpoint
         this.humidity = terskel.humidity
         this.fog = terskel.fog
+        this.probIce = terskel.probIce
+        this.crosswind = terskel.crosswind
         this.flyplass = FlyplassToFlyplassDto.convert(terskel.flyplass!!)
     }
 }
