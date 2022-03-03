@@ -1,22 +1,29 @@
 import { Slider } from '@mui/material';
 import React, { useState } from 'react'
-
-
-const defaultVerdier = {
-    lufttemperatur: 0,
-    nedboer: 20,
-    vindfart: 30,
-    vindkast: 40,
-    probTorden: 0,
-    luftfuktighet: 2,
-    fog: 40,
-    probIs: 20,
-    crosswind: 50,
-  };
+import {useDispatch, useSelector} from 'react-redux'
+import allActions from '../Actions';
+import * as buffer from "buffer";
+import axios from 'axios'
 
 function TerskelForm() {
 
-    const [formVerdier, setFormVerdier] = useState(defaultVerdier);
+    let url = ""
+    if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
+        if (process.env.REACT_APP_URL_ENV == "prod") {
+            url = "/api/terskel"
+        }
+        else {
+            url = "http://localhost:8080/api/terskel"
+        }
+    } else {
+        url = "/api/terskel"
+    }
+
+    const terskel = useSelector((state: any) => state.terskel.value)
+    const airport = useSelector((state: any) => state.airport.value)
+
+    const [formVerdier, setFormVerdier] = useState(terskel);
+    //const [formVerdier, setFormVerdier] = useState(defaultVerdier);
 
     const handleSliderEndring = (navn: string) => (e: Event, verdi: any) => {
 
@@ -31,16 +38,39 @@ function TerskelForm() {
         console.log(formVerdier);
     }
 
+    const dispatch = useDispatch()
+    const update = () => {
+        dispatch(allActions.terskelActions.setTerskel(formVerdier))
+
+        const obj = formVerdier
+
+        obj.flyplass = airport
+
+        console.log(obj)
+
+
+
+        axios.post(url, obj)
+            .then((response) => {
+                console.log(response)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+
+
+    }
+
 
   return (
     <>
     <form onSubmit={handleSubmit}>
-    <div style={{ width: "70%" }}>
+      <div style={{ width: "70%" }}>
             Lufttemperatur terskelverdi
             <Slider
-              value={formVerdier.lufttemperatur}
+              value={formVerdier.airTemp}
 
-              onChange={handleSliderEndring("lufttemperatur")}
+              onChange={handleSliderEndring("airTemp")}
               defaultValue={0}
               step={1}
               min={-60}
@@ -71,230 +101,231 @@ function TerskelForm() {
               valueLabelDisplay="off"
             />
           </div>
-          <div style={{ width: "70%" }}>
-            Nedbør terskelverdi
-            <Slider
-              value={formVerdier.nedboer}
+      <div style={{ width: "70%" }}>
+        Nedbør terskelverdi
+        <Slider
+          value={formVerdier.precipitationAmmount}
 
-              onChange={handleSliderEndring("nedboer")}
-              defaultValue={20}
-              step={1}
-              min={0}
-              max={60}
-              marks={[
-                {
-                  value: 0,
-                  label: "0mm",
-                },
-                {
-                    value: 30,
-                    label: "30mm",
-                    
-                },
-                {
-                  value: 60,
-                  label: "60mm",
-                },
-              ]}
-              valueLabelDisplay="off"
-            />
-          </div>
-          <div style={{ width: "70%" }}>
-            Vindfart terskelverdi
-            <Slider
-              value={formVerdier.vindfart}
+          onChange={handleSliderEndring("precipitationAmmount")}
+          defaultValue={20}
+          step={1}
+          min={0}
+          max={60}
+          marks={[
+            {
+              value: 0,
+              label: "0mm",
+            },
+            {
+                value: 30,
+                label: "30mm",
 
-              onChange={handleSliderEndring("vindfart")}
-              defaultValue={30}
-              step={1}
-              min={0}
-              max={60}
-              marks={[
-                {
-                  value: 0,
-                  label: "0m/s",
-                },
-                {
-                    value: 30,
-                    label: "30m/s",
-                    
-                },
-                {
-                  value: 60,
-                  label: "60m/s",
-                },
-              ]}
-              valueLabelDisplay="off"
-            />
-          </div>
-          <div style={{ width: "70%" }}>
-            Vindkast terskelverdi
-            <Slider
-              value={formVerdier.vindkast}
+            },
+            {
+              value: 60,
+              label: "60mm",
+            },
+          ]}
+          valueLabelDisplay="off"
+        />
+      </div>
+      <div style={{ width: "70%" }}>
+        Vindfart terskelverdi
+        <Slider
+          value={formVerdier.windSpeed}
 
-              onChange={handleSliderEndring("vindkast")}
-              defaultValue={20}
-              step={1}
-              min={0}
-              max={60}
-              marks={[
-                {
-                  value: 0,
-                  label: "0m/s",
-                },
-                {
-                    value: 30,
-                    label: "30m/s",
-                    
-                },
-                {
-                  value: 60,
-                  label: "60m/s",
-                },
-              ]}
-              valueLabelDisplay="off"
-            />
-          </div>
-          <div style={{ width: "70%" }}>
-            Sannsynlighet torden terskelverdi
-            <Slider
-              value={formVerdier.probTorden}
+          onChange={handleSliderEndring("windSpeed")}
+          defaultValue={30}
+          step={1}
+          min={0}
+          max={60}
+          marks={[
+            {
+              value: 0,
+              label: "0m/s",
+            },
+            {
+                value: 30,
+                label: "30m/s",
 
-              onChange={handleSliderEndring("probTorden")}
-              defaultValue={10}
-              step={1}
-              min={0}
-              max={100}
-              marks={[
-                {
-                  value: 0,
-                  label: "0%",
-                },
-                {
-                    value: 50,
-                    label: "50%",
-                    
-                },
-                {
-                  value: 100,
-                  label: "100%",
-                },
-              ]}
-              valueLabelDisplay="off"
-            />
-          </div>
-          <div style={{ width: "70%" }}>
-            Luftfuktighet terskelverdi
-            <Slider
-              value={formVerdier.luftfuktighet}
+            },
+            {
+              value: 60,
+              label: "60m/s",
+            },
+          ]}
+          valueLabelDisplay="off"
+        />
+      </div>
+      <div style={{ width: "70%" }}>
+        Vindkast terskelverdi
+        <Slider
+          value={formVerdier.windGust}
 
-              onChange={handleSliderEndring("luftfuktighet")}
-              defaultValue={2}
-              step={1}
-              min={0}
-              max={100}
-              marks={[
-                {
-                  value: 0,
-                  label: "0%",
-                },
-                {
-                    value: 50,
-                    label: "50%",
-                    
-                },
-                {
-                  value: 100,
-                  label: "100%",
-                },
-              ]}
-              valueLabelDisplay="off"
-            />
-          </div>
-          <div style={{ width: "70%" }}>
-            Tåke terskelverdi
-            <Slider
-              value={formVerdier.fog}
+          onChange={handleSliderEndring("windGust")}
+          defaultValue={20}
+          step={1}
+          min={0}
+          max={60}
+          marks={[
+            {
+              value: 0,
+              label: "0m/s",
+            },
+            {
+                value: 30,
+                label: "30m/s",
 
-              onChange={handleSliderEndring("fog")}
-              defaultValue={40}
-              step={1}
-              min={0}
-              max={100}
-              marks={[
-                {
-                  value: 0,
-                  label: "0%",
-                },
-                {
-                    value: 50,
-                    label: "50%",
-                    
-                },
-                {
-                  value: 100,
-                  label: "100%",
-                },
-              ]}
-              valueLabelDisplay="off"
-            />
-          </div>
-          <div style={{ width: "70%" }}>
-            Sannsynlighet is terskelverdi
-            <Slider
-              value={formVerdier.probIs}
+            },
+            {
+              value: 60,
+              label: "60m/s",
+            },
+          ]}
+          valueLabelDisplay="off"
+        />
+      </div>
+      <div style={{ width: "70%" }}>
+        Sannsynlighet torden terskelverdi
+        <Slider
+          value={formVerdier.probThunder}
 
-              onChange={handleSliderEndring("probIs")}
-              defaultValue={10}
-              step={1}
-              min={0}
-              max={100}
-              marks={[
-                {
-                  value: 0,
-                  label: "0%",
-                },
-                {
-                    value: 50,
-                    label: "50%",
-                    
-                },
-                {
-                  value: 100,
-                  label: "100%",
-                },
-              ]}
-              valueLabelDisplay="off"
-            />
-          </div>
-          <div style={{ width: "70%" }}>
-            Crosswind terskelverdi
-            <Slider
-              value={formVerdier.crosswind}
+          onChange={handleSliderEndring("probThunder")}
+          defaultValue={10}
+          step={1}
+          min={0}
+          max={100}
+          marks={[
+            {
+              value: 0,
+              label: "0%",
+            },
+            {
+                value: 50,
+                label: "50%",
 
-              onChange={handleSliderEndring("crosswind")}
-              defaultValue={30}
-              step={1}
-              min={0}
-              max={60}
-              marks={[
-                {
-                  value: 0,
-                  label: "0m/s",
-                },
-                {
-                    value: 30,
-                    label: "30m/s",
-                    
-                },
-                {
-                  value: 60,
-                  label: "60m/s",
-                },
-              ]}
-              valueLabelDisplay="off"
-            />
-          </div>
+            },
+            {
+              value: 100,
+              label: "100%",
+            },
+          ]}
+          valueLabelDisplay="off"
+        />
+      </div>
+      <div style={{ width: "70%" }}>
+        Luftfuktighet terskelverdi
+        <Slider
+          value={formVerdier.humidity}
+
+          onChange={handleSliderEndring("humidity")}
+          defaultValue={2}
+          step={1}
+          min={0}
+          max={100}
+          marks={[
+            {
+              value: 0,
+              label: "0%",
+            },
+            {
+                value: 50,
+                label: "50%",
+
+            },
+            {
+              value: 100,
+              label: "100%",
+            },
+          ]}
+          valueLabelDisplay="off"
+        />
+      </div>
+      <div style={{ width: "70%" }}>
+        Tåke terskelverdi
+        <Slider
+          value={formVerdier.fog}
+
+          onChange={handleSliderEndring("fog")}
+          defaultValue={40}
+          step={1}
+          min={0}
+          max={100}
+          marks={[
+            {
+              value: 0,
+              label: "0%",
+            },
+            {
+                value: 50,
+                label: "50%",
+
+            },
+            {
+              value: 100,
+              label: "100%",
+            },
+          ]}
+          valueLabelDisplay="off"
+        />
+      </div>
+      <div style={{ width: "70%" }}>
+        Sannsynlighet is terskelverdi
+        <Slider
+          value={formVerdier.probIce}
+
+          onChange={handleSliderEndring("probIce")}
+          defaultValue={10}
+          step={1}
+          min={0}
+          max={100}
+          marks={[
+            {
+              value: 0,
+              label: "0%",
+            },
+            {
+                value: 50,
+                label: "50%",
+
+            },
+            {
+              value: 100,
+              label: "100%",
+            },
+          ]}
+          valueLabelDisplay="off"
+        />
+      </div>
+      <div style={{ width: "70%" }}>
+        Crosswind terskelverdi
+        <Slider
+          value={formVerdier.crosswind}
+
+          onChange={handleSliderEndring("crosswind")}
+          defaultValue={30}
+          step={1}
+          min={0}
+          max={60}
+          marks={[
+            {
+              value: 0,
+              label: "0m/s",
+            },
+            {
+                value: 30,
+                label: "30m/s",
+
+            },
+            {
+              value: 60,
+              label: "60m/s",
+            },
+          ]}
+          valueLabelDisplay="off"
+        />
+      </div>
+      <button type={"button"} onClick={update}>Update</button>
     </form>
     </>
   )
