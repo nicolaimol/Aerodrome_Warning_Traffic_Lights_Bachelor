@@ -19,10 +19,10 @@ import MenuItem from '@mui/material/MenuItem';
 // Ikoner
 import MenuIcon from '@mui/icons-material/Menu';
 
-const pages = ['Hjem', "Trafikklys", "Liste", "Input", "HentInput"]; // Legg til alle menu-items her
+const pages = ['Hjem', "flygeleder", "Liste", "Input", "HentInput"]; // Legg til alle menu-items her
 const links = new Map();
 links.set("Hjem", "/")
-links.set("Trafikklys", "/trafikklys")
+links.set("flygeleder", "/flygeleder")
 links.set("HentInput", "/vis")
 links.set("Liste", "/list")
 links.set("Input", "/input")
