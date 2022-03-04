@@ -12,7 +12,7 @@ import vaerboksForecast from '../model/vaerboksForecast';
 import VaerBox from './VaerBox'
 
 // Material UI
-import { Container, AppBar, Typography } from '@mui/material'
+import { Container, AppBar, Typography, Divider } from '@mui/material'
 
 
 
@@ -67,11 +67,10 @@ function RaskVaer() {
     <>
     <Container>
       {/** Avbrekker som viser at under fortelles været akkurat nå */}
-        <AppBar sx={{ mb: 10 }} position='static' style= {{ background: 'white', textAlign: 'center' }}>
-            <Typography sx={{ color: '#0090a8', fontSize: 30}}>
+            <Typography sx={{ color: '#0090a8', fontSize: 30, textAlign: 'center'}}>
                 Været akkurat nå
             </Typography>
-        </AppBar>
+            <Divider sx={{ mb: 5}} />
 
         {/** Lager en 'VaerBox' komponent for hver flyplass vi har hentet værdata fra */}
         <div style={{ display: 'flex', justifyContent: 'space-evenly', flexFlow: 'row wrap', alignItems: 'center'}}>
