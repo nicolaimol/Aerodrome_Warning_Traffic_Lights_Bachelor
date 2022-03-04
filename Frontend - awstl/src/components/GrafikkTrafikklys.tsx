@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material'
+import { Box, Container, Typography } from '@mui/material'
 import { minHeight } from '@mui/system' 
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import React, { useEffect, useState }from 'react'
@@ -41,53 +41,59 @@ function GrafikkTrafikklys() {
   return (
     <>
     <div style={{ backgroundColor: '#dff2f6', minHeight: '20vh', width: '100%' }}>
-        {/** Ikonet */}
-        {weather != undefined &&
-            <div style={{width: "100%", display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
-                <Typography sx={{fontSize: 30}} style={{display: 'flex', justifyContent: 'center', width: '100%'}}>
-                    {airport?.navn}
-                </Typography>
-                <Typography style={{display: 'flex', justifyContent: 'center', width: '100%'}}>
-                    {new Date(weather.time).toLocaleString()}
-                </Typography>
-                <Box style={{ display: 'flex', justifyContent: 'center', maxHeight: '100px'}} >
-                    <img style={{width: '50%'}} src={ikonpath} alt={ikonpath} />
-                </Box>
+        <Container>
+            {/** Ikonet */}
+            {weather != undefined &&
+                <div style={{width: "100%", display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+                    <Typography sx={{fontSize: 30}} style={{display: 'flex', justifyContent: 'center', width: '100%'}}>
+                        {airport?.navn}
+                    </Typography>
+                    <Typography style={{display: 'flex', justifyContent: 'center', width: '100%'}}>
+                        {new Date(weather.time).toLocaleString()}
+                    </Typography>
+                    <Box style={{ display: 'flex', justifyContent: 'center', maxHeight: '100px'}} >
+                        <img style={{width: '50%'}} src={ikonpath} alt={ikonpath} />
+                    </Box>
 
-                <Box>
-                    <div style={{ display: 'flex', justifyContent: 'center'}}>
-                        <Typography sx={{color: `${temperatureColor}`, fontSize: 38}}>
-                            {weather.data.instant.details.air_temperature}°C
-                        </Typography>
-                    </div>
-                </Box>
+                    <Box>
+                        <div style={{ display: 'flex', justifyContent: 'center'}}>
+                            <Typography sx={{color: `${temperatureColor}`, fontSize: 38}}>
+                                {weather.data.instant.details.air_temperature}°C
+                            </Typography>
+                        </div>
+                    </Box>
 
-                <Box style={{ display: 'flex', justifyContent: 'space-evenly', flexDirection: 'row', alignItems: 'center'}}>
-                    <div style={{ transform: `rotate(${weather.data.instant.details.wind_from_direction + 90}deg)`}}>
-                        <ArrowRightAltIcon sx={{ fontSize: 100 }}></ArrowRightAltIcon>
-                    </div>
-                    <div style={{display: 'flex', flexDirection: 'column', color: '#0090a8'}}>
-                        <Typography>
-                            {weather.data.instant.details.wind_speed}m/s
-                        </Typography>
-                        <Typography>
-                            {weather.data.instant.details.wind_from_direction < 0
-                                ? 360 + weather.data.instant.details.wind_from_direction
-                                : weather.data.instant.details.wind_from_direction}°
-                        </Typography>
-                        {nedbor != "" &&
-                            <Typography>{nedbor}</Typography>
-                        }
-                    </div>
-                </Box>
-            </div>
-        }
-        {weather == undefined &&
+                    <Box style={{ display: 'flex', justifyContent: 'space-evenly', flexDirection: 'row', alignItems: 'center'}}>
+                        <div style={{ transform: `rotate(${weather.data.instant.details.wind_from_direction + 90}deg)`}}>
+                            <ArrowRightAltIcon sx={{ fontSize: 100 }}></ArrowRightAltIcon>
+                        </div>
+                        <div style={{display: 'flex', flexDirection: 'column', color: '#0090a8'}}>
+                            <Typography>
+                                {weather.data.instant.details.wind_speed}m/s
+                            </Typography>
+                            <Typography>
+                                {weather.data.instant.details.wind_from_direction < 0
+                                    ? 360 + weather.data.instant.details.wind_from_direction
+                                    : weather.data.instant.details.wind_from_direction}°
+                            </Typography>
+                            {nedbor != "" &&
+                                <Typography>{nedbor}</Typography>
+                            }
+                        </div>
+                    </Box>
+                </div>
+            }
+            {weather == undefined &&
 
-            <div>
-                <h2>Venligst vent</h2>
-            </div>
-        }
+                <div>
+                    <h2>Venligst vent</h2>
+                </div>
+            }
+
+
+
+
+        </Container>
         </div>
     </>
   )
