@@ -3,6 +3,8 @@ package bachelor.met.awstl.model
 import bachelor.met.awstl.dto.TerskelverdiDto
 import javax.persistence.Entity
 import javax.persistence.Id
+import javax.persistence.JoinColumn
+import javax.persistence.ManyToOne
 
 @Entity
 class Terskelverdi() {
@@ -19,6 +21,12 @@ class Terskelverdi() {
     var dewpoint: Double = 0.0
     var humidity: Double = 0.0
     var fog: Double = 0.0
+    var probIce: Double = 0.0
+    var crosswind: Double = 0.0
+
+    @ManyToOne
+    @JoinColumn(name = "flyplass_icao")
+    var flyplass: Flyplass? = null
 
     constructor(
         id: String,
@@ -30,7 +38,9 @@ class Terskelverdi() {
         probThunder: Double,
         dewpoint: Double,
         humidity: Double,
-        fog: Double
+        fog: Double,
+        probIce: Double,
+        crosswind: Double
     ) : this() {
         this.id = id
         this.airTemp = airTemp
@@ -42,6 +52,8 @@ class Terskelverdi() {
         this.dewpoint = dewpoint
         this.humidity = humidity
         this.fog = fog
+        this.probIce = probIce
+        this.crosswind = crosswind
     }
 
     constructor(id: String, dto: TerskelverdiDto): this() {
@@ -55,6 +67,8 @@ class Terskelverdi() {
         this.dewpoint = dto.dewpoint
         this.humidity = dto.humidity
         this.fog = dto.fog
+        this.probIce = dto.probIce
+        this.crosswind = dto.crosswind
     }
 
     fun update(dto: TerskelverdiDto) {
@@ -67,5 +81,7 @@ class Terskelverdi() {
         this.dewpoint = dto.dewpoint
         this.humidity = dto.humidity
         this.fog = dto.fog
+        this.probIce = dto.probIce
+        this.crosswind = dto.crosswind
     }
 }

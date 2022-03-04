@@ -1,8 +1,11 @@
 import { Box, List, ListItem, ListItemIcon, ListItemText, Divider, Button, SwipeableDrawer } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import React from 'react'
+import axios from  'axios'
+import { useDispatch, useSelector } from 'react-redux'
 
 import TerskelForm from './TerskelForm';
+import allActions from '../Actions';
 
 function DrawerTerskelverdier() {
 
@@ -11,6 +14,45 @@ function DrawerTerskelverdier() {
     const [state, setState] = React.useState({
         left: false
     })
+
+    let url = ""
+    if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
+        if (process.env.REACT_APP_URL_ENV == "prod") {
+            url = "/api/terskel"
+        }
+        else {
+            url = "http://localhost:8080/api/terskel"
+        }
+    } else {
+        url = "/api/terskel"
+    }
+
+    const formVerdier = useSelector((state: any) => state.terskel.value)
+    const airport = useSelector((state: any) => state.airport.value)
+
+    const dispatch = useDispatch()
+
+    const update = () => {
+        dispatch(allActions.terskelActions.setTerskel(formVerdier))
+
+        const obj = formVerdier
+
+        obj.flyplass = airport
+
+        console.log(obj)
+
+
+
+        axios.post(url, obj)
+            .then((response) => {
+                console.log(response)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+
+
+    }
 
     const toggleDrawer =
     (anchor: Anchor, open: boolean) =>
@@ -22,6 +64,10 @@ function DrawerTerskelverdier() {
           (event as React.KeyboardEvent).key === 'Shift')
       ) {
         return;
+      }
+
+      if (!open) {
+          update()
       }
 
       setState({ ...state, [anchor]: open });

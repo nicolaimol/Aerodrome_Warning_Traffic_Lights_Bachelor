@@ -9,7 +9,7 @@ import java.util.Base64
 import java.util.UUID
 
 @Service
-class TerskelverdiService(val repo: ITerskelverdiRepo) {
+class TerskelverdiService(val repo: ITerskelverdiRepo, val service: FlyplassService) {
 
     val logger = LoggerFactory.getLogger(TerskelverdiService::class.java)
 
@@ -24,6 +24,7 @@ class TerskelverdiService(val repo: ITerskelverdiRepo) {
         }
         logger.info("New id: $random")
         val terskel = Terskelverdi(random, terskeDto)
+        terskel.flyplass = service.getFlyplass(terskeDto.flyplass!!.icao)
 
         repo.save(terskel)
 
@@ -39,6 +40,7 @@ class TerskelverdiService(val repo: ITerskelverdiRepo) {
 
         if (terskel.isPresent) {
             val entity = terskel.get()
+
             return TerskelverdiDto(entity)
         } else {
             logger.error("Trying to get for id: $id")
@@ -55,6 +57,8 @@ class TerskelverdiService(val repo: ITerskelverdiRepo) {
             val obj = prev.get()
 
             obj.update(dto)
+            obj.flyplass = service.getFlyplass(dto.flyplass!!.icao)
+
             repo.save(obj)
             logger.info("$id is updated")
         }

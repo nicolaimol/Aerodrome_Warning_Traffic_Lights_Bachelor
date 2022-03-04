@@ -4,20 +4,20 @@ import React, { useState } from 'react'
 import terskelData from '../model/terskelData'
 import DrawerTerskelverdier from './DrawerTerskelverdier';
 
-function VisSatteTerskelverdier(props:terskelData) {
+function VisSatteTerskelverdier(props:{terskel: terskelData}) {
 
   let terskelverdier = [
-    ['Lufttemperatur', props.airTemp, '°C'],
-    ['Nedbør', props.precipitationAmmount, 'mm'],
-    ['Vindfart', props.windSpeed, 'm/s'],
-    ['Vindretning', props.windDirection, '°'],
-    ['Vindkast', props.windGust, 'm/s'],
-    ['Sannsynlighet torden', props.probThunder, '%'],
-    ['Kondenseringstemperatur', props.dewpoint, '°C'],
-    ['Luftfuktighet', props.humidity, '%'],
-    ['Tåke', props.fog, '%'],
-    ['Issansynlighet', props.probIce, '%'],
-    ['Crosswind', props.crosswind, 'm/s']];
+    ['Lufttemperatur', props.terskel.airTemp, '°C'],
+    ['Nedbør', props.terskel.precipitationAmmount, 'mm'],
+    ['Vindfart', props.terskel.windSpeed, 'm/s'],
+    //['Vindretning', props.windDirection, '°'],
+    ['Vindkast', props.terskel.windGust, 'm/s'],
+    ['Sannsynlighet torden', props.terskel.probThunder, '%'],
+    //['Kondenseringstemperatur', props.dewpoint, '°C'],
+    ['Luftfuktighet', props.terskel.humidity, '%'],
+    ['Tåke', props.terskel.fog, '%'],
+    ['Issansynlighet', props.terskel.probIce, '%'],
+    ['Crosswind', props.terskel.crosswind, 'm/s']];
 
 
   

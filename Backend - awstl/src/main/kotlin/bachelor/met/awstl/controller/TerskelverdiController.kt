@@ -2,6 +2,7 @@ package bachelor.met.awstl.controller
 
 import bachelor.met.awstl.dto.TerskelverdiDto
 import bachelor.met.awstl.service.TerskelverdiService
+import org.slf4j.LoggerFactory
 import org.springframework.http.HttpHeaders
 import org.springframework.http.ResponseCookie
 import org.springframework.http.ResponseEntity
@@ -10,8 +11,10 @@ import java.time.Duration
 
 @RestController
 @RequestMapping(value = ["/api/terskel"])
-@CrossOrigin(value = ["http://localhost:3001"])
+//@CrossOrigin(value = ["http://localhost:3001"])
 class TerskelverdiController(val service: TerskelverdiService) {
+
+    val logger = LoggerFactory.getLogger(TerskelverdiController::class.java)
 
     @GetMapping
     fun getTerskel(@CookieValue("terskel", defaultValue = "") terskel: String):ResponseEntity<Any> {
@@ -24,7 +27,6 @@ class TerskelverdiController(val service: TerskelverdiService) {
                 val cookie: ResponseCookie = ResponseCookie.from("terskel", "").maxAge(Duration.ofSeconds(1)).build()
                 ResponseEntity.badRequest()
                     .header(HttpHeaders.SET_COOKIE, cookie.toString())
-                    .header("Access-Control-Allow-Credentials", "true")
                     .body(e.message)
             }
         } else {
@@ -34,9 +36,12 @@ class TerskelverdiController(val service: TerskelverdiService) {
 
     }
 
-    @PostMapping
+    @PostMapping()
     fun setTerskel(@CookieValue("terskel", defaultValue = "") terskel: String,
                    @RequestBody dto: TerskelverdiDto): ResponseEntity<Any> {
+
+        logger.info("In post")
+
         if (terskel != "") {
             return try {
                 service.updateTerskelverdi(terskel, dto)
@@ -45,7 +50,6 @@ class TerskelverdiController(val service: TerskelverdiService) {
                 val cookie: ResponseCookie = ResponseCookie.from("terskel", "").maxAge(Duration.ofSeconds(1)).build()
                 ResponseEntity.badRequest()
                     .header(HttpHeaders.SET_COOKIE, cookie.toString())
-                    .header("Access-Control-Allow-Credentials", "true")
                     .build()
             }
         }
@@ -56,7 +60,6 @@ class TerskelverdiController(val service: TerskelverdiService) {
             return ResponseEntity
                 .ok()
                 .header(HttpHeaders.SET_COOKIE, cookie.toString())
-                .header("Access-Control-Allow-Credentials", "true")
                 .build()
         }
     }

@@ -42,24 +42,39 @@ export default function Banner() {
 
   const classes = useStyles(); // bruker stylingen laget ovenfor
 
+  const terskel = useSelector((state:any) => state.terskel.value)
+
   const dispatch = useDispatch(); // statemanager
   const handleChange = (event: React.ChangeEvent<any>, value: any) => {
     console.log(value)
     if (value !== null) {
       dispatch(allActions.airportAction.setAirport({icao: value.icao, navn: value.label}))
+      const obj = terskel
+      obj.flyplass = {icao: value.icao, navn: value.label}
+      axios.post(urlTerskel, obj)
+          .then((response:any) => {
+              console.log(response)
+          })
+          .catch((error: any) => {
+            console.log(error)
+          })
     }
   }
 
   let url = "";
+  let urlTerskel = "";
   console.log(process.env.URL_ENV)
   if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') { // For lokal testing og deployment endrer api kall
     if (process.env.REACT_APP_URL_ENV == "prod") {
       url = '/api/airport'
+      urlTerskel = "/api/terskel"
     } else {
       url = 'http://localhost:8080/api/airport'
+      urlTerskel = "http://localhost:8080/api/terskel"
     }
   } else {
       url = '/api/airport'
+      urlTerskel = "/api/terskel"
   }
 
   const airportRedux = useSelector((state:any) => state.airport.value)
