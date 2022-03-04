@@ -83,7 +83,7 @@ function App() {
     const airport = useSelector((state: any) => state.airport.value)
 
     useEffect(() => {
-        if ((nowcast === null || nowcast === undefined) && airport != undefined) {
+        if (airport != undefined) {
             axios.get(`${urlNowcast}${airport.icao}`) // Henter værdata for 3 flyplasser + en egendefinert
                 .then((response) => {
                     dispatch(allActions.nowcastAction.setNowcast(response.data))
@@ -92,7 +92,7 @@ function App() {
         } else {
 
         }
-    },[])
+    },[airport])
 
 
   return (
