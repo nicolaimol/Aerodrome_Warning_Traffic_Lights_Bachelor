@@ -27,9 +27,9 @@ function Trafikklys() {
   const [color, setColor] = useState<string>("green")
 
   useEffect(() => {
-    const temp = nowcast.nowcasts[0].properties.timeseries[0].data.instant.details.air_temperature
+    const temp = nowcast?.nowcasts[0].properties.timeseries[0].data.instant.details.air_temperature
 
-    setColor(temp > terskel.airTemp ? "green" : temp == terskel.airTemp ? "yellow" : "red")
+    setColor(temp > terskel?.airTemp ? "green" : temp == terskel?.airTemp ? "yellow" : "red")
 
 
   }, [terskel, nowcast])
