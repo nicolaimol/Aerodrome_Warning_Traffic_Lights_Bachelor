@@ -37,6 +37,11 @@ function RaskVaer() {
 }
 
   useEffect(() => {
+      setVData(nowcast)
+  },[nowcast])
+
+  /*
+  useEffect(() => {
     if (nowcast === null || nowcast === undefined) {
       axios.get(`${url}ENDU`) // Henter værdata for 3 flyplasser + en egendefinert
       .then((response) => {
@@ -50,6 +55,9 @@ function RaskVaer() {
     }
   },[])
 
+   */
+
+    /*
   useEffect(() => {
     if (time > 0 && airportRedux != null && airportRedux != undefined) {
       axios.get(`${url}${airportRedux?.icao}`)
@@ -61,6 +69,8 @@ function RaskVaer() {
     } 
     setTime(1)
   }, [airportRedux])
+
+     */
 
 
   return (
