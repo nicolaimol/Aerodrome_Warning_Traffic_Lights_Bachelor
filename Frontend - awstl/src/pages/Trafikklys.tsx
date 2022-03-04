@@ -43,24 +43,9 @@ function Trafikklys() {
         </Typography>
         <Divider sx={{ mb: 5 }} />
 
-      <div style={{ display: 'flex', justifyContent: 'space-evenly', flexFlow: 'row wrap', alignItems: 'center'}}>
-        <VisSatteTerskelverdier
-            terskel={terskel !== undefined ? terskel : defaultVerdier}
-            /*
-              airTemp={0}
-              precipitationAmmount={20}
-              windSpeed={30}
-                    windDirection={180}
-              windGust={40}
-              probThunder={50}
-              dewpoint={4}
-              humidity={2}
-              fog={40}
-
-              probIce={20}
-              crosswind={50}
-              */
-      />
+      <div style={{ display: 'flex', justifyContent: 'space-evenly', flexFlow: 'row wrap', alignItems: 'stretch'}}>
+        
+        <VisSatteTerskelverdier terskel={terskel !== undefined ? terskel : defaultVerdier} />
         <TrafikklysBox farge={color} />
       </div>
       
