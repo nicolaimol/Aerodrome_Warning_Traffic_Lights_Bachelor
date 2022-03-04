@@ -11,10 +11,6 @@ import Trafikklys from './pages/Trafikklys';
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import allActions from './Actions';
-import {
-    useContext
-} from "../../../../../../Applications/WebStorm.app/Contents/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/react";
-
 
 /***
  * Fargepalett!!!
