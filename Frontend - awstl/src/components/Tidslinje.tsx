@@ -160,6 +160,11 @@ function Tidslinje() {
         }
     }, [temp])
 
+    const terskel = useSelector((state: any) => state.terskel.value);
+    useEffect(() => {
+        setTemp(terskel?.airTemp);
+    },[terskel?.airTemp])
+
     const [ctxSave, setCtxsave] = useState([])
 
     const options = {
@@ -249,10 +254,9 @@ function Tidslinje() {
     return (
 
         <div>
-            <h3>{airport.icao}</h3>
-            <input type="range" min="-20" max="20" value={temp} onChange={e => setTemp(Number(e.target.value))}></input><span>{temp}</span>
+            
             <div id='scrollableDiv' style={{width: "100%", overflowX: 'scroll', marginBottom: "5em"}}>
-                <div style={{width: '200vw', height: '500px'}}>
+                <div style={{width: '3000px', height: '500px'}}>
                     {/* @ts-ignore*/}
                     <Line options={options} data={data} />
                 </div>
