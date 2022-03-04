@@ -48,7 +48,7 @@ function Trafikklys() {
               crosswind={50}
               */
       />
-        <TrafikklysBox />
+        <TrafikklysBox farge='green' />
       </div>
       
 
