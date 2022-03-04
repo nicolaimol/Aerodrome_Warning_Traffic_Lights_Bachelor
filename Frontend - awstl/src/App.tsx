@@ -58,7 +58,7 @@ function App() {
                 dispatch(allActions.terskelActions.setTerskel(response.data))
             })
             .catch((error: any) => {
-                dispatch(allActions.airportAction.setAirport({icao: "endu", navn: "Bardufoss Lufthand"}))
+                dispatch(allActions.airportAction.setAirport({icao: "endu", navn: "Bardufoss lufthavn"}))
                 dispatch(allActions.terskelActions.setTerskel(defaultVerdier))
             })
 
