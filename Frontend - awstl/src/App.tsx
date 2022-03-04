@@ -9,9 +9,8 @@ import Footer from './components/Footer';
 import Hjem from './pages/Hjem';
 import Trafikklys from './pages/Trafikklys';
 import axios from 'axios'
-import { useDispatch} from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import allActions from './Actions';
-
 
 /***
  * Fargepalett!!!
@@ -51,18 +50,49 @@ function App() {
         crosswind: 50,
     };
 
-    axios.get(url)
-        .then((response: any) => {
-            const flyplass = response.data.flyplass
-            delete response.data.flyplass
+    useEffect(() => {
 
-            dispatch(allActions.airportAction.setAirport(flyplass))
-            dispatch(allActions.terskelActions.setTerskel(response.data))
-        })
-        .catch((error: any) => {
-            dispatch(allActions.airportAction.setAirport({icao: "endu", navn: "Bardufoss Lufthand"}))
-            dispatch(allActions.terskelActions.setTerskel(defaultVerdier))
-        })
+        axios.get(url)
+            .then((response: any) => {
+                const flyplass = response.data.flyplass
+                delete response.data.flyplass
+
+                dispatch(allActions.airportAction.setAirport(flyplass))
+                dispatch(allActions.terskelActions.setTerskel(response.data))
+            })
+            .catch((error: any) => {
+                dispatch(allActions.airportAction.setAirport({icao: "endu", navn: "Bardufoss Lufthand"}))
+                dispatch(allActions.terskelActions.setTerskel(defaultVerdier))
+            })
+
+
+    }, [])
+
+    let urlNowcast = ""
+    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') { // Uavhengig om det er local testing eller deployment så fungerer API kall
+        if (process.env.REACT_APP_URL_ENV == "prod") {
+            urlNowcast = '/api/nowcast?icao='
+        } else {
+            urlNowcast = 'http://localhost:8080/api/nowcast?icao='
+        }
+    } else {
+        urlNowcast = '/api/nowcast?icao='
+    }
+
+    const nowcast = useSelector((state: any) => state.nowcast.value)
+    const airport = useSelector((state: any) => state.airport.value)
+
+    useEffect(() => {
+        if (airport != undefined) {
+            axios.get(`${urlNowcast}${airport.icao}`) // Henter værdata for 3 flyplasser + en egendefinert
+                .then((response) => {
+                    dispatch(allActions.nowcastAction.setNowcast(response.data))
+                    console.log("henter fra server")
+                })
+        } else {
+
+        }
+    },[airport])
 
 
   return (
@@ -71,9 +101,14 @@ function App() {
 
       <div style={{flexGrow: 1}}>
         <Routes>
-          <Route path="/list" element={<Testlist />} />
-          <Route path="/input" element={<Testinputs />} />
-          <Route path="/vis" element={<ShowInput />} />
+            {/*
+
+                <Route path="/list" element={<Testlist />} />
+                <Route path="/input" element={<Testinputs />} />
+                <Route path="/vis" element={<ShowInput />} />
+
+            */}
+
           <Route path="/trafikklys" element={<Trafikklys />} />
           <Route path="/" element={<Hjem />} />
         </Routes>
