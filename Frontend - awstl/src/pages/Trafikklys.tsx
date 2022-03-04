@@ -1,5 +1,5 @@
 import { AppBar, Container, Divider, Typography } from '@mui/material'
-import React from 'react'
+import React, { useEffect, useState} from 'react'
 import {useSelector} from 'react-redux'
 import TrafikklysBox from '../components/TrafikklysBox'
 import VisSatteTerskelverdier from '../components/VisSatteTerskelverdier'
@@ -22,9 +22,17 @@ function Trafikklys() {
   };
 
   const terskel = useSelector((state: any) => state.terskel.value)
+  const nowcast = useSelector((state: any) => state.nowcast.value)
+
+  const [color, setColor] = useState<string>("green")
+
+  useEffect(() => {
+    const temp = nowcast.nowcasts[0].properties.timeseries[0].data.instant.details.air_temperature
+
+    setColor(temp > terskel.airTemp ? "green" : temp == terskel.airTemp ? "yellow" : "red")
 
 
-
+  }, [terskel, nowcast])
 
   return (
     <>
@@ -48,7 +56,7 @@ function Trafikklys() {
               crosswind={50}
               */
       />
-        <TrafikklysBox farge='green' />
+        <TrafikklysBox farge={color} />
       </div>
       
 
