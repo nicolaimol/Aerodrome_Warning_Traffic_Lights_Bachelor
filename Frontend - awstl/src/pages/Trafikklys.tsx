@@ -1,5 +1,5 @@
 import { AppBar, Container, Divider, Typography } from '@mui/material'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {useSelector} from 'react-redux'
 import TrafikklysBox from '../components/TrafikklysBox'
 import VisSatteTerskelverdier from '../components/VisSatteTerskelverdier'
