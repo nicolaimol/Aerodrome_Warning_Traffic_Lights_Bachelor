@@ -12,7 +12,7 @@ import vaerboksForecast from '../model/vaerboksForecast';
 import VaerBox from './VaerBox'
 
 // Material UI
-import { Container, AppBar, Typography, Divider } from '@mui/material'
+import { Container, Typography, Divider } from '@mui/material'
 
 
 
