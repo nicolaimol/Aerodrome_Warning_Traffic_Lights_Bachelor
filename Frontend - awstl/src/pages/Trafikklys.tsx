@@ -1,4 +1,4 @@
-import { AppBar, Container, Typography } from '@mui/material'
+import { AppBar, Container, Divider, Typography } from '@mui/material'
 import React from 'react'
 import {useSelector} from 'react-redux'
 import TrafikklysBox from '../components/TrafikklysBox'
@@ -53,11 +53,10 @@ function Trafikklys() {
       
 
       <div>
-      <AppBar sx={{ mb: 10 }} position='static' style= {{ background: 'white', textAlign: 'center' }}>
-            <Typography sx={{ color: '#0090a8', fontSize: 30}}>
+            <Typography sx={{ color: '#0090a8', fontSize: 30, textAlign: 'center'}}>
                 Tidslinje for de neste 72 timer
             </Typography>
-        </AppBar>
+            <Divider sx={{ mb: 5}} />
         <Tidslinje />
       </div>
     </Container>
