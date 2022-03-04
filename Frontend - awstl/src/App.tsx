@@ -109,7 +109,7 @@ function App() {
 
             */}
 
-          <Route path="/trafikklys" element={<Trafikklys />} />
+          <Route path="/flygeleder" element={<Trafikklys />} />
           <Route path="/" element={<Hjem />} />
         </Routes>
       </div>

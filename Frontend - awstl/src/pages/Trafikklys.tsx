@@ -1,5 +1,5 @@
 import { AppBar, Container, Divider, Typography } from '@mui/material'
-import React, { useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import {useSelector} from 'react-redux'
 import TrafikklysBox from '../components/TrafikklysBox'
 import VisSatteTerskelverdier from '../components/VisSatteTerskelverdier'
@@ -37,7 +37,12 @@ function Trafikklys() {
   return (
     <>
     <Container>
-      
+
+    <Typography sx={{ color: '#0090a8', fontSize: 40, textAlign: 'center', mt: 5}}>
+          Flygeleder
+        </Typography>
+        <Divider sx={{ mb: 5 }} />
+
       <div style={{ display: 'flex', justifyContent: 'space-evenly', flexFlow: 'row wrap', alignItems: 'center'}}>
         <VisSatteTerskelverdier
             terskel={terskel !== undefined ? terskel : defaultVerdier}
