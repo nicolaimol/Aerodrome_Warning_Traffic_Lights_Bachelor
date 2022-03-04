@@ -87,13 +87,22 @@ function Tidslinje() {
 
 
     const [int, setInt] = useState<any>(null)
+    const [started, setStarted] = useState<boolean>(false)
+    const [startIndex, setStartIndex] = useState<number>(0)
 
-    const start = () => {
-        console.log("start")
-        setInt(setInterval(update, 1000))
-    }
 
     let index = 0;
+    const start = () => {
+        index = startIndex
+        console.log(started)
+        if (!started) {
+            setInt(setInterval(update, 1000))
+            setStarted(true)
+        }
+
+    }
+
+
     const update = () => {
         dispatch(allActions.grafikkAction.setGrafikk(ver[index]))
         index = (index + 1) % ver.length
@@ -101,6 +110,7 @@ function Tidslinje() {
     }
 
     const stop = () => {
+        setStarted(false)
         clearInterval(int)
     }
 
@@ -166,6 +176,7 @@ function Tidslinje() {
         },
         onClick: function (evt: any, ctx: any) {
             dispatch(allActions.grafikkAction.setGrafikk(ver[ctx[0].index]))
+            setStartIndex(ctx[0].index)
             //alert(`Du valgte ${labels[ctx[0].index]} med temp ${ver[ctx[0].index]}`)
         },
         scales: {
