@@ -60,8 +60,8 @@ function Trafikklys() {
         </AppBar>
         <Tidslinje />
       </div>
-      <GrafikkTrafikklys />
     </Container>
+      <GrafikkTrafikklys />
     </>
   )
 }
