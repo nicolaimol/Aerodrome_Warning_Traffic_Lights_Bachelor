@@ -22,9 +22,17 @@ function Trafikklys() {
   };
 
   const terskel = useSelector((state: any) => state.terskel.value)
+  const nowcast = useSelector((state: any) => state.nowcast.value)
+
+  const [color, setColor] = useState<string>("green")
+
+  useEffect(() => {
+    const temp = nowcast?.nowcasts[0].properties.timeseries[0].data.instant.details.air_temperature
+
+    setColor(temp > terskel?.airTemp ? "green" : temp == terskel?.airTemp ? "yellow" : "red")
 
 
-
+  }, [terskel, nowcast])
 
   return (
     <>
@@ -34,7 +42,7 @@ function Trafikklys() {
           Flygeleder
         </Typography>
         <Divider sx={{ mb: 5 }} />
-      
+
       <div style={{ display: 'flex', justifyContent: 'space-evenly', flexFlow: 'row wrap', alignItems: 'center'}}>
         <VisSatteTerskelverdier
             terskel={terskel !== undefined ? terskel : defaultVerdier}
@@ -53,7 +61,7 @@ function Trafikklys() {
               crosswind={50}
               */
       />
-        <TrafikklysBox farge='red' />
+        <TrafikklysBox farge={color} />
       </div>
       
 
