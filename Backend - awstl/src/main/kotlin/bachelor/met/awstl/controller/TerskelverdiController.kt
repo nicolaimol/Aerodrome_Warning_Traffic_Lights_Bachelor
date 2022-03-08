@@ -19,6 +19,19 @@ class TerskelverdiController(val service: TerskelverdiService) {
     @GetMapping
     fun getTerskel(@CookieValue("terskel", defaultValue = "") terskel: String):ResponseEntity<Any> {
 
+
+        when(terskel) {
+            "" -> {
+                val ret = service.getTerskelverdi(terskel)
+                return ResponseEntity.ok(ret)
+            }
+            else -> {
+                return ResponseEntity.notFound().build()
+            }
+        }
+
+
+        /*
         if (terskel != "") {
             return try {
                 val ret = service.getTerskelverdi(terskel)
@@ -29,9 +42,11 @@ class TerskelverdiController(val service: TerskelverdiService) {
                     .header(HttpHeaders.SET_COOKIE, cookie.toString())
                     .body(e.message)
             }
+
         } else {
             return ResponseEntity.notFound().build()
         }
+         */
 
 
     }
@@ -40,18 +55,18 @@ class TerskelverdiController(val service: TerskelverdiService) {
     fun setTerskel(@CookieValue("terskel", defaultValue = "") terskel: String,
                    @RequestBody dto: TerskelverdiDto): ResponseEntity<Any> {
 
-        logger.info("In post")
-
         if (terskel != "") {
-            return try {
+            //return try {
                 service.updateTerskelverdi(terskel, dto)
-                ResponseEntity.ok().build()
-            } catch (e: Exception) {
+                return ResponseEntity.ok().build()
+            /*} catch (e: Exception) {
                 val cookie: ResponseCookie = ResponseCookie.from("terskel", "").maxAge(Duration.ofSeconds(1)).build()
                 ResponseEntity.badRequest()
                     .header(HttpHeaders.SET_COOKIE, cookie.toString())
                     .build()
             }
+
+             */
         }
 
         else {
