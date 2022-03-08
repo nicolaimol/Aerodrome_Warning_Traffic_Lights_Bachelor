@@ -2,8 +2,11 @@ package bachelor.met.awstl.controller
 
 import bachelor.met.awstl.dto.NowcastDto
 import bachelor.met.awstl.exception.AirportNotFoundException
+import bachelor.met.awstl.exception.InternalExceptionHandler
 import bachelor.met.awstl.service.NowcastService
+import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 import org.mockito.Mockito
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
@@ -15,9 +18,11 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import org.springframework.test.web.servlet.setup.MockMvcBuilders
 
 @ContextConfiguration(classes = [NowcastController::class])
 @WebMvcTest(NowcastController::class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 internal class NowcastControllerIntegrationTest {
 
     @Autowired
@@ -25,6 +30,14 @@ internal class NowcastControllerIntegrationTest {
 
     @MockBean
     var service: NowcastService? = null
+
+    @BeforeAll
+    fun setUp () {
+        mockMvc = MockMvcBuilders
+            .standaloneSetup(NowcastController(service!!))
+            .setControllerAdvice(InternalExceptionHandler())
+            .build()
+    }
 
 
     @Test
