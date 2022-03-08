@@ -1,6 +1,7 @@
 package bachelor.met.awstl.service
 
 import bachelor.met.awstl.dto.TerskelverdiDto
+import bachelor.met.awstl.exception.TerskelverdiNotFoundException
 import bachelor.met.awstl.model.Terskelverdi
 import bachelor.met.awstl.repo.ITerskelverdiRepo
 import org.slf4j.LoggerFactory
@@ -34,43 +35,36 @@ class TerskelverdiService(val repo: ITerskelverdiRepo, val service: FlyplassServ
 
     fun getTerskelverdi(base: String): TerskelverdiDto {
 
-        val id = Base64.getDecoder().decode(base)
+        val id = Base64.getDecoder().decode(base).toString()
 
-        val terskel = repo.findById(String(id))
+        logger.info("Trying to get for id: $id")
+        val terskel = getTerskelById(id)
 
-        if (terskel.isPresent) {
-            val entity = terskel.get()
-
-            return TerskelverdiDto(entity)
-        } else {
-            logger.error("Trying to get for id: $id")
-            throw Exception("No valid id")
-        }
+        return TerskelverdiDto(terskel)
 
     }
 
     fun updateTerskelverdi(base: String, dto: TerskelverdiDto) {
-        val id = Base64.getDecoder().decode(base)
+        val id = Base64.getDecoder().decode(base).toString()
 
-        val prev = repo.findById(String(id))
-        if (prev.isPresent) {
-            val obj = prev.get()
+        val obj = getTerskelById(id)
 
-            obj.update(dto)
-            obj.flyplass = service.getFlyplass(dto.flyplass!!.icao)
+        obj.update(dto)
+        obj.flyplass = service.getFlyplass(dto.flyplass!!.icao)
 
-            repo.save(obj)
-            logger.info("$id is updated")
-        }
+        repo.save(obj)
 
-        else {
-            logger.error("$id is not found i db")
-            throw Exception("Could not find")
-        }
+        logger.info("$id is updated")
+
     }
 
     fun getAll(): List<Terskelverdi> {
         return repo.findAll()
+    }
+
+    private fun getTerskelById(id: String): Terskelverdi {
+        return repo.findById(id).orElseThrow{ TerskelverdiNotFoundException("$id is not a valid id for terskelverdi") }
+
     }
 }
 
