@@ -6,34 +6,41 @@ import bachelor.met.awstl.model.Terskelverdi
 
 class TerskelverdiDto(){
 
-    var airTemp: Double = 0.0
+    var airTempMin: Double = 0.0
+    var airTempMax: Double = 0.0
     var precipitationAmmount: Double = 0.0
-    var windSpeed: Double = 0.0
-    var windDirection: Double = 0.0
-    var windGust: Double = 0.0
-    var probThunder: Double = 0.0
-    var dewpoint: Double = 0.0
-    var humidity: Double = 0.0
+    var windSpeedMin: Double = 0.0
+    var windSpeedMax: Double = 0.0
+    var windGustMin: Double = 0.0
+    var windGustMax: Double = 0.0
+    var probThunderMin: Double = 0.0
+    var probThunderMax: Double = 0.0
+    var humidityMin: Double = 0.0
+    var humidityMax: Double = 0.0
     var fog: Double = 0.0
-    var probIce: Double = 0.0
-    var crosswind: Double = 0.0
+    var crosswindMin: Double = 0.0
+    var crosswindMax: Double = 0.0
 
     var flyplass: FlyplassDto? = null
 
     constructor(
         terskel: Terskelverdi
     ): this() {
-        this.airTemp = terskel.airTemp
+        this.airTempMin = terskel.airTempMin
+        this.airTempMax = terskel.airTempMax
         this.precipitationAmmount = terskel.precipitationAmmount
-        this.windSpeed = terskel.windSpeed
-        this.windDirection = terskel.windDirection
-        this.windGust = terskel.windGust
-        this.probThunder = terskel.probThunder
-        this.dewpoint = terskel.dewpoint
-        this.humidity = terskel.humidity
+        this.windSpeedMin = terskel.windSpeedMin
+        this.windSpeedMax = terskel.windSpeedMax
+        this.windGustMin = terskel.windGustMin
+        this.windGustMax = terskel.windGustMax
+        this.probThunderMin = terskel.probThunderMin
+        this.probThunderMax = terskel.probThunderMax
+        this.humidityMin = terskel.humidityMin
+        this.humidityMax = terskel.humidityMax
         this.fog = terskel.fog
-        this.probIce = terskel.probIce
-        this.crosswind = terskel.crosswind
+        this.crosswindMin = terskel.crosswindMin
+        this.crosswindMax = terskel.crosswindMax
+
         this.flyplass = FlyplassToFlyplassDto.convert(terskel.flyplass!!)
     }
 }
