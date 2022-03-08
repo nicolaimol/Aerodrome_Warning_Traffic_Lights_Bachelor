@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @CrossOrigin(value = ["http://localhost:3001"])
-@RestController
+//@RestController
 @RequestMapping(value =["/api"])
 class TestController(val repo: IFlyplassRepo) {
 
