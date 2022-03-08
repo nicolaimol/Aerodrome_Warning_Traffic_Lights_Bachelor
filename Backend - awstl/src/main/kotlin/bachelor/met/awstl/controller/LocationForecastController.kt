@@ -25,7 +25,7 @@ class LocationForecastController(val service: LocationForecastService) {
 
     val logger = LoggerFactory.getLogger(LocationForecastController::class.java)
 
-    @GetMapping("/test")
+    //@GetMapping("/test")
     fun getLocationForecast(): ResponseEntity<Any> {
 
         val res = service.getForecast("engm")
