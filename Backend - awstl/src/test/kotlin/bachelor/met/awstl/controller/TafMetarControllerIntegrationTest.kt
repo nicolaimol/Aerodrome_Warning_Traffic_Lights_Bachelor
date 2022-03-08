@@ -2,9 +2,12 @@ package bachelor.met.awstl.controller
 
 import bachelor.met.awstl.dto.TafMetarDto
 import bachelor.met.awstl.exception.AirportNotFoundException
+import bachelor.met.awstl.exception.InternalExceptionHandler
 import bachelor.met.awstl.service.TafMetarService
 import org.hamcrest.Matchers
+import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 import org.mockito.Mockito
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
@@ -16,9 +19,11 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import org.springframework.test.web.servlet.setup.MockMvcBuilders
 
 @ContextConfiguration(classes = [TafMetarController::class])
 @WebMvcTest(TafMetarController::class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 internal class TafMetarControllerIntegrationTest {
 
     @Autowired
@@ -26,6 +31,14 @@ internal class TafMetarControllerIntegrationTest {
 
     @MockBean
     var service: TafMetarService? = null
+
+    @BeforeAll
+    fun setUp () {
+        mockMvc = MockMvcBuilders
+            .standaloneSetup(TafMetarController(service!!))
+            .setControllerAdvice(InternalExceptionHandler())
+            .build()
+    }
 
 
     @Test
