@@ -4,8 +4,11 @@ import bachelor.met.awstl.dto.LocationForecastDto
 import bachelor.met.awstl.dto.locationforecast.Properties
 import bachelor.met.awstl.dto.locationforecast.Timeseries
 import bachelor.met.awstl.exception.AirportNotFoundException
+import bachelor.met.awstl.exception.InternalExceptionHandler
 import bachelor.met.awstl.service.LocationForecastService
+import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 import org.mockito.Mockito
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
@@ -13,12 +16,15 @@ import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.MediaType
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.MockMvcBuilder
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import org.springframework.test.web.servlet.setup.MockMvcBuilders
 
 @ContextConfiguration(classes = [LocationForecastController::class])
 @WebMvcTest(LocationForecastController::class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 internal class LocationForecastControllerIntegrationTest {
 
     @Autowired
@@ -26,6 +32,14 @@ internal class LocationForecastControllerIntegrationTest {
 
     @MockBean
     var service: LocationForecastService? = null
+
+    @BeforeAll
+    fun setUp () {
+        mockMvc = MockMvcBuilders
+            .standaloneSetup(LocationForecastController(service!!))
+            .setControllerAdvice(InternalExceptionHandler())
+            .build()
+    }
 
     @Test
     fun getLocationForecastSuccess() {
