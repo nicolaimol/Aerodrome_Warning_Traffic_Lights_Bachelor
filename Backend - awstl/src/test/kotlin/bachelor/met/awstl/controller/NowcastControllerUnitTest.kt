@@ -8,6 +8,7 @@ import org.junit.jupiter.api.TestInstance
 import org.mockito.Mockito
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.assertThrows
 import org.springframework.http.HttpStatus
 
 @TestInstance(TestInstance.Lifecycle.PER_METHOD)
@@ -49,9 +50,10 @@ class NowcastControllerUnitTest {
     fun getNowcastInternalError() {
         Mockito.`when`(service!!.getNowcast("test")).thenThrow(IllegalArgumentException("feil"))
 
-        val result = controller!!.getNowCast("test")
+        val exception = assertThrows<IllegalArgumentException> {
+            val result = controller!!.getNowCast("test")
+        }
 
-        assertThat(result.statusCode).isEqualByComparingTo(HttpStatus.INTERNAL_SERVER_ERROR)
-        assertThat(result.body).isEqualTo("feil")
+        assertThat(exception.message).isEqualTo("feil")
     }
 }
