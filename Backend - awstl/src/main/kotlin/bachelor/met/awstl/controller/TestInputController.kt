@@ -15,7 +15,7 @@ import javax.servlet.http.Cookie
 import javax.servlet.http.HttpServletResponse
 
 
-@RestController
+//@RestController
 @RequestMapping(value = ["/api/input"])
 @CrossOrigin(value = ["http://localhost:3000"])
 class TestInputController (val inputRepo: IInputRepo)  {
