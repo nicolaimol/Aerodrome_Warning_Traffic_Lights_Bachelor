@@ -7,6 +7,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.api.assertThrows
 import org.mockito.Mockito
 import org.springframework.http.HttpStatus
 
@@ -49,9 +50,11 @@ class TafMetarControllerUnitTest {
 
         Mockito.`when`(service!!.getMetar("test")).thenThrow(IllegalArgumentException("feil"))
 
-        val result = controller!!.getTafMetar("test")
+        val exception = assertThrows<IllegalArgumentException> {
+            val result = controller!!.getTafMetar("test")
+        }
 
-        assertThat(result.statusCode).isEqualByComparingTo(HttpStatus.INTERNAL_SERVER_ERROR)
-        assertThat(result.body).isEqualTo("feil")
+        //assertThat(result.statusCode).isEqualByComparingTo(HttpStatus.INTERNAL_SERVER_ERROR)
+        assertThat(exception.message).isEqualTo("feil")
     }
 }
