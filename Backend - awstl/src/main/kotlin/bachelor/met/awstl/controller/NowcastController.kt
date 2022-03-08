@@ -31,10 +31,6 @@ class NowcastController(val service: NowcastService) {
         } catch (e: AirportNotFoundException) {
             logger.error(e.message)
             return ResponseEntity.badRequest().body(e.message)
-        } catch (e: Exception) {
-            logger.error(e.message)
-            e.printStackTrace()
-            return ResponseEntity.internalServerError().body(e.message)
         }
     }
 
