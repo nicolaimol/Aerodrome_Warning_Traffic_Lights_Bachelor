@@ -4,24 +4,22 @@ import bachelor.met.awstl.dto.NowcastDto
 import bachelor.met.awstl.dto.nowcast.Nowcast
 import bachelor.met.awstl.mapper.FlyplassToFlyplassDto
 import bachelor.met.awstl.model.Flyplass
-import bachelor.met.awstl.repo.IFlyplassRepo
+import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
-import org.springframework.web.client.RestTemplate
-import org.springframework.web.client.getForObject
-import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 @Service
-class NowcastService(val restTemplate: RestTemplate, val sercice: FlyplassService) {
+class NowcastService(
+    val httpService: HttpService,
+    val sercice: FlyplassService) {
 
     @Value("\${nowcast}")
     var url = ""
 
-    val logger = LoggerFactory.getLogger(NowcastService::class.java)
+    val logger: Logger = LoggerFactory.getLogger(NowcastService::class.java)
 
 
     fun getNowcast(icao: String): NowcastDto {
@@ -74,25 +72,21 @@ class NowcastService(val restTemplate: RestTemplate, val sercice: FlyplassServic
             query["lat"] = airport.lat
             query["lon"] = airport.lon
 
-            try {
-                getForAirport(airport.icao, query)?.let {
-                    it.properties.timeseries = it.properties.timeseries.copyOfRange(0, 1);
-                    dto.nowcasts.add(it)
-                }
-                dto.airports.add(FlyplassToFlyplassDto.convert(airport))
-            } catch (e: Exception) {
-                logger.error(e.message)
-                e.printStackTrace()
-                throw Exception(e.message)
+
+            getForAirport(airport.icao, query)?.let {
+                it.properties.timeseries = it.properties.timeseries.copyOfRange(0, 1);
+                dto.nowcasts.add(it)
             }
+            dto.airports.add(FlyplassToFlyplassDto.convert(airport))
+
         }
     }
 
     @Cacheable(value = ["nowcast"], key = "#icao")
     fun getForAirport(icao: String, query: HashMap<String, String>): Nowcast? {
         logger.info("Nowcast for $icao")
-        return restTemplate.getForObject(url, Nowcast::class.java, query)
+
+        return httpService.hentData(url, Nowcast::class.java, query)
+
     }
-
-
 }
