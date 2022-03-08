@@ -1,6 +1,10 @@
 package bachelor.met.awstl.model
 
 import bachelor.met.awstl.dto.TerskelverdiDto
+import org.hibernate.annotations.CreationTimestamp
+import org.hibernate.annotations.UpdateTimestamp
+import java.sql.Timestamp
+import java.time.LocalDateTime
 import javax.persistence.Entity
 import javax.persistence.Id
 import javax.persistence.JoinColumn
@@ -12,76 +16,101 @@ class Terskelverdi() {
     @Id
     lateinit var id: String
 
-    var airTemp: Double = 0.0
+    var airTempMin: Double = 0.0
+    var airTempMax: Double = 0.0
     var precipitationAmmount: Double = 0.0
-    var windSpeed: Double = 0.0
-    var windDirection: Double = 0.0
-    var windGust: Double = 0.0
-    var probThunder: Double = 0.0
-    var dewpoint: Double = 0.0
-    var humidity: Double = 0.0
+    var windSpeedMin: Double = 0.0
+    var windSpeedMax: Double = 0.0
+    var windGustMin: Double = 0.0
+    var windGustMax: Double = 0.0
+    var probThunderMin: Double = 0.0
+    var probThunderMax: Double = 0.0
+    var humidityMin: Double = 0.0
+    var humidityMax: Double = 0.0
     var fog: Double = 0.0
-    var probIce: Double = 0.0
-    var crosswind: Double = 0.0
+    var crosswindMin: Double = 0.0
+    var crosswindMax: Double = 0.0
 
     @ManyToOne
     @JoinColumn(name = "flyplass_icao")
     var flyplass: Flyplass? = null
 
+    @UpdateTimestamp
+    var updateAt: LocalDateTime? = null
+
+    @CreationTimestamp
+    var createAt: LocalDateTime? = null
+
     constructor(
         id: String,
-        airTemp: Double,
+        airTempMin: Double,
+        airTempMax: Double,
         precipitationAmmount: Double,
-        windSpeed: Double,
-        windDirection: Double,
-        windGust: Double,
-        probThunder: Double,
-        dewpoint: Double,
-        humidity: Double,
+        windSpeedMin: Double,
+        windSpeedMax: Double,
+        windGustMin: Double,
+        windGustMax: Double,
+        probThunderMin: Double,
+        probThunderMax: Double,
+        humidityMin: Double,
+        humidityMax: Double,
         fog: Double,
-        probIce: Double,
-        crosswind: Double
-    ) : this() {
+        crosswindMin: Double,
+        crosswindMax: Double,
+        flyplass: Flyplass?
+    ): this ()
+    {
         this.id = id
-        this.airTemp = airTemp
+        this.airTempMin = airTempMin
+        this.airTempMax = airTempMax
         this.precipitationAmmount = precipitationAmmount
-        this.windSpeed = windSpeed
-        this.windDirection = windDirection
-        this.windGust = windGust
-        this.probThunder = probThunder
-        this.dewpoint = dewpoint
-        this.humidity = humidity
+        this.windSpeedMin = windSpeedMin
+        this.windSpeedMax = windSpeedMax
+        this.windGustMin = windGustMin
+        this.windGustMax = windGustMax
+        this.probThunderMin = probThunderMin
+        this.probThunderMax = probThunderMax
+        this.humidityMin = humidityMin
+        this.humidityMax = humidityMax
         this.fog = fog
-        this.probIce = probIce
-        this.crosswind = crosswind
+        this.crosswindMin = crosswindMin
+        this.crosswindMax = crosswindMax
+        this.flyplass = flyplass
     }
 
     constructor(id: String, dto: TerskelverdiDto): this() {
         this.id = id
-        this.airTemp = dto.airTemp
+        this.airTempMin = dto.airTempMin
+        this.airTempMax = dto.airTempMax
         this.precipitationAmmount = dto.precipitationAmmount
-        this.windSpeed = dto.windSpeed
-        this.windDirection = dto.windDirection
-        this.windGust = dto.windGust
-        this.probThunder = dto.probThunder
-        this.dewpoint = dto.dewpoint
-        this.humidity = dto.humidity
+        this.windSpeedMin = dto.windSpeedMin
+        this.windSpeedMax = dto.windSpeedMax
+        this.windGustMin = dto.windGustMin
+        this.windGustMax = dto.windGustMax
+        this.probThunderMin = dto.probThunderMin
+        this.probThunderMax = dto.probThunderMax
+        this.humidityMin = dto.humidityMin
+        this.humidityMax = dto.humidityMax
         this.fog = dto.fog
-        this.probIce = dto.probIce
-        this.crosswind = dto.crosswind
+        this.crosswindMin = dto.crosswindMin
+        this.crosswindMax = dto.crosswindMax
     }
 
+
     fun update(dto: TerskelverdiDto) {
-        this.airTemp = dto.airTemp
+        this.airTempMin = dto.airTempMin
+        this.airTempMax = dto.airTempMax
         this.precipitationAmmount = dto.precipitationAmmount
-        this.windSpeed = dto.windSpeed
-        this.windDirection = dto.windDirection
-        this.windGust = dto.windGust
-        this.probThunder = dto.probThunder
-        this.dewpoint = dto.dewpoint
-        this.humidity = dto.humidity
+        this.windSpeedMin = dto.windSpeedMin
+        this.windSpeedMax = dto.windSpeedMax
+        this.windGustMin = dto.windGustMin
+        this.windGustMax = dto.windGustMax
+        this.probThunderMin = dto.probThunderMin
+        this.probThunderMax = dto.probThunderMax
+        this.humidityMin = dto.humidityMin
+        this.humidityMax = dto.humidityMax
         this.fog = dto.fog
-        this.probIce = dto.probIce
-        this.crosswind = dto.crosswind
+        this.crosswindMin = dto.crosswindMin
+        this.crosswindMax = dto.crosswindMax
     }
 }
