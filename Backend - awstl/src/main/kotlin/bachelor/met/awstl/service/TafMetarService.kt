@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
 
 @Service
-class TafMetarService(val template: RestTemplate, val service: FlyplassService) {
+class TafMetarService(val httpService: HttpService, val service: FlyplassService) {
 
     @Value("\${tafmetar}")
     var url = ""
@@ -20,33 +20,25 @@ class TafMetarService(val template: RestTemplate, val service: FlyplassService) 
     fun getMetar(icao: String): TafMetarDto {
         logger.info("Getting taf metar for $icao")
 
-        val aiport = service.getFlyplass(icao)
+        service.getFlyplass(icao)
 
-        var query: HashMap<String, String> = HashMap()
+        val query: HashMap<String, String> = HashMap()
         query["icao"] = icao
 
-        try {
-            val tafmetar = template.getForObject(url, String::class.java, query)
+        val tafmetar = httpService.hentData(url, String::class.java, query)
 
-            if (tafmetar != null) {
+        if (tafmetar != null) {
 
-                val list = tafmetar.lines()
-                val ret = TafMetarDto()
+            val list = tafmetar.lines()
+            val ret = TafMetarDto()
 
-                ret.taf = list[3]
-                ret.metar = list[list.size-4]
+            ret.taf = list[3]
+            ret.metar = list[list.size-4]
 
-                return ret;
-            }
-
-            throw Exception("Could not get taf metar for icao $icao")
-        } catch (e: Exception) {
-            throw Exception(e.message)
+            return ret;
         }
 
-
-
-
+        throw Exception("Could not get taf metar for icao $icao")
 
     }
 
