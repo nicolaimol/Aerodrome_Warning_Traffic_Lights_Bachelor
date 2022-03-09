@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import TerskelForm from './TerskelForm';
 import allActions from '../Actions';
 
-import { defaultVerdier } from '../App'
 
 function DrawerTerskelverdier() {
 
@@ -52,10 +51,6 @@ function DrawerTerskelverdier() {
             })
     }
 
-    const tilbakestillTerskelverdier = () => {
-      dispatch(allActions.terskelActions.setTerskel(defaultVerdier));
-    }
-
     const toggleDrawer =
     (anchor: Anchor, open: boolean) =>
     (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -82,15 +77,12 @@ function DrawerTerskelverdier() {
           onKeyDown={toggleDrawer(anchor, false)}
         >
             <div style={{ marginLeft: '25px'}}>
-                <h2>Sett terskelverdier her</h2>
+                <h2 style={{color:"#0090a8"}}>Sett terskelverdier her</h2>
             </div>
             <Divider />
-            <div style={{ marginLeft: '25px'}}>
+            <div style={{ marginLeft: 0}}>
                 <TerskelForm />
             </div>
-          
-          <Divider />
-          <Button onClick={tilbakestillTerskelverdier} variant="outlined">Tilbakestill</Button>
           
         </Box>
       );
