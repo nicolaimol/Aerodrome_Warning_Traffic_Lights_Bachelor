@@ -1,4 +1,5 @@
 import { makeStyles } from "@material-ui/styles";
+import React from "react";
 
 const part = {
     thumb: {
@@ -52,8 +53,7 @@ const partRevers = {
     }
 }
 
-
-export function generateStyle(value: number, max: number, min: number, revers: boolean) {
+function generateStyle(value: number, max: number, min: number, revers: boolean) {
 
     const now = Date.now()
 
@@ -82,7 +82,7 @@ export function generateStyle(value: number, max: number, min: number, revers: b
     const classes = styles()
 
     const diff = Date.now() - now
-    console.log("Diff:", diff)
+    //console.log("Diff:", diff)
     return {
         thumb: classes.thumb,
         rail: classes.rail,
@@ -93,3 +93,5 @@ export function generateStyle(value: number, max: number, min: number, revers: b
     }
 
 }
+
+export { generateStyle }
