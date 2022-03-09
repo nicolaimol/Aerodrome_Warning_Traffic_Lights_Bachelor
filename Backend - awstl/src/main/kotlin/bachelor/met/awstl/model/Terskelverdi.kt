@@ -18,7 +18,8 @@ class Terskelverdi() {
 
     var airTempMin: Double = 0.0
     var airTempMax: Double = 0.0
-    var precipitationAmmount: Double = 0.0
+    var precipitationMin: Double = 0.0
+    var precipitationMax: Double = 0.0
     var windSpeedMin: Double = 0.0
     var windSpeedMax: Double = 0.0
     var windGustMin: Double = 0.0
@@ -45,7 +46,8 @@ class Terskelverdi() {
         id: String,
         airTempMin: Double,
         airTempMax: Double,
-        precipitationAmmount: Double,
+        precipitationMin: Double,
+        precipitationMax: Double,
         windSpeedMin: Double,
         windSpeedMax: Double,
         windGustMin: Double,
@@ -63,7 +65,8 @@ class Terskelverdi() {
         this.id = id
         this.airTempMin = airTempMin
         this.airTempMax = airTempMax
-        this.precipitationAmmount = precipitationAmmount
+        this.precipitationMin = precipitationMin
+        this.precipitationMax = precipitationMax
         this.windSpeedMin = windSpeedMin
         this.windSpeedMax = windSpeedMax
         this.windGustMin = windGustMin
@@ -82,7 +85,8 @@ class Terskelverdi() {
         this.id = id
         this.airTempMin = dto.airTempMin
         this.airTempMax = dto.airTempMax
-        this.precipitationAmmount = dto.precipitationAmmount
+        this.precipitationMin = dto.precipitationMin
+        this.precipitationMax = dto.precipitationMax
         this.windSpeedMin = dto.windSpeedMin
         this.windSpeedMax = dto.windSpeedMax
         this.windGustMin = dto.windGustMin
@@ -100,7 +104,8 @@ class Terskelverdi() {
     fun update(dto: TerskelverdiDto) {
         this.airTempMin = dto.airTempMin
         this.airTempMax = dto.airTempMax
-        this.precipitationAmmount = dto.precipitationAmmount
+        this.precipitationMin = dto.precipitationMin
+        this.precipitationMax = dto.precipitationMax
         this.windSpeedMin = dto.windSpeedMin
         this.windSpeedMax = dto.windSpeedMax
         this.windGustMin = dto.windGustMin
