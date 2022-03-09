@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import TerskelForm from './TerskelForm';
 import allActions from '../Actions';
 
+import { defaultVerdier } from '../App'
+
 function DrawerTerskelverdier() {
 
     type Anchor = 'left'
@@ -41,8 +43,6 @@ function DrawerTerskelverdier() {
 
         console.log(obj)
 
-
-
         axios.post(url, obj)
             .then((response) => {
                 console.log(response)
@@ -50,8 +50,10 @@ function DrawerTerskelverdier() {
             .catch((error) => {
                 console.log(error)
             })
+    }
 
-
+    const tilbakestillTerskelverdier = () => {
+      dispatch(allActions.terskelActions.setTerskel(defaultVerdier));
     }
 
     const toggleDrawer =
@@ -88,6 +90,7 @@ function DrawerTerskelverdier() {
             </div>
           
           <Divider />
+          <Button onClick={tilbakestillTerskelverdier} variant="outlined">Tilbakestill</Button>
           
         </Box>
       );

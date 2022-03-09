@@ -18,6 +18,24 @@ import allActions from './Actions';
  * Footer: #496c80
  */
 
+ export const defaultVerdier = {
+    airTempMin: 3,
+    airTempMax: -10,
+    precipitationMin: 0,
+    precipitationMax: 1,
+    windSpeedMin: 15,
+    windSpeedMax: 25,
+    windGustMin: 20,
+    windGustMax: 30,
+    probThunderMin: 20,
+    probThunderMax: 40,
+    humidityMin: 90,
+    humidityMax: 98,
+    fog: 50,
+    //probIce: 0, ????????????????????????????
+    crosswindMin: 7,
+    crosswindMax: 15
+};
 
 function App() {
 
@@ -35,17 +53,7 @@ function App() {
         url = "/api/terskel"
     }
 
-    const defaultVerdier = {
-        airTemp: 0,
-        precipitationAmmount: 20,
-        windSpeed: 30,
-        windGust: 40,
-        probThunder: 0,
-        humidity: 2,
-        fog: 40,
-        probIce: 20,
-        crosswind: 50,
-    };
+    
 
     useEffect(() => {
 
@@ -123,7 +131,7 @@ function App() {
 
                 <Route path="/list" element={<Testlist />} />
                 <Route path="/input" element={<Testinputs />} />
-                <Route path="/vis" element={<ShowInput />} />
+                <Route path="/  " element={<ShowInput />} />
 
             */}
 
