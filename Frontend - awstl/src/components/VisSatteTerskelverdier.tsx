@@ -9,14 +9,14 @@ function VisSatteTerskelverdier(props:{terskel: terskelData}) {
   let terskelverdier = [
     ['Lufttemperatur', `${props.terskel.airTempMin}, ${props.terskel.airTempMax}`, '°C'],
     ['Nedbør', `${props.terskel.precipitationMin}, ${props.terskel.precipitationMax}`, 'mm'],
-    ['Vindfart', `${props.terskel.windSpeedMin}, ${props.terskel.windSpeedMax}`, 'm/s'],
+    ['Vindfart', `${props.terskel.windSpeedMin}, ${props.terskel.windSpeedMax}`, 'kt'],
     //['Vindretning', props.windDirection, '°'],
-    ['Vindkast', `${props.terskel.windGustMin}, ${props.terskel.windGustMax}`, 'm/s'],
+    ['Vindkast', `${props.terskel.windGustMin}, ${props.terskel.windGustMax}`, 'kt'],
     ['Sannsynlighet torden', `${props.terskel.probThunderMin}, ${props.terskel.probThunderMax}`, '%'],
     //['Kondenseringstemperatur', props.dewpoint, '°C'],
     ['Luftfuktighet', `${props.terskel.humidityMin}, ${props.terskel.humidityMax}`, '%'],
     ['Tåke', props.terskel.fog, '%'],
-    ['Crosswind', `${props.terskel.crosswindMin}, ${props.terskel.crosswindMax}`, 'm/s']];
+    ['Crosswind', `${props.terskel.crosswindMin}, ${props.terskel.crosswindMax}`, 'kt']];
 
 
   
