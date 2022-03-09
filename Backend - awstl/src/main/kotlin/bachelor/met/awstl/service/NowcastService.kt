@@ -43,6 +43,18 @@ class NowcastService(
 
             getWeather(airports, dto)
 
+            /*
+            dto.nowcasts.forEach { it ->
+                it.properties.timeseries.forEach { innerIt ->
+                    run {
+                        val element = innerIt.data.instant.details
+                        element.wind_speed = element.wind_speed * 1.943844
+                        element.wind_speed_of_gust = element.wind_speed_of_gust * 1.943844
+                    }
+                }
+            }
+             */
+
             return dto
 
 
