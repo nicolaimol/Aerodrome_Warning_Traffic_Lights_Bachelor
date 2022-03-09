@@ -2,7 +2,7 @@ package bachelor.met.awstl.controller
 
 import bachelor.met.awstl.dto.NowcastDto
 import bachelor.met.awstl.exception.AirportNotFoundException
-import bachelor.met.awstl.exception.InternalExceptionHandler
+import bachelor.met.awstl.exception.handler.InternalExceptionHandler
 import bachelor.met.awstl.service.NowcastService
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
@@ -15,9 +15,7 @@ import org.springframework.http.MediaType
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 
 @ContextConfiguration(classes = [NowcastController::class])
@@ -81,7 +79,7 @@ internal class NowcastControllerIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON)
         )
             .andExpect(status().isInternalServerError)
-            .andExpect(content().string("feil"))
+            .andExpect(jsonPath("$.message").value("feil"))
     }
 
 

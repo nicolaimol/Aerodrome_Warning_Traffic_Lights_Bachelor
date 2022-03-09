@@ -1,14 +1,14 @@
 package bachelor.met.awstl.dto
 
 import bachelor.met.awstl.mapper.FlyplassToFlyplassDto
-import bachelor.met.awstl.model.Flyplass
 import bachelor.met.awstl.model.Terskelverdi
 
 class TerskelverdiDto(){
 
     var airTempMin: Double = 0.0
     var airTempMax: Double = 0.0
-    var precipitationAmmount: Double = 0.0
+    var precipitationMin: Double = 0.0
+    var precipitationMax: Double = 0.0
     var windSpeedMin: Double = 0.0
     var windSpeedMax: Double = 0.0
     var windGustMin: Double = 0.0
@@ -28,7 +28,8 @@ class TerskelverdiDto(){
     ): this() {
         this.airTempMin = terskel.airTempMin
         this.airTempMax = terskel.airTempMax
-        this.precipitationAmmount = terskel.precipitationAmmount
+        this.precipitationMin = terskel.precipitationMin
+        this.precipitationMax = terskel.precipitationMax
         this.windSpeedMin = terskel.windSpeedMin
         this.windSpeedMax = terskel.windSpeedMax
         this.windGustMin = terskel.windGustMin

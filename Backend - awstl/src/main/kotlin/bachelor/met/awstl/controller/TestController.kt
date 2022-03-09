@@ -68,4 +68,9 @@ class TestController(val repo: IFlyplassRepo) {
 
     @Autowired
     var env: Environment? = null
+
+    @GetMapping(value = ["/exception"])
+    fun getException(): ResponseEntity<Any> {
+        throw IllegalArgumentException("test exception")
+    }
 }

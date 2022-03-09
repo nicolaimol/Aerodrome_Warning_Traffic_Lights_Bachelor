@@ -4,7 +4,7 @@ import bachelor.met.awstl.dto.LocationForecastDto
 import bachelor.met.awstl.dto.locationforecast.Properties
 import bachelor.met.awstl.dto.locationforecast.Timeseries
 import bachelor.met.awstl.exception.AirportNotFoundException
-import bachelor.met.awstl.exception.InternalExceptionHandler
+import bachelor.met.awstl.exception.handler.InternalExceptionHandler
 import bachelor.met.awstl.service.LocationForecastService
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
@@ -16,10 +16,8 @@ import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.MediaType
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.MockMvcBuilder
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 
 @ContextConfiguration(classes = [LocationForecastController::class])
@@ -98,7 +96,7 @@ internal class LocationForecastControllerIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON)
         )
             .andExpect(status().isInternalServerError)
-            .andExpect(content().string("feil"))
+            .andExpect(jsonPath("$.message").value("feil"))
 
     }
 

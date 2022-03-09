@@ -2,7 +2,7 @@ package bachelor.met.awstl.controller
 
 import bachelor.met.awstl.dto.TafMetarDto
 import bachelor.met.awstl.exception.AirportNotFoundException
-import bachelor.met.awstl.exception.InternalExceptionHandler
+import bachelor.met.awstl.exception.handler.InternalExceptionHandler
 import bachelor.met.awstl.service.TafMetarService
 import org.hamcrest.Matchers
 import org.junit.jupiter.api.BeforeAll
@@ -17,8 +17,7 @@ import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 
 @ContextConfiguration(classes = [TafMetarController::class])
@@ -83,7 +82,7 @@ internal class TafMetarControllerIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON)
         )
             .andExpect(status().isInternalServerError)
-            .andExpect(content().string("feil"))
+            .andExpect(jsonPath("$.message").value("feil"))
 
     }
 

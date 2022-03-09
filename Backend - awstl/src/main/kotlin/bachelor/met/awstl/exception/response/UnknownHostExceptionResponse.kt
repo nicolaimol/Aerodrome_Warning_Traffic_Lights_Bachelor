@@ -1,4 +1,4 @@
-package bachelor.met.awstl.exception
+package bachelor.met.awstl.exception.response
 
 import org.springframework.http.HttpStatus
 import java.time.LocalDateTime

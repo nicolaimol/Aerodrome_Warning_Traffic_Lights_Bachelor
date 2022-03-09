@@ -1,5 +1,7 @@
-package bachelor.met.awstl.exception
+package bachelor.met.awstl.exception.handler
 
+import bachelor.met.awstl.exception.UnknownHostException
+import bachelor.met.awstl.exception.response.UnknownHostExceptionResponse
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
