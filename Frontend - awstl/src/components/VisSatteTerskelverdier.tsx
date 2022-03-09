@@ -19,9 +19,6 @@ function VisSatteTerskelverdier(props:{terskel: terskelData}) {
     ['Crosswind', `${props.terskel.crosswindMin}, ${props.terskel.crosswindMax}`, 'kt']];
 
 
-  
-
-  console.log(props);
 
   return (
     <>
