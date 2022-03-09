@@ -41,8 +41,6 @@ function DrawerTerskelverdier() {
 
         console.log(obj)
 
-
-
         axios.post(url, obj)
             .then((response) => {
                 console.log(response)
@@ -88,6 +86,7 @@ function DrawerTerskelverdier() {
             </div>
           
           <Divider />
+          <Button variant="outlined">Tilbakestill</Button>
           
         </Box>
       );
