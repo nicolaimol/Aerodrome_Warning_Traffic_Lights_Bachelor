@@ -34,7 +34,7 @@ function DrawerTerskelverdier() {
     const dispatch = useDispatch()
 
     const update = () => {
-        dispatch(allActions.terskelActions.setTerskel(formVerdier))
+        //dispatch(allActions.terskelActions.setTerskel(formVerdier))
 
         const obj = formVerdier
 
