@@ -16,8 +16,12 @@ function TerskelForm() {
     const handleSliderEndring = (navn: string) => (e: Event, verdi: any) => {
         setFormVerdier({
             ...formVerdier,
-            [navn]: verdi,
+            [navn + "Min"]: verdi[0],
+            [navn + "Max"]: verdi[1],
+
         })
+
+        
 
     }
 
@@ -25,8 +29,6 @@ function TerskelForm() {
         dispatch(allActions.terskelActions.setTerskel(formVerdier))
 
     }, [formVerdier])
-
-
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
@@ -39,10 +41,9 @@ function TerskelForm() {
       <div style={{ width: "70%" }}>
             Lufttemperatur terskelverdi
             <Slider
-              value={formVerdier.airTemp}
 
               onChange={handleSliderEndring("airTemp")}
-              defaultValue={0}
+              value={[formVerdier.airTempMin, formVerdier.airTempMax]}
               step={1}
               min={-60}
               max={60}
@@ -75,26 +76,26 @@ function TerskelForm() {
       <div style={{ width: "70%" }}>
         Nedbør terskelverdi
         <Slider
-          value={formVerdier.precipitationAmmount}
+          value={[formVerdier.precipitationMin, formVerdier.precipitationMax]}
 
-          onChange={handleSliderEndring("precipitationAmmount")}
+          onChange={handleSliderEndring("precipitation")}
           defaultValue={20}
-          step={1}
+          step={0.1}
           min={0}
-          max={60}
+          max={5}
           marks={[
             {
               value: 0,
               label: "0mm",
             },
             {
-                value: 30,
-                label: "30mm",
+                value: 2.5,
+                label: "2.5mm",
 
             },
             {
-              value: 60,
-              label: "60mm",
+              value: 5,
+              label: "5mm",
             },
           ]}
           valueLabelDisplay="off"
