@@ -20,13 +20,13 @@ class TerskelverdiController(val service: TerskelverdiService) {
     fun getTerskel(@CookieValue("terskel", defaultValue = "") terskel: String):ResponseEntity<Any> {
 
 
-        when(terskel) {
+        return when(terskel) {
             "" -> {
-                val ret = service.getTerskelverdi(terskel)
-                return ResponseEntity.ok(ret)
+                ResponseEntity.notFound().build()
             }
             else -> {
-                return ResponseEntity.notFound().build()
+                val ret = service.getTerskelverdi(terskel)
+                ResponseEntity.ok(ret)
             }
         }
 
