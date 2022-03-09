@@ -7,17 +7,16 @@ import DrawerTerskelverdier from './DrawerTerskelverdier';
 function VisSatteTerskelverdier(props:{terskel: terskelData}) {
 
   let terskelverdier = [
-    ['Lufttemperatur', props.terskel.airTemp, '°C'],
-    ['Nedbør', props.terskel.precipitationAmmount, 'mm'],
-    ['Vindfart', props.terskel.windSpeed, 'm/s'],
+    ['Lufttemperatur', `${props.terskel.airTempMin}, ${props.terskel.airTempMax}`, '°C'],
+    ['Nedbør', `${props.terskel.precipitationMin}, ${props.terskel.precipitationMax}`, 'mm'],
+    ['Vindfart', `${props.terskel.windSpeedMin}, ${props.terskel.windSpeedMax}`, 'm/s'],
     //['Vindretning', props.windDirection, '°'],
-    ['Vindkast', props.terskel.windGust, 'm/s'],
-    ['Sannsynlighet torden', props.terskel.probThunder, '%'],
+    ['Vindkast', `${props.terskel.windGustMin}, ${props.terskel.windGustMax}`, 'm/s'],
+    ['Sannsynlighet torden', `${props.terskel.probThunderMin}, ${props.terskel.probThunderMax}`, '%'],
     //['Kondenseringstemperatur', props.dewpoint, '°C'],
-    ['Luftfuktighet', props.terskel.humidity, '%'],
+    ['Luftfuktighet', `${props.terskel.humidityMin}, ${props.terskel.humidityMax}`, '%'],
     ['Tåke', props.terskel.fog, '%'],
-    ['Issansynlighet', props.terskel.probIce, '%'],
-    ['Crosswind', props.terskel.crosswind, 'm/s']];
+    ['Crosswind', `${props.terskel.crosswindMin}, ${props.terskel.crosswindMax}`, 'm/s']];
 
 
   
@@ -34,7 +33,7 @@ function VisSatteTerskelverdier(props:{terskel: terskelData}) {
           <div>
             {terskelverdier.map((verdi) => {
           return <Typography key={verdi[0]} gutterBottom style={{ color: '#0090a8', fontSize: 20}}>
-            {verdi[0]}: {verdi[1]}{verdi[2]}
+            {verdi[0]}: {verdi[1]} {verdi[2]}
           </Typography>
           })}
           </div>
