@@ -192,16 +192,16 @@ function TerskelForm() {
           value={[formVerdier.humidityMin, formVerdier.humidityMax]}
           onChange={handleSliderEndring("humidity")}
           step={1}
-          min={0}
+          min={40}
           max={100}
           marks={[
             {
-              value: 0,
-              label: "0%",
+              value: 40,
+              label: "40%",
             },
             {
-                value: 50,
-                label: "50%",
+                value: 70,
+                label: "70%",
 
             },
             {
