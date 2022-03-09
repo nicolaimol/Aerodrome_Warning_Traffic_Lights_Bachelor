@@ -4,6 +4,7 @@ import bachelor.met.awstl.dto.TerskelverdiDto
 import bachelor.met.awstl.exception.TerskelverdiNotFoundException
 import bachelor.met.awstl.model.Terskelverdi
 import bachelor.met.awstl.repo.ITerskelverdiRepo
+import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import java.util.Base64
@@ -12,7 +13,7 @@ import java.util.UUID
 @Service
 class TerskelverdiService(val repo: ITerskelverdiRepo, val service: FlyplassService) {
 
-    val logger = LoggerFactory.getLogger(TerskelverdiService::class.java)
+    val logger: Logger = LoggerFactory.getLogger(TerskelverdiService::class.java)
 
     fun addTerskelverdi(terskeDto: TerskelverdiDto): String {
         var random: String? = null
@@ -35,7 +36,7 @@ class TerskelverdiService(val repo: ITerskelverdiRepo, val service: FlyplassServ
 
     fun getTerskelverdi(base: String): TerskelverdiDto {
 
-        val id = Base64.getDecoder().decode(base).toString()
+        val id = String(Base64.getDecoder().decode(base))
 
         logger.info("Trying to get for id: $id")
         val terskel = getTerskelById(id)
@@ -45,7 +46,7 @@ class TerskelverdiService(val repo: ITerskelverdiRepo, val service: FlyplassServ
     }
 
     fun updateTerskelverdi(base: String, dto: TerskelverdiDto) {
-        val id = Base64.getDecoder().decode(base).toString()
+        val id = String(Base64.getDecoder().decode(base))
 
         val obj = getTerskelById(id)
 
