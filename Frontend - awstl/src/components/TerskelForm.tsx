@@ -1,5 +1,5 @@
 import { Slider, Divider, Button } from '@mui/material';
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import allActions from '../Actions';
 import * as buffer from "buffer";
@@ -7,41 +7,71 @@ import axios from 'axios'
 
 import { defaultVerdier } from '../App'
 import { generateStyle } from '../util/sliderStyleUtil'
+import SliderWrapper from './SliderWrapper';
 
 function TerskelForm() {
 
     const terskel = useSelector((state: any) => state.terskel.value)
     const airport = useSelector((state: any) => state.airport.value)
 
-    const [formVerdier, setFormVerdier] = useState(terskel);
+    const copy = JSON.parse(JSON.stringify(terskel))
+
+    //console.log("load", copy)
+
+    //const [formVerdier, setFormVerdier] = useState(terskel);
+    //console.log("init",formVerdier)
     const dispatch = useDispatch()
 
+    //console.log("rendering form")
+
     const handleSliderEndring = (navn: string) => (e: Event, verdi: any) => {
+        //console.log(verdi)
+
+        //console.log("old", copy)
+
+        const newTerskel ={
+            ...terskel,
+            [navn + "Min"]: verdi[0],
+            [navn + "Max"]: verdi[1]
+        }
+
+        //console.log("new", newTerskel)
+        dispatch(allActions.terskelActions.setTerskel(newTerskel))
+
+        /*
         setFormVerdier({
             ...formVerdier,
             [navn + "Min"]: verdi[0],
-            [navn + "Max"]: verdi[1],
-
+            [navn + "Max"]: verdi[1]
         })
+         */
     }
 
     const handleSliderEndringSingleValue = (navn: string) => (e: Event, verdi: any) => {
-      setFormVerdier({
+
+        /*
+        setFormVerdier({
           ...formVerdier,
           [navn]: verdi,
-          
-
       })
+
+         */
     }
 
-    const handleChange = useEffect(() => {
-        dispatch(allActions.terskelActions.setTerskel(formVerdier))
+    /*
+    useEffect(() => {
+        //dispatch(allActions.terskelActions.setTerskel(formVerdier))
+        //console.log(formVerdier)
+        //console.log(terskel)
     }, [formVerdier])
+     */
 
     const tilbakestillTerskelverdier = () => {
-        setFormVerdier(defaultVerdier)
 
-        //dispatch(allActions.terskelActions.setTerskel(defaultVerdier));
+        //setFormVerdier(defaultVerdier)
+        //formVerdier = defaultVerdier
+
+        dispatch(allActions.terskelActions.setTerskel(defaultVerdier));
     }
 
     const handleSubmit = (e: any) => {
@@ -55,55 +85,62 @@ function TerskelForm() {
       <div style={{width: "calc(100% - 40px)", padding:"5px 20px", backgroundColor: "#dff2f6"}}>
           <span style={{color: "#0090a8"}}>Lufttemperatur</span>
           <div style={{display: 'flex', flexDirection: "row"}}>
-            <Slider
-            classes={
-                generateStyle(formVerdier.airTempMax, 60, -60, false)
-            }
-              onChange={handleSliderEndring("airTemp")}
-              value={[formVerdier.airTempMin, formVerdier.airTempMax]}
-              step={1}
-              min={-60}
-              max={60}
-              marks={[
-                {
-                  value: -60,
-                  label: "-60°C",
-                },
-                {
-                    value: -30,
-                    label: "-30°C",
-                },
-                {
-                  value: 0,
-                  label: "0°C",
-                },
-                {
-                    value: 30,
-                    label: "30°C",
-                    
-                },
-                {
-                  value: 60,
-                  label: "60°C",
-                },
-              ]}
-              valueLabelDisplay="auto"
+            <SliderWrapper
+                minValue={terskel.airTempMin}
+                maxValue={terskel.airTempMax}
+
+                reverse={false}
+                field={"airTemp"}
+
+                handleSliderEndring={handleSliderEndring}
+
+                step={1}
+                min={-60}
+                max={60}
+
+                marks={[
+                    {
+                        value: -60,
+                        label: "-60°C",
+                    },
+                    {
+                        value: -30,
+                        label: "-30°C",
+                    },
+                    {
+                        value: 0,
+                        label: "0°C",
+                    },
+                    {
+                        value: 30,
+                        label: "30°C",
+
+                    },
+                    {
+                        value: 60,
+                        label: "60°C",
+                    },
+                ]}
             />
-          <p style={{marginLeft: '30px', width: 'fit-content', whiteSpace: "nowrap"}}>{`${formVerdier.airTempMin}, ${formVerdier.airTempMax}`}</p>
+          <p style={{marginLeft: '30px', width: 'fit-content', whiteSpace: "nowrap"}}>{`${terskel.airTempMin}, ${terskel.airTempMax}`}</p>
           </div>
           </div>
       <div style={{ width: "calc(100% - 40px)", padding:"5px 20px" }}>
           <span style={{color: "#0090a8"}}>Nedbør</span>
-        <Slider
-            classes={
-                generateStyle(formVerdier.precipitationMax, 5, 0, true)
-            }
+        <SliderWrapper
 
-          value={[formVerdier.precipitationMin, formVerdier.precipitationMax]}
-          onChange={handleSliderEndring("precipitation")}
+            minValue={terskel.precipitationMin}
+            maxValue={terskel.precipitationMax}
+
+            field={"precipitation"}
+            reverse={true}
+
+            handleSliderEndring={handleSliderEndring}
+
           step={0.1}
           min={0}
           max={5}
+
           marks={[
             {
               value: 0,
@@ -119,21 +156,25 @@ function TerskelForm() {
               label: "5mm",
             },
           ]}
-          valueLabelDisplay="auto"
+
         />
       </div>
       <div style={{ width: "calc(100% - 40px)", padding:"5px 20px", backgroundColor: "#dff2f6" }}>
           <span style={{color: "#0090a8"}}>Vindfart</span>
-        <Slider
-            classes={
-                generateStyle(formVerdier.windSpeedMax, 60, 0, true)
-            }
+        <SliderWrapper
 
-          value={[formVerdier.windSpeedMin, formVerdier.windSpeedMax]}
-          onChange={handleSliderEndring("windSpeed")}
+            minValue={terskel.windSpeedMin}
+            maxValue={terskel.windSpeedMax}
+
+            field={"windSpeed"}
+            reverse={true}
+
+            handleSliderEndring={handleSliderEndring}
+
           step={1}
           min={0}
           max={60}
+
           marks={[
             {
               value: 0,
@@ -149,21 +190,24 @@ function TerskelForm() {
               label: "60 kt",
             },
           ]}
-          valueLabelDisplay="auto"
         />
       </div>
       <div style={{ width: "calc(100% - 40px)", padding:"5px 20px" }}>
           <span style={{color: "#0090a8"}}>Vindkast</span>
-        <Slider
-            classes={
-                generateStyle(formVerdier.windGustMax, 60, 0, true)
-            }
+        <SliderWrapper
 
-          value={[formVerdier.windGustMin, formVerdier.windGustMax]}
-          onChange={handleSliderEndring("windGust")}
+            minValue={terskel.windGustMin}
+            maxValue={terskel.windGustMax}
+
+            field={"windGust"}
+            reverse={true}
+
+            handleSliderEndring={handleSliderEndring}
+
           step={1}
           min={0}
           max={60}
+
           marks={[
             {
               value: 0,
@@ -179,21 +223,24 @@ function TerskelForm() {
               label: "60 kt",
             },
           ]}
-          valueLabelDisplay="auto"
         />
       </div>
       <div style={{ width: "calc(100% - 40px)", padding:"5px 20px", backgroundColor: "#dff2f6" }}>
           <span style={{color: "#0090a8"}}>Sannsynlighet torden</span>
-        <Slider
-            classes={
-                generateStyle(formVerdier.probThunderMax, 100, 0, true)
-            }
+        <SliderWrapper
 
-          value={[formVerdier.probThunderMin, formVerdier.probThunderMax]}
-          onChange={handleSliderEndring("probThunder")}
+            minValue={terskel.probThunderMin}
+            maxValue={terskel.probThunderMax}
+
+            field={"probThunder"}
+            reverse={true}
+
+            handleSliderEndring={handleSliderEndring}
+
           step={1}
           min={0}
           max={100}
+
           marks={[
             {
               value: 0,
@@ -209,21 +256,24 @@ function TerskelForm() {
               label: "100%",
             },
           ]}
-          valueLabelDisplay="auto"
         />
       </div>
       <div style={{ width: "calc(100% - 40px)", padding:"5px 20px" }}>
           <span style={{color: "#0090a8"}}>Luftfuktighet</span>
-        <Slider
-            classes={
-                generateStyle(formVerdier.humidityMax, 100, 40, true)
-            }
+        <SliderWrapper
 
-          value={[formVerdier.humidityMin, formVerdier.humidityMax]}
-          onChange={handleSliderEndring("humidity")}
+            minValue={terskel.humidityMin}
+            maxValue={terskel.humidityMax}
+
+            field={"humidity"}
+          reverse={true}
+
+            handleSliderEndring={handleSliderEndring}
+
           step={1}
           min={40}
           max={100}
+
           marks={[
             {
               value: 40,
@@ -239,15 +289,16 @@ function TerskelForm() {
               label: "100%",
             },
           ]}
-          valueLabelDisplay="auto"
+
         />
       </div>
       <div style={{ width: "calc(100% - 40px)", padding:"5px 20px", backgroundColor: "#dff2f6" }}>
           <span style={{color: "#0090a8"}}>Tåke</span>
         <Slider
+
             disabled
 
-          value={formVerdier.fog}
+          value={terskel.fog}
           onChange={handleSliderEndringSingleValue("fog")}
           step={1}
           min={0}
@@ -272,16 +323,20 @@ function TerskelForm() {
       </div>
       <div style={{ width: "calc(100% - 40px)", padding:"5px 20px" }}>
           <span style={{color: "#0090a8"}}>Crosswind</span>
-        <Slider
-            classes={
-                generateStyle(formVerdier.crosswindMax, 60, 0, true)
-            }
+        <SliderWrapper
 
-          value={[formVerdier.crosswindMin, formVerdier.crosswindMax]}
-          onChange={handleSliderEndring("crosswind")}
+            minValue={terskel.crosswindMin}
+            maxValue={terskel.crosswindMax}
+
+            field={"crosswind"}
+            reverse={true}
+
+            handleSliderEndring={handleSliderEndring}
+
           step={1}
           min={0}
           max={60}
+
           marks={[
             {
               value: 0,
@@ -297,7 +352,7 @@ function TerskelForm() {
               label: "60 kt",
             },
           ]}
-          valueLabelDisplay="auto"
+
         />
       </div>
     </form>
@@ -307,4 +362,5 @@ function TerskelForm() {
   )
 }
 
+//export default React.memo(TerskelForm)
 export default TerskelForm
