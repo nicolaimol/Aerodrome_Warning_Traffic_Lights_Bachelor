@@ -2,7 +2,7 @@ package bachelor.met.awstl.controller
 
 import bachelor.met.awstl.dto.TafMetarDto
 import bachelor.met.awstl.exception.AirportNotFoundException
-import bachelor.met.awstl.exception.InternalExceptionHandler
+import bachelor.met.awstl.exception.handler.InternalExceptionHandler
 import bachelor.met.awstl.service.TafMetarService
 import org.hamcrest.Matchers
 import org.junit.jupiter.api.BeforeAll
