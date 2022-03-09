@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import TerskelForm from './TerskelForm';
 import allActions from '../Actions';
 
+import { defaultVerdier } from '../App'
+
 function DrawerTerskelverdier() {
 
     type Anchor = 'left'
@@ -48,8 +50,10 @@ function DrawerTerskelverdier() {
             .catch((error) => {
                 console.log(error)
             })
+    }
 
-
+    const tilbakestillTerskelverdier = () => {
+      dispatch(allActions.terskelActions.setTerskel(defaultVerdier));
     }
 
     const toggleDrawer =
@@ -86,7 +90,7 @@ function DrawerTerskelverdier() {
             </div>
           
           <Divider />
-          <Button variant="outlined">Tilbakestill</Button>
+          <Button onClick={tilbakestillTerskelverdier} variant="outlined">Tilbakestill</Button>
           
         </Box>
       );
