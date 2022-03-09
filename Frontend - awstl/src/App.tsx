@@ -79,6 +79,8 @@ function App() {
     const nowcast = useSelector((state: any) => state.nowcast.value)
     const airport = useSelector((state: any) => state.airport.value)
 
+    const [active, setActive] = useState<any>(null)
+
     useEffect(() => {
         if (airport != undefined) {
             axios.get(`${urlNowcast}${airport.icao}`) // Henter værdata for 3 flyplasser + en egendefinert
@@ -86,9 +88,28 @@ function App() {
                     dispatch(allActions.nowcastAction.setNowcast(response.data))
                     console.log("henter fra server")
                 })
-        } else {
-
         }
+
+        /*
+        if (active) {
+            clearInterval(active)
+            setActive(null)
+        }
+
+
+        const interval = setInterval(() => {
+            console.log(airport)
+        }, 10000)
+
+        setActive(interval)
+
+         */
+
+
+
+        //return () => clearInterval(active)
+
+
     },[airport])
 
 
