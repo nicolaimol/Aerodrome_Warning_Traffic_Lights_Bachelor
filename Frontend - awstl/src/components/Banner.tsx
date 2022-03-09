@@ -102,7 +102,7 @@ export default function Banner() {
     <>
     <div style={{ minHeight: 'fit-content', width: '100%', backgroundColor: '#dff2f6'}}> {/** banneret tar uansett halvparten av skjermen, men om den behøver mer vil den utvides */}
       <Container sx={{ color: '#0090a8' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-evenly', flexFlow: 'row wrap', alignItems: 'center'}}> {/** Denne div-en inneholder tittel og AutoComplete komponent */}
+        <div style={{ display: 'flex', justifyContent: 'space-evenly', textAlign: 'center', flexFlow: 'row wrap', alignItems: 'center'}}> {/** Denne div-en inneholder tittel og AutoComplete komponent */}
         {/** Tittel */}
           <Typography style={{ maxWidth: '60%'}} sx={{ pt: 5}} component="h1" variant="h3" color="inherit" gutterBottom>
             Aerodrome Warning Traffic Light System
@@ -132,7 +132,7 @@ export default function Banner() {
 
         {/** Beskrivelse av nettsiden */}
 
-      <Typography sx={{ pb: 5}} variant="h5" color="inherit" paragraph>
+      <Typography sx={{ pb: 5}} style={{textAlign: 'center'}} variant="h5" color="inherit" paragraph>
         Dette er en tjeneste for å fortelle om det er trygt med aktivitet på en flyplass i Norge.
       </Typography>
     </Container>
