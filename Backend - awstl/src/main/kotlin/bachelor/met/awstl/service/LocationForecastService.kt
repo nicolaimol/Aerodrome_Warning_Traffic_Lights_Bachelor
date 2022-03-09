@@ -23,16 +23,26 @@ class LocationForecastService(val httpService: HttpService, val flyplass: Flypla
     @Cacheable(value = ["locfor"], key = "#icao")
     fun getForecast(icao: String): LocationForecastDto? {
 
-        val airport = flyplass.getFlyplass(icao)!!
+        val airport = flyplass.getFlyplass(icao)
 
-        var queryParams: HashMap<String, String> = HashMap();
+        val queryParams: HashMap<String, String> = HashMap();
         queryParams["altitude"] = airport.altitude
         queryParams["lat"] = airport.lat
         queryParams["lon"] = airport.lon
 
         logger.info("Getting data from $url")
 
-        return httpService.hentData(url, LocationForecastDto::class.java, queryParams)
+        val unformed = httpService.hentData(url, LocationForecastDto::class.java, queryParams)
+
+        /*
+        unformed.properties!!.timeseries!!.forEach { it ->
+            val el = it.data!!.instant!!.details!!
+            el["wind_speed"] = el["wind_speed"]!! * 1.943844
+            el["wind_speed_of_gust"] = el["wind_speed_of_gust"]!! * 1.943844
+        }
+         */
+
+        return unformed
 
     }
 
