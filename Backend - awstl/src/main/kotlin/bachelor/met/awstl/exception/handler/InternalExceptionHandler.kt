@@ -41,7 +41,7 @@ class InternalExceptionHandler {
             httpStatus = HttpStatus.INTERNAL_SERVER_ERROR
         )
 
-        return ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR)
+        return ResponseEntity.internalServerError().header("content-type", "application/json").body(response)
 
     }
 }
