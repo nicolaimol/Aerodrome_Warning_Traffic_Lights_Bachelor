@@ -55,24 +55,28 @@ const partRevers = {
 
 function generateStyle(value: number, max: number, min: number, revers: boolean) {
 
-    const now = Date.now()
+    //const resten = revers ? partRevers : part
 
-    const resten = revers ? partRevers : part
+    const prosent = ((value - min)*100)/(max-min)
+
     let styles = null
     if (!revers) {
+
        styles = makeStyles((theme:any) => ({
-            ...resten,
+            ...part,
             rail: {
                 opacity: 0.6,
-                background: `linear-gradient(to right, red, red ${((value + (min < 0 ? - min : 0))*100)/(max-min)}%, green ${((value + (min < 0 ? - min : 0))*100)/(max-min)}%, green);`
+                background: `linear-gradient(to right, red, red ${prosent}%
+                , green ${prosent}%, green);`
             }
         }));
     } else {
        styles = makeStyles((theme:any) => ({
-            ...resten,
+            ...partRevers,
             rail: {
                 opacity: 0.6,
-                background: `linear-gradient(to right, green, green ${((value + (min < 0 ? - min : 0))*100)/(max-min)}%, red ${((value + (min < 0 ? - min : 0))*100)/(max-min)}%, red);`
+                background: `linear-gradient(to right, green, green ${prosent}%
+                , red ${prosent}%, red);`
             }
         }));
     }
@@ -81,8 +85,6 @@ function generateStyle(value: number, max: number, min: number, revers: boolean)
 
     const classes = styles()
 
-    const diff = Date.now() - now
-    //console.log("Diff:", diff)
     return {
         thumb: classes.thumb,
         rail: classes.rail,
