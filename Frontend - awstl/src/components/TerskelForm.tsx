@@ -1,5 +1,5 @@
 import { Slider, Divider, Button } from '@mui/material';
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect, useMemo, useCallback } from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import allActions from '../Actions';
 import * as buffer from "buffer";
@@ -18,25 +18,40 @@ function TerskelForm() {
 
     //console.log("load", copy)
 
-    //const [formVerdier, setFormVerdier] = useState(terskel);
+    const [formVerdier, setFormVerdier] = useState(terskel);
     //console.log("init",formVerdier)
     const dispatch = useDispatch()
 
     //console.log("rendering form")
 
-    const handleSliderEndring = (navn: string) => (e: Event, verdi: any) => {
+
+    const handleSliderEndring = useCallback((navn: string) => (e: Event, verdi: any) => {
         //console.log(verdi)
 
-        //console.log("old", copy)
+        //console.log(navn, e, verdi)
 
+        setFormVerdier((setForm: any) => {
+
+            return {
+                ...setForm,
+                [navn + "Min"]: verdi[0],
+                [navn + "Max"]: verdi[1]
+            }
+        })
+
+        //console.log("old", terskel)
+
+        /*
         const newTerskel ={
             ...terskel,
             [navn + "Min"]: verdi[0],
             [navn + "Max"]: verdi[1]
         }
 
+         */
+
         //console.log("new", newTerskel)
-        dispatch(allActions.terskelActions.setTerskel(newTerskel))
+        //dispatch(allActions.terskelActions.setTerskel(newTerskel))
 
         /*
         setFormVerdier({
@@ -45,7 +60,7 @@ function TerskelForm() {
             [navn + "Max"]: verdi[1]
         })
          */
-    }
+    }, [])
 
     const handleSliderEndringSingleValue = (navn: string) => (e: Event, verdi: any) => {
 
@@ -57,14 +72,12 @@ function TerskelForm() {
 
          */
     }
-
-    /*
     useEffect(() => {
-        //dispatch(allActions.terskelActions.setTerskel(formVerdier))
+        dispatch(allActions.terskelActions.setTerskel(formVerdier))
         //console.log(formVerdier)
         //console.log(terskel)
     }, [formVerdier])
-     */
+
 
     const tilbakestillTerskelverdier = () => {
 
