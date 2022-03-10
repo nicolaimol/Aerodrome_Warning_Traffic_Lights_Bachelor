@@ -369,7 +369,7 @@ function TerskelForm() {
         />
       </div>
     </form>
-        <Divider />
+        <Divider sx={{mb: 3}} />
         <Button onClick={tilbakestillTerskelverdier} variant="outlined">Tilbakestill</Button>
     </>
   )
