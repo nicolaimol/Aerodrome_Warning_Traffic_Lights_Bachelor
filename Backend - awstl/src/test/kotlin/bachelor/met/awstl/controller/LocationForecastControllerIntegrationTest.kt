@@ -4,6 +4,7 @@ import bachelor.met.awstl.dto.LocationForecastDto
 import bachelor.met.awstl.dto.locationforecast.Properties
 import bachelor.met.awstl.dto.locationforecast.Timeseries
 import bachelor.met.awstl.exception.AirportNotFoundException
+import bachelor.met.awstl.exception.handler.AirportNotFoundExceptionHandler
 import bachelor.met.awstl.exception.handler.InternalExceptionHandler
 import bachelor.met.awstl.service.LocationForecastService
 import org.junit.jupiter.api.BeforeAll
@@ -17,6 +18,7 @@ import org.springframework.http.MediaType
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 
@@ -35,7 +37,7 @@ internal class LocationForecastControllerIntegrationTest {
     fun setUp () {
         mockMvc = MockMvcBuilders
             .standaloneSetup(LocationForecastController(service!!))
-            .setControllerAdvice(InternalExceptionHandler())
+            .setControllerAdvice(InternalExceptionHandler(), AirportNotFoundExceptionHandler())
             .build()
     }
 
@@ -81,6 +83,7 @@ internal class LocationForecastControllerIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON)
         )
             .andExpect(status().isBadRequest)
+            .andDo(MockMvcResultHandlers.print())
             .andExpect(content().string("feil"))
     }
 
