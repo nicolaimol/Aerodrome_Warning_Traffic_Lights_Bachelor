@@ -2,6 +2,7 @@ package bachelor.met.awstl.controller
 
 import bachelor.met.awstl.dto.TafMetarDto
 import bachelor.met.awstl.exception.AirportNotFoundException
+import bachelor.met.awstl.exception.handler.AirportNotFoundExceptionHandler
 import bachelor.met.awstl.exception.handler.InternalExceptionHandler
 import bachelor.met.awstl.service.TafMetarService
 import org.hamcrest.Matchers
@@ -16,6 +17,7 @@ import org.springframework.http.MediaType
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
@@ -35,7 +37,7 @@ internal class TafMetarControllerIntegrationTest {
     fun setUp () {
         mockMvc = MockMvcBuilders
             .standaloneSetup(TafMetarController(service!!))
-            .setControllerAdvice(InternalExceptionHandler())
+            .setControllerAdvice(InternalExceptionHandler(), AirportNotFoundExceptionHandler())
             .build()
     }
 
@@ -67,6 +69,7 @@ internal class TafMetarControllerIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON)
         )
             .andExpect(status().isBadRequest)
+            .andDo(MockMvcResultHandlers.print())
             .andExpect(content().string("feil"))
     }
 
