@@ -25,9 +25,11 @@ function SliderWrapper(props: any) {
 
     const [values, setValue] = useState([props.minValue, props.maxValue])
 
+    /*
     const changeVisual = (event?: Event, verdi?: any) => {
         setValue(verdi)
     }
+     */
 
     /*
     useEffect(() => {
@@ -42,8 +44,8 @@ function SliderWrapper(props: any) {
             generateStyle(((props.maxValue + props.minValue)/2), props.max, props.min, props.reverse)
         }
         onChangeCommitted={props?.handleSliderEndring(props.field)}
-        onChange={changeVisual}
-        value={values}
+        //onChange={changeVisual}
+        defaultValue={values}
         step={props.step}
         min={props.min}
         max={props.max}
