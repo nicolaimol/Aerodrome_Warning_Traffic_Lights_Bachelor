@@ -1,6 +1,8 @@
 package bachelor.met.awstl.controller
 
+import bachelor.met.awstl.dto.FlyplassDto
 import bachelor.met.awstl.mapper.FlyplassToFlyplassDto
+import bachelor.met.awstl.model.Flyplass
 import bachelor.met.awstl.service.FlyplassService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.CrossOrigin
@@ -24,12 +26,12 @@ import org.springframework.web.bind.annotation.RestController
 class FlyplassController(var service: FlyplassService) {
 
     @GetMapping(value = ["/airport/dto"])
-    fun getAllAirportsDto(): ResponseEntity<Any> {
+    fun getAllAirportsDto(): ResponseEntity<List<FlyplassDto>> {
         return ResponseEntity.ok(service.getAllFlyplass().map { FlyplassToFlyplassDto.convert(it) })
     }
 
     @GetMapping(value = ["/airport"])
-    fun getAllAirports(): ResponseEntity<Any> {
+    fun getAllAirports(): ResponseEntity<List<Flyplass>> {
         return ResponseEntity.ok(service.getAllFlyplass())
     }
 
