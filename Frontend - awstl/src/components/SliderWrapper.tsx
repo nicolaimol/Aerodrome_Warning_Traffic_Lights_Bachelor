@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { Slider } from "@mui/material";
 import { generateStyle } from '../util/sliderStyleUtil'
 
@@ -21,16 +21,29 @@ function checkEqual(prev: any, next: any) {
 
 function SliderWrapper(props: any) {
 
-    //console.log("render", props.field)
+    console.log("render", props.field)
+
+    const [values, setValue] = useState([props.minValue, props.maxValue])
+
+    const changeVisual = (event?: Event, verdi?: any) => {
+        setValue(verdi)
+    }
+
+    /*
+    useEffect(() => {
+        setValue([props.minValue, props.maxValue])
+    }, [props])
+    */
 
     return (
 
     <Slider
         classes={
-            generateStyle(props.maxValue, props.max, props.min, props.reverse)
+            generateStyle(((props.maxValue + props.minValue)/2), props.max, props.min, props.reverse)
         }
-        onChange={props.handleSliderEndring(props.field)}
-        value={[props.minValue, props.maxValue]}
+        onChangeCommitted={props?.handleSliderEndring(props.field)}
+        onChange={changeVisual}
+        value={values}
         step={props.step}
         min={props.min}
         max={props.max}
