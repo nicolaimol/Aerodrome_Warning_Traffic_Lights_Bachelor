@@ -1,5 +1,6 @@
 package bachelor.met.awstl.controller
 
+import bachelor.met.awstl.dto.LocationForecastDto
 import bachelor.met.awstl.exception.AirportNotFoundException
 import bachelor.met.awstl.service.LocationForecastService
 import org.slf4j.LoggerFactory
@@ -38,16 +39,12 @@ class LocationForecastController(val service: LocationForecastService) {
     }
 
     @GetMapping(value = ["/locationforecast"])
-    fun getLocationForecastIcao(@RequestParam(name = "icao")icao: String): ResponseEntity<Any> {
-        try {
-            val res = service.getForecast(icao)
+    fun getLocationForecastIcao(@RequestParam(name = "icao")icao: String): ResponseEntity<LocationForecastDto> {
+        val res = service.getForecast(icao)
 
-            res!!.properties!!.timeseries = res.properties!!.timeseries!!.filterIndexed {index, _ -> index < 58}.toTypedArray()
+        res!!.properties!!.timeseries = res.properties!!.timeseries!!.filterIndexed {index, _ -> index < 58}.toTypedArray()
 
-            return ResponseEntity.ok(res)
-        } catch (e: AirportNotFoundException) {
-            logger.error(e.message)
-            return ResponseEntity.badRequest().body(e.message)
-        }
+        return ResponseEntity.ok(res)
+
     }
 }
