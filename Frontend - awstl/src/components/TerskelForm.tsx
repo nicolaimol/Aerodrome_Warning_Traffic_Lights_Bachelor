@@ -81,7 +81,7 @@ function TerskelForm() {
 
     const tilbakestillTerskelverdier = () => {
 
-        //setFormVerdier(defaultVerdier)
+        setFormVerdier(defaultVerdier)
         //formVerdier = defaultVerdier
 
         dispatch(allActions.terskelActions.setTerskel(defaultVerdier));
