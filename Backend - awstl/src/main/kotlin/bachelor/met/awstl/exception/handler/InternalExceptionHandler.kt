@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.MissingServletRequestParameterException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
+import org.springframework.web.bind.annotation.ResponseStatus
 import java.time.LocalDateTime
 
 @ControllerAdvice
@@ -18,8 +19,9 @@ class InternalExceptionHandler {
 
     val logger: Logger = LoggerFactory.getLogger(InternalExceptionHandler::class.java)
 
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = [MissingServletRequestParameterException::class])
-    fun missingParamException(e: MissingServletRequestParameterException): ResponseEntity<Any> {
+    fun missingParamException(e: MissingServletRequestParameterException): ResponseEntity<InternalExceptionResponse> {
 
         val response = InternalExceptionResponse(
             LocalDateTime.now(),
@@ -30,8 +32,9 @@ class InternalExceptionHandler {
         return ResponseEntity(response, HttpStatus.BAD_REQUEST)
     }
 
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(value = [Exception::class])
-    fun handleInternalException(e: Exception): ResponseEntity<Any> {
+    fun handleInternalException(e: Exception): ResponseEntity<InternalExceptionResponse> {
 
         logger.error("Handled error: ${e.message}")
 
