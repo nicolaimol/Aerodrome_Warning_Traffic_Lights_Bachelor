@@ -370,7 +370,10 @@ function TerskelForm() {
       </div>
     </form>
         <Divider sx={{mb: 3}} />
-        <Button onClick={tilbakestillTerskelverdier} variant="outlined">Tilbakestill</Button>
+        <div style={{ display: 'flex', justifyContent: 'right'}}>
+          <Button sx={{ mr: 3 }}onClick={tilbakestillTerskelverdier} variant="outlined">Tilbakestill</Button>
+        </div>
+        
     </>
   )
 }
