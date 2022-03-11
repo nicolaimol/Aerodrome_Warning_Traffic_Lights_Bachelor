@@ -1,5 +1,6 @@
 package bachelor.met.awstl.controller
 
+import bachelor.met.awstl.dto.NowcastDto
 import bachelor.met.awstl.exception.AirportNotFoundException
 import bachelor.met.awstl.service.NowcastService
 import org.slf4j.LoggerFactory
@@ -23,15 +24,12 @@ class NowcastController(val service: NowcastService) {
     val logger = LoggerFactory.getLogger(NowcastController::class.java)
 
     @GetMapping(value = ["/nowcast"])
-    fun getNowCast(@RequestParam("icao") icao: String): ResponseEntity<Any> {
-        try {
-            val ret = service.getNowcast(icao)
+    fun getNowCast(@RequestParam("icao") icao: String): ResponseEntity<NowcastDto> {
 
-            return ResponseEntity.ok(ret)
-        } catch (e: AirportNotFoundException) {
-            logger.error(e.message)
-            return ResponseEntity.badRequest().body(e.message)
-        }
+        val ret = service.getNowcast(icao)
+
+        return ResponseEntity.ok(ret)
+
     }
 
 
