@@ -58,10 +58,12 @@ class LocationForecastControllerUnitTest {
 
         Mockito.`when`(service!!.getForecast("test")).thenThrow(AirportNotFoundException("feil"))
 
-        val result = controller!!.getLocationForecastIcao("test")
+        val exception = assertThrows<AirportNotFoundException> {
+            val result = controller!!.getLocationForecastIcao("test")
+        }
 
-        assertThat(result.statusCode).isEqualByComparingTo(HttpStatus.BAD_REQUEST)
-        assertThat(result.body).isEqualTo("feil")
+        //assertThat(result.statusCode).isEqualByComparingTo(HttpStatus.BAD_REQUEST)
+        assertThat(exception.message).isEqualTo("feil")
 
     }
 
