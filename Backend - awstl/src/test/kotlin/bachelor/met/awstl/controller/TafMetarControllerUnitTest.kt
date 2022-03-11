@@ -39,10 +39,13 @@ class TafMetarControllerUnitTest {
     fun getTafMetarBadRequest() {
 
         Mockito.`when`(service!!.getMetar("test")).thenThrow(AirportNotFoundException("feil"))
-        val result = controller!!.getTafMetar("test")
+        val exception = assertThrows<AirportNotFoundException> {
+            val result = controller!!.getTafMetar("test")
+        }
 
-        assertThat(result.statusCode).isEqualByComparingTo(HttpStatus.BAD_REQUEST)
-        assertThat(result.body).isEqualTo("feil")
+
+        //assertThat(result.statusCode).isEqualByComparingTo(HttpStatus.BAD_REQUEST)
+        assertThat(exception.message).isEqualTo("feil")
     }
 
     @Test
