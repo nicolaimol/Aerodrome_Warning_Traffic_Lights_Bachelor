@@ -2,7 +2,7 @@ import React from 'react'
 import { Slider } from "@mui/material";
 import { generateStyle } from '../util/sliderStyleUtil'
 
-function chechEqual(prev: any, next: any) {
+function checkEqual(prev: any, next: any) {
     const bool = (prev.minValue === next.minValue && prev.maxValue === next.maxValue)
 
 
@@ -43,5 +43,5 @@ function SliderWrapper(props: any) {
 
 }
 
-export default React.memo(SliderWrapper, chechEqual)
+export default React.memo(SliderWrapper, checkEqual)
 //export default React.memo(SliderWrapper)
