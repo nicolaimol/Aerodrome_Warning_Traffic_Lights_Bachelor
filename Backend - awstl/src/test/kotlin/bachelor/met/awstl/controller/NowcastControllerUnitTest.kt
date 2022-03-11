@@ -40,10 +40,12 @@ class NowcastControllerUnitTest {
     fun getNowcastBadRequest() {
         Mockito.`when`(service!!.getNowcast("test")).thenThrow(AirportNotFoundException("feil"))
 
-        val result = controller!!.getNowCast("test")
+        val exception = assertThrows<AirportNotFoundException> {
+            val result = controller!!.getNowCast("test")
+        }
 
-        assertThat(result.statusCode).isEqualByComparingTo(HttpStatus.BAD_REQUEST)
-        assertThat(result.body).isEqualTo("feil")
+        //assertThat(result.statusCode).isEqualByComparingTo(HttpStatus.BAD_REQUEST)
+        assertThat(exception.message).isEqualTo("feil")
     }
 
     @Test
