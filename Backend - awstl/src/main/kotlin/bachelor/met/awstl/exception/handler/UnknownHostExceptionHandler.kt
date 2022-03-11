@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
+import org.springframework.web.bind.annotation.ResponseStatus
 import java.time.LocalDateTime
 
 @ControllerAdvice
@@ -15,8 +16,9 @@ class UnknownHostExceptionHandler {
 
     val logger: Logger = LoggerFactory.getLogger(UnknownHostExceptionHandler::class.java)
 
+    @ResponseStatus(value = HttpStatus.SERVICE_UNAVAILABLE)
     @ExceptionHandler(value = [UnknownHostException::class])
-    fun handleUnknownhostException(e: UnknownHostException): ResponseEntity<Any> {
+    fun handleUnknownhostException(e: UnknownHostException): ResponseEntity<UnknownHostExceptionResponse> {
 
         logger.error("${e.message} er ikke tilgjengelig")
 
