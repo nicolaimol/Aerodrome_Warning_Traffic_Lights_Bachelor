@@ -25,6 +25,7 @@ function Trafikklys() {
 
   const terskel = useSelector((state: any) => state.terskel.value)
   const nowcast = useSelector((state: any) => state.nowcast.value)
+  const airport = useSelector((state: any) => state.airport.value)
 
   const [color, setColor] = useState<string>("green")
 
@@ -33,7 +34,7 @@ function Trafikklys() {
 
     setColor(temp > terskel?.airTemp ? "green" : temp == terskel?.airTemp ? "yellow" : "red")
 
-    setColor(calcFarge(nowcast?.nowcasts[0].properties.timeseries[0].data.instant.details, terskel!!))
+    setColor(calcFarge(nowcast?.nowcasts[0].properties.timeseries[0].data.instant.details, terskel!!, airport!!))
 
 
   }, [terskel, nowcast])
