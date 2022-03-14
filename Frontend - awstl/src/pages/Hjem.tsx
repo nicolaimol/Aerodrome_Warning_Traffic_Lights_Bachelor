@@ -57,12 +57,6 @@ function Hjem() {
                   </div>
 
                 </Card>
-
-
-
-                <Skeleton variant="text" animation="wave"  />
-                <Skeleton variant="circular" animation="wave" sx={{margin: 'auto'}} width={80} height={80} />
-                <Skeleton variant="rectangular" animation="wave"  height={118} />
               </div>
               <div>
                 <Card sx={{ minWidth: 250, mb: 5, width: "100%", height: "fit-content" }}>
@@ -102,12 +96,6 @@ function Hjem() {
                   </div>
 
                 </Card>
-
-
-
-                <Skeleton variant="text" animation="wave"  />
-                <Skeleton variant="circular" animation="wave" sx={{margin: 'auto'}} width={80} height={80} />
-                <Skeleton variant="rectangular" animation="wave"  height={118} />
               </div>
               <div>
                 <Card sx={{ minWidth: 250, mb: 5, width: "100%", height: "fit-content" }}>
@@ -147,12 +135,6 @@ function Hjem() {
                   </div>
 
                 </Card>
-
-
-
-                <Skeleton variant="text" animation="wave"  />
-                <Skeleton variant="circular" animation="wave" sx={{margin: 'auto'}} width={80} height={80} />
-                <Skeleton variant="rectangular" animation="wave"  height={118} />
               </div>
               <div>
                 <Card sx={{ minWidth: 250, mb: 5, width: "100%", height: "fit-content" }}>
@@ -192,12 +174,6 @@ function Hjem() {
                   </div>
 
                 </Card>
-
-
-
-                <Skeleton variant="text" animation="wave"  />
-                <Skeleton variant="circular" animation="wave" sx={{margin: 'auto'}} width={80} height={80} />
-                <Skeleton variant="rectangular" animation="wave"  height={118} />
               </div>
 
             </div>
