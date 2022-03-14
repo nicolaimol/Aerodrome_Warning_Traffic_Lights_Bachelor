@@ -17,6 +17,7 @@ import {
 import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux';
 import allActions from '../Actions';
+import { calcFarge } from '../util/calcFarge';
 
 
 ChartJS.register(
@@ -64,10 +65,9 @@ function Tidslinje() {
 
     })
 
-    var airport:any = useSelector<string>((state:any) => state.airport.value)
-    if (airport == undefined) {
-        airport = {icao: "ENDU"}
-    }
+    const airport:any = useSelector<string>((state:any) => state.airport.value)
+    const terskel = useSelector((state: any) => state.terskel.value);
+    const locfor = useSelector((state: any) => state.weather.value)
 
     let url = ""
     if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') { // Uavhengig om det er local testing eller deployment så fungerer API kall
@@ -81,9 +81,8 @@ function Tidslinje() {
     }
 
     const [ver, setVer] = useState<any>()
-    const [temp,  setTemp] = useState(0);
-    const [labels, setLabels] = useState<any[]>([1,2,2,2,3,3,2,3,1,1,1,2,2])
-    const [dataset, setDataset] = useState<any[]>([1,2,2,2,3,3,2,3,1,1,1,2,2])
+    const [labels, setLabels] = useState<any[]>([])
+    const [dataset, setDataset] = useState<any[]>([])
 
 
     const [int, setInt] = useState<any>(null)
@@ -114,59 +113,59 @@ function Tidslinje() {
         clearInterval(int)
     }
 
-    //let labels = [1,2,2,2,3,3,2,3,1,1,1,2,2];
-    //let dataset = [1,2,2,2,3,3,2,3,1,1,1,2,2]
-
     const dispatch = useDispatch()
 
+
     useEffect(()=> {
-        console.log(airport)
-        axios.get(url + airport.icao)
-            .then((response:any) => {
-                //console.log(response)
-                const herVer = response.data.properties.timeseries
-                dispatch(allActions.grafikkAction.setGrafikk(herVer[0]))
-                setVer(herVer)
-                setLabels(herVer.map((it: any) => {
-                    let string = new Date(it.time).toLocaleString();
-                    let list = string.split(",")
-                    //console.table(list)
+        if(!airport) return;
+        const herVer = locfor?.data.properties.timeseries
+        dispatch(allActions.grafikkAction.setGrafikk(herVer[0]))
+        setVer(herVer)
+        setLabels(herVer.map((it: any) => {
+            let string = new Date(it.time).toLocaleString();
+            let list = string.split(",")
+            //console.table(list)
 
-                    let dato = list[0].split(".")
-                    dato.splice(2, 1)
-                    let datoString = dato.join(".")
-                    //console.log(datoString)
-                    list[0] = datoString
+            let dato = list[0].split(".")
+            dato.splice(2, 1)
+            let datoString = dato.join(".")
+            //console.log(datoString)
+            list[0] = datoString
 
-                    let tid = list[1].split(":")
-                    tid.splice(1, 2)
-                    let tidString = tid.join()
-                    list[1] = tidString
-                    return list.join(", kl:")
-                }))
-                setDataset(herVer.map((it: any) => {
-                    return it.data.instant.details.air_temperature < temp ? 3 :
-                        it.data.instant.details.air_temperature == temp ? 2: 1
-                }))
-            })
-    }, [])
+            let tid = list[1].split(":")
+            tid.splice(1, 2)
+            let tidString = tid.join()
+            list[1] = tidString
+            return list.join(", kl:")
+        }))
+        setDataset(herVer.map((it: any) => {
+            const farge = calcFarge(it.data.instant.details, terskel, airport)
+            console.log(farge);
+            switch (farge) {
+                case "green" : return 1
+                case "yellow" : return 2
+                case "red": return 3
+                default : return 0
+            }
+        }))
+    }, [locfor])
+    
 
     useEffect(() => {
         if (ver !== undefined) {
             setDataset(ver.map((it: any) => {
-                return it.data.instant.details.air_temperature < temp ? 3 :
-                    it == temp ? 2: 1
+                const farge = calcFarge(it.data.instant.details, terskel, airport)
+                    switch (farge) {
+                        case "green" : return 1
+                        case "yellow" : return 2
+                        case "red": return 3
+                        default : return 0
+                    }
             }))
         }
-    }, [temp])
+    }, [terskel])
 
-    const terskel = useSelector((state: any) => state.terskel.value);
-    useEffect(() => {
-        setTemp(terskel?.airTemp);
-    },[terskel?.airTemp])
-
-    const [ctxSave, setCtxsave] = useState([])
-
+    
     const options = {
         maintainAspectRatio: false,
         responsive: true,
@@ -199,7 +198,6 @@ function Tidslinje() {
                     color: ['green', 'yellow', 'red'],
                     precision: 0,
                     callback: function(value:any, index:number, ctx: any) {
-
                         let string = ""
                         if (value === 1) {
                             return "Grønn"
