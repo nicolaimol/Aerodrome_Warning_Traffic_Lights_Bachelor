@@ -48,7 +48,7 @@ export default function Banner() {
   const handleChange = (event: React.ChangeEvent<any>, value: any) => {
     console.log(value)
     if (value !== null) {
-      dispatch(allActions.airportAction.setAirport({icao: value.icao, navn: value.label}))
+      dispatch(allActions.airportAction.setAirport({icao: value.icao, navn: value.label, rwy: value.rwy}))
       const obj = terskel
       obj.flyplass = {icao: value.icao, navn: value.label}
       axios.post(urlTerskel, obj)
@@ -94,7 +94,7 @@ export default function Banner() {
   let relevantFlyplassData = []; // Lager en ny array som skal ta inn mindre data som skal settes inn i AutoComplete komponenten
 
   for (let i = 0; i < flyplasserList.length; i++){
-    const nyPush = {label: flyplasserList[i].navn, icao: flyplasserList[i].icao}; // Velger å kun sette inn navn og icao i den nye listen
+    const nyPush = {label: flyplasserList[i].navn, icao: flyplasserList[i].icao, rwy: flyplasserList[i].rwy}; // Velger å kun sette inn navn og icao i den nye listen
     relevantFlyplassData.push(nyPush);
   }
 
