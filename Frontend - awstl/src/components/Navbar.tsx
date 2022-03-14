@@ -39,12 +39,6 @@ const Navbar = () => {
   const airport = useSelector((state:any) => state.airport.value)
   const nowcast = useSelector((state: any) => state.nowcast.value)
 
-  let ikonpath:string = "/weatherIcons/";
-  ikonpath += nowcast?.nowcasts[0].properties.timeseries[0].data.next_1_hours.summary.symbol_code + ".svg"; // Setter riktig ikon avhengig data
-
-  let temperatureColor = nowcast?.nowcasts[0].properties.timeseries[0].data.instant.details.air_temperature < 0 ? '#006edb' : '#c80a0a'; // Er det pluss eller minus grader? farge avhenger av dette
-
-
   return (
     <AppBar position="static" style={{ background: 'white' }}>
       <Container maxWidth="xl">
@@ -120,24 +114,6 @@ const Navbar = () => {
               </Button></Link>
             ))}
           </Box>
-          <Typography>
-            {airport != undefined &&
-                <span style={{color: "#0090a8"}}>{airport.navn}</span>
-            }
-          </Typography>
-
-          {nowcast != undefined &&
-
-              <>
-                <Box style={{ display: 'flex', justifyContent: 'center'}}>
-                  <img style={{height: '20px', margin: "0 5px"}} src={ikonpath} alt={nowcast?.nowcasts[0].properties.timeseries[0].data.next_1_hours.summary.symbol_code} />
-                </Box>
-                <Typography sx={{color: `${temperatureColor}`}}>
-                  {nowcast?.nowcasts[0].properties.timeseries[0].data.instant.details.air_temperature}°C
-                </Typography>
-              </>
-
-          }
         </Toolbar>
       </Container>
     </AppBar>
