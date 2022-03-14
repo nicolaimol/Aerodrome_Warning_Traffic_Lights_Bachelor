@@ -54,6 +54,28 @@ function App() {
         url = "/api/terskel"
     }
 
+    let urlNowcast = ""
+    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') { // Uavhengig om det er local testing eller deployment så fungerer API kall
+        if (process.env.REACT_APP_URL_ENV == "prod") {
+            urlNowcast = '/api/nowcast?icao='
+        } else {
+            urlNowcast = 'http://localhost:8080/api/nowcast?icao='
+        }
+    } else {
+        urlNowcast = '/api/nowcast?icao='
+    }
+
+    let urlLocfor = ""
+    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') { // Uavhengig om det er local testing eller deployment så fungerer API kall
+        if (process.env.REACT_APP_URL_ENV == "prod") {
+            urlLocfor = '/api/locationforecast?icao='
+        } else {
+            urlLocfor = 'http://localhost:8080/api/locationforecast?icao='
+        }
+    } else {
+        urlLocfor = '/api/locationforecast?icao='
+    }
+
     
 
     useEffect(() => {
@@ -67,23 +89,17 @@ function App() {
                 dispatch(allActions.terskelActions.setTerskel(response.data))
             })
             .catch((error: any) => {
-                dispatch(allActions.airportAction.setAirport({icao: "endu", navn: "Bardufoss lufthavn"}))
+                dispatch(allActions.airportAction.setAirport({
+                    icao: "ENDU",
+                    navn: "Bardufoss lufthavn",
+                    rwy: "11/28"
+                }))
                 dispatch(allActions.terskelActions.setTerskel(defaultVerdier))
             })
 
 
     }, [])
 
-    let urlNowcast = ""
-    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') { // Uavhengig om det er local testing eller deployment så fungerer API kall
-        if (process.env.REACT_APP_URL_ENV == "prod") {
-            urlNowcast = '/api/nowcast?icao='
-        } else {
-            urlNowcast = 'http://localhost:8080/api/nowcast?icao='
-        }
-    } else {
-        urlNowcast = '/api/nowcast?icao='
-    }
 
     const nowcast = useSelector((state: any) => state.nowcast.value)
     const airport = useSelector((state: any) => state.airport.value)
@@ -95,9 +111,18 @@ function App() {
             axios.get(`${urlNowcast}${airport.icao}`) // Henter værdata for 3 flyplasser + en egendefinert
                 .then((response) => {
                     dispatch(allActions.nowcastAction.setNowcast(response.data))
-                    console.log("henter fra server")
+                   
                 })
+
+            axios.get(`${urlLocfor}${airport.icao}`)
+                .then((response:any) => {
+                    dispatch(allActions.weatherActions.setWeather(response))
+                }) 
+
+            console.log("henter fra server")
         }
+
+    
 
         /*
         if (active) {
