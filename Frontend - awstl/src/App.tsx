@@ -8,6 +8,7 @@ import Trafikklys from './pages/Trafikklys';
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import allActions from './Actions';
+import { Typography, Box } from '@mui/material';
 
 /***
  * Fargepalett!!!
@@ -19,8 +20,8 @@ import allActions from './Actions';
  */
 
  export const defaultVerdier = {
-    airTempMin: 3,
-    airTempMax: -10,
+    airTempMin: -10,
+    airTempMax: 3,
     precipitationMin: 0,
     precipitationMax: 1,
     windSpeedMin: 15,
@@ -120,10 +121,35 @@ function App() {
 
     },[airport])
 
+    let ikonpath:string = "/weatherIcons/";
+    ikonpath += nowcast?.nowcasts[0].properties.timeseries[0].data.next_1_hours.summary.symbol_code + ".svg"; // Setter riktig ikon avhengig data
 
-  return (
-    <div className="outer" style={{display: 'flex', minHeight: "100vh", flexDirection: "column"}}>
+    let temperatureColor = nowcast?.nowcasts[0].properties.timeseries[0].data.instant.details.air_temperature < 0 ? '#006edb' : '#c80a0a'; // Er det pluss eller minus grader? farge avhenger av dette
+
+
+    return (
+    <div className="outer" style={{display: 'flex', minHeight: "100vh", flexDirection: "column", position: "relative"}}>
       <Navbar />
+        <div style={{position: "fixed", display: 'flex', right: '.5em', top: '1.5em', width: 'fit-content'}}>
+            <Typography>
+                {airport != undefined &&
+                    <span style={{color: "#0090a8"}}>{airport.navn}</span>
+                }
+            </Typography>
+
+            {nowcast != undefined &&
+
+                <>
+                    <Box style={{ display: 'flex', justifyContent: 'center'}}>
+                        <img style={{height: '20px', margin: "0 5px"}} src={ikonpath} alt={nowcast?.nowcasts[0].properties.timeseries[0].data.next_1_hours.summary.symbol_code} />
+                    </Box>
+                    <Typography sx={{color: `${temperatureColor}`}}>
+                        {nowcast?.nowcasts[0].properties.timeseries[0].data.instant.details.air_temperature}°C
+                    </Typography>
+                </>
+
+            }
+        </div>
 
       <div style={{flexGrow: 1}}>
         <Routes>
