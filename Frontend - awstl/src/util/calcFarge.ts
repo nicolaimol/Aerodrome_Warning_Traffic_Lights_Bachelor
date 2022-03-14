@@ -1,11 +1,13 @@
 
 export const calcFarge = ( data?: any, terskelverdier?: any ) => {
 
+    /*
     console.log('Her er terskelverdier fra calcFarge');
     console.log(terskelverdier!!);
 
     console.log('Her er data fra calcFarge');
     console.log(data!!);
+     */
 
     let analyseArray = [];
 
