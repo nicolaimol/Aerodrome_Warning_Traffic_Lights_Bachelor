@@ -96,8 +96,7 @@ function TerskelForm() {
     <>
     <form onSubmit={handleSubmit}>
       <div style={{width: "calc(100% - 40px)", padding:"5px 20px", backgroundColor: "#dff2f6"}}>
-          <span style={{color: "#0090a8"}}>Lufttemperatur</span>
-          <div style={{display: 'flex', flexDirection: "row"}}>
+          <span style={{color: "#0090a8"}}>Lufttemperatur {terskel.airTempMin}, {terskel.airTempMax}</span>
             <SliderWrapper
                 minValue={terskel.airTempMin}
                 maxValue={terskel.airTempMax}
@@ -135,11 +134,9 @@ function TerskelForm() {
                     },
                 ]}
             />
-          <p style={{marginLeft: '30px', width: 'fit-content', whiteSpace: "nowrap"}}>{`${terskel.airTempMin}, ${terskel.airTempMax}`}</p>
-          </div>
           </div>
       <div style={{ width: "calc(100% - 40px)", padding:"5px 20px" }}>
-          <span style={{color: "#0090a8"}}>Nedbør</span>
+          <span style={{color: "#0090a8"}}>Nedbør {terskel.precipitationMin}, {terskel.precipitationMax}</span>
         <SliderWrapper
 
             minValue={terskel.precipitationMin}
@@ -173,7 +170,7 @@ function TerskelForm() {
         />
       </div>
       <div style={{ width: "calc(100% - 40px)", padding:"5px 20px", backgroundColor: "#dff2f6" }}>
-          <span style={{color: "#0090a8"}}>Vindfart</span>
+          <span style={{color: "#0090a8"}}>Vindfart {terskel.windSpeedMin}, {terskel.windSpeedMax}</span>
         <SliderWrapper
 
             minValue={terskel.windSpeedMin}
@@ -206,7 +203,7 @@ function TerskelForm() {
         />
       </div>
       <div style={{ width: "calc(100% - 40px)", padding:"5px 20px" }}>
-          <span style={{color: "#0090a8"}}>Vindkast</span>
+          <span style={{color: "#0090a8"}}>Vindkast {terskel.windGustMin}, {terskel.windGustMax}</span>
         <SliderWrapper
 
             minValue={terskel.windGustMin}
@@ -239,7 +236,7 @@ function TerskelForm() {
         />
       </div>
       <div style={{ width: "calc(100% - 40px)", padding:"5px 20px", backgroundColor: "#dff2f6" }}>
-          <span style={{color: "#0090a8"}}>Sannsynlighet torden</span>
+          <span style={{color: "#0090a8"}}>Sannsynlighet torden {terskel.probThunderMin}, {terskel.probThunderMax}</span>
         <SliderWrapper
 
             minValue={terskel.probThunderMin}
@@ -272,7 +269,7 @@ function TerskelForm() {
         />
       </div>
       <div style={{ width: "calc(100% - 40px)", padding:"5px 20px" }}>
-          <span style={{color: "#0090a8"}}>Luftfuktighet</span>
+          <span style={{color: "#0090a8"}}>Luftfuktighet {terskel.humidityMin}, {terskel.humidityMax}</span>
         <SliderWrapper
 
             minValue={terskel.humidityMin}
@@ -335,7 +332,7 @@ function TerskelForm() {
         />
       </div>
       <div style={{ width: "calc(100% - 40px)", padding:"5px 20px" }}>
-          <span style={{color: "#0090a8"}}>Crosswind</span>
+          <span style={{color: "#0090a8", textAlign: 'justify', width: '100%'}}>Crosswind {terskel.crosswindMin}, {terskel.crosswindMax}</span>
         <SliderWrapper
 
             minValue={terskel.crosswindMin}
