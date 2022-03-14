@@ -25,7 +25,7 @@ function Arbeider() {
   return (
     <> 
     {/** Box med flex rundt */}
-    <Box id="arbeiderBox" sx={{ mt: 8, mb: 5 }} style={{ display: 'flex', justifyContent: 'space-evenly', flexFlow: 'row wrap', alignItems: 'center'}}>
+    <Box id="arbeiderBox" sx={{ mt: 8, mb: 5 }} style={{ display: 'grid', gridTemplateColumns: "1fr 1fr 1fr", gap: '1em' /*justifyContent: 'space-evenly'*/, width: '100%', /*flexFlow: 'row wrap', alignItems: 'center'*/}}>
       
       {arbeiderne.map((personen) => { {/** Dynamisk lager et Arbeiderkort for hver av arbeiderne i arrayet */}
         return <ArbeiderKort key={personen[0].toString()} arbeider={personen[0].toString()} ikonComp={personen[1]} />
