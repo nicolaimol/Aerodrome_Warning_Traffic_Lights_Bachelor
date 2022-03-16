@@ -41,7 +41,7 @@ function GrafikkTrafikklys() {
 
   return (
     <>
-    <div style={{ backgroundColor: '#dff2f6', minHeight: '20vh', width: '100%' }}>
+    <div style={{ backgroundColor: '#dff2f6', minHeight: '20vh', width: '100%', padding: '0 0 30px 0' }}>
         <Container>
             {/** Ikonet */}
             {weather != undefined &&
@@ -70,9 +70,9 @@ function GrafikkTrafikklys() {
 
                             <div style={{position: 'absolute',
                                 right: weather.data.instant.details.wind_from_direction > 0 && weather.data.instant.details.wind_from_direction < 180 ?
-                                    0 : "130px",
+                                    "-70px" : "170px",
                                 top: weather.data.instant.details.wind_from_direction < 90 && weather.data.instant.details.wind_from_direction > -90 ?
-                                    0 : "130px",
+                                    "-70px" : "170px",
                                 textAlign: 'center',
                                 color: '#0090a8'
                             }}>
