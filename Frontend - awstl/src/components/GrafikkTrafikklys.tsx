@@ -69,7 +69,7 @@ function GrafikkTrafikklys() {
                             <Rullebane rullebane={airport.rwy}></Rullebane>
 
                             <div style={{position: 'absolute',
-                                right: weather.data.instant.details.wind_from_direction > 0 ?
+                                right: weather.data.instant.details.wind_from_direction > 0 && weather.data.instant.details.wind_from_direction < 180 ?
                                     0 : "130px",
                                 top: weather.data.instant.details.wind_from_direction < 90 && weather.data.instant.details.wind_from_direction > -90 ?
                                     0 : "130px",
