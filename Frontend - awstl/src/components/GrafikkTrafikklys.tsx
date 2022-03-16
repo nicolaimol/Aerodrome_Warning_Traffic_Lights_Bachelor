@@ -4,6 +4,7 @@ import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import React, { useEffect, useState }from 'react'
 import { useSelector } from 'react-redux'
 import weatherTimeseries from '../model/weatherTimeseries';
+import Rullebane from './Rullebane';
 
 function GrafikkTrafikklys() {
 
@@ -64,6 +65,9 @@ function GrafikkTrafikklys() {
                     </Box>
 
                     <Box style={{ display: 'flex', justifyContent: 'space-evenly', flexDirection: 'row', alignItems: 'center'}}>
+                        <div style={{ height: '230px', width: '230px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                            <Rullebane rullebane={airport.rwy}></Rullebane>
+                        </div>
                         <div style={{ transform: `rotate(${weather.data.instant.details.wind_from_direction + 90}deg)`}}>
                             <ArrowRightAltIcon sx={{ fontSize: 100 }}></ArrowRightAltIcon>
                         </div>
@@ -79,6 +83,7 @@ function GrafikkTrafikklys() {
                             {nedbor != "" &&
                                 <Typography>{nedbor}</Typography>
                             }
+
                         </div>
                     </Box>
                 </div>
@@ -89,9 +94,6 @@ function GrafikkTrafikklys() {
                     <h2>Venligst vent</h2>
                 </div>
             }
-
-
-
 
         </Container>
         </div>
