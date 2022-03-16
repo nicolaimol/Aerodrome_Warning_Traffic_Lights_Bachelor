@@ -33,13 +33,16 @@ function Pilot() {
   return (
     <>
     <Container>
+    <div style={{ display: 'flex', justifyContent: 'space-evenly', textAlign: 'center', flexFlow: 'row wrap', alignItems: 'center'}}>
+    </div>
 
     <Typography sx={{ color: '#0090a8', fontSize: 40, textAlign: 'center', mt: 5}}>
-          Pilot
-        </Typography>
-        <Divider sx={{ mb: 5 }} />
+        Pilot
+    </Typography>
+    <Divider sx={{ mb: 5 }} />
 
-        <PilotFlyplassTo />
+    <PilotFlyplassTo />
+    <Divider sx={{ mb: 5 }} />
 
       <div style={{ display: 'flex', justifyContent: 'space-evenly', flexFlow: 'row wrap', alignItems: 'stretch'}}>
         {terskel != undefined && 
