@@ -210,7 +210,7 @@ function Tidslinje() {
                         return
 
                     },
-
+                    padding: 15,
 
                     grace: '10%'
                 }
