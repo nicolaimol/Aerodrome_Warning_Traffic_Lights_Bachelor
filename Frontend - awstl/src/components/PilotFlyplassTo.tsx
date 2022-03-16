@@ -86,7 +86,7 @@ function PilotFlyplassTo() {
             <div className='AutoCompleteCustom' style={{ paddingBottom: '2em' }}>
                 <div style={{ display: 'flex', flexFlow: 'row wrap', alignItems: 'center'}}>
                     <Typography sx={{ pr: 3, color: '#0090a8'}}>
-                        Fra <b>{airport.navn.split(",")[0]}</b> til
+                        Fra <b>{airport?.navn.split(",")[0]}</b> til
                     </Typography>
 
                 <Autocomplete
