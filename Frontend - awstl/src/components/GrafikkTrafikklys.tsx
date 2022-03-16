@@ -66,7 +66,15 @@ function GrafikkTrafikklys() {
 
                     <Box style={{ display: 'flex', justifyContent: 'space-evenly', flexDirection: 'row', alignItems: 'center'}}>
                         <div style={{ height: '230px', width: '230px', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative'}}>
-                            <Rullebane rullebane={airport.rwy}></Rullebane>
+                            {
+                                airport.rwy.split(",").map((it: any) => {
+
+                                    return <Rullebane rullebane={it}></Rullebane>
+
+                                })
+                            }
+
+
 
                             <div style={{position: 'absolute',
                                 right: weather.data.instant.details.wind_from_direction > 0 && weather.data.instant.details.wind_from_direction < 180 ?
