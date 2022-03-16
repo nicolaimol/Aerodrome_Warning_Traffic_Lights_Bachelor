@@ -11,17 +11,7 @@ import DrawerTerskelverdier from '../components/DrawerTerskelverdier'
 import { calcFarge } from '../util/calcFarge'
 
 function Trafikklys() {
-  const defaultVerdier = {
-    airTemp: 0,
-    precipitationAmmount: 20,
-    windSpeed: 30,
-    windGust: 40,
-    probThunder: 0,
-    humidity: 2,
-    fog: 40,
-    probIce: 20,
-    crosswind: 50,
-  };
+  
 
   const terskel = useSelector((state: any) => state.terskel.value)
   const nowcast = useSelector((state: any) => state.nowcast.value)
@@ -50,7 +40,8 @@ function Trafikklys() {
 
       <div style={{ display: 'flex', justifyContent: 'space-evenly', flexFlow: 'row wrap', alignItems: 'stretch'}}>
         
-        <VisSatteTerskelverdier terskel={terskel !== undefined ? terskel : defaultVerdier} />
+      {terskel != undefined && 
+        <VisSatteTerskelverdier terskel={terskel} />}
         <TrafikklysBox farge={color} />
       </div>
       
