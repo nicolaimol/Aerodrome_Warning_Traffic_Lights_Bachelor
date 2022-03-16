@@ -5,6 +5,7 @@ import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import Footer from './components/Footer';
 import Hjem from './pages/Hjem';
 import Trafikklys from './pages/Trafikklys';
+import Pilot from './pages/Pilot';
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import allActions from './Actions';
@@ -187,6 +188,7 @@ function App() {
             */}
 
           <Route path="/flygeleder" element={<Trafikklys />} />
+          <Route path="/pilot" element={<Pilot />} />
           <Route path="/" element={<Hjem />} />
         </Routes>
       </div>

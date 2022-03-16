@@ -7,10 +7,11 @@ import VisSatteTerskelverdier from '../components/VisSatteTerskelverdier'
 import Tidslinje from '../components/Tidslinje'
 import GrafikkTrafikklys from '../components/GrafikkTrafikklys'
 import DrawerTerskelverdier from '../components/DrawerTerskelverdier'
+import PilotFlyplassTo from '../components/PilotFlyplassTo'
 
 import { calcFarge } from '../util/calcFarge'
 
-function Trafikklys() {
+function Pilot() {
   
 
   const terskel = useSelector((state: any) => state.terskel.value)
@@ -34,13 +35,14 @@ function Trafikklys() {
     <Container>
 
     <Typography sx={{ color: '#0090a8', fontSize: 40, textAlign: 'center', mt: 5}}>
-          Flygeleder
+          Pilot
         </Typography>
         <Divider sx={{ mb: 5 }} />
 
+        <PilotFlyplassTo />
+
       <div style={{ display: 'flex', justifyContent: 'space-evenly', flexFlow: 'row wrap', alignItems: 'stretch'}}>
-        
-      {terskel != undefined && 
+        {terskel != undefined && 
         <VisSatteTerskelverdier terskel={terskel} />}
         <TrafikklysBox farge={color} />
       </div>
@@ -59,4 +61,4 @@ function Trafikklys() {
   )
 }
 
-export default Trafikklys
+export default Pilot
