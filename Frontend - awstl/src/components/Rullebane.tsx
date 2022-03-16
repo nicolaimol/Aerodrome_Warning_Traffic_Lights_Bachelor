@@ -6,15 +6,17 @@ function Rullebane(props: any) {
                             color: 'yellow',
                             display: 'inline-flex',
                             justifyContent: 'space-between',
-                            padding: 5,
+                            padding: 6,
                             border: "1px yellow solid",
-                            width: 'fit-content',
+                            width: 'max-content',
                             transform: `rotate(${Number(props.rullebane.split("/")[0])*10 - 90}deg)`,
                             }}>
                 <div style={{transform: 'rotate(90deg)', width: 'fit-content'}}>
                     {props.rullebane.split("/")[0]}
                 </div>
-                - - - - - - - - - - - - - - - -
+                <span style={{width: 'max-content'}}>
+                    - - - - - - - - - - - - - - - -
+                </span>
                 <div style={{transform: 'rotate(-90deg)', width: 'fit-content'}}>
                     {props.rullebane.split("/")[1]}
                 </div>
