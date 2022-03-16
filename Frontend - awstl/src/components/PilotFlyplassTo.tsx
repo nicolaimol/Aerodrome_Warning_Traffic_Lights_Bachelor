@@ -33,6 +33,7 @@ function PilotFlyplassTo() {
 
     const [flyplasserList, setFlyplasserList] = useState<flyplasser[]>([]); // Vi skal kunne lage en liste med alle flyplasser som passer til interfacet 'flyplasser'
     const classes = useStyles(); // bruker stylingen laget ovenfor
+    const airport = useSelector((state: any) => state.airport.value)
 
     let url = "";
     let urlTerskel = "";
@@ -79,29 +80,36 @@ function PilotFlyplassTo() {
   return (
     <>
     <div>
-        <Typography>
-            Fra FLYPLASS til 
-        </Typography>
+        <div style={{ display: 'flex', justifyContent: 'space-evenly', textAlign: 'center', flexFlow: 'row wrap', alignItems: 'center'}}>
+            
         {/** AutoComplete */}
-        <div className='AutoCompleteCustom' style={{ paddingBottom: '2em' }}>
-            <Autocomplete
-            disablePortal
-            id="combo-box-flyplasser"
-            // Bruker styling laget ovenfor
-            classes={classes}
-            // redux endring av flyplasshåndtering
-            onChange={handleChange}
-            // setter flyplassen som valgt i listen
-            value={listAirport}
-            isOptionEqualToValue={(option, value) => option.icao === value.icao}
-            // Listen med valg settes inn her. For å gjøre det enklere sorteres den alfabetisk
-            options={relevantFlyplassData.sort((a, b) => -b.label.localeCompare(a.label))}
-            // Listen grupperes også etter første bokstav
-            groupBy={(relevantFlyplassData) => relevantFlyplassData.label.charAt(0).toString()}
-            sx={{ width: 300, backgroundColor: '#FFFFFF'}}
-            renderInput={(params) => <TextField {...params} label="Velg flyplass" />}
-          />
+            <div className='AutoCompleteCustom' style={{ paddingBottom: '2em' }}>
+                <div style={{ display: 'flex', flexFlow: 'row wrap', alignItems: 'center'}}>
+                    <Typography sx={{ pr: 3, color: '#0090a8'}}>
+                        Fra <b>{airport.navn.split(",")[0]}</b> til
+                    </Typography>
+
+                <Autocomplete
+                disablePortal
+                id="combo-box-flyplasser"
+                // Bruker styling laget ovenfor
+                classes={classes}
+                // redux endring av flyplasshåndtering
+                onChange={handleChange}
+                // setter flyplassen som valgt i listen
+                value={listAirport}
+                isOptionEqualToValue={(option, value) => option.icao === value.icao}
+                // Listen med valg settes inn her. For å gjøre det enklere sorteres den alfabetisk
+                options={relevantFlyplassData.sort((a, b) => -b.label.localeCompare(a.label))}
+                // Listen grupperes også etter første bokstav
+                groupBy={(relevantFlyplassData) => relevantFlyplassData.label.charAt(0).toString()}
+                sx={{ width: 300, backgroundColor: '#FFFFFF'}}
+                renderInput={(params) => <TextField {...params} label="Velg flyplass" />}
+                />
+            </div>
           </div>
+        </div>
+        
     </div>
     </>
   )
