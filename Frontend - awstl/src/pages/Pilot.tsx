@@ -7,6 +7,7 @@ import VisSatteTerskelverdier from '../components/VisSatteTerskelverdier'
 import Tidslinje from '../components/Tidslinje'
 import GrafikkTrafikklys from '../components/GrafikkTrafikklys'
 import DrawerTerskelverdier from '../components/DrawerTerskelverdier'
+import PilotFlyplassTo from '../components/PilotFlyplassTo'
 
 import { calcFarge } from '../util/calcFarge'
 
@@ -37,6 +38,8 @@ function Pilot() {
           Pilot
         </Typography>
         <Divider sx={{ mb: 5 }} />
+
+        <PilotFlyplassTo />
 
       <div style={{ display: 'flex', justifyContent: 'space-evenly', flexFlow: 'row wrap', alignItems: 'stretch'}}>
         {terskel != undefined && 
