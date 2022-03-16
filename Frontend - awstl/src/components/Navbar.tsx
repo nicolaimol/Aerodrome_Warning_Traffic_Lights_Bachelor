@@ -19,10 +19,12 @@ import MenuItem from '@mui/material/MenuItem';
 // Ikoner
 import MenuIcon from '@mui/icons-material/Menu';
 
-const pages = ['Hjem', "Flygeleder"]; // Legg til alle menu-items her
+const pages = ['Hjem', "Flygeleder", "Pilot"]; // Legg til alle menu-items her
 const links = new Map();
 links.set("Hjem", "/")
 links.set("Flygeleder", "/flygeleder")
+links.set("Pilot", "/pilot")
+
 
 
 const Navbar = () => {
