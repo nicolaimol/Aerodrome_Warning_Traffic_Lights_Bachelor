@@ -4,6 +4,7 @@ import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import React, { useEffect, useState }from 'react'
 import { useSelector } from 'react-redux'
 import weatherTimeseries from '../model/weatherTimeseries';
+import Rullebane from './Rullebane';
 
 function GrafikkTrafikklys() {
 
@@ -64,13 +65,30 @@ function GrafikkTrafikklys() {
                     </Box>
 
                     <Box style={{ display: 'flex', justifyContent: 'space-evenly', flexDirection: 'row', alignItems: 'center'}}>
-                        <div style={{ transform: `rotate(${weather.data.instant.details.wind_from_direction + 90}deg)`}}>
-                            <ArrowRightAltIcon sx={{ fontSize: 100 }}></ArrowRightAltIcon>
+                        <div style={{ height: '230px', width: '230px', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative'}}>
+                            <Rullebane rullebane={airport.rwy}></Rullebane>
+
+                            <div style={{position: 'absolute',
+                                right: weather.data.instant.details.wind_from_direction > 0 && weather.data.instant.details.wind_from_direction < 180 ?
+                                    0 : "130px",
+                                top: weather.data.instant.details.wind_from_direction < 90 && weather.data.instant.details.wind_from_direction > -90 ?
+                                    0 : "130px",
+                                textAlign: 'center',
+                                color: '#0090a8'
+                            }}>
+
+                                <Typography style={{position: 'absolute', top: 0,left: "calc(50%-100px)", zIndex: 1}}>
+                                    {weather.data.instant.details.wind_speed}m/s
+                                </Typography>
+                                <div style={{ position: 'relative', zIndex: 0,
+                                transform: `rotate(${weather.data.instant.details.wind_from_direction + 90}deg)`}}>
+                                    <ArrowRightAltIcon sx={{ fontSize: 100 }}></ArrowRightAltIcon>
+                                </div>
+
+                            </div>
                         </div>
+
                         <div style={{display: 'flex', flexDirection: 'column', color: '#0090a8'}}>
-                            <Typography>
-                                {weather.data.instant.details.wind_speed}m/s
-                            </Typography>
                             <Typography>
                                 {weather.data.instant.details.wind_from_direction < 0
                                     ? 360 + weather.data.instant.details.wind_from_direction
@@ -79,6 +97,7 @@ function GrafikkTrafikklys() {
                             {nedbor != "" &&
                                 <Typography>{nedbor}</Typography>
                             }
+
                         </div>
                     </Box>
                 </div>
@@ -89,9 +108,6 @@ function GrafikkTrafikklys() {
                     <h2>Venligst vent</h2>
                 </div>
             }
-
-
-
 
         </Container>
         </div>
