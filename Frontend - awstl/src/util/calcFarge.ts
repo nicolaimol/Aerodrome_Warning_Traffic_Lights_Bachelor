@@ -13,13 +13,6 @@ export const calcFarge = ( data?: any, terskelverdier?: any, flyplass?: any ) =>
     const yellow = []
     const red = []
 
-    console.log(data!!);
-    console.log(terskelverdier!!);
-    //console.log(flyplass);
-
-
-    
-
 
     if (data?.air_temperature > terskelverdier?.airTempMax) {
         green.push("air temp")
@@ -73,10 +66,6 @@ export const calcFarge = ( data?: any, terskelverdier?: any, flyplass?: any ) =>
     } else {
         yellow.push("crosswind")
     }
-
-    console.table(green)
-    console.table(yellow)
-    console.table(red)
     
     if (red.length > 0 || yellow.length >= 4) return "red";
     if (yellow.length > 0) return "yellow";
