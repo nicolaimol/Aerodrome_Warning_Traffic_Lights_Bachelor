@@ -33,7 +33,7 @@ function Pilot() {
   }, [terskel, nowcast])
 
   return (
-    <ThemeProvider theme={theme}>
+    <>
     <Container>
     <div style={{ display: 'flex', justifyContent: 'space-evenly', textAlign: 'center', flexFlow: 'row wrap', alignItems: 'center'}}>
     </div>
@@ -64,7 +64,7 @@ function Pilot() {
       </div>
     </Container>
       <GrafikkTrafikklys />
-    </ ThemeProvider>
+    </ >
   )
 }
 
