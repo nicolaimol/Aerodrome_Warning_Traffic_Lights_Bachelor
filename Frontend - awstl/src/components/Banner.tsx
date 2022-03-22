@@ -78,9 +78,9 @@ export default function Banner() {
   }
 
   const airportRedux = useSelector((state:any) => state.airport.value)
-  const listAirport = airportRedux != null ?
-      {icao: airportRedux.icao, label: airportRedux.navn} :
-      {icao: "ENDU", label: "Bardufoss Lufthavn"}
+  const listAirport = airportRedux// != null ?
+      //{icao: airportRedux.icao, label: airportRedux.navn} :
+      //{icao: "ENDU", label: "Bardufoss Lufthavn"}
 
   useEffect(() => {
 
