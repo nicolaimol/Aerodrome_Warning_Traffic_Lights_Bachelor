@@ -1,4 +1,4 @@
-import { AppBar, Container, Divider, Typography } from '@mui/material'
+import { AppBar, Container, Divider, ThemeProvider, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import {useSelector} from 'react-redux'
 import TrafikklysBox from '../components/TrafikklysBox'
@@ -10,6 +10,8 @@ import DrawerTerskelverdier from '../components/DrawerTerskelverdier'
 import PilotFlyplassTo from '../components/PilotFlyplassTo'
 
 import { calcFarge } from '../util/calcFarge'
+import PilotVelgDepArvl from '../components/PilotVelgDepArvl'
+import { theme } from '../util/theme'
 
 function Pilot() {
   
@@ -43,6 +45,8 @@ function Pilot() {
 
     <PilotFlyplassTo />
     <Divider sx={{ mb: 5 }} />
+    <PilotVelgDepArvl />
+    <Divider />
 
       <div style={{ display: 'flex', justifyContent: 'space-evenly', flexFlow: 'row wrap', alignItems: 'stretch'}}>
         {terskel != undefined && 
@@ -60,7 +64,7 @@ function Pilot() {
       </div>
     </Container>
       <GrafikkTrafikklys />
-    </>
+    </ >
   )
 }
 
