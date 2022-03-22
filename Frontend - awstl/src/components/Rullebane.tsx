@@ -2,7 +2,7 @@ import React from 'react';
 
 function Rullebane(props: any) {
     return (
-            <div style={{backgroundColor: 'black',
+            <div style={{backgroundColor: '#404040',
                             color: 'yellow',
                             display: 'inline-flex',
                             justifyContent: 'space-between',
