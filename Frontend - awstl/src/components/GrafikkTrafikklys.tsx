@@ -169,7 +169,8 @@ const cw = weather?.data.instant.details.wind_speed * Math.sin
                     <h2>Venligst vent</h2>
                 </div>
             }
-
+        </div>
+        </div>
         </Container>
         </div>
     </>
