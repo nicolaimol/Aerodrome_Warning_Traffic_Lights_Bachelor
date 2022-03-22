@@ -10,6 +10,7 @@ import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import allActions from './Actions';
 import { Typography, Box } from '@mui/material';
+import ReportGmailerrorredSharpIcon from '@mui/icons-material/ReportGmailerrorredSharp';
 
 /***
  * Fargepalett!!!
@@ -77,7 +78,7 @@ function App() {
         urlLocfor = '/api/locationforecast?icao='
     }
 
-    
+    const [error, setError] = useState(false)
 
     useEffect(() => {
 
@@ -90,11 +91,17 @@ function App() {
                 dispatch(allActions.terskelActions.setTerskel(response.data))
             })
             .catch((error: any) => {
-                dispatch(allActions.airportAction.setAirport({
-                    icao: "ENDU",
-                    navn: "Bardufoss lufthavn",
-                    rwy: "11/28"
-                }))
+
+                if (error.response.status === 502) {
+                    setError(true)
+                } else {
+                    dispatch(allActions.airportAction.setAirport({
+                        icao: "ENDU",
+                        navn: "Bardufoss lufthavn",
+                        rwy: "11/28"
+                    }))
+                }
+
                 dispatch(allActions.terskelActions.setTerskel(defaultVerdier))
             })
 
@@ -156,26 +163,57 @@ function App() {
     return (
     <div className="outer" style={{display: 'flex', minHeight: "100vh", flexDirection: "column", position: "relative"}}>
       <Navbar />
-        <div style={{position: "fixed", display: 'flex', right: '.5em', top: '1.5em', width: 'fit-content'}}>
-            <Typography>
-                {airport != undefined &&
-                    <span style={{color: "#0090a8"}}>{airport.navn}</span>
-                }
-            </Typography>
 
-            {nowcast != undefined &&
 
-                <>
-                    <Box style={{ display: 'flex', justifyContent: 'center'}}>
-                        <img style={{height: '20px', margin: "0 5px"}} src={ikonpath} alt={nowcast?.nowcasts[0].properties.timeseries[0].data.next_1_hours.summary.symbol_code} />
-                    </Box>
-                    <Typography sx={{color: `${temperatureColor}`}}>
-                        {nowcast?.nowcasts[0].properties.timeseries[0].data.instant.details.air_temperature}°C
+            { !error &&
+                <div style={{position: "fixed", display: 'flex', right: '.5em', top: '1.5em', width: 'fit-content'}}>
+                    <Typography>
+                        {airport != undefined &&
+                            <span style={{color: "#0090a8"}}>{airport.navn}</span>
+                        }
                     </Typography>
-                </>
+                    {nowcast != undefined &&
+
+                        <>
+                            <Box style={{ display: 'flex', justifyContent: 'center'}}>
+                                <img style={{height: '20px', margin: "0 5px"}} src={ikonpath} alt={nowcast?.nowcasts[0].properties.timeseries[0].data.next_1_hours.summary.symbol_code} />
+                            </Box>
+                            <Typography sx={{color: `${temperatureColor}`}}>
+                                {nowcast?.nowcasts[0].properties.timeseries[0].data.instant.details.air_temperature}°C
+                            </Typography>
+                        </>
+
+                    }
+                </div>
+            }
+            { error &&
+                <div style={{
+                    zIndex: 100,
+                    backgroundColor: 'yellow',
+                    position: "fixed",
+                    display: 'flex',
+
+                    left: "50%",
+                    transform: "translateX(-50%) translateY(-50%)",
+                    top: "50%",
+
+                    /*
+                    right: '1.5em',
+                    top: '1.5em',
+
+                     */
+                    padding: '1em',
+                    borderRadius: '1em',
+                    border: 'solid hsla(0, 0%, 100%, 0.6 ) 3px'}}>
+                    <Typography variant="h6" style={{color: "gray", display:'flex', alignItems:'center', gap: '.5em'}}>
+                        <ReportGmailerrorredSharpIcon />Tjenesten er ikke tilgjengelig
+                    </Typography>
+                </div>
 
             }
-        </div>
+
+
+
 
       <div style={{flexGrow: 1}}>
         <Routes>
