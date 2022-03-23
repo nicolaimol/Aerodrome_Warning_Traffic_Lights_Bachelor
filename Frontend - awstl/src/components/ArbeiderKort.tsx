@@ -10,7 +10,7 @@ import { Card, CardContent, Typography, Box, Button } from '@mui/material'
 function ArbeiderKort(props:arbeiderInfo) { {/** Tar inn props med interface til arbeiderinfo */}
 
   return (
-    <Card sx={{ minWidth: 300, width:"30%", mt: 5, backgroundColor: '#0494ac'}}>
+    <Card sx={{ backgroundColor: '#0494ac'}}>
             <CardContent>
                 {/** Tittel */}
                 <Typography sx={{ color: 'white' }} variant="h5">
