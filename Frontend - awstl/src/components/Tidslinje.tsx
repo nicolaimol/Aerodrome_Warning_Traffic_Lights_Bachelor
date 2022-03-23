@@ -139,7 +139,25 @@ function Tidslinje() {
             return list.join(", kl:")
         }))
         setDataset(herVer.map((it: any) => {
-            const farge = calcFarge(it.data.instant.details, terskel, airport)
+            let precipitation_amount = 0;
+            let probThunder = 0
+            if ( it.data.next_1_hours != undefined) {
+                precipitation_amount =  it.data.next_1_hours.details.precipitation_amount
+                probThunder = it.data.next_1_hours.details.probability_of_thunder
+            } else if (it.data.next_6_hours != undefined) {
+                precipitation_amount =  it.data.next_6_hours.details.precipitation_amount / 6
+                probThunder = it.data.next_6_hours.details.probability_of_thunder
+            } else {
+                precipitation_amount =  it.data.next_12_hours.details.precipitation_amount / 12
+                probThunder = it.data.next_12_hours.details.probability_of_thunder
+            }
+
+            const farge = calcFarge(it.data.instant.details, terskel, airport,
+                {
+                    precipitation_amount: precipitation_amount,
+                    probThunder: probThunder
+                })
+
             console.log(farge);
             switch (farge) {
                 case "green" : return 1
@@ -154,7 +172,23 @@ function Tidslinje() {
     useEffect(() => {
         if (ver !== undefined) {
             setDataset(ver.map((it: any) => {
-                const farge = calcFarge(it.data.instant.details, terskel, airport)
+                let precipitation_amount = 0;
+                let probThunder = 0
+                if ( it.data.next_1_hours != undefined) {
+                    precipitation_amount =  it.data.next_1_hours.details.precipitation_amount
+                    probThunder = it.data.next_1_hours.details.probability_of_thunder
+                } else if (it.data.next_6_hours != undefined) {
+                    precipitation_amount =  it.data.next_6_hours.details.precipitation_amount / 6
+                    probThunder = it.data.next_6_hours.details.probability_of_thunder
+                } else {
+                    precipitation_amount =  it.data.next_12_hours.details.precipitation_amount / 12
+                    probThunder = it.data.next_12_hours.details.probability_of_thunder
+                }
+
+                const farge = calcFarge(it.data.instant.details, terskel, airport, {
+                    precipitation_amount: precipitation_amount,
+                    probThunder: probThunder
+                })
                     switch (farge) {
                         case "green" : return 1
                         case "yellow" : return 2
