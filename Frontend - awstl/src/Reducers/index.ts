@@ -4,13 +4,15 @@ import { combineReducers } from 'redux'
 import nowcast from "./nowcast";
 import airport from './airport'
 import grafikk from './grafikk'
+import airportList from './airportList'
 
 export const rootReducer = combineReducers({
     terskel,
     weather,
     nowcast,
     airport,
-    grafikk
+    grafikk,
+    airportList
 })
 
 export type RootState = ReturnType<typeof rootReducer>
