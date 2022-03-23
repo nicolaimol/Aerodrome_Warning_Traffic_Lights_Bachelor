@@ -38,11 +38,12 @@ const useStyles = makeStyles((theme) => ({ // Lager style til AutoComplete kompo
 
 export default function Banner() {
 
-  const [flyplasserList, setFlyplasserList] = useState<flyplasser[]>([]); // Vi skal kunne lage en liste med alle flyplasser som passer til interfacet 'flyplasser'
+  //const [flyplasserList, setFlyplasserList] = useState<flyplasser[]>([]); // Vi skal kunne lage en liste med alle flyplasser som passer til interfacet 'flyplasser'
 
   const classes = useStyles(); // bruker stylingen laget ovenfor
 
   const terskel = useSelector((state:any) => state.terskel.value)
+  const urlTerskel = "/api/terskel"
 
   const dispatch = useDispatch(); // statemanager
   const handleChange = (event: React.ChangeEvent<any>, value: any) => {
@@ -61,43 +62,42 @@ export default function Banner() {
     }
   }
 
-  let url = "";
-  let urlTerskel = "";
-  console.log(process.env.URL_ENV)
-  if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') { // For lokal testing og deployment endrer api kall
-    if (process.env.REACT_APP_URL_ENV == "prod") {
-      url = '/api/airport'
-      urlTerskel = "/api/terskel"
-    } else {
-      url = 'http://localhost:8080/api/airport'
-      urlTerskel = "http://localhost:8080/api/terskel"
-    }
-  } else {
-      url = '/api/airport'
-      urlTerskel = "/api/terskel"
-  }
+
 
   const airportRedux = useSelector((state:any) => state.airport.value)
-  const listAirport = airportRedux// != null ?
-      //{icao: airportRedux.icao, label: airportRedux.navn} :
-      //{icao: "ENDU", label: "Bardufoss Lufthavn"}
+  const airportList = useSelector((state:any) => state.airportList.value)
+  const [listAirport, setListAirport] = useState([])
+  const [selectedAirport, setSelectedAirport] = useState<any>(null)
 
   useEffect(() => {
-
-      axios.get(url) // Henter alle flyplasser
-      .then((response) => {
-        setFlyplasserList(response.data); // Setter alle flyplassene i en liste
+    if (airportRedux != null) {
+      setSelectedAirport({
+        label: airportRedux?.navn,
+        icao: airportRedux?.icao,
+        rwy: airportRedux?.rwy
       })
-      
-  },[])
+    }
+    else {
+      setSelectedAirport(null)
+    }
+  }, [airportRedux])
 
-  let relevantFlyplassData = []; // Lager en ny array som skal ta inn mindre data som skal settes inn i AutoComplete komponenten
+  useEffect(() => {
+    if (airportList !== undefined) {
+      console.log(airportList)
+      console.log(airportRedux)
 
-  for (let i = 0; i < flyplasserList.length; i++){
-    const nyPush = {label: flyplasserList[i].navn, icao: flyplasserList[i].icao, rwy: flyplasserList[i].rwy}; // Velger å kun sette inn navn og icao i den nye listen
-    relevantFlyplassData.push(nyPush);
-  }
+      setListAirport(airportList.map((it:any) => {
+        return {
+          label: it.navn,
+          icao: it.icao,
+          rwy: it.rwy
+        }
+      }))
+    }
+  },[airportList])
 
+  // @ts-ignore
   return (
     <>
     <div style={{ minHeight: 'fit-content', width: '100%', backgroundColor: '#dff2f6'}}> {/** banneret tar uansett halvparten av skjermen, men om den behøver mer vil den utvides */}
@@ -117,10 +117,10 @@ export default function Banner() {
             // redux endring av flyplasshåndtering
             onChange={handleChange}
             // setter flyplassen som valgt i listen
-            value={listAirport}
+            value={selectedAirport}
             isOptionEqualToValue={(option, value) => option.icao === value.icao}
             // Listen med valg settes inn her. For å gjøre det enklere sorteres den alfabetisk
-            options={relevantFlyplassData.sort((a, b) => -b.label.localeCompare(a.label))}
+            options={listAirport.sort((a:any, b:any) => -b.label.localeCompare(a.label))}
             // Listen grupperes også etter første bokstav
             groupBy={(relevantFlyplassData) => relevantFlyplassData.label.charAt(0).toString()}
             sx={{ width: 300, backgroundColor: '#FFFFFF'}}
