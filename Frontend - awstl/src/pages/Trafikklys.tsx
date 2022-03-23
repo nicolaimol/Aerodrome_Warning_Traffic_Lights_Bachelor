@@ -24,7 +24,11 @@ function Trafikklys() {
 
     setColor(temp > terskel?.airTemp ? "green" : temp == terskel?.airTemp ? "yellow" : "red")
 
-    setColor(calcFarge(nowcast?.nowcasts[0].properties.timeseries[0].data.instant.details, terskel!!, airport!!))
+    setColor(calcFarge(nowcast?.nowcasts[0].properties.timeseries[0].data.instant.details, terskel!!, airport!!,
+        {
+            precipitation_amount: 0,
+            probThunder: 0
+        }))
 
 
   }, [terskel, nowcast])
