@@ -25,7 +25,8 @@ class KeycloakProvider() {
 
     fun getInstance(): Keycloak {
         if (keycloak == null) {
-            keycloak = KeycloakBuilder()
+            keycloak = KeycloakBuilder
+                .builder()
                 .realm(realm!!)
                 .serverUrl(serverURL!!)
                 .clientId(clientID!!)
