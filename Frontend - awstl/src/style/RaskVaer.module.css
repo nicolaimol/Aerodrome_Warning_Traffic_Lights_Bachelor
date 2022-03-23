@@ -1,0 +1,28 @@
+.vaerGrid {
+    gap: 1em;
+    display: grid;
+    grid-template-columns: 1fr;
+    margin-bottom: 1em;
+}
+
+.vaerGrid > * {
+
+    justify-content: center;
+}
+
+@media screen and (min-width: 700px) {
+    .vaerGrid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .vaerGrid > * {
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 1270px) {
+    .vaerGrid {
+        gap: 2em;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+}
