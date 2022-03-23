@@ -33,7 +33,7 @@ class TafMetarService(val httpService: HttpService, val service: FlyplassService
             val ret = TafMetarDto()
 
             ret.taf = list[3]
-            ret.metar = list[list.size-4]
+            ret.metar = list[list.size-3]
 
             return ret;
         }
