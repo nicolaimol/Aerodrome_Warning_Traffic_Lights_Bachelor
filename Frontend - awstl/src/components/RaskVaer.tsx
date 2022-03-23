@@ -14,7 +14,7 @@ import VaerBox from './VaerBox'
 // Material UI
 import { Container, Typography, Divider } from '@mui/material'
 
-
+import styles from '../style/RaskVaer.module.css'
 
 function RaskVaer() {
 
@@ -83,7 +83,7 @@ function RaskVaer() {
             <Divider sx={{ mb: 5}} />
 
         {/** Lager en 'VaerBox' komponent for hver flyplass vi har hentet værdata fra */}
-        <div style={{ display: 'flex', justifyContent: 'space-evenly', flexFlow: 'row wrap', alignItems: 'center'}}>
+        <div className={styles.vaerGrid}>
           { vdata != null && 
             vdata.nowcasts.map((flyplass, index) => {
               return <VaerBox key={index} properties={flyplass.properties} airports={vdata.airports[index]} ></VaerBox>
