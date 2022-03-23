@@ -28,10 +28,7 @@
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 <!--
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
+
 -->
 
 		<dependency>
@@ -43,7 +40,7 @@
 		<dependency>
 			<groupId>io.micrometer</groupId>
 			<artifactId>micrometer-registry-prometheus</artifactId>
-			<version>1.5.1</version>
+			<version>1.8.3</version>
 		</dependency>
 
 		<dependency>
@@ -119,7 +116,36 @@
 			<version>0.7.2</version>
 			<scope>test</scope>
 		</dependency>
+
+
+
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.keycloak</groupId>
+			<artifactId>keycloak-spring-boot-starter</artifactId>
+			<version>17.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.keycloak</groupId>
+			<artifactId>keycloak-admin-client</artifactId>
+			<version>17.0.0</version>
+		</dependency>
 	</dependencies>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.keycloak.bom</groupId>
+				<artifactId>keycloak-adapter-bom</artifactId>
+				<version>17.0.0</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<build>
 		<sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
