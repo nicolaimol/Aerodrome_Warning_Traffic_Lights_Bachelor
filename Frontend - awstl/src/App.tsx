@@ -192,10 +192,11 @@ function App() {
                     backgroundColor: 'yellow',
                     position: "fixed",
                     display: 'flex',
-
+                    width: '100%',
                     left: "50%",
                     transform: "translateX(-50%) translateY(-50%)",
                     top: "50%",
+                    justifyContent: 'center',
 
                     /*
                     right: '1.5em',
