@@ -1,5 +1,5 @@
 
-export const calcFarge = ( data?: any, terskelverdier?: any, flyplass?: any ) => {
+export const calcFarge = ( data?: any, terskelverdier?: any, flyplass?: any, more?: any ) => {
 
     /*
     console.log('Her er terskelverdier fra calcFarge');
@@ -23,6 +23,15 @@ export const calcFarge = ( data?: any, terskelverdier?: any, flyplass?: any ) =>
     }
 
     // PRECIPITATION SKAL HIT, ER FEIL I KODEN HVOR DET ER PRECIPITATION_RATE ISTEDENFOR PRECIPITATION_AMMOUNT
+    if (more.precipitation_amount > terskelverdier?.precipitationMax) {
+        red.push("precipitation")
+    } else if (more.precipitation_amount < terskelverdier?.precipitationMin) {
+        green.push("precipitation")
+    } else {
+        yellow.push("precipitation")
+    }
+
+
 
     if (data?.wind_speed > terskelverdier?.windSpeedMax) {
         red.push("wind speed")
@@ -41,7 +50,13 @@ export const calcFarge = ( data?: any, terskelverdier?: any, flyplass?: any ) =>
         yellow.push("wind gust")
     }
 
-    // PROBABILITY THUNDER HER
+    if (more.probThunder > terskelverdier?.probThunderMax) {
+        red.push("prob thunder")
+    } else if (more.probThunder < terskelverdier?.probThunderMin) {
+        green.push("prob thunder")
+    } else {
+        yellow.push("prob thunder")
+    }
 
     if (data?.relative_humidity > terskelverdier?.humidityMax) {
         red.push("humidity")
