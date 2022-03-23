@@ -122,7 +122,7 @@ const cw = weather?.data.instant.details.wind_speed * Math.sin
                             {
                                 airport.rwy.split(",").map((it: any) => {
 
-                                    return <Rullebane rullebane={it}></Rullebane>
+                                    return <Rullebane key={it[0]} rullebane={it}></Rullebane>
 
                                 })
                             }
