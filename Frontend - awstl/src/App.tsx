@@ -45,38 +45,30 @@ function App() {
     const dispatch = useDispatch()
 
     let url = ""
+    let urlNowcast = ""
+    let urlLocfor = ""
+    let urlAirport = ""
     if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
         if (process.env.REACT_APP_URL_ENV == "prod") {
             url = "/api/terskel"
+            urlNowcast = '/api/nowcast?icao='
+            urlLocfor = '/api/locationforecast?icao='
+            urlAirport = '/api/airport'
         }
         else {
             url = "http://localhost:8080/api/terskel"
+            urlNowcast = 'http://localhost:8080/api/nowcast?icao='
+            urlLocfor = 'http://localhost:8080/api/locationforecast?icao='
+            urlAirport = 'http://localhost:8080/api/airport'
         }
     } else {
         url = "/api/terskel"
-    }
-
-    let urlNowcast = ""
-    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') { // Uavhengig om det er local testing eller deployment så fungerer API kall
-        if (process.env.REACT_APP_URL_ENV == "prod") {
-            urlNowcast = '/api/nowcast?icao='
-        } else {
-            urlNowcast = 'http://localhost:8080/api/nowcast?icao='
-        }
-    } else {
         urlNowcast = '/api/nowcast?icao='
+        urlLocfor = '/api/locationforecast?icao='
+        urlAirport = '/api/airport'
     }
 
-    let urlLocfor = ""
-    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') { // Uavhengig om det er local testing eller deployment så fungerer API kall
-        if (process.env.REACT_APP_URL_ENV == "prod") {
-            urlLocfor = '/api/locationforecast?icao='
-        } else {
-            urlLocfor = 'http://localhost:8080/api/locationforecast?icao='
-        }
-    } else {
-        urlLocfor = '/api/locationforecast?icao='
-    }
+
 
     const [error, setError] = useState(false)
 
@@ -105,6 +97,11 @@ function App() {
                 dispatch(allActions.terskelActions.setTerskel(defaultVerdier))
             })
 
+        axios.get(urlAirport)
+            .then((response: any) => {
+                console.log(response)
+                dispatch(allActions.airportListAction.setAirportList(response.data))
+            })
 
     }, [])
 
@@ -115,7 +112,7 @@ function App() {
     const [active, setActive] = useState<any>(null)
 
     useEffect(() => {
-        if (airport != undefined) {
+        if (airport != undefined && airport.icao != undefined) {
             axios.get(`${urlNowcast}${airport.icao}`) // Henter værdata for 3 flyplasser + en egendefinert
                 .then((response) => {
                     dispatch(allActions.nowcastAction.setNowcast(response.data))
