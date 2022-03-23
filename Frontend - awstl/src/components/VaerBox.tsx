@@ -16,7 +16,7 @@ function VaerBox(props:weatherNowAirport) { // Værboksen tar inn props med 'wea
 
   return (
     <>
-    <Card sx={{ minWidth: 250, mb: 5, width: "20%", height: "fit-content" }}>
+    <Card sx={{ width: '100%', height: "fit-content" }}>
         <CardHeader
         sx={{ color: '#0090a8', height: "5em"}}
         /*
