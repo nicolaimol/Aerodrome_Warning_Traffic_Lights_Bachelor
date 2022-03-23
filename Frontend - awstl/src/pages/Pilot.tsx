@@ -13,6 +13,8 @@ import { calcFarge } from '../util/calcFarge'
 import PilotVelgDepArvl from '../components/PilotVelgDepArvl'
 import { theme } from '../util/theme'
 
+import TafMetar from '../components/TafMetar'
+
 function Pilot() {
   
 
@@ -21,16 +23,24 @@ function Pilot() {
   const airport = useSelector((state: any) => state.airport.value)
 
   const [color, setColor] = useState<string>("green")
+  const [toAirport, setToAirport] = useState<any>(null)
 
   useEffect(() => {
     const temp = nowcast?.nowcasts[0].properties.timeseries[0].data.instant.details.air_temperature
 
     setColor(temp > terskel?.airTemp ? "green" : temp == terskel?.airTemp ? "yellow" : "red")
 
-    setColor(calcFarge(nowcast?.nowcasts[0].properties.timeseries[0].data.instant.details, terskel!!, airport!!))
-
-
+    setColor(calcFarge(nowcast?.nowcasts[0].properties.timeseries[0].data.instant.details, terskel!!, airport!!,
+        {
+          precipitation_amount: 0,
+          probThunder: 0
+        }))
   }, [terskel, nowcast])
+
+    const updateAirportTo = (data: any) => {
+      console.log(data)
+      setToAirport(data)
+    }
 
   return (
     <>
@@ -43,10 +53,22 @@ function Pilot() {
     </Typography>
     <Divider sx={{ mb: 5 }} />
 
-    <PilotFlyplassTo />
+    <PilotFlyplassTo update={updateAirportTo} />
     <Divider sx={{ mb: 5 }} />
     <PilotVelgDepArvl />
     <Divider />
+        <div style={{textAlign: 'center', color: '#0090a8', marginBottom: '1em'}}>
+            <Typography variant="h4">Taf metar</Typography>
+            <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2em'}}>
+                { airport != undefined && toAirport != null &&
+                    <>
+                        <TafMetar icao={airport.icao} />
+                        <TafMetar icao={toAirport.icao} />
+                    </>
+                }
+            </div>
+        </div>
+    <Divider sx={{mt: 1, mb: 1}} />
 
       <div style={{ display: 'flex', justifyContent: 'space-evenly', flexFlow: 'row wrap', alignItems: 'stretch'}}>
         {terskel != undefined && 
