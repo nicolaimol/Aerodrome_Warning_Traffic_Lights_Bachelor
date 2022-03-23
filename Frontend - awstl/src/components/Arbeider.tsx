@@ -1,5 +1,6 @@
 import '../App.css';
 import React from 'react'
+import styles from '../style/Arbeider.module.css'
 
 // Komponenter
 import ArbeiderKort from './ArbeiderKort';
@@ -25,13 +26,13 @@ function Arbeider() {
   return (
     <> 
     {/** Box med flex rundt */}
-    <Box id="arbeiderBox" sx={{ mt: 8, mb: 5 }} style={{ display: 'grid', gridTemplateColumns: "1fr 1fr 1fr", gap: '1em' /*justifyContent: 'space-evenly'*/, width: '100%', /*flexFlow: 'row wrap', alignItems: 'center'*/}}>
+    <div id="arbeiderBox" className={styles.arbeiderGrid} /*sx={{ mt: 8, mb: 5 }}*/>
       
       {arbeiderne.map((personen) => { {/** Dynamisk lager et Arbeiderkort for hver av arbeiderne i arrayet */}
         return <ArbeiderKort key={personen[0].toString()} arbeider={personen[0].toString()} ikonComp={personen[1]} />
       })}
         
-    </Box>
+    </div>
         
         
     </>
