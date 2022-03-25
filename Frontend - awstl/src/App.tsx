@@ -9,7 +9,7 @@ import Pilot from './pages/Pilot';
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import allActions from './Actions';
-import { Typography, Box } from '@mui/material';
+import { Typography, Box, Paper } from '@mui/material';
 import ReportGmailerrorredSharpIcon from '@mui/icons-material/ReportGmailerrorredSharp';
 
 /***
@@ -163,24 +163,26 @@ function App() {
 
 
             { !error &&
-                <div style={{position: "fixed", display: 'flex', right: '.5em', top: '1.5em', width: 'fit-content'}}>
-                    <Typography>
+                <div style={{position: "fixed",  /*right: '.5em', top: '1.5em' */ right: '0', backgroundColor: 'white', zIndex: '100'}}>
+                    <Paper elevation={3} style={{display: 'flex', width: 'fit-content', padding: '1em', height: '32px', alignItems: 'center'}}>
                         {airport != undefined &&
                             <span style={{color: "#0090a8"}}>{airport.navn}</span>
                         }
-                    </Typography>
-                    {nowcast != undefined &&
 
-                        <>
-                            <Box style={{ display: 'flex', justifyContent: 'center'}}>
-                                <img style={{height: '20px', margin: "0 5px"}} src={ikonpath} alt={nowcast?.nowcasts[0].properties.timeseries[0].data.next_1_hours.summary.symbol_code} />
-                            </Box>
-                            <Typography sx={{color: `${temperatureColor}`}}>
-                                {nowcast?.nowcasts[0].properties.timeseries[0].data.instant.details.air_temperature}°C
-                            </Typography>
-                        </>
+                        {nowcast != undefined &&
 
-                    }
+                            <>
+                                <Box style={{ display: 'flex', justifyContent: 'center'}}>
+                                    <img style={{height: '20px', margin: "0 5px"}} src={ikonpath} alt={nowcast?.nowcasts[0].properties.timeseries[0].data.next_1_hours.summary.symbol_code} />
+                                </Box>
+                                <Typography sx={{color: `${temperatureColor}`}}>
+                                    {nowcast?.nowcasts[0].properties.timeseries[0].data.instant.details.air_temperature}°C
+                                </Typography>
+                            </>
+
+                        }
+                    </Paper>
+
                 </div>
             }
             { error &&
