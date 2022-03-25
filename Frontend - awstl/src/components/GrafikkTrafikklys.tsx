@@ -41,11 +41,19 @@ function GrafikkTrafikklys() {
 
 //console.log(weather);
 
-const cw = weather?.data.instant.details.wind_speed * Math.sin
-    (   Math.min(
-            Math.abs(10*airport?.rwy?.split("/")[0] - (360 + weather?.data.instant.details.wind_from_direction)) ,
-            Math.abs(10*airport?.rwy?.split("/")[1] - (360 + weather?.data.instant.details.wind_from_direction))
-        )
+    const windDir = weather?.data.instant.details.wind_from_direction > 0 ?
+        weather?.data.instant.details.wind_from_direction :
+        360 + weather?.data.instant.details.wind_from_direction
+
+    const rwyDiff1 = Math.abs(10*Number(airport?.rwy?.split("/")[0]) - windDir)
+    const rwyDiff2 = Math.abs(10*Number(airport?.rwy?.split("/")[1]) - windDir)
+
+    //console.log(rwyDiff1, rwyDiff2)
+    const cw = weather?.data.instant.details.wind_speed * Math.sin
+    (   (Math.min(
+            rwyDiff1 ,
+            rwyDiff2
+        ) / 360) * 2 * Math.PI
     )
 
    // console.log(terskel);
