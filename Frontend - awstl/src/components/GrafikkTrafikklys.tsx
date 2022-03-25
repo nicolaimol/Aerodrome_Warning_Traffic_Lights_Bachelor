@@ -169,10 +169,12 @@ const cw = weather?.data.instant.details.wind_speed * Math.sin
                             }
 
                             <div style={{position: 'absolute',
-                                right: weather.data.instant.details.wind_from_direction > 0 && weather.data.instant.details.wind_from_direction < 180 ?
+                                right: (weather.data.instant.details.wind_from_direction > 0 && weather.data.instant.details.wind_from_direction < 180) ||
+                                    (weather.data.instant.details.wind_from_direction < -360 && weather.data.instant.details.wind_from_direction > -180) ?
                                     "-50px" : "250px",
-                                top: weather.data.instant.details.wind_from_direction < 90 && weather.data.instant.details.wind_from_direction > -90 ?
-                                    "0" : "150px",
+                                top: (weather.data.instant.details.wind_from_direction > 90 && weather.data.instant.details.wind_from_direction < 270) ||
+                                    (weather.data.instant.details.wind_from_direction > -270 && weather.data.instant.details.wind_from_direction < -90) ?
+                                    "150px" : "0px",
                                 textAlign: 'center',
                                 color: '#0090a8'
                             }}>
