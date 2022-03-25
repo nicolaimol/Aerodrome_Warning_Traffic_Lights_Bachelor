@@ -170,9 +170,9 @@ const cw = weather?.data.instant.details.wind_speed * Math.sin
 
                             <div style={{position: 'absolute',
                                 right: weather.data.instant.details.wind_from_direction > 0 && weather.data.instant.details.wind_from_direction < 180 ?
-                                    "-50px" : "150px",
+                                    "-50px" : "250px",
                                 top: weather.data.instant.details.wind_from_direction < 90 && weather.data.instant.details.wind_from_direction > -90 ?
-                                    "-50px" : "150px",
+                                    "0" : "150px",
                                 textAlign: 'center',
                                 color: '#0090a8'
                             }}>
