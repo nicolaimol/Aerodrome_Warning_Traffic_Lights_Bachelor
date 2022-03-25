@@ -88,6 +88,7 @@ function Tidslinje() {
 
 
     const [int, setInt] = useState<any>(null)
+    const [sliderValue, setSliderValue] = React.useState<number>(0);
     const [started, setStarted] = useState<boolean>(false)
     const [startIndex, setStartIndex] = useState<number>(0)
 
@@ -95,6 +96,7 @@ function Tidslinje() {
     let index = 0;
     const start = () => {
         index = startIndex
+        setSliderValue(index);
         console.log(started)
         if (!started) {
             setInt(setInterval(update, 1000))
@@ -103,11 +105,11 @@ function Tidslinje() {
 
     }
 
-
     const update = () => {
-        dispatch(allActions.grafikkAction.setGrafikk(ver[index]))
+        dispatch(allActions.grafikkAction.setGrafikk(ver[sliderValue]))
         index = (index + 1) % ver.length
-        console.log(index)
+        setSliderValue(index)
+        console.log(sliderValue)
     }
 
     const stop = () => {
@@ -281,11 +283,16 @@ function Tidslinje() {
         ],
     };
 
-    const [sliderValue, setSliderValue] = React.useState<number>(100);
 
     const tempSliderHandler = (event: Event, newValue: number | number[]) => {
         setSliderValue(newValue as number);
+        dispatch(allActions.grafikkAction.setGrafikk(ver[sliderValue]))
     };
+
+        //dispatch(allActions.grafikkAction.setGrafikk(ver[index]))
+        //index = (index + 1) % ver.length
+        //console.log(index)
+    
 
 
 
@@ -312,7 +319,7 @@ function Tidslinje() {
             value={sliderValue}
             step={1}
             min={0}
-            max={100}
+            max={ver?.length - 1}
     
             //marks={SETT INN MARK FOR ALLE TIMER}
             valueLabelDisplay="auto"
