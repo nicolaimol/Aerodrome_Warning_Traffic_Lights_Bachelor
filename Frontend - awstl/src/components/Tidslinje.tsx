@@ -90,7 +90,7 @@ function Tidslinje() {
     const [int, setInt] = useState<any>(null)
     const [sliderValue, setSliderValue] = React.useState<number>(0);
     const [started, setStarted] = useState<boolean>(false)
-    const [startIndex, setStartIndex] = useState<number>(0)
+    const [startIndex, setStartIndex] = useState<number>(1)
 
 
     let index = 0;
@@ -106,7 +106,7 @@ function Tidslinje() {
     }
 
     const update = () => {
-        dispatch(allActions.grafikkAction.setGrafikk(ver[sliderValue]))
+        dispatch(allActions.grafikkAction.setGrafikk(ver[index]))
         index = (index + 1) % ver.length
         setSliderValue(index)
         console.log(sliderValue)
