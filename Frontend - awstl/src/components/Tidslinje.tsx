@@ -18,6 +18,8 @@ import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux';
 import allActions from '../Actions';
 import { calcFarge } from '../util/calcFarge';
+import SliderWrapper from './SliderWrapper';
+import { Slider } from '@mui/material';
 
 
 ChartJS.register(
@@ -279,6 +281,12 @@ function Tidslinje() {
         ],
     };
 
+    const [sliderValue, setSliderValue] = React.useState<number>(100);
+
+    const tempSliderHandler = (event: Event, newValue: number | number[]) => {
+        setSliderValue(newValue as number);
+    };
+
 
 
 
@@ -296,6 +304,20 @@ function Tidslinje() {
             </div>
             <button onClick={start}>ANIMASJON</button>
             <button onClick={stop}>STOPP</button>
+            <Slider
+            
+            //onChangeCommitted={tempSliderHandler}
+            onChange={tempSliderHandler}
+            defaultValue={0}
+            value={sliderValue}
+            step={1}
+            min={0}
+            max={100}
+    
+            //marks={SETT INN MARK FOR ALLE TIMER}
+            valueLabelDisplay="auto"
+
+            />
         </div>
 
   )
