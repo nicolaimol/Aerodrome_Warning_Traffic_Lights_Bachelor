@@ -19,7 +19,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import allActions from '../Actions';
 import { calcFarge } from '../util/calcFarge';
 import SliderWrapper from './SliderWrapper';
-import { Slider } from '@mui/material';
+import { Button, Slider } from '@mui/material';
 
 
 ChartJS.register(
@@ -90,12 +90,11 @@ function Tidslinje() {
     const [int, setInt] = useState<any>(null)
     const [sliderValue, setSliderValue] = React.useState<number>(0);
     const [started, setStarted] = useState<boolean>(false)
-    const [startIndex, setStartIndex] = useState<number>(1)
 
 
     let index = 0;
     const start = () => {
-        index = startIndex
+        index = sliderValue
         setSliderValue(index);
         console.log(started)
         if (!started) {
@@ -218,7 +217,7 @@ function Tidslinje() {
         },
         onClick: function (evt: any, ctx: any) {
             dispatch(allActions.grafikkAction.setGrafikk(ver[ctx[0].index]))
-            setStartIndex(ctx[0].index)
+            setSliderValue(ctx[0].index)
             //alert(`Du valgte ${labels[ctx[0].index]} med temp ${ver[ctx[0].index]}`)
         },
         scales: {
@@ -309,8 +308,9 @@ function Tidslinje() {
                 </div>
 
             </div>
-            <button onClick={start}>ANIMASJON</button>
-            <button onClick={stop}>STOPP</button>
+            <Button sx={{ mr: 2, backgroundColor: '#0494ac'}} variant="contained" onClick={start}>Animasjon</Button>
+            <Button sx={{ mr: 2, backgroundColor: '#0494ac'}} variant="contained" onClick={stop}>Stopp</Button>
+            
             <Slider
             
             //onChangeCommitted={tempSliderHandler}
