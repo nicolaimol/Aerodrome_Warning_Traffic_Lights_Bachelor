@@ -71,40 +71,48 @@ const cw = weather?.data.instant.details.wind_speed * Math.sin
     <>
     <div style={{ backgroundColor: '#dff2f6', minHeight: '20vh', width: '100%', padding: '0 0 30px 0' }}>
         <Container>
+        {weather != undefined &&
+            <div>
+                <Typography sx={{fontSize: 30}} style={{display: 'flex', justifyContent: 'center', width: '100%', color: '#0090a8'}}>
+                    {airport?.navn}
+                </Typography>
+                <Typography style={{display: 'flex', justifyContent: 'center', width: '100%', color: '#0090a8'}}>
+                    {new Date(weather.time).toLocaleString()}
+                </Typography>
+            </div>
+        }
+        
+            
+
         <div style={{display: 'flex', justifyContent: 'space-evenly', flexGrow: 'row wrap'}}>
-        <div style={{ width: '50%'}}>
-            <Typography style={{color : weather?.data.instant.details.air_temperature < terskel?.airTempMin ? "red" :  weather?.data.instant.details.air_temperature > terskel?.airTempMax ? "#0090a8" : "yellow"}}>
+        <div style={{ width: '33%'}}>
+            <Typography gutterBottom style={{ fontSize: 20, color : weather?.data.instant.details.air_temperature < terskel?.airTempMin ? "red" :  weather?.data.instant.details.air_temperature > terskel?.airTempMax ? "#0090a8" : "yellow"}}>
                 Effektiv lufttemperatur: {weather?.data.instant.details.air_temperature}
             </Typography>
-            <Typography style={{color : precipitation_amount > terskel?.precipitationMax ? "red" :  precipitation_amount <= terskel?.precipitationMin ? "#0090a8" : "yellow"}}>
+            <Typography gutterBottom style={{ fontSize: 20, color : precipitation_amount > terskel?.precipitationMax ? "red" :  precipitation_amount <= terskel?.precipitationMin ? "#0090a8" : "yellow"}}>
                 Nedbør: {precipitation_amount}
             </Typography>
-            <Typography style={{color : weather?.data.instant.details.wind_speed > terskel?.windSpeedMax ? "red" :  weather?.data.instant.details.wind_speed < terskel?.windSpeedMin ? "#0090a8" : "yellow"}}>
+            <Typography gutterBottom style={{ fontSize: 20, color : weather?.data.instant.details.wind_speed > terskel?.windSpeedMax ? "red" :  weather?.data.instant.details.wind_speed < terskel?.windSpeedMin ? "#0090a8" : "yellow"}}>
                 Vindfart: {weather?.data.instant.details.wind_speed}
             </Typography>
-            <Typography style={{color : weather?.data.instant.details.wind_speed_of_gust > terskel?.windGustMax ? "red" :  weather?.data.instant.details.wind_speed_of_gust < terskel?.windGustMin ? "#0090a8" : "yellow"}}>
+            <Typography gutterBottom style={{ fontSize: 20, color : weather?.data.instant.details.wind_speed_of_gust > terskel?.windGustMax ? "red" :  weather?.data.instant.details.wind_speed_of_gust < terskel?.windGustMin ? "#0090a8" : "yellow"}}>
                 Vindkast: {weather?.data.instant.details.wind_speed_of_gust}
             </Typography>
-            <Typography style={{color : probThunder > terskel?.probThunderMax ? "red" :  probThunder < terskel?.probThunderMin ? "#0090a8" : (probThunder <= 100 && probThunder >= 0) ? "yellow" : "#0090a8"}}>
+            <Typography gutterBottom style={{ fontSize: 20, color : probThunder > terskel?.probThunderMax ? "red" :  probThunder < terskel?.probThunderMin ? "#0090a8" : (probThunder <= 100 && probThunder >= 0) ? "yellow" : "#0090a8"}}>
                 Sannsynlighet torden: {(probThunder <= 100 && probThunder >= 0) ? probThunder : "N/A"}
             </Typography>
-            <Typography style={{color : weather?.data.instant.details.relative_humidity > terskel?.humidityMax ? "red" :  weather?.data.instant.details.relative_humidity < terskel?.humidityMin ? "#0090a8" : "yellow"}}>
+            <Typography gutterBottom style={{ fontSize: 20, color : weather?.data.instant.details.relative_humidity > terskel?.humidityMax ? "red" :  weather?.data.instant.details.relative_humidity < terskel?.humidityMin ? "#0090a8" : "yellow"}}>
                 Luftfuktighet: {weather?.data.instant.details.relative_humidity}
             </Typography>
-            <Typography style={{color : cw > terskel?.crosswindMax ? "red" :  cw < terskel?.crosswindMin ? "#0090a8" : "yellow"}}>
+            <Typography gutterBottom style={{ fontSize: 20, color : cw > terskel?.crosswindMax ? "red" :  cw < terskel?.crosswindMin ? "#0090a8" : "yellow"}}>
                 Crosswind: {cw.toPrecision(2)}
             </Typography>
         </div>
-        <div style={{ width: '50%' }}>
+        <div style={{ width: '33%' }}>
                     {/** Ikonet */}
                     {weather != undefined &&
                         <div style={{width: "100%", display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
-                            <Typography sx={{fontSize: 30}} style={{display: 'flex', justifyContent: 'center', width: '100%'}}>
-                                {airport?.navn}
-                            </Typography>
-                            <Typography style={{display: 'flex', justifyContent: 'center', width: '100%'}}>
-                                {new Date(weather.time).toLocaleString()}
-                            </Typography>
+                            
                             <Box style={{ display: 'flex', justifyContent: 'center', maxHeight: '100px'}} >
                                 <img style={{width: '50%'}} src={ikonpath} alt={ikonpath} />
                             </Box>
@@ -117,7 +125,40 @@ const cw = weather?.data.instant.details.wind_speed * Math.sin
                                 </div>
                             </Box>
 
+                        <div style={{display: 'flex', alignItems: 'center', flexDirection: 'column', color: '#0090a8'}}>
+                            <Typography>
+                                {weather.data.instant.details.wind_from_direction < 0
+                                    ? 360 + weather.data.instant.details.wind_from_direction
+                                    : weather.data.instant.details.wind_from_direction}°
+                            </Typography>
+                            {nedbor != "" &&
+                                <Typography>{nedbor}</Typography>
+                            }
+
+                        </div>
+                </div>
+            }
+            
+            {weather == undefined &&
+
+                <div>
+                    <h2>Venligst vent</h2>
+                </div>
+            }
+        </div>
+        <div style={{ width: '33%' }}>
+                    {/** Ikonet */}
+                    {weather != undefined &&
+                        <div style={{width: "100%", display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+
+                        <div style={{ display: 'flex', justifyContent: 'center'}}>
+                            <Typography gutterBottom style={{ fontSize: 20, color: '#0090a8'}}>
+                                Vind forhold til rullebane
+                            </Typography>
+                        </div>
+
                     <Box style={{ display: 'flex', justifyContent: 'space-evenly', flexDirection: 'row', alignItems: 'center'}}>
+                        
                         <div style={{ height: '230px', width: '230px', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative'}}>
                             {
                                 airport.rwy.split(",").map((it: any) => {
@@ -126,8 +167,6 @@ const cw = weather?.data.instant.details.wind_speed * Math.sin
 
                                 })
                             }
-
-
 
                             <div style={{position: 'absolute',
                                 right: weather.data.instant.details.wind_from_direction > 0 && weather.data.instant.details.wind_from_direction < 180 ?
@@ -148,21 +187,10 @@ const cw = weather?.data.instant.details.wind_speed * Math.sin
 
                             </div>
                         </div>
-
-                        <div style={{display: 'flex', flexDirection: 'column', color: '#0090a8'}}>
-                            <Typography>
-                                {weather.data.instant.details.wind_from_direction < 0
-                                    ? 360 + weather.data.instant.details.wind_from_direction
-                                    : weather.data.instant.details.wind_from_direction}°
-                            </Typography>
-                            {nedbor != "" &&
-                                <Typography>{nedbor}</Typography>
-                            }
-
-                        </div>
                     </Box>
                 </div>
             }
+            
             {weather == undefined &&
 
                 <div>
