@@ -84,8 +84,8 @@ const cw = weather?.data.instant.details.wind_speed * Math.sin
         
             
 
-        <div style={{display: 'flex', justifyContent: 'space-evenly', flexGrow: 'row wrap'}}>
-        <div style={{ width: '33%'}}>
+        <div style={{display: 'flex', justifyContent: 'space-evenly', flexWrap:'wrap'}}>
+        <div style={{ width: '33%', minWidth: 'fit-content'}}>
             <Typography gutterBottom style={{ fontSize: 20, color : weather?.data.instant.details.air_temperature < terskel?.airTempMin ? "red" :  weather?.data.instant.details.air_temperature > terskel?.airTempMax ? "#0090a8" : "yellow"}}>
                 Effektiv lufttemperatur: {weather?.data.instant.details.air_temperature}
             </Typography>
@@ -108,10 +108,10 @@ const cw = weather?.data.instant.details.wind_speed * Math.sin
                 Crosswind: {cw.toPrecision(2)}
             </Typography>
         </div>
-        <div style={{ width: '33%' }}>
+        <div style={{ width: '33%', minWidth: 'fit-content' }}>
                     {/** Ikonet */}
                     {weather != undefined &&
-                        <div style={{width: "100%", display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+                        <div style={{width: "100%", display: 'flex', flexDirection: 'column', flexWrap:'wrap', justifyContent: 'center'}}>
                             
                             <Box style={{ display: 'flex', justifyContent: 'center', maxHeight: '100px'}} >
                                 <img style={{width: '50%'}} src={ikonpath} alt={ikonpath} />
@@ -146,7 +146,7 @@ const cw = weather?.data.instant.details.wind_speed * Math.sin
                 </div>
             }
         </div>
-        <div style={{ width: '33%' }}>
+        <div style={{ width: '33%', minWidth: 'fit-content' }}>
                     {/** Ikonet */}
                     {weather != undefined &&
                         <div style={{width: "100%", display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
@@ -170,19 +170,19 @@ const cw = weather?.data.instant.details.wind_speed * Math.sin
 
                             <div style={{position: 'absolute',
                                 right: weather.data.instant.details.wind_from_direction > 0 && weather.data.instant.details.wind_from_direction < 180 ?
-                                    "-70px" : "170px",
+                                    "-50px" : "150px",
                                 top: weather.data.instant.details.wind_from_direction < 90 && weather.data.instant.details.wind_from_direction > -90 ?
-                                    "-70px" : "170px",
+                                    "-50px" : "150px",
                                 textAlign: 'center',
                                 color: '#0090a8'
                             }}>
 
-                                <Typography style={{position: 'absolute', top: 0,left: "calc(50%-100px)", zIndex: 1}}>
+                                <Typography style={{position: 'absolute', top: -5,left: "calc(50%-100px)", zIndex: 1, }}>
                                     {weather.data.instant.details.wind_speed}m/s
                                 </Typography>
                                 <div style={{ position: 'relative', zIndex: 0,
                                 transform: `rotate(${weather.data.instant.details.wind_from_direction + 90}deg)`}}>
-                                    <ArrowRightAltIcon sx={{ fontSize: 100 }}></ArrowRightAltIcon>
+                                    <ArrowRightAltIcon sx={{ fontSize: 40 }}></ArrowRightAltIcon>
                                 </div>
 
                             </div>
