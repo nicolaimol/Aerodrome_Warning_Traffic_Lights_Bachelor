@@ -107,7 +107,7 @@ function Tidslinje() {
     const update = () => {
         dispatch(allActions.grafikkAction.setGrafikk(ver[index]))
         index = (index + 1) % ver.length
-        setSliderValue(index)
+        setSliderValue(index-1)
         console.log(sliderValue)
     }
 
@@ -115,6 +115,16 @@ function Tidslinje() {
         setStarted(false)
         clearInterval(int)
     }
+
+    const tempSliderHandler = (event: Event, newValue: number | number[]) => {
+        setSliderValue(newValue as number);
+        const number = newValue as number
+        console.log(number)
+        index = number
+        console.log(index)
+        dispatch(allActions.grafikkAction.setGrafikk(ver[sliderValue]))
+    };
+
 
     const dispatch = useDispatch()
 
@@ -282,12 +292,6 @@ function Tidslinje() {
         ],
     };
 
-
-    const tempSliderHandler = (event: Event, newValue: number | number[]) => {
-        setSliderValue(newValue as number);
-        dispatch(allActions.grafikkAction.setGrafikk(ver[sliderValue]))
-    };
-
         //dispatch(allActions.grafikkAction.setGrafikk(ver[index]))
         //index = (index + 1) % ver.length
         //console.log(index)
@@ -310,21 +314,27 @@ function Tidslinje() {
             </div>
             <Button sx={{ mr: 2, backgroundColor: '#0494ac'}} variant="contained" onClick={start}>Animasjon</Button>
             <Button sx={{ mr: 2, backgroundColor: '#0494ac'}} variant="contained" onClick={stop}>Stopp</Button>
-            
-            <Slider
-            
-            //onChangeCommitted={tempSliderHandler}
-            onChange={tempSliderHandler}
-            defaultValue={0}
-            value={sliderValue}
-            step={1}
-            min={0}
-            max={ver?.length - 1}
-    
-            //marks={SETT INN MARK FOR ALLE TIMER}
-            valueLabelDisplay="auto"
 
-            />
+            {
+                ver != undefined &&
+
+                <Slider
+
+                    //onChangeCommitted={tempSliderHandler}
+                    onChange={tempSliderHandler}
+                    defaultValue={0}
+                    value={sliderValue}
+                    step={1}
+                    min={0}
+                    max={ver.length - 1}
+
+                    //marks={SETT INN MARK FOR ALLE TIMER}
+                    valueLabelDisplay="auto"
+
+                />
+            }
+
+
         </div>
 
   )
