@@ -39,7 +39,7 @@ function GrafikkTrafikklys() {
     
 
 
-console.log(weather);
+//console.log(weather);
 
 const cw = weather?.data.instant.details.wind_speed * Math.sin
     (   Math.min(
@@ -48,7 +48,7 @@ const cw = weather?.data.instant.details.wind_speed * Math.sin
         )
     )
 
-    console.log(terskel);
+   // console.log(terskel);
 
     let precipitation_amount = 0;
     let probThunder = 0
