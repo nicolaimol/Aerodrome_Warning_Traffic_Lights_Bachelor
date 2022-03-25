@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import allActions from './Actions';
 import { Typography, Box, Paper } from '@mui/material';
 import ReportGmailerrorredSharpIcon from '@mui/icons-material/ReportGmailerrorredSharp';
+import Bakkemanskap from './pages/Bakkemanskap';
 
 /***
  * Fargepalett!!!
@@ -164,7 +165,7 @@ function App() {
 
             { !error &&
                 <div style={{position: "fixed",  /*right: '.5em', top: '1.5em' */ right: '0', backgroundColor: 'white', zIndex: '100'}}>
-                    <Paper elevation={3} style={{display: 'flex', width: 'fit-content', padding: '1em', height: '32px', alignItems: 'center'}}>
+                    <Paper elevation={0} style={{display: 'flex', width: 'fit-content', padding: '1em', height: '32px', alignItems: 'center'}}>
                         {airport != undefined &&
                             <span style={{color: "#0090a8"}}>{airport.navn}</span>
                         }
@@ -225,6 +226,7 @@ function App() {
 
             */}
 
+          <Route path="/bakkemanskap" element={<Bakkemanskap />} />
           <Route path="/flygeleder" element={<Trafikklys />} />
           <Route path="/pilot" element={<Pilot />} />
           <Route path="/" element={<Hjem />} />
