@@ -12,6 +12,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import {Typography} from '@mui/material'
 
 
 function TafMetar(props: any) {
@@ -23,6 +24,11 @@ function TafMetar(props: any) {
         axios.get(url)
             .then((response: any) => {
                 setTafmetar(response.data)
+            })
+            .catch((error:any) => {
+                if (error.status === 400) {
+                    setTafmetar(null)
+                }
             })
     }, [props])
 
@@ -38,20 +44,28 @@ function TafMetar(props: any) {
 
     return (
         <div>
-            <TableContainer component={Paper}>
-                <Table >
-                    <TableBody>
-                        {
-                            rows.map((row: any) => (
-                                <TableRow key={row.name} >
-                                    <TableCell component="th" scope="row" >{row.name}</TableCell>
-                                    <TableCell>{row.value}</TableCell>
-                                </TableRow>
-                            ))
-                        }
-                    </TableBody>
-                </Table>
-            </TableContainer>
+            { tafmetar != null &&
+                <TableContainer component={Paper}>
+                    <Table >
+                        <TableBody>
+                            {
+                                rows.map((row: any) => (
+                                    <TableRow key={row.name} >
+                                        <TableCell component="th" scope="row" >{row.name}</TableCell>
+                                        <TableCell>{row.value}</TableCell>
+                                    </TableRow>
+                                ))
+                            }
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            }
+            { tafmetar == null &&
+                <Typography variant="h6">
+                    Taf og metar ikke ikke tilgjengelig
+                </Typography>
+
+            }
         </div>
     );
 }
