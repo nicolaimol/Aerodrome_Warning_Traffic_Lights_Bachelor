@@ -8,6 +8,7 @@ import org.springframework.http.ResponseCookie
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.time.Duration
+import javax.annotation.security.RolesAllowed
 
 @RestController
 @RequestMapping(value = ["/api/terskel"])
@@ -79,6 +80,7 @@ class TerskelverdiController(val service: TerskelverdiService) {
         }
     }
 
+    @RolesAllowed("admin")
     @GetMapping(value = ["/all"])
     fun getAll(): ResponseEntity<Any> {
         return ResponseEntity.ok(service.getAll())
