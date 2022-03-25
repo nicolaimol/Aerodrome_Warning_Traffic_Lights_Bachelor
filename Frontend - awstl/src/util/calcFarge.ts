@@ -66,13 +66,28 @@ export const calcFarge = ( data?: any, terskelverdier?: any, flyplass?: any, mor
         yellow.push("humidity")
     }
 
+    const windDir = data?.wind_from_direction > 0 ?
+        data?.wind_from_direction :
+        360 + data?.wind_from_direction
+
+    const rwyDiff1 = Math.abs(10*Number(flyplass?.rwy?.split("/")[0]) - windDir)
+    const rwyDiff2 = Math.abs(10*Number(flyplass?.rwy?.split("/")[1]) - windDir)
 
     const cw = data?.wind_speed * Math.sin
+    (   (Math.min(
+        rwyDiff1 ,
+        rwyDiff2
+    ) / 360) * 2 * Math.PI
+    )
+
+
+    /*const cw = data?.wind_speed * Math.sin
     (   Math.min(
-            Math.abs(10*flyplass?.rwy.split("/")[0] - (360 + data?.wind_from_direction)) , 
+            Math.abs(10*flyplass?.rwy.split("/")[0] - (360 + data?.wind_from_direction)) ,
             Math.abs(10*flyplass?.rwy.split("/")[1] - (360 + data?.wind_from_direction))
         )
     )
+     */
 
     if (cw > terskelverdier?.crosswindMax) {
         red.push("crosswind")
