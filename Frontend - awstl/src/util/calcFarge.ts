@@ -25,7 +25,7 @@ export const calcFarge = ( data?: any, terskelverdier?: any, flyplass?: any, mor
     // PRECIPITATION SKAL HIT, ER FEIL I KODEN HVOR DET ER PRECIPITATION_RATE ISTEDENFOR PRECIPITATION_AMMOUNT
     if (more.precipitation_amount > terskelverdier?.precipitationMax) {
         red.push("precipitation")
-    } else if (more.precipitation_amount < terskelverdier?.precipitationMin) {
+    } else if (more.precipitation_amount < terskelverdier?.precipitationMin || more.precipitation_amount == 0) {
         green.push("precipitation")
     } else {
         yellow.push("precipitation")
