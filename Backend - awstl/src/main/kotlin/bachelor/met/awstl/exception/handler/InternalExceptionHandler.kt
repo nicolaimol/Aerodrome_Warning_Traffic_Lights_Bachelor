@@ -36,6 +36,8 @@ class InternalExceptionHandler {
     @ExceptionHandler(value = [Exception::class])
     fun handleInternalException(e: Exception): ResponseEntity<InternalExceptionResponse> {
 
+        e.printStackTrace()
+
         logger.error("Handled error: ${e.message}")
 
         val response = InternalExceptionResponse(
