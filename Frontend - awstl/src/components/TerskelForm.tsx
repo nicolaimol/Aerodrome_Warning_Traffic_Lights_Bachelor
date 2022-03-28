@@ -281,38 +281,9 @@ function TerskelForm() {
             handleSliderEndring={handleSliderEndring}
 
           step={1}
-          min={40}
-          max={100}
-
-          marks={[
-            {
-              value: 40,
-              label: "40%",
-            },
-            {
-                value: 70,
-                label: "70%",
-
-            },
-            {
-              value: 100,
-              label: "100%",
-            },
-          ]}
-
-        />
-      </div>
-      <div style={{ width: "calc(100% - 40px)", padding:"5px 20px", backgroundColor: "#dff2f6" }}>
-          <span style={{color: "#0090a8"}}>Tåke</span>
-        <Slider
-
-            disabled
-
-          value={terskel.fog}
-          onChange={handleSliderEndringSingleValue("fog")}
-          step={1}
           min={0}
           max={100}
+
           marks={[
             {
               value: 0,
@@ -328,7 +299,7 @@ function TerskelForm() {
               label: "100%",
             },
           ]}
-          valueLabelDisplay="auto"
+
         />
       </div>
       <div style={{ width: "calc(100% - 40px)", padding:"5px 20px" }}>
