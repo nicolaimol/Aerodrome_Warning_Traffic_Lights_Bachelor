@@ -152,14 +152,15 @@ function GrafikkTrafikklys() {
                 </div>
             }
         </div>
-        <div style={{ width: '33%', minWidth: 'fit-content' }}>
-                    {/** Ikonet */}
+        <div style={{ width: '33%', minWidth: 'fit-content', position: 'relative' }}>
+            <img alt="compass rose" src="/Gray_compass_rose.svg" style={{height: '40px', position: 'absolute', bottom: 0, right: 0}}/>
+            {/** Ikonet */}
                     {weather != undefined &&
                         <div style={{width: "100%", display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
 
                         <div style={{ display: 'flex', justifyContent: 'center'}}>
                             <Typography gutterBottom style={{ fontSize: 20, color: '#0090a8'}}>
-                                Vind forhold til rullebane
+                                Vindforhold til rullebane
                             </Typography>
                         </div>
 
