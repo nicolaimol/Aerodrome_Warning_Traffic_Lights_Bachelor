@@ -1,34 +1,19 @@
-import { Slider, Divider, Button } from '@mui/material';
-import React, { useState, useEffect, useMemo, useCallback } from 'react'
+import { Divider, Button } from '@mui/material';
+import React, { useState, useEffect, useCallback } from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import allActions from '../Actions';
-import * as buffer from "buffer";
-import axios from 'axios'
-
 import { defaultVerdier } from '../App'
-import { generateStyle } from '../util/sliderStyleUtil'
 import SliderWrapper from './SliderWrapper';
 
 function TerskelForm() {
 
     const terskel = useSelector((state: any) => state.terskel.value)
-    const airport = useSelector((state: any) => state.airport.value)
 
-    const copy = JSON.parse(JSON.stringify(terskel))
-
-    //console.log("load", copy)
 
     const [formVerdier, setFormVerdier] = useState(terskel);
-    //console.log("init",formVerdier)
     const dispatch = useDispatch()
 
-    //console.log("rendering form")
-
-
     const handleSliderEndring = useCallback((navn: string) => (e: Event, verdi: any) => {
-        //console.log(verdi)
-
-        //console.log(navn, e, verdi)
 
         setFormVerdier((setForm: any) => {
 
@@ -39,50 +24,17 @@ function TerskelForm() {
             }
         })
 
-        //console.log("old", terskel)
-
-        /*
-        const newTerskel ={
-            ...terskel,
-            [navn + "Min"]: verdi[0],
-            [navn + "Max"]: verdi[1]
-        }
-
-         */
-
-        //console.log("new", newTerskel)
-        //dispatch(allActions.terskelActions.setTerskel(newTerskel))
-
-        /*
-        setFormVerdier({
-            ...formVerdier,
-            [navn + "Min"]: verdi[0],
-            [navn + "Max"]: verdi[1]
-        })
-         */
     }, [])
 
-    const handleSliderEndringSingleValue = (navn: string) => (e: Event, verdi: any) => {
-
-        /*
-        setFormVerdier({
-          ...formVerdier,
-          [navn]: verdi,
-      })
-
-         */
-    }
     useEffect(() => {
         dispatch(allActions.terskelActions.setTerskel(formVerdier))
-        //console.log(formVerdier)
-        //console.log(terskel)
+
     }, [formVerdier])
 
 
     const tilbakestillTerskelverdier = () => {
 
         setFormVerdier(defaultVerdier)
-        //formVerdier = defaultVerdier
 
         dispatch(allActions.terskelActions.setTerskel(defaultVerdier));
     }
