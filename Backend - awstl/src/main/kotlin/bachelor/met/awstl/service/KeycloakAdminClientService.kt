@@ -7,6 +7,7 @@ import org.keycloak.KeycloakSecurityContext
 import org.keycloak.admin.client.resource.UsersResource
 import org.keycloak.representations.AccessTokenResponse
 import org.keycloak.representations.idm.CredentialRepresentation
+import org.keycloak.representations.idm.RoleRepresentation
 import org.keycloak.representations.idm.UserRepresentation
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -28,6 +29,7 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 import javax.servlet.http.HttpSession
 import javax.ws.rs.core.Response
+import kotlin.collections.ArrayList
 
 
 @Service
@@ -41,6 +43,9 @@ class KeycloakAdminClientService(val provider: KeycloakProvider) {
     @Value("\${keycloak.realm}")
     var realm: String? = null
 
+    @Value("\${keycloak.resource}")
+    var clientID: String? = null
+
     @Autowired
     var authenticationManager: AuthenticationManager? = null
 
@@ -53,24 +58,6 @@ class KeycloakAdminClientService(val provider: KeycloakProvider) {
     fun login(dto: LoginDto, response:HttpServletResponse): AccessTokenResponse {
         val keycloak = provider.newKeycloakBuilderWithPasswordCredentials(dto.username!!, dto.password!!)
 
-
-
-        //logger.info(keycloak.tokenManager().accessToken.sessionState)
-        //logger.info(session!!.id)
-
-        //val set = HashSet<SimpleGrantedAuthority>()
-        //set.add(SimpleGrantedAuthority("admin"))
-
-        //val cookie = Cookie("JSESSIONID", session!!.id)
-
-        //response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString())
-
-        //val et = SecurityContextHolder.getContext().authentication
-        //logger.info(et.toString())
-        //val authentication = KeycloakAuthenticationProvider().authenticate(et)
-
-        //session!!.setAttribute("SPRING_SECURITY_CONTEXT", authentication)
-
         val headers = HttpHeaders()
         headers.setBearerAuth(keycloak.tokenManager().accessTokenString)
         val cookie = HttpCookie("JSESSIONID", session!!.id)
@@ -82,8 +69,6 @@ class KeycloakAdminClientService(val provider: KeycloakProvider) {
         try {
             val securityContext: String = http!!
                 .exchange("http://localhost:8080/api/user/auth", HttpMethod.GET, entity ,String::class.java).body!!
-
-            //session!!.setAttribute("SPRING_SECURITY_CONTEXT", securityContext)
         } catch (e: Exception) {
             logger.error(e.message)
         }
@@ -125,7 +110,45 @@ class KeycloakAdminClientService(val provider: KeycloakProvider) {
             .realm(realm)
             .users()
 
-        return userResource.create(user)
+        val response = userResource.create(user)
+
+        if (response.status == 201) {
+            val client = provider
+                .newKeycloakBuilderWithPasswordCredentials()
+                .realm(realm)
+                .clients()
+                .findByClientId(clientID!!)[0]
+
+            val roleList = ArrayList<RoleRepresentation>()
+
+            roleList.add(
+                provider
+                    .newKeycloakBuilderWithPasswordCredentials()
+                    .realm(realm)
+                    .clients()
+                    .get(client.id)
+                    .roles()
+                    .get("user")
+                    .toRepresentation()
+            )
+
+
+            val userId = provider
+                .newKeycloakBuilderWithPasswordCredentials()
+                .realm(realm)
+                .users()
+                .search(dto.username)[0].id
+
+            val user = provider
+                .newKeycloakBuilderWithPasswordCredentials()
+                .realm(realm)
+                .users()
+                .get(userId)
+
+            user.roles().clientLevel(client.id).add(roleList)
+        }
+
+        return response
     }
 
     private fun createPasswordCredentials(password: String): CredentialRepresentation {
