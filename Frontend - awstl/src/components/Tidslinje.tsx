@@ -14,11 +14,9 @@ import {
     useState,
     useEffect
 } from "react";
-import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux';
 import allActions from '../Actions';
 import { calcFarge } from '../util/calcFarge';
-import SliderWrapper from './SliderWrapper';
 import { Button, Slider } from '@mui/material';
 
 
@@ -32,9 +30,6 @@ ChartJS.register(
   Legend
 );
 
-//import { getLabelForValue } from 'chart.js/helpers';
-
-const ylabel = ['Rød', 'Grønn', 'Gul'];
 
 const getGradient = (ctx: any, chartArea: any) => {
     let width, height, gradient;
@@ -71,17 +66,6 @@ function Tidslinje() {
     const terskel = useSelector((state: any) => state.terskel.value);
     const locfor = useSelector((state: any) => state.weather.value)
 
-    let url = ""
-    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') { // Uavhengig om det er local testing eller deployment så fungerer API kall
-        if (process.env.REACT_APP_URL_ENV == "prod") {
-            url = "/api/locationforecast?icao="
-        } else {
-            url = "http://localhost:8080/api/locationforecast?icao="
-        }
-    } else {
-        url = "/api/locationforecast?icao="
-    }
-
     const [ver, setVer] = useState<any>()
     const [labels, setLabels] = useState<any[]>([])
     const [dataset, setDataset] = useState<any[]>([])
@@ -90,6 +74,7 @@ function Tidslinje() {
     const [int, setInt] = useState<any>(null)
     const [sliderValue, setSliderValue] = React.useState<number>(0);
     const [started, setStarted] = useState<boolean>(false)
+
 
     let index = 0;
     const start = () => {
@@ -135,7 +120,7 @@ function Tidslinje() {
     }, [sliderValue])
 
     useEffect(() => {
-        
+
         const inteval = setInterval(() => {
             setStarted((statedIn: any) => {
                 //console.log(statedIn)
@@ -257,15 +242,15 @@ function Tidslinje() {
             setDataset(ver.map((it: any) => {
                 let precipitation_amount = 0;
                 let probThunder = 0
-                if ( it.data.next_1_hours != undefined) {
-                    precipitation_amount =  it.data.next_1_hours.details.precipitation_amount
-                    probThunder = it.data.next_1_hours.details.probability_of_thunder
-                } else if (it.data.next_6_hours != undefined) {
-                    precipitation_amount =  it.data.next_6_hours.details.precipitation_amount / 6
-                    probThunder = it.data.next_6_hours.details.probability_of_thunder
+                if ( it.data.next_1_hours !== undefined) {
+                    precipitation_amount =  it.data.next_1_hours?.details.precipitation_amount
+                    probThunder = it.data.next_1_hours?.details.probability_of_thunder
+                } else if (it.data.next_6_hours !== undefined) {
+                    precipitation_amount =  it.data.next_6_hours?.details.precipitation_amount / 6
+                    probThunder = it.data.next_6_hours?.details.probability_of_thunder
                 } else {
-                    precipitation_amount =  it.data.next_12_hours.details.precipitation_amount / 12
-                    probThunder = it.data.next_12_hours.details.probability_of_thunder
+                    precipitation_amount =  it.data.next_12_hours?.details.precipitation_amount / 12
+                    probThunder = it.data.next_12_hours?.details.probability_of_thunder
                 }
 
                 const farge = calcFarge(it.data.instant.details, terskel, airport, {
@@ -315,7 +300,6 @@ function Tidslinje() {
                     color: ['green', 'yellow', 'red'],
                     precision: 0,
                     callback: function(value:any, index:number, ctx: any) {
-                        let string = ""
                         if (value === 1) {
                             return "Grønn"
                         } else if (value === 2) {
@@ -351,11 +335,11 @@ function Tidslinje() {
                     return getGradient(ctx, chartArea )
                 },
                 backgroundColor: dataset.map((it:any) => {
-                    return it < 2 ? "rgba(0,255,0, 0.5)": it == 2 ? "rgba(255,255,0, 0.5)" : "rgba(255,0,0, 0.5)"
+                    return it < 2 ? "rgba(0,255,0, 0.5)": it === 2 ? "rgba(255,255,0, 0.5)" : "rgba(255,0,0, 0.5)"
 
                 }),
                 color: dataset.map((it:any) => {
-                    return it > 2 ? "rgba(0,255,0, 0.5)": it == 2 ? "rgba(255,255,0, 0.5)" : "rgba(255,0,0, 0.5)"
+                    return it > 2 ? "rgba(0,255,0, 0.5)": it === 2 ? "rgba(255,255,0, 0.5)" : "rgba(255,0,0, 0.5)"
                 }),
                 tension: 0.1
             },
@@ -386,7 +370,7 @@ function Tidslinje() {
             <Button sx={{ mr: 2, backgroundColor: '#0494ac'}} variant="contained" onClick={stop}>Stopp</Button>
 
             {
-                ver != undefined &&
+                ver !== undefined &&
 
                 <Slider
 
