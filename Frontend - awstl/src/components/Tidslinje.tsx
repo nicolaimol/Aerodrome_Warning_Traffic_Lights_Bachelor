@@ -91,9 +91,11 @@ function Tidslinje() {
     const [sliderValue, setSliderValue] = React.useState<number>(0);
     const [started, setStarted] = useState<boolean>(false)
 
-
     let index = 0;
     const start = () => {
+        setStarted(true)
+
+        /*
         index = sliderValue
         setSliderValue(index);
         console.log(started)
@@ -101,28 +103,93 @@ function Tidslinje() {
             setInt(setInterval(update, 1000))
             setStarted(true)
         }
+         */
 
     }
 
     const update = () => {
+        /*
         dispatch(allActions.grafikkAction.setGrafikk(ver[index]))
         index = (index + 1) % ver.length
         setSliderValue(index-1)
         console.log(sliderValue)
+         */
     }
 
     const stop = () => {
         setStarted(false)
+        /*
         clearInterval(int)
+        setInt(null)
+         */
     }
 
     const tempSliderHandler = (event: Event, newValue: number | number[]) => {
         setSliderValue(newValue as number);
-        const number = newValue as number
-        index = number
-        console.log(index)
-        dispatch(allActions.grafikkAction.setGrafikk(ver[sliderValue]))
     };
+
+    useEffect(() => {
+        if (ver != undefined) {
+            dispatch(allActions.grafikkAction.setGrafikk(ver[sliderValue]))
+        }
+    }, [sliderValue])
+
+    useEffect(() => {
+        
+        const inteval = setInterval(() => {
+            setStarted((statedIn: any) => {
+                //console.log(statedIn)
+
+                if (statedIn) {
+                    setSliderValue((oldValue: any) => {
+                        console.log(oldValue)
+                        return oldValue + 1;
+                    })
+                    /*
+                    setSliderValue((oldValue: any) => {
+                        setVer((oldVer: any) => {
+                            if (oldVer != undefined) {
+                                dispatch(allActions.grafikkAction.setGrafikk(oldVer[oldValue]))
+                            } else {
+                                console.log("ingen ver")
+                            }
+
+                            return oldVer
+                        })
+
+                        return oldValue
+                    })
+                     */
+
+                }
+                return statedIn
+            })
+        }, 1000)
+
+
+
+        return () => clearInterval(inteval)
+        /*{
+            console.log("exit")
+            setStarted((oldValue:any) => {
+                if (oldValue) {
+                    console.log("started")
+                    setInt((old: any) => {
+                        stop()
+                        clearInterval(old)
+                        console.log("old", old)
+                        return null
+                    })
+                } else {
+                    console.log("not started")
+                }
+
+                return false
+            })
+            console.log("done")
+        }
+         */
+    }, [])
 
 
     const dispatch = useDispatch()
@@ -131,52 +198,57 @@ function Tidslinje() {
     useEffect(()=> {
         if(!airport) return;
         const herVer = locfor?.data.properties.timeseries
-        dispatch(allActions.grafikkAction.setGrafikk(herVer[0]))
-        setVer(herVer)
-        setLabels(herVer.map((it: any) => {
-            let string = new Date(it.time).toLocaleString();
-            let list = string.split(",")
-            //console.table(list)
+        if (herVer != undefined && herVer[0] != undefined) {
+            dispatch(allActions.grafikkAction.setGrafikk(herVer[0]))
 
-            let dato = list[0].split(".")
-            dato.splice(2, 1)
-            let datoString = dato.join(".")
-            //console.log(datoString)
-            list[0] = datoString
+            setVer(herVer)
+            setLabels(herVer.map((it: any) => {
+                let string = new Date(it.time).toLocaleString();
+                let list = string.split(",")
+                //console.table(list)
 
-            let tid = list[1].split(":")
-            tid.splice(1, 2)
-            let tidString = tid.join()
-            list[1] = tidString
-            return list.join(", kl:")
-        }))
-        setDataset(herVer.map((it: any) => {
-            let precipitation_amount = 0;
-            let probThunder = 0
-            if ( it.data.next_1_hours != undefined) {
-                precipitation_amount =  it.data.next_1_hours.details.precipitation_amount
-                probThunder = it.data.next_1_hours.details.probability_of_thunder
-            } else if (it.data.next_6_hours != undefined) {
-                precipitation_amount =  it.data.next_6_hours.details.precipitation_amount / 6
-                probThunder = it.data.next_6_hours.details.probability_of_thunder
-            } else {
-                precipitation_amount =  it.data.next_12_hours.details.precipitation_amount / 12
-                probThunder = it.data.next_12_hours.details.probability_of_thunder
-            }
+                let dato = list[0].split(".")
+                dato.splice(2, 1)
+                let datoString = dato.join(".")
+                //console.log(datoString)
+                list[0] = datoString
 
-            const farge = calcFarge(it.data.instant.details, terskel, airport,
-                {
-                    precipitation_amount: precipitation_amount,
-                    probThunder: probThunder
-                })
+                let tid = list[1].split(":")
+                tid.splice(1, 2)
+                let tidString = tid.join()
+                list[1] = tidString
+                return list.join(", kl:")
+            }))
+            setDataset(herVer.map((it: any) => {
+                let precipitation_amount = 0;
+                let probThunder = 0
+                if ( it.data.next_1_hours != undefined) {
+                    precipitation_amount =  it.data.next_1_hours.details.precipitation_amount
+                    probThunder = it.data.next_1_hours.details.probability_of_thunder
+                } else if (it.data.next_6_hours != undefined) {
+                    precipitation_amount =  it.data.next_6_hours.details.precipitation_amount / 6
+                    probThunder = it.data.next_6_hours.details.probability_of_thunder
+                } else {
+                    precipitation_amount =  it.data.next_12_hours.details.precipitation_amount / 12
+                    probThunder = it.data.next_12_hours.details.probability_of_thunder
+                }
 
-            switch (farge) {
-                case "green" : return 1
-                case "yellow" : return 2
-                case "red": return 3
-                default : return 0
-            }
-        }))
+                const farge = calcFarge(it.data.instant.details, terskel, airport,
+                    {
+                        precipitation_amount: precipitation_amount,
+                        probThunder: probThunder
+                    })
+
+                switch (farge) {
+                    case "green" : return 1
+                    case "yellow" : return 2
+                    case "red": return 3
+                    default : return 0
+                }
+            }))
+        }
+
+
     }, [locfor])
     
 
