@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import Navbar from './components/Navbar';
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import { Routes, Route} from 'react-router-dom';
 import Footer from './components/Footer';
 import Hjem from './pages/Hjem';
 import Trafikklys from './pages/Trafikklys';
@@ -50,7 +50,7 @@ function App() {
     let urlLocfor = ""
     let urlAirport = ""
     if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
-        if (process.env.REACT_APP_URL_ENV == "prod") {
+        if (process.env.REACT_APP_URL_ENV === "prod") {
             url = "/api/terskel"
             urlNowcast = '/api/nowcast?icao='
             urlLocfor = '/api/locationforecast?icao='
@@ -109,10 +109,8 @@ function App() {
     const nowcast = useSelector((state: any) => state.nowcast.value)
     const airport = useSelector((state: any) => state.airport.value)
 
-    const [active, setActive] = useState<any>(null)
-
     useEffect(() => {
-        if (airport != undefined && airport.icao != undefined) {
+        if (airport !== undefined && airport.icao !== undefined) {
             axios.get(`${urlNowcast}${airport.icao}`) // Henter værdata for 3 flyplasser + en egendefinert
                 .then((response) => {
                     response.data.nowcasts.map((data: any) =>{
@@ -136,28 +134,6 @@ function App() {
             console.log("henter fra server")
         }
 
-    
-
-        /*
-        if (active) {
-            clearInterval(active)
-            setActive(null)
-        }
-
-
-        const interval = setInterval(() => {
-            console.log(airport)
-        }, 10000)
-
-        setActive(interval)
-
-         */
-
-
-
-        //return () => clearInterval(active)
-
-
     },[airport])
 
     let ikonpath:string = "/weatherIcons/";
@@ -174,11 +150,11 @@ function App() {
             { !error &&
                 <div style={{position: "fixed",  /*right: '.5em', top: '1.5em' */ right: '0', backgroundColor: 'white', zIndex: '100'}}>
                     <Paper elevation={0} style={{display: 'flex', width: 'fit-content', padding: '1em', height: '32px', alignItems: 'center'}}>
-                        {airport != undefined &&
+                        {airport !== undefined &&
                             <span style={{color: "#0090a8"}}>{airport.navn}</span>
                         }
 
-                        {nowcast != undefined &&
+                        {nowcast !== undefined &&
 
                             <>
                                 <Box style={{ display: 'flex', justifyContent: 'center'}}>
