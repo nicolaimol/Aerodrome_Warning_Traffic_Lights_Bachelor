@@ -119,7 +119,6 @@ function Tidslinje() {
     const tempSliderHandler = (event: Event, newValue: number | number[]) => {
         setSliderValue(newValue as number);
         const number = newValue as number
-        console.log(number)
         index = number
         console.log(index)
         dispatch(allActions.grafikkAction.setGrafikk(ver[sliderValue]))
