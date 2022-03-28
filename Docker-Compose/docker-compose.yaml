@@ -1,4 +1,9 @@
 version: '3.7'
+
+volumes:
+  mysql_data:
+    driver: local
+
 services: 
   mysql:
     image: mysql
@@ -7,6 +12,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: db_example
+    volumes:
+      - mysql_data:/var/lib/mysql
   redis:
     image: s341833/redis
     ports:
