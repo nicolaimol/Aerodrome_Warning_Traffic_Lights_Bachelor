@@ -71,7 +71,6 @@ function GrafikkTrafikklys() {
         probThunder = weather?.data.next_12_hours.details.probability_of_thunder
     }
 
-
   return (
     <>
     <div style={{ backgroundColor: '#dff2f6', minHeight: '20vh', width: '100%', padding: '0 0 30px 0' }}>
@@ -101,8 +100,8 @@ function GrafikkTrafikklys() {
                 Vindfart: {weather?.data.instant.details.wind_speed}
             </Typography>
             <Typography gutterBottom style={{ fontSize: 20, color : weather?.data.instant.details.wind_speed_of_gust > terskel?.windGustMax ? "red" :  
-            weather?.data.instant.details.wind_speed_of_gust < terskel?.windGustMin ? "#0090a8" : (weather?.data.instant.details.wind_speed_of_gust === undefined) ? "#0090a8" : "#FFAF42"}}>
-                Vindkast: {(weather?.data.instant.details.wind_speed_of_gust === undefined ? "N/A" : weather?.data.instant.details.wind_speed_of_gust)}
+            weather?.data.instant.details.wind_speed_of_gust < terskel?.windGustMin ? "#0090a8" : isNaN(weather?.data.instant.details.wind_speed_of_gust) ? "#0090a8" : "#FFAF42"}}>
+                Vindkast: {(isNaN(weather?.data.instant.details.wind_speed_of_gust) === true ? "N/A" : weather?.data.instant.details.wind_speed_of_gust)}
             </Typography>
             <Typography gutterBottom style={{ fontSize: 20, color : probThunder > terskel?.probThunderMax ? "red" :  probThunder < terskel?.probThunderMin ? "#0090a8" : (probThunder <= 100 && probThunder >= 0) ? "#FFAF42" : "#0090a8"}}>
                 Sannsynlighet torden: {(probThunder <= 100 && probThunder >= 0) ? probThunder : "N/A"}
