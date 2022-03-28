@@ -71,7 +71,6 @@ function GrafikkTrafikklys() {
         probThunder = weather?.data.next_12_hours.details.probability_of_thunder
     }
 
-    console.log(isNaN(weather?.data.instant.details.wind_speed_of_gust));
   return (
     <>
     <div style={{ backgroundColor: '#dff2f6', minHeight: '20vh', width: '100%', padding: '0 0 30px 0' }}>
