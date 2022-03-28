@@ -53,19 +53,18 @@ function GrafikkTrafikklys() {
         ) / 360) * 2 * Math.PI
     )
 
-   // console.log(terskel);
 
     let precipitation_amount = 0;
     let probThunder = 0
     if ( weather?.data.next_1_hours !== undefined) {
-        precipitation_amount =  weather?.data.next_1_hours.details.precipitation_amount
-        probThunder = weather?.data.next_1_hours.details.probability_of_thunder
+        precipitation_amount =  weather?.data?.next_1_hours?.details?.precipitation_amount
+        probThunder = weather?.data.next_1_hours?.details?.probability_of_thunder
     } else if (weather?.data.next_6_hours !== undefined) {
-        precipitation_amount =  weather?.data.next_6_hours.details.precipitation_amount / 6
-        probThunder = weather?.data.next_6_hours.details.probability_of_thunder
+        precipitation_amount =  weather?.data?.next_6_hours?.details?.precipitation_amount / 6
+        probThunder = weather?.data?.next_6_hours?.details?.probability_of_thunder
     } else {
-        precipitation_amount =  weather?.data.next_12_hours.details.precipitation_amount / 12
-        probThunder = weather?.data.next_12_hours.details.probability_of_thunder
+        precipitation_amount =  weather?.data?.next_12_hours?.details?.precipitation_amount / 12
+        probThunder = weather?.data?.next_12_hours?.details?.probability_of_thunder
     }
 
   return (
@@ -91,7 +90,7 @@ function GrafikkTrafikklys() {
                 Effektiv lufttemperatur: {weather?.data.instant.details.air_temperature}
             </Typography>
             <Typography gutterBottom style={{ fontSize: 20, color : precipitation_amount > terskel?.precipitationMax ? "red" :  precipitation_amount <= terskel?.precipitationMin ? "#0090a8" : "#FFAF42"}}>
-                Nedbør: {precipitation_amount.toPrecision(1)}
+                Nedbør: {precipitation_amount?.toPrecision(1)}
             </Typography>
             <Typography gutterBottom style={{ fontSize: 20, color : weather?.data.instant.details.wind_speed > terskel?.windSpeedMax ? "red" :  weather?.data.instant.details.wind_speed < terskel?.windSpeedMin ? "#0090a8" : "#FFAF42"}}>
                 Vindfart: {weather?.data.instant.details.wind_speed}
