@@ -15,7 +15,6 @@ function VisSatteTerskelverdier(props:{terskel: terskelData}) {
     ['Sannsynlighet torden', `${props.terskel.probThunderMin}, ${props.terskel.probThunderMax}`, '%'],
     //['Kondenseringstemperatur', props.dewpoint, '°C'],
     ['Luftfuktighet', `${props.terskel.humidityMin}, ${props.terskel.humidityMax}`, '%'],
-    ['Tåke', props.terskel.fog, '%'],
     ['Crosswind', `${props.terskel.crosswindMin}, ${props.terskel.crosswindMax}`, 'kt']];
 
 
