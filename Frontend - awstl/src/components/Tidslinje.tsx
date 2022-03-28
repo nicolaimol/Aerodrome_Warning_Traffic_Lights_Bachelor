@@ -14,11 +14,9 @@ import {
     useState,
     useEffect
 } from "react";
-import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux';
 import allActions from '../Actions';
 import { calcFarge } from '../util/calcFarge';
-import SliderWrapper from './SliderWrapper';
 import { Button, Slider } from '@mui/material';
 
 
@@ -32,9 +30,6 @@ ChartJS.register(
   Legend
 );
 
-//import { getLabelForValue } from 'chart.js/helpers';
-
-const ylabel = ['Rød', 'Grønn', 'Gul'];
 
 const getGradient = (ctx: any, chartArea: any) => {
     let width, height, gradient;
