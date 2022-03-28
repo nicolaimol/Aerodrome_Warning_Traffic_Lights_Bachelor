@@ -80,7 +80,7 @@ class TerskelverdiController(val service: TerskelverdiService) {
         }
     }
 
-    @RolesAllowed("admin")
+    @RolesAllowed(value = ["user", "admin"])
     @GetMapping(value = ["/all"])
     fun getAll(): ResponseEntity<Any> {
         return ResponseEntity.ok(service.getAll())
