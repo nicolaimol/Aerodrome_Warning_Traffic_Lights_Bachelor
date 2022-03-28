@@ -66,17 +66,6 @@ function Tidslinje() {
     const terskel = useSelector((state: any) => state.terskel.value);
     const locfor = useSelector((state: any) => state.weather.value)
 
-    let url = ""
-    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') { // Uavhengig om det er local testing eller deployment så fungerer API kall
-        if (process.env.REACT_APP_URL_ENV == "prod") {
-            url = "/api/locationforecast?icao="
-        } else {
-            url = "http://localhost:8080/api/locationforecast?icao="
-        }
-    } else {
-        url = "/api/locationforecast?icao="
-    }
-
     const [ver, setVer] = useState<any>()
     const [labels, setLabels] = useState<any[]>([])
     const [dataset, setDataset] = useState<any[]>([])
