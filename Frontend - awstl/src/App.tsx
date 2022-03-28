@@ -116,12 +116,23 @@ function App() {
         if (airport != undefined && airport.icao != undefined) {
             axios.get(`${urlNowcast}${airport.icao}`) // Henter værdata for 3 flyplasser + en egendefinert
                 .then((response) => {
+                    response.data.nowcasts.map((data: any) =>{
+                        data.properties.timeseries[0].data.instant.details.wind_speed = (data.properties.timeseries[0].data.instant.details.wind_speed * 1.943844).toPrecision(2)
+                        data.properties.timeseries[0].data.instant.details.wind_speed_of_gust = (data.properties.timeseries[0].data.instant.details.wind_speed_of_gust * 1.943844).toPrecision(2)
+                    })
                     dispatch(allActions.nowcastAction.setNowcast(response.data))
                    
                 })
 
             axios.get(`${urlLocfor}${airport.icao}`)
                 .then((response:any) => {
+                    
+                    response.data.properties.timeseries.map((data: any) => {
+                        console.log('Før: ' + data.data.instant.details.wind_speed);
+                        data.data.instant.details.wind_speed = (data.data.instant.details.wind_speed * 1.943844).toPrecision(2);
+                        data.data.instant.details.wind_speed_of_gust = (data.data.instant.details.wind_speed_of_gust * 1.943844).toPrecision(2);
+                        console.log('Etter: ' + data.data.instant.details.wind_speed);
+                    })
                     dispatch(allActions.weatherActions.setWeather(response))
                 }) 
 
