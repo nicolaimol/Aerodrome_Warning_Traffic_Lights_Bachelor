@@ -170,7 +170,6 @@ function Tidslinje() {
                     probThunder: probThunder
                 })
 
-            console.log(farge);
             switch (farge) {
                 case "green" : return 1
                 case "yellow" : return 2
