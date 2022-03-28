@@ -46,7 +46,7 @@ function VaerBox(props:weatherNowAirport) { // Værboksen tar inn props med 'wea
                     </div>
                     <div style={{display: 'flex', flexDirection: 'column', color: '#0090a8'}}>
                         <Typography>
-                            {props.properties.timeseries[0].data.instant.details.wind_speed}m/s 
+                            {props.properties.timeseries[0].data.instant.details.wind_speed} kt 
                         </Typography>
                         <Typography>
                             {props.properties.timeseries[0].data.instant.details.wind_from_direction < 0 
