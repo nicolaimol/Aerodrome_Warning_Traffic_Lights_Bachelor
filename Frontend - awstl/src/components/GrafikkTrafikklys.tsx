@@ -72,9 +72,6 @@ function GrafikkTrafikklys() {
     }
 
 
-
-
-
   return (
     <>
     <div style={{ backgroundColor: '#dff2f6', minHeight: '20vh', width: '100%', padding: '0 0 30px 0' }}>
@@ -97,7 +94,7 @@ function GrafikkTrafikklys() {
             <Typography gutterBottom style={{ fontSize: 20, color : weather?.data.instant.details.air_temperature < terskel?.airTempMin ? "red" :  weather?.data.instant.details.air_temperature > terskel?.airTempMax ? "#0090a8" : "#FFAF42"}}>
                 Effektiv lufttemperatur: {weather?.data.instant.details.air_temperature}
             </Typography>
-            <Typography gutterBottom style={{ fontSize: 20, color : precipitation_amount > terskel?.precipitationMax ? "red" :  precipitation_amount <= terskel?.precipitationMin ? "#0090a8" : "##FFAF42"}}>
+            <Typography gutterBottom style={{ fontSize: 20, color : precipitation_amount > terskel?.precipitationMax ? "red" :  precipitation_amount <= terskel?.precipitationMin ? "#0090a8" : "#FFAF42"}}>
                 Nedbør: {precipitation_amount.toPrecision(1)}
             </Typography>
             <Typography gutterBottom style={{ fontSize: 20, color : weather?.data.instant.details.wind_speed > terskel?.windSpeedMax ? "red" :  weather?.data.instant.details.wind_speed < terskel?.windSpeedMin ? "#0090a8" : "#FFAF42"}}>
@@ -151,7 +148,7 @@ function GrafikkTrafikklys() {
             {weather == undefined &&
 
                 <div>
-                    <h2>Venligst vent</h2>
+                    <h2>Vennligst vent</h2>
                 </div>
             }
         </div>
@@ -189,7 +186,7 @@ function GrafikkTrafikklys() {
                             }}>
 
                                 <Typography style={{position: 'absolute', top: -5,left: "calc(50%-100px)", zIndex: 1, }}>
-                                    {weather.data.instant.details.wind_speed}m/s
+                                    {weather.data.instant.details.wind_speed}kt
                                 </Typography>
                                 <div style={{ position: 'relative', zIndex: 0,
                                 transform: `rotate(${weather.data.instant.details.wind_from_direction + 90}deg)`}}>
