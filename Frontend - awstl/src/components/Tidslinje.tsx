@@ -137,15 +137,15 @@ function Tidslinje() {
         setDataset(herVer.map((it: any) => {
             let precipitation_amount = 0;
             let probThunder = 0
-            if ( it.data.next_1_hours != undefined) {
-                precipitation_amount =  it.data.next_1_hours.details.precipitation_amount
-                probThunder = it.data.next_1_hours.details.probability_of_thunder
-            } else if (it.data.next_6_hours != undefined) {
-                precipitation_amount =  it.data.next_6_hours.details.precipitation_amount / 6
-                probThunder = it.data.next_6_hours.details.probability_of_thunder
+            if ( it.data.next_1_hours !== undefined) {
+                precipitation_amount =  it.data.next_1_hours?.details.precipitation_amount
+                probThunder = it.data.next_1_hours?.details.probability_of_thunder
+            } else if (it.data.next_6_hours !== undefined) {
+                precipitation_amount =  it.data.next_6_hours?.details.precipitation_amount / 6
+                probThunder = it.data.next_6_hours?.details.probability_of_thunder
             } else {
-                precipitation_amount =  it.data.next_12_hours.details.precipitation_amount / 12
-                probThunder = it.data.next_12_hours.details.probability_of_thunder
+                precipitation_amount =  it.data.next_12_hours?.details.precipitation_amount / 12
+                probThunder = it.data.next_12_hours?.details.probability_of_thunder
             }
 
             const farge = calcFarge(it.data.instant.details, terskel, airport,
@@ -169,15 +169,15 @@ function Tidslinje() {
             setDataset(ver.map((it: any) => {
                 let precipitation_amount = 0;
                 let probThunder = 0
-                if ( it.data.next_1_hours != undefined) {
-                    precipitation_amount =  it.data.next_1_hours.details.precipitation_amount
-                    probThunder = it.data.next_1_hours.details.probability_of_thunder
-                } else if (it.data.next_6_hours != undefined) {
-                    precipitation_amount =  it.data.next_6_hours.details.precipitation_amount / 6
-                    probThunder = it.data.next_6_hours.details.probability_of_thunder
+                if ( it.data.next_1_hours !== undefined) {
+                    precipitation_amount =  it.data.next_1_hours?.details.precipitation_amount
+                    probThunder = it.data.next_1_hours?.details.probability_of_thunder
+                } else if (it.data.next_6_hours !== undefined) {
+                    precipitation_amount =  it.data.next_6_hours?.details.precipitation_amount / 6
+                    probThunder = it.data.next_6_hours?.details.probability_of_thunder
                 } else {
-                    precipitation_amount =  it.data.next_12_hours.details.precipitation_amount / 12
-                    probThunder = it.data.next_12_hours.details.probability_of_thunder
+                    precipitation_amount =  it.data.next_12_hours?.details.precipitation_amount / 12
+                    probThunder = it.data.next_12_hours?.details.probability_of_thunder
                 }
 
                 const farge = calcFarge(it.data.instant.details, terskel, airport, {
