@@ -40,6 +40,7 @@ class SecurityController(val service: KeycloakAdminClientService) {
         return ResponseEntity.ok(responseValue)
     }
 
+    @RolesAllowed(value = ["admin"])
     @PostMapping(value = ["/create"])
     fun createUser(@NotNull @RequestBody dto: RegisterDto): ResponseEntity<Response> {
         val response = service.createKeycloakUser(dto)
