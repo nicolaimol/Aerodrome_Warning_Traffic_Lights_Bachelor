@@ -94,25 +94,25 @@ function GrafikkTrafikklys() {
 
         <div style={{display: 'flex', justifyContent: 'space-evenly', flexWrap:'wrap'}}>
         <div style={{ width: '33%', minWidth: 'fit-content'}}>
-            <Typography gutterBottom style={{ fontSize: 20, color : weather?.data.instant.details.air_temperature < terskel?.airTempMin ? "red" :  weather?.data.instant.details.air_temperature > terskel?.airTempMax ? "#0090a8" : "yellow"}}>
+            <Typography gutterBottom style={{ fontSize: 20, color : weather?.data.instant.details.air_temperature < terskel?.airTempMin ? "red" :  weather?.data.instant.details.air_temperature > terskel?.airTempMax ? "#0090a8" : "#FFAF42"}}>
                 Effektiv lufttemperatur: {weather?.data.instant.details.air_temperature}
             </Typography>
-            <Typography gutterBottom style={{ fontSize: 20, color : precipitation_amount > terskel?.precipitationMax ? "red" :  precipitation_amount <= terskel?.precipitationMin ? "#0090a8" : "yellow"}}>
+            <Typography gutterBottom style={{ fontSize: 20, color : precipitation_amount > terskel?.precipitationMax ? "red" :  precipitation_amount <= terskel?.precipitationMin ? "#0090a8" : "##FFAF42"}}>
                 Nedbør: {precipitation_amount}
             </Typography>
-            <Typography gutterBottom style={{ fontSize: 20, color : weather?.data.instant.details.wind_speed > terskel?.windSpeedMax ? "red" :  weather?.data.instant.details.wind_speed < terskel?.windSpeedMin ? "#0090a8" : "yellow"}}>
+            <Typography gutterBottom style={{ fontSize: 20, color : weather?.data.instant.details.wind_speed > terskel?.windSpeedMax ? "red" :  weather?.data.instant.details.wind_speed < terskel?.windSpeedMin ? "#0090a8" : "#FFAF42"}}>
                 Vindfart: {weather?.data.instant.details.wind_speed}
             </Typography>
-            <Typography gutterBottom style={{ fontSize: 20, color : weather?.data.instant.details.wind_speed_of_gust > terskel?.windGustMax ? "red" :  weather?.data.instant.details.wind_speed_of_gust < terskel?.windGustMin ? "#0090a8" : "yellow"}}>
-                Vindkast: {weather?.data.instant.details.wind_speed_of_gust}
+            <Typography gutterBottom style={{ fontSize: 20, color : weather?.data.instant.details.wind_speed_of_gust > terskel?.windGustMax ? "red" :  weather?.data.instant.details.wind_speed_of_gust < terskel?.windGustMin ? "#0090a8" : (weather?.data.instant.details.wind_speed_of_gust === undefined) ? "#0090a8" : "#FFAF42"}}>
+                Vindkast: {(weather?.data.instant.details.wind_speed_of_gust === undefined ? "N/A" : weather?.data.instant.details.wind_speed_of_gust)}
             </Typography>
-            <Typography gutterBottom style={{ fontSize: 20, color : probThunder > terskel?.probThunderMax ? "red" :  probThunder < terskel?.probThunderMin ? "#0090a8" : (probThunder <= 100 && probThunder >= 0) ? "yellow" : "#0090a8"}}>
+            <Typography gutterBottom style={{ fontSize: 20, color : probThunder > terskel?.probThunderMax ? "red" :  probThunder < terskel?.probThunderMin ? "#0090a8" : (probThunder <= 100 && probThunder >= 0) ? "#FFAF42" : "#0090a8"}}>
                 Sannsynlighet torden: {(probThunder <= 100 && probThunder >= 0) ? probThunder : "N/A"}
             </Typography>
-            <Typography gutterBottom style={{ fontSize: 20, color : weather?.data.instant.details.relative_humidity > terskel?.humidityMax ? "red" :  weather?.data.instant.details.relative_humidity < terskel?.humidityMin ? "#0090a8" : "yellow"}}>
+            <Typography gutterBottom style={{ fontSize: 20, color : weather?.data.instant.details.relative_humidity > terskel?.humidityMax ? "red" :  weather?.data.instant.details.relative_humidity < terskel?.humidityMin ? "#0090a8" : "#FFAF42"}}>
                 Luftfuktighet: {weather?.data.instant.details.relative_humidity}
             </Typography>
-            <Typography gutterBottom style={{ fontSize: 20, color : cw > terskel?.crosswindMax ? "red" :  cw < terskel?.crosswindMin ? "#0090a8" : "yellow"}}>
+            <Typography gutterBottom style={{ fontSize: 20, color : cw > terskel?.crosswindMax ? "red" :  cw < terskel?.crosswindMin ? "#0090a8" : "#FFAF42"}}>
                 Crosswind: {cw.toPrecision(2)}
             </Typography>
         </div>
