@@ -98,12 +98,13 @@ function GrafikkTrafikklys() {
                 Effektiv lufttemperatur: {weather?.data.instant.details.air_temperature}
             </Typography>
             <Typography gutterBottom style={{ fontSize: 20, color : precipitation_amount > terskel?.precipitationMax ? "red" :  precipitation_amount <= terskel?.precipitationMin ? "#0090a8" : "##FFAF42"}}>
-                Nedbør: {precipitation_amount}
+                Nedbør: {precipitation_amount.toPrecision(1)}
             </Typography>
             <Typography gutterBottom style={{ fontSize: 20, color : weather?.data.instant.details.wind_speed > terskel?.windSpeedMax ? "red" :  weather?.data.instant.details.wind_speed < terskel?.windSpeedMin ? "#0090a8" : "#FFAF42"}}>
                 Vindfart: {weather?.data.instant.details.wind_speed}
             </Typography>
-            <Typography gutterBottom style={{ fontSize: 20, color : weather?.data.instant.details.wind_speed_of_gust > terskel?.windGustMax ? "red" :  weather?.data.instant.details.wind_speed_of_gust < terskel?.windGustMin ? "#0090a8" : (weather?.data.instant.details.wind_speed_of_gust === undefined) ? "#0090a8" : "#FFAF42"}}>
+            <Typography gutterBottom style={{ fontSize: 20, color : weather?.data.instant.details.wind_speed_of_gust > terskel?.windGustMax ? "red" :  
+            weather?.data.instant.details.wind_speed_of_gust < terskel?.windGustMin ? "#0090a8" : (weather?.data.instant.details.wind_speed_of_gust === undefined) ? "#0090a8" : "#FFAF42"}}>
                 Vindkast: {(weather?.data.instant.details.wind_speed_of_gust === undefined ? "N/A" : weather?.data.instant.details.wind_speed_of_gust)}
             </Typography>
             <Typography gutterBottom style={{ fontSize: 20, color : probThunder > terskel?.probThunderMax ? "red" :  probThunder < terskel?.probThunderMin ? "#0090a8" : (probThunder <= 100 && probThunder >= 0) ? "#FFAF42" : "#0090a8"}}>
