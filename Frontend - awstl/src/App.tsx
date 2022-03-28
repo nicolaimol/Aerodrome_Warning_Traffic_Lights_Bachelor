@@ -100,7 +100,6 @@ function App() {
 
         axios.get(urlAirport)
             .then((response: any) => {
-                console.log(response)
                 dispatch(allActions.airportListAction.setAirportList(response.data))
             })
 
@@ -128,10 +127,8 @@ function App() {
                 .then((response:any) => {
                     
                     response.data.properties.timeseries.map((data: any) => {
-                        console.log('Før: ' + data.data.instant.details.wind_speed);
                         data.data.instant.details.wind_speed = (data.data.instant.details.wind_speed * 1.943844).toPrecision(2);
                         data.data.instant.details.wind_speed_of_gust = (data.data.instant.details.wind_speed_of_gust * 1.943844).toPrecision(2);
-                        console.log('Etter: ' + data.data.instant.details.wind_speed);
                     })
                     dispatch(allActions.weatherActions.setWeather(response))
                 }) 
