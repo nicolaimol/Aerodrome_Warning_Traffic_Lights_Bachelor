@@ -1,11 +1,8 @@
 import { Box, Container, Typography } from '@mui/material'
-import { minHeight } from '@mui/system' 
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import React, { useEffect, useState }from 'react'
 import { useSelector } from 'react-redux'
-import weatherTimeseries from '../model/weatherTimeseries';
 import Rullebane from './Rullebane';
-import VisSatteTerskelverdier from './VisSatteTerskelverdier';
 
 function GrafikkTrafikklys() {
 
@@ -16,7 +13,7 @@ function GrafikkTrafikklys() {
     let airport = useSelector((state:any) => state.airport.value)
     const terskel = useSelector((state: any) => state.terskel.value);
 
-    if (airport == undefined) {
+    if (airport === undefined) {
         airport = {icao: "ENDU", navn: "Bardufoss Lufthan"}
     }
 
@@ -60,10 +57,10 @@ function GrafikkTrafikklys() {
 
     let precipitation_amount = 0;
     let probThunder = 0
-    if ( weather?.data.next_1_hours != undefined) {
+    if ( weather?.data.next_1_hours !== undefined) {
         precipitation_amount =  weather?.data.next_1_hours.details.precipitation_amount
         probThunder = weather?.data.next_1_hours.details.probability_of_thunder
-    } else if (weather?.data.next_6_hours != undefined) {
+    } else if (weather?.data.next_6_hours !== undefined) {
         precipitation_amount =  weather?.data.next_6_hours.details.precipitation_amount / 6
         probThunder = weather?.data.next_6_hours.details.probability_of_thunder
     } else {
@@ -75,7 +72,7 @@ function GrafikkTrafikklys() {
     <>
     <div style={{ backgroundColor: '#dff2f6', minHeight: '20vh', width: '100%', padding: '0 0 30px 0' }}>
         <Container>
-        {weather != undefined &&
+        {weather !== undefined &&
             <div>
                 <Typography sx={{fontSize: 30}} style={{display: 'flex', justifyContent: 'center', width: '100%', color: '#0090a8'}}>
                     {airport?.navn}
@@ -115,7 +112,7 @@ function GrafikkTrafikklys() {
         </div>
         <div style={{ width: '33%', minWidth: 'fit-content' }}>
                     {/** Ikonet */}
-                    {weather != undefined &&
+                    {weather !== undefined &&
                         <div style={{width: "100%", display: 'flex', flexDirection: 'column', flexWrap:'wrap', justifyContent: 'center'}}>
                             
                             <Box style={{ display: 'flex', justifyContent: 'center', maxHeight: '100px'}} >
@@ -136,7 +133,7 @@ function GrafikkTrafikklys() {
                                     ? 360 + weather.data.instant.details.wind_from_direction
                                     : weather.data.instant.details.wind_from_direction}°
                             </Typography>
-                            {nedbor != "" &&
+                            {nedbor !== "" &&
                                 <Typography>{nedbor}</Typography>
                             }
 
@@ -144,7 +141,7 @@ function GrafikkTrafikklys() {
                 </div>
             }
             
-            {weather == undefined &&
+            {weather === undefined &&
 
                 <div>
                     <h2>Vennligst vent</h2>
@@ -154,7 +151,7 @@ function GrafikkTrafikklys() {
         <div style={{ width: '33%', minWidth: 'fit-content', position: 'relative' }}>
             <img alt="compass rose" src="/Gray_compass_rose.svg" style={{height: '40px', position: 'absolute', bottom: 0, right: 0}}/>
             {/** Ikonet */}
-                    {weather != undefined &&
+                    {weather !== undefined &&
                         <div style={{width: "100%", display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
 
                         <div style={{ display: 'flex', justifyContent: 'center'}}>
@@ -199,7 +196,7 @@ function GrafikkTrafikklys() {
                 </div>
             }
             
-            {weather == undefined &&
+            {weather === undefined &&
 
                 <div>
                     <h2>Venligst vent</h2>
