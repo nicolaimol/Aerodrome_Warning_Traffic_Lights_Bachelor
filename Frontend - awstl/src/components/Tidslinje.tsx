@@ -227,7 +227,6 @@ function Tidslinje() {
                     color: ['green', 'yellow', 'red'],
                     precision: 0,
                     callback: function(value:any, index:number, ctx: any) {
-                        let string = ""
                         if (value === 1) {
                             return "Grønn"
                         } else if (value === 2) {
@@ -263,11 +262,11 @@ function Tidslinje() {
                     return getGradient(ctx, chartArea )
                 },
                 backgroundColor: dataset.map((it:any) => {
-                    return it < 2 ? "rgba(0,255,0, 0.5)": it == 2 ? "rgba(255,255,0, 0.5)" : "rgba(255,0,0, 0.5)"
+                    return it < 2 ? "rgba(0,255,0, 0.5)": it === 2 ? "rgba(255,255,0, 0.5)" : "rgba(255,0,0, 0.5)"
 
                 }),
                 color: dataset.map((it:any) => {
-                    return it > 2 ? "rgba(0,255,0, 0.5)": it == 2 ? "rgba(255,255,0, 0.5)" : "rgba(255,0,0, 0.5)"
+                    return it > 2 ? "rgba(0,255,0, 0.5)": it === 2 ? "rgba(255,255,0, 0.5)" : "rgba(255,0,0, 0.5)"
                 }),
                 tension: 0.1
             },
@@ -298,7 +297,7 @@ function Tidslinje() {
             <Button sx={{ mr: 2, backgroundColor: '#0494ac'}} variant="contained" onClick={stop}>Stopp</Button>
 
             {
-                ver != undefined &&
+                ver !== undefined &&
 
                 <Slider
 
