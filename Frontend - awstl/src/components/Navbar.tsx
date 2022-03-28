@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {Link} from 'react-router-dom'
 import MetLogo from '../media/met-logo.svg';
-import {useSelector} from 'react-redux'
 
 // Material UI ---
 
@@ -38,9 +37,6 @@ const Navbar = () => {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
-
-  const airport = useSelector((state:any) => state.airport.value)
-  const nowcast = useSelector((state: any) => state.nowcast.value)
 
   return (
     <AppBar position="static" style={{ background: 'white' }}>
