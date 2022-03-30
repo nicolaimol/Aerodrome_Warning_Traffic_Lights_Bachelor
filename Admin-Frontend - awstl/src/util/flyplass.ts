@@ -12,7 +12,7 @@ export interface flyplass{
 
 export const hentFlyplasser = async (): Promise<flyplass[]> => {
 
-    let data = await axios.get("/api/airport")
+    const data = await axios.get("/api/airport")
         .then((response: any) => {
             //console.log(response)
             return response.data
@@ -26,5 +26,12 @@ export const hentFlyplasser = async (): Promise<flyplass[]> => {
 
 export const oppdaterFlyplass = async (flyplass: flyplass): Promise<any> => {
     let response = await axios.put("/api/airport", flyplass)
-    console.log(response)
+        .then((response: any) => {
+            return response.status
+        })
+        .catch((error: any) => {
+            return error.response.status
+        })
+
+    return response
 }
