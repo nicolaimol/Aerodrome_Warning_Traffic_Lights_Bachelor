@@ -23,6 +23,7 @@ function Pilot() {
   const terskel = useSelector((state: any) => state.terskel.value)
   const nowcast = useSelector((state: any) => state.nowcast.value)
   const airport = useSelector((state: any) => state.airport.value)
+  const toAirportRedux = useSelector((state: any) => state.toAirport.value)
 
   const [color, setColor] = useState<string>("green")
   const [toAirport, setToAirport] = useState<any>(null)
@@ -42,7 +43,6 @@ function Pilot() {
     const updateAirportTo = (data: any) => {
       console.log(data)
       setToAirport(data)
-      dispatch(allActions.toAirportAction.setToAirport(toAirport));
     }
 
   return (
@@ -62,11 +62,13 @@ function Pilot() {
         <div style={{textAlign: 'center', color: '#0090a8', marginBottom: '1em'}}>
             <Typography sx={{ mb: 3 }} variant="h4">Taf metar</Typography>
             <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2em'}}>
-                { airport != undefined && toAirport != null &&
+                { airport != undefined && 
                     <>
                         <TafMetar icao={airport.icao} />
-                        <TafMetar icao={toAirport.icao} />
                     </>
+                }
+                {toAirportRedux != undefined &&
+                  <TafMetar icao={toAirportRedux.icao} />
                 }
             </div>
         </div>
