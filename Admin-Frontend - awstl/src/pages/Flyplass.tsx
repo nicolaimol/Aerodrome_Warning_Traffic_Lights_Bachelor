@@ -54,15 +54,19 @@ function Flyplass(props: any) {
         setFlyplass(null)
     }
 
+    const avbryt = () => {
+        setFlyplass(null)
+    }
+
     return (
         <div style={{width: '100%', display: 'flex', backgroundColor: 'blue', justifyContent: 'center'}}>
             {
                 flyplass == null &&
-                    <Test changeFlyplass={changeFlyplass} />
+                    <Test list={flyplassList} changeFlyplass={changeFlyplass} />
             }
             {
                 flyplass != null &&
-                <FlyplassForm done={showTable} flyplass={flyplass} />
+                <FlyplassForm done={showTable} cancel={avbryt} flyplass={flyplass} />
             }
 
         </div>
