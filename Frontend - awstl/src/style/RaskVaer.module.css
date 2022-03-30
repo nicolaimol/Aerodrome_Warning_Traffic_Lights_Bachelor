@@ -13,6 +13,7 @@
 @media screen and (min-width: 700px) {
     .vaerGrid {
         grid-template-columns: 1fr 1fr;
+        column-gap: 1em;
     }
 
     .vaerGrid > * {
