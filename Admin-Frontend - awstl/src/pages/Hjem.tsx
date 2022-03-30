@@ -6,7 +6,6 @@ function Hjem(props: any) {
     const [loggedIn, setLoggedIn] = useState<boolean>(false)
 
     const alert = (value: boolean) => {
-        console.log(value)
         setLoggedIn(value)
     }
 
