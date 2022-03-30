@@ -122,15 +122,11 @@ export default function Test(props: any) {
             return 0
         })
 
-            setRows(flyplasser.map((it: any) => {
-                return createData(it.icao, it.navn, it.iata, it.rwy, it.lat, it.lon, it.altitude)
-            }))
-        }
+        setRows(flyplasser.map((it: any) => {
+            return createData(it.icao, it.navn, it.iata, it.rwy, it.lat, it.lon, it.altitude)
+        }))
 
-
-        hentFlyplasserInternal()
-
-    }, [])
+    }, [props])
 
 
     const [page, setPage] = useState<number>(0);
