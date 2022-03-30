@@ -10,6 +10,8 @@ import Paper from '@mui/material/Paper';
 import {useEffect, useState} from "react";
 import { hentFlyplasser} from "../util/flyplass";
 import {Button} from "@mui/material";
+import {auth} from "../util/auth";
+import {useNavigate} from "react-router";
 
 interface Column {
     id: 'icao' | 'navn' | 'iata' | 'rwy' | 'lat' | 'lon' | 'altitude' | 'velg';
@@ -94,6 +96,19 @@ export default function Test(props: any) {
     const setFlyplass = (flyplass: Data) => {
         props.changeFlyplass(flyplass)
     }
+
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        const authentication = async () => {
+            const status = await auth()
+
+            if (status === 401) {
+                navigate("/")
+            }
+        }
+        authentication()
+    })
 
     const [rows, setRows] = useState<Data[]>([{icao: "ENGM", navn: "Gardermoen", iata: "OSL", rwy: "01/19", lat: "60", lon: "10", altitude: "100"}])
     useEffect(() => {
