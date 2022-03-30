@@ -4,6 +4,7 @@ import weatherActions from "./weatherActions";
 import airportAction from "./airportAction";
 import grafikkAction from './grafikkAction'
 import airportListAction from './airportListAction';
+import toAirportAction from './toAirportAction';
 
 const allActions = {
     terskelActions,
@@ -11,7 +12,8 @@ const allActions = {
     nowcastAction,
     airportAction,
     grafikkAction,
-    airportListAction
+    airportListAction,
+    toAirportAction
 }
 
 export default allActions
