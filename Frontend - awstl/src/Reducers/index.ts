@@ -5,6 +5,7 @@ import nowcast from "./nowcast";
 import airport from './airport'
 import grafikk from './grafikk'
 import airportList from './airportList'
+import toAirport from './toAirport'
 
 export const rootReducer = combineReducers({
     terskel,
@@ -12,7 +13,8 @@ export const rootReducer = combineReducers({
     nowcast,
     airport,
     grafikk,
-    airportList
+    airportList,
+    toAirport
 })
 
 export type RootState = ReturnType<typeof rootReducer>
