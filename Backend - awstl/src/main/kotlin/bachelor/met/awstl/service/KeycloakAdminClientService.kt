@@ -62,7 +62,6 @@ class KeycloakAdminClientService(val provider: KeycloakProvider) {
         headers.setBearerAuth(keycloak.tokenManager().accessTokenString)
         val cookie = HttpCookie("JSESSIONID", session!!.id)
         headers.set("Cookie", cookie.toString())
-        logger.info("Service id: ${session!!.id}")
 
         val entity: HttpEntity<String> = HttpEntity("body", headers)
 
