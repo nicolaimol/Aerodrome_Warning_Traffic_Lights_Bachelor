@@ -26,11 +26,11 @@ function Login(props: any) {
 
     return (
         <Card style={{minWidth: 'fit-content', width: "50%", height: '40vh', minHeight: 'fit-content'}} sx={{padding: 5}}>
-            <CardContent style={{display: 'flex', flexDirection: 'column', flexGrow: 1, height: '100%', alignItems: 'space-between'}} >
-                <Typography gutterBottom variant="h5" component="div">
+            <CardContent style={{display: 'flex', flexDirection: 'column', flexGrow: 1, height: '100%', alignItems: 'space-between', justifyContent: 'center'}} >
+                <Typography gutterBottom variant="h5" component="div" style={{textAlign: 'center'}}>
                     Logg inn
                 </Typography>
-                <Typography variant="h6" >
+                <Typography variant="h6" style={{textAlign: 'center'}}>
                     <LockOutlinedIcon />
                 </Typography>
                 <div style={{display: 'flex', flexDirection: 'column', flexGrow: 1, justifyContent: 'space-evenly'}}>
@@ -39,7 +39,7 @@ function Login(props: any) {
                 </div>
                 <div style={{display: "flex", alignItems:'center', justifyContent: 'space-between'}}>
                     <Button onClick={click} style={{width: 'fit-content'}} variant="outlined">Logg in</Button>
-                    <Typography style={{color:'red'}} >Her kommer feil</Typography>
+                    <Typography style={{color:'red'}} >{feil}</Typography>
                 </div>
 
             </CardContent>
