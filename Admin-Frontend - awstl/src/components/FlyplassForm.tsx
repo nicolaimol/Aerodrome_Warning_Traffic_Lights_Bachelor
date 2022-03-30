@@ -46,8 +46,35 @@ function FlyplassForm(props: any) {
         setAltitude(e.target.value)
     }
 
-    const click = () => {
-        props.done()
+    const [feil, setFeil] = useState<string>("")
+
+    const click = async () => {
+
+        const flyplass = {
+            icao: icao,
+            navn: navn,
+            iata: iata,
+            rwy: rwy,
+            lat: lat,
+            lon: lon,
+            altitude: altitude
+        }
+
+        const value: any = await oppdaterFlyplass(flyplass)
+
+        console.log(value)
+
+        if (value === 401) {
+            navigate("/")
+            return
+        }
+
+        if (value >= 400) {
+            setFeil("Kunne ikke opdatere")
+            return
+        }
+
+        props.done(flyplass)
     }
 
     return (
