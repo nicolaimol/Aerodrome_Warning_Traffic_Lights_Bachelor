@@ -10,11 +10,9 @@ export const login = async (username: string, password: string): Promise<boolean
 
     let loggedIn = await axios.post("/api/user/login", loginDto)
         .then((response: any) => {
-            console.log(response)
             return true;
         })
         .catch((error: any) => {
-            console.log(error)
             return false;
         })
 
