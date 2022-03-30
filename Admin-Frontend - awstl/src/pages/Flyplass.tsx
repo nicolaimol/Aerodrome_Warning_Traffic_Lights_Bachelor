@@ -1,7 +1,9 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Test from '../components/Test'
-import {flyplass} from '../util/flyplass'
+import {flyplass, hentFlyplasser} from '../util/flyplass'
 import FlyplassForm from "../components/FlyplassForm";
+import { auth } from '../util/auth'
+import { useNavigate} from "react-router";
 
 function Flyplass(props: any) {
 
