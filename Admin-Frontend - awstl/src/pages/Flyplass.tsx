@@ -11,7 +11,17 @@ function Flyplass(props: any) {
         setFlyplass(flyplass)
     }
 
-    const showTable = () => {
+    const showTable = (flyplass: flyplass) => {
+        setFlyplassList((oldList: flyplass[]) => {
+            return oldList.map((it: flyplass) => {
+                if (it.icao === flyplass.icao) {
+                    return flyplass
+                }
+
+                return it
+            })
+        })
+
         setFlyplass(null)
     }
 
