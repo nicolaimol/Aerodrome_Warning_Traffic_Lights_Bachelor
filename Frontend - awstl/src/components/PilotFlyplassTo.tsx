@@ -33,39 +33,48 @@ const useStyles = makeStyles((theme) => ({ // Lager style til AutoComplete kompo
 function PilotFlyplassTo(props: any) {
 
   const dispatch = useDispatch()
+
+  const handleChange = (event: React.ChangeEvent<any>, value: any) => {
+        if (value != null) {
+          dispatch(allActions.toAirportAction.setToAirport(value));
+          props.update(value)
+        }
+    }
+
+
   const airportList = useSelector((state: any) => state.airportList.value)
   const airport = useSelector((state: any) => state.airport.value)
   const toAirport = useSelector((state: any) => state.toAirport.value)
 
     const [flyplasserList, setFlyplasserList] = useState<any>([]); // Vi skal kunne lage en liste med alle flyplasser som passer til interfacet 'flyplasser'
-    const [airportActive, setAirportActive] = useState(toAirport != undefined ? toAirport : null)
-    const classes = useStyles(); // bruker stylingen laget ovenfor
-    
-    console.log(' DETTE ER TOAIRPORT NÅ ' + toAirport);
+    const [airportActive, setAirportActive] = useState(null)
+
 
     useEffect(() => {
-
-        if (airportList != undefined) {
-            setFlyplasserList(
-                airportList.map((it: any) => {
-                    return {
-                        label: it.navn,
-                        icao: it.icao,
-                        rwy: it.rwy
-                    }
-                })
-            )
-        }
-
+      if (airportList != undefined) {
+        setFlyplasserList(airportList.map((it: any) => {
+        return {label: it.navn, icao: it.icao, rwy: it.rwy}
+      }))
+      }
+      
     }, [airportList])
+  
+    useEffect(() => {
+      if (toAirport !== undefined) {
+        setAirportActive(toAirport)
+      }
+        
+    }, [toAirport])
 
-  const handleChange = (event: React.ChangeEvent<any>, value: any) => {
-      console.log('jeg dispatcher')
-      dispatch(allActions.toAirportAction.setToAirport(toAirport));
-      setAirportActive(value)
-      props.update(value)
+
+
+
+    const classes = useStyles(); // bruker stylingen laget ovenfor
     
-  }
+  
+
+
+
 
   return (
     <>
