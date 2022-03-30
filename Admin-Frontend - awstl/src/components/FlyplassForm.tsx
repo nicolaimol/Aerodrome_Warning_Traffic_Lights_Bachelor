@@ -3,6 +3,20 @@ import {Button, Card, CardContent, TextField, Typography} from "@mui/material";
 
 function FlyplassForm(props: any) {
 
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        const authentication = async () => {
+            const status = await auth()
+
+            if (status === 401) {
+                navigate("/")
+            }
+        }
+
+        authentication()
+    })
+
     const [icao, setIcao] = useState<string>(props.flyplass.icao)
     const icaoChange = (e: any) =>{
         setIcao(e.target.value)
