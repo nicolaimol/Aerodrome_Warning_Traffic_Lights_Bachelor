@@ -113,18 +113,14 @@ export default function Test(props: any) {
     const [rows, setRows] = useState<Data[]>([{icao: "ENGM", navn: "Gardermoen", iata: "OSL", rwy: "01/19", lat: "60", lon: "10", altitude: "100"}])
     useEffect(() => {
 
-
-        const hentFlyplasserInternal = async () => {
-            let flyplasser = await hentFlyplasser()
-
-            flyplasser = flyplasser.sort((a:any, b:any) => {
-                if (a.navn < b.navn) {
-                    return -1
-                } else if (a.navn > b.navn) {
-                    return 1
-                }
-                return 0
-            })
+        const flyplasser = props.list.sort((a:any, b:any) => {
+            if (a.navn < b.navn) {
+                return -1
+            } else if (a.navn > b.navn) {
+                return 1
+            }
+            return 0
+        })
 
             setRows(flyplasser.map((it: any) => {
                 return createData(it.icao, it.navn, it.iata, it.rwy, it.lat, it.lon, it.altitude)
