@@ -14,8 +14,13 @@ function Login(props: any) {
         setPassword(e.target.value)
     }
 
-    const click = () => {
-        const loggedIn = login(username, password)
+    const [feil, setFeil] = useState<string>("")
+
+    const click = async () => {
+        const loggedIn = await login(username, password)
+        if (!loggedIn) {
+            setFeil("Brukernavn eller passord er feil")
+        }
         props.alert(loggedIn)
     }
 
