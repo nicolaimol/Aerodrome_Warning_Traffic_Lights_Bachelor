@@ -80,6 +80,10 @@ function FlyplassForm(props: any) {
         props.done(flyplass)
     }
 
+    const avbryt = () => {
+        props.cancel()
+    }
+
     return (
         <Card style={{minWidth: 'fit-content', width: "50%", minHeight: 'fit-content'}} sx={{padding: 5}}>
             <CardContent style={{display: 'flex', flexDirection: 'column', flexGrow: 1, height: '100%', alignItems: 'space-between'}} >
@@ -93,8 +97,11 @@ function FlyplassForm(props: any) {
                     <TextField onChange={altitudeChange} value={altitude} id="standard-required" label="Altitude" variant="standard" />
                 </div>
                 <div style={{display: "flex", alignItems:'center', justifyContent: 'space-between'}}>
-                    <Button onClick={click} style={{width: 'fit-content'}} variant="outlined">Lagre</Button>
-                    <Typography style={{color:'red'}} >Her kommer feil</Typography>
+                    <div style={{display:'flex', gap: 1}}>
+                        <Button onClick={click} style={{width: 'fit-content'}} variant="outlined">Lagre</Button>
+                        <Button onClick={avbryt} style={{width: 'fit-content'}} variant="outlined">Avbryt</Button>
+                    </div>
+                    <Typography style={{color:'red'}} >{feil}</Typography>
                 </div>
 
             </CardContent>
