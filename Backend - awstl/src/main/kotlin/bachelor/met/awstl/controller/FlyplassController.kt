@@ -7,8 +7,11 @@ import bachelor.met.awstl.service.FlyplassService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import javax.annotation.security.RolesAllowed
 
 
 /**
@@ -33,6 +36,15 @@ class FlyplassController(var service: FlyplassService) {
     @GetMapping(value = ["/airport"])
     fun getAllAirports(): ResponseEntity<List<Flyplass>> {
         return ResponseEntity.ok(service.getAllFlyplass())
+    }
+
+    @PutMapping(value = ["/airport"])
+    @RolesAllowed(value = ["admin", "user"])
+    fun updateAirport(@RequestBody flyplass: Flyplass): ResponseEntity<Any> {
+
+        service.updateFlyplass(flyplass.icao, flyplass)
+
+        return ResponseEntity.ok().build()
     }
 
 }
