@@ -88,13 +88,13 @@ function FlyplassForm(props: any) {
         <Card style={{minWidth: 'fit-content', width: "50%", minHeight: 'fit-content'}} sx={{padding: 5}}>
             <CardContent style={{display: 'flex', flexDirection: 'column', flexGrow: 1, height: '100%', alignItems: 'space-between'}} >
                 <div style={{display: 'flex', flexDirection: 'column', flexGrow: 1, justifyContent: 'space-evenly', gap:'1em', marginBottom: '1em'}}>
-                    <TextField onChange={icaoChange} value={icao} id="standard-required" label="Icao" variant="standard" />
-                    <TextField onChange={navnChange} value={navn} id="standard-required" label="Navn" variant="standard"/>
-                    <TextField onChange={iataChange} value={iata} id="standard-required" label="Iata" variant="standard" />
-                    <TextField onChange={rwyChange} value={rwy} id="standard-required" label="Runway" variant="standard"/>
-                    <TextField onChange={latChange} value={lat} id="standard-required" label="Latitude" variant="standard" />
-                    <TextField onChange={lonChange} value={lon} id="standard-required" label="Longitude" variant="standard"/>
-                    <TextField onChange={altitudeChange} value={altitude} id="standard-required" label="Altitude" variant="standard" />
+                    <TextField onChange={icaoChange} value={icao} id="standard-required-icao" label="Icao" variant="standard" />
+                    <TextField onChange={navnChange} value={navn} id="standard-required-navn" label="Navn" variant="standard"/>
+                    <TextField onChange={iataChange} value={iata} id="standard-required-iata" label="Iata" variant="standard" />
+                    <TextField onChange={rwyChange} value={rwy} id="standard-required-rwy" label="Runway" variant="standard"/>
+                    <TextField onChange={latChange} value={lat} id="standard-required-lat" label="Latitude" variant="standard" />
+                    <TextField onChange={lonChange} value={lon} id="standard-required-lon" label="Longitude" variant="standard"/>
+                    <TextField onChange={altitudeChange} value={altitude} id="standard-required-alt" label="Altitude" variant="standard" />
                 </div>
                 <div style={{display: "flex", alignItems:'center', justifyContent: 'space-between'}}>
                     <div style={{display:'flex', gap: 1}}>
