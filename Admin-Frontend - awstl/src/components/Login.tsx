@@ -34,8 +34,8 @@ function Login(props: any) {
                     <LockOutlinedIcon />
                 </Typography>
                 <div style={{display: 'flex', flexDirection: 'column', flexGrow: 1, justifyContent: 'space-evenly'}}>
-                    <TextField onChange={usernameChange} value={username} id="standard-required" label="Brukernavn" variant="standard" />
-                    <TextField onChange={passwordChange} value={password} id="standard-required" label="Passord" variant="standard" type="password"/>
+                    <TextField onChange={usernameChange} value={username} id="standard-required-username" label="Brukernavn" variant="standard" />
+                    <TextField onChange={passwordChange} value={password} id="standard-required-password" label="Passord" variant="standard" type="password"/>
                 </div>
                 <div style={{display: "flex", alignItems:'center', justifyContent: 'space-between'}}>
                     <Button onClick={click} style={{width: 'fit-content'}} variant="outlined">Logg in</Button>
