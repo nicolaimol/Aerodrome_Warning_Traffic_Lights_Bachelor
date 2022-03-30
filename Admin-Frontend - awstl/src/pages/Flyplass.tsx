@@ -5,7 +5,34 @@ import FlyplassForm from "../components/FlyplassForm";
 
 function Flyplass(props: any) {
 
+    const navigate = useNavigate()
+
     const [flyplass, setFlyplass] = useState<flyplass | null>(null)
+    const [flyplassList, setFlyplassList] = useState<flyplass[]>([])
+
+    useEffect(() => {
+
+
+        const onStart = async () => {
+            const status = await auth()
+            //console.log(status)
+
+            if (status === 401) {
+                navigate("/")
+            } else {
+                const list = await hentFlyplasser()
+
+                setFlyplassList(list)
+            }
+
+
+
+
+        }
+
+        onStart()
+
+    }, [])
 
     const changeFlyplass = (flyplass: flyplass) => {
         setFlyplass(flyplass)
