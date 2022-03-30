@@ -56,8 +56,6 @@ class SecurityController(val service: KeycloakAdminClientService) {
 
         val sessionObj = session!!.getAttribute("SPRING_SECURITY_CONTEXT") as SecurityContextImpl
         sessionObj.authentication
-        logger.info("Controller id: ${session!!.id}")
-        logger.info(session.toString())
 
         return ResponseEntity.ok(sessionObj.toString())
     }
