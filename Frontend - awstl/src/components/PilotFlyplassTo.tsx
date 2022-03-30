@@ -7,7 +7,8 @@ import axios from 'axios';
 import Typography from '@mui/material/Typography';
 import { Autocomplete, Container, TextField } from '@mui/material';
 import { createStyles, makeStyles } from '@mui/styles';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import allActions from '../Actions';
 
 const useStyles = makeStyles((theme) => ({ // Lager style til AutoComplete komponent 
   root: {
@@ -31,11 +32,16 @@ const useStyles = makeStyles((theme) => ({ // Lager style til AutoComplete kompo
 
 function PilotFlyplassTo(props: any) {
 
+  const dispatch = useDispatch()
+  const airportList = useSelector((state: any) => state.airportList.value)
+  const airport = useSelector((state: any) => state.airport.value)
+  const toAirport = useSelector((state: any) => state.toAirport.value)
+
     const [flyplasserList, setFlyplasserList] = useState<any>([]); // Vi skal kunne lage en liste med alle flyplasser som passer til interfacet 'flyplasser'
-    const [airportActivr, setAirportActive] = useState(null)
+    const [airportActive, setAirportActive] = useState(toAirport != undefined ? toAirport : null)
     const classes = useStyles(); // bruker stylingen laget ovenfor
-    const airportList = useSelector((state: any) => state.airportList.value)
-    const airport = useSelector((state: any) => state.airport.value)
+    
+    console.log(' DETTE ER TOAIRPORT NÅ ' + toAirport);
 
     useEffect(() => {
 
@@ -54,7 +60,8 @@ function PilotFlyplassTo(props: any) {
     }, [airportList])
 
   const handleChange = (event: React.ChangeEvent<any>, value: any) => {
-    //console.log(value)
+      console.log('jeg dispatcher')
+      dispatch(allActions.toAirportAction.setToAirport(toAirport));
       setAirportActive(value)
       props.update(value)
     
@@ -80,7 +87,7 @@ function PilotFlyplassTo(props: any) {
                 // redux endring av flyplasshåndtering
                 onChange={handleChange}
                 // setter flyplassen som valgt i listen
-                value={airportActivr}
+                value={airportActive}
                 isOptionEqualToValue={(option: any, value: any) => option?.icao === value?.icao}
                 // Listen med valg settes inn her. For å gjøre det enklere sorteres den alfabetisk
                 options={flyplasserList.sort((a:any, b:any) => -b.label.localeCompare(a.label))}
