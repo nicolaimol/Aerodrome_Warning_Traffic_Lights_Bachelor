@@ -8,7 +8,6 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import {useEffect, useState} from "react";
-import { hentFlyplasser} from "../util/flyplass";
 import {Button} from "@mui/material";
 import {auth} from "../util/auth";
 import {useNavigate} from "react-router";
