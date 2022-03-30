@@ -1,4 +1,4 @@
-import { AppBar, Container, Divider, ThemeProvider, Typography } from '@mui/material'
+import { Container, Divider, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import {useSelector} from 'react-redux'
 import TrafikklysBox from '../components/TrafikklysBox'
@@ -6,13 +6,10 @@ import VisSatteTerskelverdier from '../components/VisSatteTerskelverdier'
 
 import Tidslinje from '../components/Tidslinje'
 import GrafikkTrafikklys from '../components/GrafikkTrafikklys'
-import DrawerTerskelverdier from '../components/DrawerTerskelverdier'
 import PilotFlyplassTo from '../components/PilotFlyplassTo'
 
 import { calcFarge } from '../util/calcFarge'
 import PilotVelgDepArvl from '../components/PilotVelgDepArvl'
-import { theme } from '../util/theme'
-
 import TafMetar from '../components/TafMetar'
 
 function Pilot() {
@@ -54,11 +51,10 @@ function Pilot() {
     <Divider sx={{ mb: 5 }} />
 
     <PilotFlyplassTo update={updateAirportTo} />
-    <Divider sx={{ mb: 5 }} />
     <PilotVelgDepArvl />
-    <Divider />
+    <Divider sx={{ mb: 5 }} />
         <div style={{textAlign: 'center', color: '#0090a8', marginBottom: '1em'}}>
-            <Typography variant="h4">Taf metar</Typography>
+            <Typography sx={{ mb: 3 }} variant="h4">Taf metar</Typography>
             <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2em'}}>
                 { airport != undefined && toAirport != null &&
                     <>
@@ -68,7 +64,7 @@ function Pilot() {
                 }
             </div>
         </div>
-    <Divider sx={{mt: 1, mb: 1}} />
+    <Divider sx={{ mb: 5 }} />
 
       <div style={{ display: 'flex', justifyContent: 'space-evenly', flexFlow: 'row wrap', alignItems: 'stretch'}}>
         {terskel != undefined && 
