@@ -1,6 +1,6 @@
 import { Container, Divider, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import {useSelector} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import TrafikklysBox from '../components/TrafikklysBox'
 import VisSatteTerskelverdier from '../components/VisSatteTerskelverdier'
 
@@ -11,8 +11,13 @@ import PilotFlyplassTo from '../components/PilotFlyplassTo'
 import { calcFarge } from '../util/calcFarge'
 import PilotVelgDepArvl from '../components/PilotVelgDepArvl'
 import TafMetar from '../components/TafMetar'
+import allActions from '../Actions'
+
+
 
 function Pilot() {
+
+  const dispatch = useDispatch()
   
 
   const terskel = useSelector((state: any) => state.terskel.value)
@@ -37,6 +42,7 @@ function Pilot() {
     const updateAirportTo = (data: any) => {
       console.log(data)
       setToAirport(data)
+      dispatch(allActions.toAirportAction.setToAirport(toAirport));
     }
 
   return (
@@ -87,3 +93,7 @@ function Pilot() {
 }
 
 export default Pilot
+
+function dispatch(arg0: any) {
+  throw new Error('Function not implemented.')
+}
