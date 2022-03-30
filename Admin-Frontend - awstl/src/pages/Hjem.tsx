@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Login from "../components/Login";
+import {auth} from '../util/auth'
 
 function Hjem(props: any) {
     const [loggedIn, setLoggedIn] = useState<boolean>(false)
@@ -8,6 +9,18 @@ function Hjem(props: any) {
         console.log(value)
         setLoggedIn(value)
     }
+
+    useEffect(() => {
+        const authenticate = async () => {
+            const repsonse = await auth()
+
+            if (repsonse === 200) {
+                setLoggedIn(true)
+            }
+        }
+
+        authenticate()
+    }, [])
 
     return (
         <div style={{backgroundColor: 'green', display: 'flex', justifyContent: 'center', width: '100%'}}>
