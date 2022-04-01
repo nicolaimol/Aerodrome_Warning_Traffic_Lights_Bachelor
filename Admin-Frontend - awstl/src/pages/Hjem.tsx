@@ -2,10 +2,8 @@ import React, {useContext, useEffect, useState} from 'react';
 import Login from "../components/Login";
 import {Button, Card, CardContent, Typography} from "@mui/material";
 import {Link} from "react-router-dom";
-import {TokenContext} from "../util/DataContext";
 import {useNavigate} from "react-router";
 import {auth} from '../util/auth'
-import axios from "axios";
 
 function Hjem(props: any) {
     const [loggedIn, setLoggedIn] = useState<boolean>(false)
