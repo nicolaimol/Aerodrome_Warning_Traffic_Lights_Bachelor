@@ -37,7 +37,7 @@ function PilotFlyplassTo(props: any) {
   const handleChange = (event: React.ChangeEvent<any>, value: any) => {
         if (value != null) {
           dispatch(allActions.toAirportAction.setToAirport(value));
-          props.update(value)
+          props.update({ navn: value.label, icao: value.icao, rwy: value.rwy})
         }
     }
 
@@ -47,7 +47,7 @@ function PilotFlyplassTo(props: any) {
   const toAirport = useSelector((state: any) => state.toAirport.value)
 
     const [flyplasserList, setFlyplasserList] = useState<any>([]); // Vi skal kunne lage en liste med alle flyplasser som passer til interfacet 'flyplasser'
-    const [airportActive, setAirportActive] = useState(null)
+    const [airportActive, setAirportActive] = useState<any>(null)
 
 
     useEffect(() => {
