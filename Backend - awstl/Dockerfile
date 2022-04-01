@@ -9,7 +9,10 @@ RUN --mount=type=cache,target=/root/.m2  mvn clean package -Dmaven.test.skip
 
 FROM openjdk:11-jre-slim
 
-USER springboot
+RUN addgroup -g 1001 -S appuser && adduser -u 1001 -S appuser -G appuser
+RUN mkdir /opt && chown -R appuser:appuser /opt
+RUN mkdir /logs && chown -R appuser:appuser /logs
+USER appuser
 
 COPY --from=maven /usr/src/app/target/awtl.jar awtl.jar
 ENTRYPOINT ["java", "-jar", "/awtl.jar"]
