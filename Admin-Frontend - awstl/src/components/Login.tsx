@@ -1,9 +1,12 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Button, Card, CardContent, TextField, Typography} from "@mui/material";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import {login} from '../util/user'
+import {TokenContext} from "../util/DataContext";
 
 function Login(props: any) {
+
+    const {setToken} = useContext(TokenContext)
 
     const [username, setUsername] = useState<string>("")
     const usernameChange = (e: any) =>{
@@ -17,11 +20,15 @@ function Login(props: any) {
     const [feil, setFeil] = useState<string>("")
 
     const click = async () => {
-        const loggedIn = await login(username, password)
-        if (!loggedIn) {
+        const token = await login(username, password)
+        if (token == null) {
             setFeil("Brukernavn eller passord er feil")
+            return
+        } else {
+            setToken(token)
+            props.alert(true)
         }
-        props.alert(loggedIn)
+
     }
 
     return (
