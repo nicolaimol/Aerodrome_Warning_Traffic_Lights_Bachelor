@@ -85,12 +85,16 @@ function Pilot() {
         <VisSatteTerskelverdier terskel={terskel} />}
       </div>
           {airport != undefined && fromWeather != undefined && 
-            <GrafikkPilot airport={airport} weather={fromWeather} time={'07:30'} />
+            <GrafikkPilot airport={airport} weather={fromWeather} time={'19:30'} />
+          }
+          { toAirport != undefined && weatherToAirport != undefined &&
+          
+          <GrafikkPilot airport={toAirport} weather={weatherToAirport} time={'21:30'} />
+
           }
       
 
     </Container>
-      <GrafikkTrafikklys />
     </ >
   )
 }
