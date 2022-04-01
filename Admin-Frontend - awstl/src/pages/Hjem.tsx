@@ -16,6 +16,7 @@ function Hjem(props: any) {
 
 
     useEffect(() => {
+        auth()
 
         axios.get("/api/user/auth")
             .then((response: any) => {
