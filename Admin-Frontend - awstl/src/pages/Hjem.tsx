@@ -45,16 +45,6 @@ function Hjem(props: any) {
                                 </Link>
                             </CardContent>
                         </Card>
-                        <Card style={{backgroundColor: "#0494ac", color: "white"}}>
-                            <CardContent style={{display: 'flex', flexDirection:'column', alignItems:'center', gap: '1em'}}>
-                                <Typography variant="h5">
-                                    {token}
-                                </Typography>
-                                <Link to="/">
-                                    <Button style={{color: "white"}} variant="text">Velg</Button>
-                                </Link>
-                            </CardContent>
-                        </Card>
                     </div>
         </div>
     );
