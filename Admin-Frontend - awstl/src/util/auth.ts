@@ -1,7 +1,16 @@
 import axios from 'axios'
+import {useContext, useEffect, useState} from "react";
+import {TokenContext} from "./DataContext";
 
-export const auth = async (): Promise<number> => {
-    let response = await axios.get("/api/user/auth")
+export const auth = async (token: string): Promise<number> => {
+
+    const config = {
+        headers: {
+            Authentication: `Bearer ${token}`
+        }
+    }
+
+    return axios.get("/api/user/auth")
         .then((response: any) => {
             return response.status
         })
@@ -10,7 +19,5 @@ export const auth = async (): Promise<number> => {
             return error.response.status
         })
 
-    console.log(response)
-    return response
-
+    //return status
 }
