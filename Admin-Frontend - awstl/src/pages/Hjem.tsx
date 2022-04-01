@@ -1,6 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Login from "../components/Login";
+import {Button, Card, CardContent, Typography} from "@mui/material";
+import {Link} from "react-router-dom";
+import {TokenContext} from "../util/DataContext";
+import {useNavigate} from "react-router";
 import {auth} from '../util/auth'
+import axios from "axios";
 
 function Hjem(props: any) {
     const [loggedIn, setLoggedIn] = useState<boolean>(false)
@@ -9,22 +14,68 @@ function Hjem(props: any) {
         setLoggedIn(value)
     }
 
+    const navigate = useNavigate()
+
+    const {token} = useContext(TokenContext)
+
     useEffect(() => {
-        const authenticate = async () => {
-            const repsonse = await auth()
 
-            if (repsonse === 200) {
-                setLoggedIn(true)
-            }
-        }
+        axios.get("/api/user/auth")
+            .then((response: any) => {
+                console.log(response)
+            })
 
-        authenticate()
+        /*
+        auth(token)
+            .then((status: number) => {
+                if (status !== 401) {
+                    setLoggedIn(true)
+                }
+            })
+         */
     }, [])
 
     return (
-        <div style={{backgroundColor: 'green', display: 'flex', justifyContent: 'center', width: '100%'}}>
+        <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', gap: '1em'}}>
             {loggedIn ?
-                "HJEM"
+                <>
+                    <Typography style={{textAlign: 'center', color: '#0494ac'}} variant="h3">
+                        Velkommen til admin
+                    </Typography>
+                    <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2em'}}>
+                        <Card style={{backgroundColor: "#0494ac", color: "white"}}>
+                            <CardContent style={{display: 'flex', flexDirection:'column', alignItems:'center', gap: '1em'}}>
+                                <Typography variant="h5">
+                                    Flyplass
+                                </Typography>
+                                <Link to="/flyplass">
+                                    <Button style={{color: "white"}} variant="text">Velg</Button>
+                                </Link>
+                            </CardContent>
+                        </Card>
+                        <Card style={{backgroundColor: "#0494ac", color: "white"}}>
+                            <CardContent style={{display: 'flex', flexDirection:'column', alignItems:'center', gap: '1em'}}>
+                                <Typography variant="h5">
+                                    Standard Terskelverdi
+                                </Typography>
+                                <Link to="/terskelverdi">
+                                    <Button style={{color: "white"}} variant="text">Velg</Button>
+                                </Link>
+                            </CardContent>
+                        </Card>
+                        <Card style={{backgroundColor: "#0494ac", color: "white"}}>
+                            <CardContent style={{display: 'flex', flexDirection:'column', alignItems:'center', gap: '1em'}}>
+                                <Typography variant="h5">
+                                    {token}
+                                </Typography>
+                                <Link to="/">
+                                    <Button style={{color: "white"}} variant="text">Velg</Button>
+                                </Link>
+                            </CardContent>
+                        </Card>
+                    </div>
+
+                </>
                 :
                 <Login alert={alert}/>
             }
