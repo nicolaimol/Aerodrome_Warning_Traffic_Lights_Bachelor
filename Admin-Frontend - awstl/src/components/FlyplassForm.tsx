@@ -2,7 +2,6 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Button, Card, CardContent, TextField, Typography} from "@mui/material";
 import { oppdaterFlyplass} from "../util/flyplass";
 import {useNavigate} from "react-router";
-import {TokenContext} from "../util/DataContext";
 
 function FlyplassForm(props: any) {
 
@@ -39,8 +38,6 @@ function FlyplassForm(props: any) {
 
     const [feil, setFeil] = useState<string>("")
 
-    const {token} = useContext(TokenContext)
-
     const click = async () => {
 
         const flyplass = {
@@ -53,17 +50,10 @@ function FlyplassForm(props: any) {
             altitude: altitude
         }
 
-        const value: any = await oppdaterFlyplass(flyplass, token)
-
-        console.log(value)
+        const value: any = await oppdaterFlyplass(flyplass)
 
         if (value === 401) {
-            navigate("/")
-            return
-        }
-
-        if (value >= 400) {
-            setFeil("Kunne ikke opdatere")
+            setFeil("Du har ikke lov til å endre flyplass")
             return
         }
 
