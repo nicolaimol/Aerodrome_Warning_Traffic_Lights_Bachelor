@@ -1,6 +1,4 @@
 import axios from 'axios'
-import {useContext} from "react";
-import {TokenContext} from "./DataContext";
 
 export const login = async (username: string, password: string): Promise<string> => {
     const loginDto = {
