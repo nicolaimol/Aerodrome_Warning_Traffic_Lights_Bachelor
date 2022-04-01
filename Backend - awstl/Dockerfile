@@ -11,7 +11,7 @@ FROM openjdk:11-jre-slim
 
 USER springboot
 
-COPY --from=maven /usr/scr/app/target/awtl.jar awtl.jar
+COPY --from=maven /usr/src/app/target/awtl.jar awtl.jar
 ENTRYPOINT ["java", "-jar", "/awtl.jar"]
 
 #FROM tomcat:9.0.58-jre11-openjdk-slim-buster
