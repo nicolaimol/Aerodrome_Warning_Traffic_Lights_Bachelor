@@ -1,9 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Test from '../components/Test'
 import {flyplass, hentFlyplasser} from '../util/flyplass'
 import FlyplassForm from "../components/FlyplassForm";
-import { auth } from '../util/auth'
+import {auth} from '../util/auth'
 import { useNavigate} from "react-router";
+import {TokenContext} from "../util/DataContext";
 
 function Flyplass(props: any) {
 
@@ -12,29 +13,23 @@ function Flyplass(props: any) {
     const [flyplass, setFlyplass] = useState<flyplass | null>(null)
     const [flyplassList, setFlyplassList] = useState<flyplass[]>([])
 
+    const {token} = useContext(TokenContext)
     useEffect(() => {
+        auth(token)
+            .then((status: number) => {
+                if (status === 401) {
+                    navigate("/")
+                } else {
 
+                    hentFlyplasser()
+                        .then(list => {
+                            setFlyplassList(list)
+                        })
 
-        const onStart = async () => {
-            const status = await auth()
-            //console.log(status)
-
-            if (status === 401) {
-                navigate("/")
-            } else {
-                const list = await hentFlyplasser()
-
-                setFlyplassList(list)
-            }
-
-
-
-
-        }
-
-        onStart()
-
+                }
+            })
     }, [])
+
 
     const changeFlyplass = (flyplass: flyplass) => {
         setFlyplass(flyplass)
@@ -59,7 +54,7 @@ function Flyplass(props: any) {
     }
 
     return (
-        <div style={{width: '100%', display: 'flex', backgroundColor: 'blue', justifyContent: 'center'}}>
+        <div style={{width: '100%', display: 'flex', justifyContent: 'center'}}>
             {
                 flyplass == null &&
                     <Test list={flyplassList} changeFlyplass={changeFlyplass} />
