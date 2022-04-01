@@ -1,24 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Button, Card, CardContent, TextField, Typography} from "@mui/material";
 import { oppdaterFlyplass} from "../util/flyplass";
 import {useNavigate} from "react-router";
-import {auth} from "../util/auth";
+import {TokenContext} from "../util/DataContext";
 
 function FlyplassForm(props: any) {
 
     const navigate = useNavigate()
-
-    useEffect(() => {
-        const authentication = async () => {
-            const status = await auth()
-
-            if (status === 401) {
-                navigate("/")
-            }
-        }
-
-        authentication()
-    })
 
     const [icao, setIcao] = useState<string>(props.flyplass.icao)
     const icaoChange = (e: any) =>{
@@ -51,6 +39,8 @@ function FlyplassForm(props: any) {
 
     const [feil, setFeil] = useState<string>("")
 
+    const {token} = useContext(TokenContext)
+
     const click = async () => {
 
         const flyplass = {
@@ -63,7 +53,7 @@ function FlyplassForm(props: any) {
             altitude: altitude
         }
 
-        const value: any = await oppdaterFlyplass(flyplass)
+        const value: any = await oppdaterFlyplass(flyplass, token)
 
         console.log(value)
 
