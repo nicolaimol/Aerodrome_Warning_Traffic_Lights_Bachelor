@@ -18,19 +18,6 @@ function Hjem(props: any) {
     useEffect(() => {
         auth()
 
-        axios.get("/api/user/auth")
-            .then((response: any) => {
-                console.log(response)
-            })
-
-        /*
-        auth(token)
-            .then((status: number) => {
-                if (status !== 401) {
-                    setLoggedIn(true)
-                }
-            })
-         */
     }, [])
 
     return (
