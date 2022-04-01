@@ -128,7 +128,7 @@ function App() {
                         data.data.instant.details.wind_speed = (data.data.instant.details.wind_speed * 1.943844).toPrecision(2);
                         data.data.instant.details.wind_speed_of_gust = (data.data.instant.details.wind_speed_of_gust * 1.943844).toPrecision(2);
                     })
-                    dispatch(allActions.weatherActions.setWeather(response))
+                    dispatch(allActions.weatherActions.setWeather(response.data))
                 }) 
 
             console.log("henter fra server")
