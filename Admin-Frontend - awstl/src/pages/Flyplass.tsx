@@ -4,7 +4,6 @@ import {flyplass, hentFlyplasser} from '../util/flyplass'
 import FlyplassForm from "../components/FlyplassForm";
 import {auth} from '../util/auth'
 import { useNavigate} from "react-router";
-import {TokenContext} from "../util/DataContext";
 
 function Flyplass(props: any) {
 
@@ -13,21 +12,13 @@ function Flyplass(props: any) {
     const [flyplass, setFlyplass] = useState<flyplass | null>(null)
     const [flyplassList, setFlyplassList] = useState<flyplass[]>([])
 
-    const {token} = useContext(TokenContext)
     useEffect(() => {
-        auth(token)
-            .then((status: number) => {
-                if (status === 401) {
-                    navigate("/")
-                } else {
+        auth()
 
-                    hentFlyplasser()
-                        .then(list => {
-                            setFlyplassList(list)
-                        })
-
-                }
-            })
+        hentFlyplasser().then((response: any) => {
+            //console.log(response)
+            setFlyplassList(response)
+        })
     }, [])
 
 
