@@ -21,8 +21,6 @@ function Hjem(props: any) {
 
     return (
         <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', gap: '1em'}}>
-            {loggedIn ?
-                <>
                     <Typography style={{textAlign: 'center', color: '#0494ac'}} variant="h3">
                         Velkommen til admin
                     </Typography>
@@ -58,12 +56,6 @@ function Hjem(props: any) {
                             </CardContent>
                         </Card>
                     </div>
-
-                </>
-                :
-                <Login alert={alert}/>
-            }
-
         </div>
     );
 }
