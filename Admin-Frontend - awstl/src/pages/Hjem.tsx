@@ -14,7 +14,6 @@ function Hjem(props: any) {
 
     const navigate = useNavigate()
 
-    const {token} = useContext(TokenContext)
 
     useEffect(() => {
 
