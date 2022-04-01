@@ -24,8 +24,14 @@ export const hentFlyplasser = async (): Promise<flyplass[]> => {
     return data
 }
 
-export const oppdaterFlyplass = async (flyplass: flyplass): Promise<any> => {
-    let response = await axios.put("/api/airport", flyplass)
+export const oppdaterFlyplass = async (flyplass: flyplass, token: string): Promise<any> => {
+    const config = {
+        headers: {
+            Authentication: `Bearer ${token}`
+        }
+    }
+
+    let response = await axios.put("/api/airport", flyplass, config)
         .then((response: any) => {
             return response.status
         })
