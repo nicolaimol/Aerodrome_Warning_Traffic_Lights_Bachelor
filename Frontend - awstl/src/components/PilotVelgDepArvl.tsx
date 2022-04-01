@@ -1,5 +1,5 @@
 import { TextField, Typography } from '@mui/material'
-import React from 'react'
+import React, {useState} from 'react'
 import { ThemeProvider, styled } from '@mui/material/styles';
 import { theme } from '../util/theme'
 
@@ -32,7 +32,21 @@ const CustomTextFieldTimeInput = styled(TextField)({
 
 
 
-function PilotVelgDepArvl() {
+function PilotVelgDepArvl(props: any) {
+
+  const [fra, setFra] = useState<string>("07:30")
+  const [til, setTil] = useState<string>("07:30")
+
+  const handleEndretTidFra = (event: any) => {
+    setFra(event.target.value as string)
+    props.updateFra(event.target.value as string)
+  }
+
+  const handleEndretTidTil = (event: any) => {
+  setTil(event.target.value as string)
+    console.log(event.target.value)
+    props.updateTil(event.target.value as string)
+  }
 
   return (
     <>
@@ -46,7 +60,8 @@ function PilotVelgDepArvl() {
                 id="time"
                 label="Avgang"
                 type="time"
-                defaultValue="07:30"
+                onChange={handleEndretTidFra}
+                value={fra}
                 InputLabelProps={{
                 shrink: true,
                 }}
@@ -59,7 +74,8 @@ function PilotVelgDepArvl() {
             id="time"
             label="Ankomst"
             type="time"
-            defaultValue="07:30"
+            onChange={handleEndretTidTil}
+            value={til}
             InputLabelProps={{
             shrink: true,
             }}
