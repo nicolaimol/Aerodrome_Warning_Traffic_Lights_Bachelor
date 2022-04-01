@@ -5,11 +5,9 @@ import Hjem from './pages/Hjem'
 import Flyplass from './pages/Flyplass'
 import Terskel from './pages/Terskel'
 import Navbar from './components/Navbar'
-import { TokenContextProvider} from "./util/DataContext";
 
 function App() {
   return (
-      <TokenContextProvider>
           <div style={{display: 'flex',flexDirection:'column', minHeight: '100vh'}}>
               <Navbar />
               <div style={{display: 'flex', flexGrow: 1, alignItems: 'center', justifyContent: 'center',}}>
@@ -20,7 +18,6 @@ function App() {
                   </Routes>
               </div>
           </div>
-      </TokenContextProvider>
   );
 }
 
