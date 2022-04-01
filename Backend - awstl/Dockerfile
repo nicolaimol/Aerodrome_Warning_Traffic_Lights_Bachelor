@@ -9,13 +9,12 @@ RUN --mount=type=cache,target=/root/.m2  mvn clean package -Dmaven.test.skip
 
 FROM openjdk:11-jre-slim
 
-RUN addgroup -g 1001 -S appuser && adduser -u 1001 -S appuser -G appuser
-RUN mkdir /opt && chown -R appuser:appuser /opt
-RUN mkdir /logs && chown -R appuser:appuser /logs
-USER appuser
+RUN useradd --create-home -s /bin/bash user
+WORKDIR /home/user
+USER user
 
-COPY --from=maven /usr/src/app/target/awtl.jar awtl.jar
-ENTRYPOINT ["java", "-jar", "/awtl.jar"]
+COPY --from=maven /usr/src/app/target/awtl.jar /home/user/awtl.jar
+ENTRYPOINT ["java", "-jar", "/home/user/awtl.jar"]
 
 #FROM tomcat:9.0.58-jre11-openjdk-slim-buster
 #WORKDIR /usr/local/tomcat/webapps/
