@@ -182,7 +182,7 @@ function Tidslinje() {
 
     useEffect(()=> {
         if(!airport) return;
-        const herVer = locfor?.data.properties.timeseries
+        const herVer = locfor?.properties.timeseries
         if (herVer != undefined && herVer[0] != undefined) {
             dispatch(allActions.grafikkAction.setGrafikk(herVer[0]))
 
