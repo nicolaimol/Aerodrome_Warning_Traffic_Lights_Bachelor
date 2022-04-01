@@ -35,6 +35,9 @@ function Pilot() {
       setToAirport(data)
     }
 
+    const [avgangstid, setAvgangstid] = useState<any>('07:30');
+    const [ankomsttid, setAnkomsttid] = useState<any>('07:30');
+
     useEffect(() => {
       if (toAirport != null) {
         const urlArvl = `/api/locationforecast?icao=${toAirport.icao}`
@@ -65,7 +68,7 @@ function Pilot() {
     <Divider sx={{ mb: 5 }} />
 
     <PilotFlyplassTo update={updateAirportTo} />
-    <PilotVelgDepArvl />
+    <PilotVelgDepArvl updateTil={(tid:string) => setAnkomsttid(tid)} updateFra={(tid:string) => setAvgangstid(tid)} />
     <Divider sx={{ mb: 5 }} />
         <div style={{textAlign: 'center', color: '#0090a8', marginBottom: '1em'}}>
             <Typography sx={{ mb: 3 }} variant="h4">Taf metar</Typography>
@@ -85,11 +88,11 @@ function Pilot() {
         <VisSatteTerskelverdier terskel={terskel} />}
       </div>
           {airport != undefined && fromWeather != undefined && 
-            <GrafikkPilot airport={airport} weather={fromWeather} time={'19:30'} />
+            <GrafikkPilot airport={airport} weather={fromWeather} time={avgangstid} />
           }
           { toAirport != undefined && weatherToAirport != undefined &&
           
-          <GrafikkPilot airport={toAirport} weather={weatherToAirport} time={'21:30'} />
+          <GrafikkPilot airport={toAirport} weather={weatherToAirport} time={ankomsttid} />
 
           }
       
