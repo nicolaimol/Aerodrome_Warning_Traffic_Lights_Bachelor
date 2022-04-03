@@ -5,7 +5,7 @@ import {useNavigate} from "react-router";
 
 function FlyplassForm(props: any) {
 
-    const navigate = useNavigate()
+    const keycloak = useKeycloak()
 
     const [icao, setIcao] = useState<string>(props.flyplass.icao)
     const icaoChange = (e: any) =>{
