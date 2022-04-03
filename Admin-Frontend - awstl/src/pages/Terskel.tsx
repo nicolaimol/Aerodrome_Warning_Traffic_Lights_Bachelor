@@ -18,13 +18,20 @@ function Terskel(props: any) {
             }
         }
 
+        hent();
 
 
-    })
+    }, [])
+
+    const update = (id: string) => {
+        setTerskelList((oldList: any) => {
+            return oldList.filter((it: any) => it.id != id)
+        })
+    }
 
     return (
         <div>
-            <TerskelList list={terskelList} />
+            <TerskelList update={update} list={terskelList} />
         </div>
     );
 }
