@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {Link} from 'react-router-dom'
+import { useKeycloak } from "@react-keycloak/web";
 // Material UI ---
 
 // komponenter
@@ -34,6 +35,8 @@ const Navbar = () => {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
+
+  const { keycloak, initialized } = useKeycloak();
 
 
   return (
@@ -111,6 +114,27 @@ const Navbar = () => {
               </Button></Link>
             ))}
           </Box>
+          <div>
+            {!keycloak.authenticated && (
+                <Button
+                    type="button"
+                    className="text-blue-800"
+                    onClick={() => keycloak.login()}
+                >
+                  Login
+                </Button>
+            )}
+
+            {keycloak.authenticated && (
+                <Button
+                    type="button"
+                    className="text-blue-800"
+                    onClick={() => keycloak.logout()}
+                >
+                  Logout ({keycloak?.tokenParsed?.preferred_username})
+                </Button>
+            )}
+          </div>
         </Toolbar>
       </Container>
     </AppBar>
