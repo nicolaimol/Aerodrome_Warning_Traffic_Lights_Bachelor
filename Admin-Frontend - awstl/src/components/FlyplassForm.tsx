@@ -50,7 +50,7 @@ function FlyplassForm(props: any) {
             altitude: altitude
         }
 
-        const value: any = await oppdaterFlyplass(flyplass)
+        const value: any = await oppdaterFlyplass(flyplass, keycloak.keycloak.token!!)
 
         if (value === 401) {
             setFeil("Du har ikke lov til å endre flyplass")
