@@ -1,7 +1,7 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Button, Card, CardContent, TextField, Typography} from "@mui/material";
 import { oppdaterFlyplass} from "../util/flyplass";
-import {useNavigate} from "react-router";
+import { useKeycloak } from "@react-keycloak/web";
 
 function FlyplassForm(props: any) {
 
