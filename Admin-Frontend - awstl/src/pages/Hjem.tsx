@@ -1,23 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Card, CardContent, Typography} from "@mui/material";
 import {Link} from "react-router-dom";
-import {useNavigate} from "react-router";
-import {auth} from '../util/auth'
 
 function Hjem(props: any) {
-    const [loggedIn, setLoggedIn] = useState<boolean>(false)
-
-    const alert = (value: boolean) => {
-        setLoggedIn(value)
-    }
-
-    const navigate = useNavigate()
-
-
-    useEffect(() => {
-        auth()
-
-    }, [])
 
     return (
         <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', gap: '1em'}}>
