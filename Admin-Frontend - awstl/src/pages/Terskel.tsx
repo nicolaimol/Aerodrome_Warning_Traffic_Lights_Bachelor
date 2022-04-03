@@ -30,7 +30,7 @@ function Terskel(props: any) {
     }
 
     return (
-        <div>
+        <div style={{width: '100%', display: 'flex', justifyContent: 'center'}}>
             <TerskelList update={update} list={terskelList} />
         </div>
     );
