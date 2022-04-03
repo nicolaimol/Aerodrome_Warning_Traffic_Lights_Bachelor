@@ -7,9 +7,13 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import TablePagination from "@mui/material/TablePagination";
+import {slettTerskel} from "../util/terskel";
+import {useKeycloak} from "@react-keycloak/web";
+import {Button} from "@mui/material";
+
 
 interface Column {
-    id: 'id' | 'icao' | 'updateAt' | 'createAt';
+    id: 'id' | 'icao' | 'updateAt' | 'createAt' | 'delete';
     label: string;
     minWidth?: number;
     align?: 'right';
@@ -37,6 +41,12 @@ const columns: readonly Column[] = [
         label: 'Created',
         minWidth: 170,
         align: 'right',
+    },
+    {
+        id: 'delete',
+        label: 'Slett terskel',
+        minWidth: 170,
+        align: 'right',
     }
 ];
 
@@ -56,6 +66,8 @@ function createData(
 
 function TerskelList(props: any) {
 
+    const keycloak = useKeycloak()
+
     const [rows, setRows] = useState<Data[]>([])
 
     useEffect(() => {
@@ -70,7 +82,12 @@ function TerskelList(props: any) {
         })
 
         setRows(terskelList.map((it: any) => {
-            return createData(it.id, it.flyplass.icao, it.updateAt, it.createAt)
+            return createData(
+                it.id,
+                it.flyplass.icao,
+                new Date(it.updateAt).toLocaleString(),
+                new Date(it.createAt).toLocaleString()
+            )
         }))
 
     }, [props])
@@ -86,6 +103,13 @@ function TerskelList(props: any) {
         setRowsPerPage(+event.target.value);
         setPage(0);
     };
+
+    const slett = async (id: string) => {
+        const response = await slettTerskel(id, keycloak.keycloak.token!!)
+        if (response == 200) {
+            props.update(id)
+        }
+    }
 
 
     return (
@@ -112,12 +136,24 @@ function TerskelList(props: any) {
                                 return (
                                     <TableRow hover role="checkbox" tabIndex={-1} key={row.icao}>
                                         {columns.map((column) => {
-                                            const value = row[column.id];
-                                            return (
-                                                <TableCell key={column.id} align={column.align}>
-                                                    {value}
-                                                </TableCell>
-                                            );
+                                            if (column.id != "delete") {
+                                                const value = row[column.id];
+                                                return (
+                                                    <TableCell key={column.id} align={column.align}>
+                                                        {value}
+                                                    </TableCell>
+                                                );
+                                            } else {
+                                                return (
+
+                                                    <TableCell key={column.id} align={column.align}>
+                                                        <Button onClick={() => slett(row.id)} >
+                                                            Slett
+                                                        </Button>
+                                                    </TableCell>
+                                                )
+                                            }
+
                                         })}
                                     </TableRow>
                                 );
