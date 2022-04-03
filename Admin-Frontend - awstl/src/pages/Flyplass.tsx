@@ -7,13 +7,11 @@ import { useNavigate} from "react-router";
 
 function Flyplass(props: any) {
 
-    const navigate = useNavigate()
 
     const [flyplass, setFlyplass] = useState<flyplass | null>(null)
     const [flyplassList, setFlyplassList] = useState<flyplass[]>([])
 
     useEffect(() => {
-        auth()
 
         hentFlyplasser().then((response: any) => {
             //console.log(response)
