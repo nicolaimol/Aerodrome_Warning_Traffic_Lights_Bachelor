@@ -10,6 +10,7 @@ import org.keycloak.representations.AccessTokenResponse
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.Authentication
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.toMono
 import java.net.URI
 import javax.annotation.security.RolesAllowed
+import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 import javax.servlet.http.HttpSession
 import javax.validation.constraints.NotNull
@@ -52,10 +54,19 @@ class SecurityController(val service: KeycloakAdminClientService) {
     }
 
     @GetMapping(value = ["/auth"])
-    fun authUser(): ResponseEntity<Void> {
+    fun authUser(request: HttpServletRequest): ResponseEntity<String> {
+        val origin = URI.create(request.requestURI.toString()).host
 
+        val header: String? = request.getHeader("test")
+        if (header != null) {
+            logger.info(header)
+        } else {
+            logger.error("No header found")
+        }
 
-        return ResponseEntity.status(HttpStatus.FOUND).location(URI("/admin")).build()
+        return ResponseEntity.ok("TEST")
+
+        //return ResponseEntity.status(HttpStatus.FOUND).location(URI("/admin")).build()
     }
 
     @Autowired
