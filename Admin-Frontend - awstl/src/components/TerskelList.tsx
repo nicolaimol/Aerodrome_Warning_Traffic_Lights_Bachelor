@@ -114,7 +114,7 @@ function TerskelList(props: any) {
 
     return (
         <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-            <TableContainer sx={{ maxHeight: "80vh" }}>
+            <TableContainer style={{ height: "calc(100vh - 116.5px)"}}>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>
                         <TableRow>
