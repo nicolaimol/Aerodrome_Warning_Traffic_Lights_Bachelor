@@ -46,7 +46,7 @@ function Flyplass(props: any) {
         <div style={{width: '100%', display: 'flex', justifyContent: 'center'}}>
             {
                 flyplass == null &&
-                    <Test list={flyplassList} changeFlyplass={changeFlyplass} />
+                    <FlyplassList list={flyplassList} changeFlyplass={changeFlyplass} />
             }
             {
                 flyplass != null &&
