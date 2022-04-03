@@ -21,7 +21,11 @@ function App() {
                                   <Flyplass />
                               </SecureRoute>
                           } />
-                          <Route path="/terskelverdi" element={<Terskel />} />
+                          <Route path="/terskelverdi" element={
+                              <SecureRoute role="admin" >
+                                  <Terskel />
+                              </SecureRoute>
+                          } />
                           <Route path="/" element={<Hjem />} />
                       </Routes>
                   </div>
