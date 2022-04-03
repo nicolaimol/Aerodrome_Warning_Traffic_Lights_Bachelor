@@ -1,9 +1,7 @@
-import React, {useContext, useEffect, useState} from 'react';
-import Test from '../components/Test'
+import React, {useEffect, useState} from 'react';
+import FlyplassList from '../components/FlyplassList'
 import {flyplass, hentFlyplasser} from '../util/flyplass'
 import FlyplassForm from "../components/FlyplassForm";
-import {auth} from '../util/auth'
-import { useNavigate} from "react-router";
 
 function Flyplass(props: any) {
 
@@ -14,7 +12,6 @@ function Flyplass(props: any) {
     useEffect(() => {
 
         hentFlyplasser().then((response: any) => {
-            //console.log(response)
             setFlyplassList(response)
         })
     }, [])
