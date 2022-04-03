@@ -1,5 +1,6 @@
 package bachelor.met.awstl.controller
 
+import bachelor.met.awstl.dto.TerskelDeleteDto
 import bachelor.met.awstl.dto.TerskelverdiDto
 import bachelor.met.awstl.service.TerskelverdiService
 import org.slf4j.LoggerFactory
@@ -84,5 +85,13 @@ class TerskelverdiController(val service: TerskelverdiService) {
     @GetMapping(value = ["/all"])
     fun getAll(): ResponseEntity<Any> {
         return ResponseEntity.ok(service.getAll())
+    }
+
+    @RolesAllowed(value = ["admin"])
+    @DeleteMapping()
+    fun deleteById(@RequestBody dto: TerskelDeleteDto): ResponseEntity<Any> {
+        service.deleteById(dto.id)
+
+        return ResponseEntity.ok().build()
     }
 }
