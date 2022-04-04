@@ -53,9 +53,13 @@ const partRevers = {
     }
 }
 
-function generateStyle(value: number, max: number, min: number, revers: boolean) {
+function generateStyle(value: number, max: number, min: number, revers: boolean, disabled: boolean) {
 
     //const resten = revers ? partRevers : part
+
+    if (disabled) {
+        return {}
+    }
 
     const prosent = ((value - min)*100)/(max-min)
 
