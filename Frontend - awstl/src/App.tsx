@@ -25,20 +25,31 @@ import Bakkemanskap from './pages/Bakkemanskap';
  export const defaultVerdier = {
     airTempMin: -10,
     airTempMax: 3,
+    airTempActive: true,
+
     precipitationMin: 0,
     precipitationMax: 1,
+    precipitationActive: true,
+
     windSpeedMin: 15,
     windSpeedMax: 25,
+    windSpeedActive: true,
+
     windGustMin: 20,
     windGustMax: 30,
+    windGustActive: true,
+
     probThunderMin: 20,
     probThunderMax: 40,
+    probThunderActive: true,
+    
     humidityMin: 90,
     humidityMax: 98,
-    fog: 50,
-    //probIce: 0, ????????????????????????????
+    humidityActive: true,
+
     crosswindMin: 7,
-    crosswindMax: 15
+    crosswindMax: 15,
+    crosswindActive: true
 };
 
 function App() {
