@@ -1,17 +1,12 @@
 import { Container, Divider, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import TrafikklysBox from '../components/TrafikklysBox'
 import VisSatteTerskelverdier from '../components/VisSatteTerskelverdier'
 
-import Tidslinje from '../components/Tidslinje'
-import GrafikkTrafikklys from '../components/GrafikkTrafikklys'
 import PilotFlyplassTo from '../components/PilotFlyplassTo'
 
-import { calcFarge } from '../util/calcFarge'
 import PilotVelgDepArvl from '../components/PilotVelgDepArvl'
 import TafMetar from '../components/TafMetar'
-import allActions from '../Actions'
 import GrafikkPilot from '../components/GrafikkPilot'
 import axios from 'axios'
 
@@ -56,6 +51,19 @@ function Pilot() {
       
     }, [toAirport])
 
+    useEffect(() => {
+      console.log(toAirportRedux)
+      if( toAirportRedux !== undefined){
+        const reformatert = {
+          navn: toAirportRedux.label,
+          icao: toAirportRedux.icao,
+          rwy: toAirportRedux.rwy
+        }
+        setToAirport( reformatert )
+      }
+      
+    }, [toAirportRedux])
+
   return (
     <>
     <Container>
@@ -73,10 +81,10 @@ function Pilot() {
         <div style={{textAlign: 'center', color: '#0090a8', marginBottom: '1em'}}>
             <Typography sx={{ mb: 3 }} variant="h4">Taf metar</Typography>
             <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2em'}}>
-                { airport != undefined && 
+                { airport !== undefined && 
                         <TafMetar icao={airport.icao} />
                 }
-                {toAirportRedux != undefined &&
+                {toAirportRedux !== undefined &&
                   <TafMetar icao={toAirportRedux.icao} />
                 }
             </div>
@@ -84,20 +92,28 @@ function Pilot() {
     <Divider sx={{ mb: 5 }} />
 
       <div style={{ display: 'flex', justifyContent: 'space-evenly', flexFlow: 'row wrap', alignItems: 'stretch', flexGrow: '1'}}>
-        {terskel != undefined && 
+        {terskel !== undefined && 
         <VisSatteTerskelverdier terskel={terskel} />}
       </div>
-          {airport != undefined && fromWeather != undefined && 
-            <GrafikkPilot airport={airport} weather={fromWeather} time={avgangstid} />
-          }
-          { toAirport != undefined && weatherToAirport != undefined &&
-          
-          <GrafikkPilot airport={toAirport} weather={weatherToAirport} time={ankomsttid} />
-
-          }
       
-
+      
     </Container>
+
+    <div style={{ display: 'flex', justifyContent: 'space-evenly', flexFlow: 'row wrap', backgroundColor: '#dff2f6'}}>
+
+        <div style={{display: 'flex', maxWidth: '450px', minWidth: '280px', marginBottom: '1em'}}>
+          {airport !== undefined && fromWeather !== undefined && 
+            <GrafikkPilot airport={airport} weather={fromWeather} time={avgangstid}/>
+          }
+        </div>
+        <div style={{ display: 'flex', maxWidth: '450px', minWidth: '280px', marginBottom: '1em'}}>
+          { toAirport !== undefined && weatherToAirport !== undefined &&
+            <GrafikkPilot airport={toAirport} weather={weatherToAirport} time={ankomsttid} />
+            }
+        </div>
+      </div>
+
+
     </ >
   )
 }
