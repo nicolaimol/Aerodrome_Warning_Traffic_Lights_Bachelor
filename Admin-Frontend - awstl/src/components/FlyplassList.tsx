@@ -9,9 +9,15 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import {useEffect, useState} from "react";
 import {Button} from "@mui/material";
+import {Add} from "@mui/icons-material";
+import {Link} from "react-router-dom";
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import ConfirmDialog from "./ConfirmDialog";
+import {slettFlyplass} from "../util/flyplass";
+import {useKeycloak} from "@react-keycloak/web";
 
 interface Column {
-    id: 'icao' | 'navn' | 'iata' | 'rwy' | 'lat' | 'lon' | 'altitude' | 'velg';
+    id: 'icao' | 'navn' | 'iata' | 'rwy' | 'lat' | 'lon' | 'altitude' | 'velg' | 'slett';
     label: string;
     minWidth?: number;
     align?: 'right';
@@ -56,6 +62,10 @@ const columns: readonly Column[] = [
         label: 'Velg',
         minWidth: 170,
     },
+    {
+        id: 'slett',
+        label: 'Slett'
+    }
 ];
 
 interface Data {
@@ -90,8 +100,33 @@ function createData(
 
 export default function FlyplassList(props: any) {
 
+    const [confirmOpen, setConfirmOpen] = useState<boolean>(false)
+    const [slettIcao, setSlettIcao] = useState<string>("")
+
+    const keycloak = useKeycloak()
+
     const setFlyplass = (flyplass: Data) => {
         props.changeFlyplass(flyplass)
+    }
+
+    const slett = (icao: string) => {
+
+        setSlettIcao(icao)
+        setConfirmOpen(true)
+
+
+    }
+
+    const confirm = async () => {
+
+        const status = await slettFlyplass(slettIcao, keycloak.keycloak.token!!)
+
+        if (status === 200) {
+            props.slett(slettIcao)
+            return
+        }
+
+        alert(`Error with code ${status}`)
     }
 
     const [rows, setRows] = useState<Data[]>([{icao: "ENGM", navn: "Gardermoen", iata: "OSL", rwy: "01/19", lat: "60", lon: "10", altitude: "100"}])
@@ -127,8 +162,9 @@ export default function FlyplassList(props: any) {
     };
 
     return (
-        <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-            <TableContainer style={{ height: "calc(100vh - 116.5px)" }}>
+        <>
+        <Paper sx={{ width: '100%', overflow: 'hidden', position: 'relative' }}>
+            <TableContainer style={{ height: "calc(100vh - 123px)" }}>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>
                         <TableRow>
@@ -150,18 +186,25 @@ export default function FlyplassList(props: any) {
                                 return (
                                     <TableRow hover role="checkbox" tabIndex={-1} key={row.icao}>
                                         {columns.map((column) => {
-                                            if (column.id != 'velg') {
+                                            if (column.id != 'velg' && column.id != 'slett') {
                                                 const value = row[column.id];
                                                 return (
                                                     <TableCell key={column.id} align={column.align}>
                                                         {value}
                                                     </TableCell>
                                                 );
+                                            } else if (column.id == 'slett') {
+                                                return (
+                                                    <TableCell key={column.id} align={column.align}>
+                                                        <Button startIcon={<DeleteOutlineIcon />} onClick={() => slett(row.icao)} variant="text" color="error">Slett</Button>
+                                                    </TableCell>
+                                                )
                                             } else {
                                                 return (
                                                     <TableCell key={column.id} align={column.align}>
                                                         <Button onClick={() => setFlyplass(row)} variant="text">Endre</Button>
                                                     </TableCell>
+
                                                 )
                                             }
 
@@ -181,6 +224,17 @@ export default function FlyplassList(props: any) {
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
             />
+            <Link to="/flyplass/ny" style={{position: 'absolute', left: '.5em', bottom: '.5em'}} >
+                <Button variant="outlined" endIcon={<Add />}>Ny</Button>
+            </Link>
         </Paper>
+            <div>
+                <ConfirmDialog
+                    title={`Er du sikker på at du vil slette ${slettIcao}?`}
+                    onConfirm={confirm}
+                    setOpen={setConfirmOpen}
+                    open={confirmOpen} />
+            </div>
+        </>
     );
 }
