@@ -49,7 +49,7 @@ const Navbar = () => {
             component="div"
             sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
           >
-            <Link to={links.get('Hjem')}><img src="/met-logo.svg" alt="Met logo"/></Link>
+            <Link to={links.get('Hjem')}><img src="/admin/met-logo.svg" alt="Met logo"/></Link>
             
 
           </Typography>
@@ -100,7 +100,7 @@ const Navbar = () => {
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
           >
-            <Link to={links.get('Hjem')}><img src="/met-logo.svg" alt="Met logo"/></Link>
+            <Link to={links.get('Hjem')}><img src="/admin/met-logo.svg" alt="Met logo"/></Link>
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => ( // Setter alle linkene inn i menyen for desktop
