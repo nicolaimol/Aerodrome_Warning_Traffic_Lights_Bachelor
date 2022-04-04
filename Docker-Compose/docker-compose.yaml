@@ -70,3 +70,6 @@ services:
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: adminpassword
       PROXY_ADDRESS_FORWARDING: true
+  frontend:
+    image: s341833/awtl-frontend
+    
