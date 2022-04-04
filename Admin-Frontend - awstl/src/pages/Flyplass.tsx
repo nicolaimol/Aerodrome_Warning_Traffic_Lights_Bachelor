@@ -21,6 +21,12 @@ function Flyplass(props: any) {
         setFlyplass(flyplass)
     }
 
+    const slett = (icao: string) => {
+        setFlyplassList((oldList: flyplass[]) => {
+            return oldList.filter((it: flyplass) => it.icao !== icao)
+        })
+    }
+
     const showTable = (flyplass: flyplass) => {
         setFlyplassList((oldList: flyplass[]) => {
             return oldList.map((it: flyplass) => {
@@ -43,7 +49,7 @@ function Flyplass(props: any) {
         <div style={{width: '100%', display: 'flex', justifyContent: 'center'}}>
             {
                 flyplass == null &&
-                    <FlyplassList list={flyplassList} changeFlyplass={changeFlyplass} />
+                    <FlyplassList list={flyplassList} changeFlyplass={changeFlyplass} slett={slett} />
             }
             {
                 flyplass != null &&
