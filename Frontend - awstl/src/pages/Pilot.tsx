@@ -23,7 +23,7 @@ function Pilot() {
   const toAirportRedux = useSelector((state: any) => state.toAirport.value)
   const [toAirport, setToAirport] = useState<any>(null)
 
-  const [weatherToAirport, setWeatherToAirport] = useState<any>(null);
+  const [weatherToAirport, setWeatherToAirport] = useState<any>(undefined);
 
     const updateAirportTo = (data: any) => {
       console.log(data)
