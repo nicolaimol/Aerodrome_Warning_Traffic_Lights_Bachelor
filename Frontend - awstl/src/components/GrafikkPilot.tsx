@@ -34,6 +34,8 @@ function GrafikkPilot(props: {airport:airports, weather:LocationForecast, time: 
           
     }, [props.time])
 
+
+
     const terskel = useSelector((state: any) => state.terskel.value);
 
 
