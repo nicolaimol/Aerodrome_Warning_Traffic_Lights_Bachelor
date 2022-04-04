@@ -3,7 +3,7 @@ import { Slider } from "@mui/material";
 import { generateStyle } from '../util/sliderStyleUtil'
 
 function checkEqual(prev: any, next: any) {
-    const bool = (prev.minValue === next.minValue && prev.maxValue === next.maxValue)
+    const bool = (prev.minValue === next.minValue && prev.maxValue === next.maxValue && prev.disabled === next.disabled)
 
     return bool
 }
@@ -13,6 +13,7 @@ function SliderWrapper(props: any) {
     console.log("render", props.field)
 
     const [values, setValue] = useState([props.minValue, props.maxValue])
+    const [disabled, setDisabled] = useState<boolean>(props.disabled !== undefined ? props.disabled as boolean : false)
 
 
     const changeVisual = (event?: Event, verdi?: any) => {
@@ -22,6 +23,7 @@ function SliderWrapper(props: any) {
 
     useEffect(() => {
         setValue([props.minValue, props.maxValue])
+        setDisabled(props.disabled)
     }, [props])
 
 
@@ -30,7 +32,7 @@ function SliderWrapper(props: any) {
     <Slider
 
         classes={
-            generateStyle(((values[1] + values[0])/2), props.max, props.min, props.reverse)
+            generateStyle(((values[1] + values[0])/2), props.max, props.min, props.reverse, disabled)
         }
 
         onChangeCommitted={props?.handleSliderEndring(props.field)}
@@ -40,6 +42,8 @@ function SliderWrapper(props: any) {
         step={props.step}
         min={props.min}
         max={props.max}
+
+        disabled={disabled}
 
         marks={props.marks}
         valueLabelDisplay="auto"
