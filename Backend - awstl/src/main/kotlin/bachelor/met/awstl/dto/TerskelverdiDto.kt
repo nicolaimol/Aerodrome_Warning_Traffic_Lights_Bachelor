@@ -19,7 +19,7 @@ class TerskelverdiDto(){
     var windGustActive: Boolean = true
     var probThunderMin: Double = 0.0
     var probThunderMax: Double = 0.0
-    var propThunderActive: Boolean = true
+    var probThunderActive: Boolean = true
     var humidityMin: Double = 0.0
     var humidityMax: Double = 0.0
     var humidityActive: Boolean = true
@@ -46,7 +46,7 @@ class TerskelverdiDto(){
         this.windGustActive = terskel.windGustActive
         this.probThunderMin = terskel.probThunderMin
         this.probThunderMax = terskel.probThunderMax
-        this.propThunderActive = terskel.probThunderActive
+        this.probThunderActive = terskel.probThunderActive
         this.humidityMin = terskel.humidityMin
         this.humidityMax = terskel.humidityMax
         this.humidityActive = terskel.humidityActive
