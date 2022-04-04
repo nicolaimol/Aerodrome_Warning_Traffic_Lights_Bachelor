@@ -24,6 +24,25 @@ export const hentFlyplasser = async (): Promise<flyplass[]> => {
     return data
 }
 
+export const leggtilFlyplass = async (flyplass: flyplass, token: string): Promise<any> => {
+    let config = {
+        headers: {
+            "Authorization": `Bearer ${token}`,
+        }
+    }
+
+    const response = await axios.post("/api/airport", flyplass, config)
+        .then((response: any) => {
+            return response.status
+        })
+        .catch((error: any) => {
+            console.log(error.response)
+            return error.response.status
+        })
+
+    return response
+}
+
 export const oppdaterFlyplass = async (flyplass: flyplass, token: string): Promise<any> => {
 
     let config = {
