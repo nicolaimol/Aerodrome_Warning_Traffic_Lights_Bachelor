@@ -41,4 +41,17 @@ class FlyplassService(val repo: IFlyplassRepo, val cacheConfig: CacheConfig) {
 
     }
 
+    fun addFlyplass(flyplass: Flyplass) {
+        repo.save(flyplass)
+
+        cacheConfig.removeByNameAndId("flyplass", "all")
+    }
+
+    fun deleteFlyplass(icao: String) {
+        repo.deleteById(icao)
+
+        cacheConfig.removeByNameAndId("flyplass", icao)
+        cacheConfig.removeByNameAndId("flyplass", "all")
+    }
+
 }
