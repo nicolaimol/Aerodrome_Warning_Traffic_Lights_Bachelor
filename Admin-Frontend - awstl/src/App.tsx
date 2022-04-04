@@ -8,6 +8,7 @@ import Navbar from './components/Navbar'
 import { ReactKeycloakProvider } from "@react-keycloak/web";
 import keycloak from "./util/keycloak"
 import SecureRoute from "./components/SecureRoute";
+import FlyplassFormAdd from "./components/FlyplassFormAdd";
 
 function App() {
   return (
@@ -16,6 +17,11 @@ function App() {
                   <Navbar />
                   <div style={{display: 'flex', flexGrow: 1, alignItems: 'center', justifyContent: 'center',}}>
                       <Routes>
+                          <Route path="/flyplass/ny" element={
+                              <SecureRoute>
+                                  <FlyplassFormAdd />
+                              </SecureRoute>
+                          } />
                           <Route path="/flyplass" element={
                               <SecureRoute role="user">
                                   <Flyplass />
