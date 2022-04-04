@@ -92,6 +92,8 @@ class TerskelverdiController(val service: TerskelverdiService) {
     fun deleteById(@RequestBody dto: TerskelDeleteDto): ResponseEntity<Any> {
         service.deleteById(dto.id)
 
+        logger.info(dto.id)
+
         return ResponseEntity.ok().build()
     }
 }
