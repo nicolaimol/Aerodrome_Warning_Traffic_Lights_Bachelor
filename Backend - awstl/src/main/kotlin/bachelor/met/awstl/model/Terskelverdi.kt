@@ -115,7 +115,7 @@ class Terskelverdi() {
         this.windGustActive = dto.windGustActive
         this.probThunderMin = dto.probThunderMin
         this.probThunderMax = dto.probThunderMax
-        this.probThunderActive = dto.propThunderActive
+        this.probThunderActive = dto.probThunderActive
         this.humidityMin = dto.humidityMin
         this.humidityMax = dto.humidityMax
         this.humidityActive = dto.humidityActive
@@ -140,7 +140,7 @@ class Terskelverdi() {
         this.windGustActive = dto.windGustActive
         this.probThunderMin = dto.probThunderMin
         this.probThunderMax = dto.probThunderMax
-        this.probThunderActive = dto.propThunderActive
+        this.probThunderActive = dto.probThunderActive
         this.humidityMin = dto.humidityMin
         this.humidityMax = dto.humidityMax
         this.humidityActive = dto.humidityActive
