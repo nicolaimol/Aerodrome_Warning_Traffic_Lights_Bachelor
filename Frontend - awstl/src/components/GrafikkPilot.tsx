@@ -1,4 +1,4 @@
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Container, Divider, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import airports from '../model/airports'
@@ -23,11 +23,13 @@ function GrafikkPilot(props: {airport:airports, weather:LocationForecast, time: 
               }
           }) 
           */
-          for (const it of props.weather.properties.timeseries) {
-            if (new Date(it.time.toString()).toLocaleString().split(", ")[1].split(":")[0] == props.time.split(":")[0]) {
-                  setWeather(it)
-                  break
-            }
+          if ( props.weather?.properties?.timeseries !== undefined){
+            for (const it of props.weather.properties.timeseries) {
+                if (new Date(it.time.toString()).toLocaleString().split(", ")[1].split(":")[0] == props.time.split(":")[0]) {
+                      setWeather(it)
+                      break
+                }
+            }            
         }
           
     }, [props.time])
@@ -86,7 +88,6 @@ function GrafikkPilot(props: {airport:airports, weather:LocationForecast, time: 
   return (
     <>
     <div style={{ backgroundColor: '#dff2f6', minHeight: '20vh', width: '100%', padding: '0 0 30px 0' }}>
-        <Container>
         {weather !== undefined &&
             <div>
                 <Typography sx={{fontSize: 30}} style={{display: 'flex', justifyContent: 'center', width: '100%', color: '#0090a8'}}>
@@ -95,37 +96,38 @@ function GrafikkPilot(props: {airport:airports, weather:LocationForecast, time: 
                 <Typography style={{display: 'flex', justifyContent: 'center', width: '100%', color: '#0090a8'}}>
                     {new Date(weather.time).toLocaleString()}
                 </Typography>
+                <Divider sx={{ mb: 5 }} />
             </div>
         }
         
             
 
         <div style={{display: 'flex', justifyContent: 'space-evenly', flexWrap:'wrap'}}>
-        <div style={{ width: '33%', minWidth: 'fit-content'}}>
-            <Typography gutterBottom style={{ fontSize: 20, color : weather?.data.instant.details.air_temperature < terskel?.airTempMin ? "red" :  weather?.data.instant.details.air_temperature > terskel?.airTempMax ? "#0090a8" : "#FFAF42"}}>
-                Effektiv lufttemperatur: {weather?.data.instant.details.air_temperature}
-            </Typography>
-            <Typography gutterBottom style={{ fontSize: 20, color : precipitation_amount > terskel?.precipitationMax ? "red" :  precipitation_amount <= terskel?.precipitationMin ? "#0090a8" : "#FFAF42"}}>
-                Nedbør: {precipitation_amount?.toPrecision(1)}
-            </Typography>
-            <Typography gutterBottom style={{ fontSize: 20, color : weather?.data.instant.details.wind_speed > terskel?.windSpeedMax ? "red" :  weather?.data.instant.details.wind_speed < terskel?.windSpeedMin ? "#0090a8" : "#FFAF42"}}>
-                Vindfart: {weather?.data.instant.details.wind_speed}
-            </Typography>
-            <Typography gutterBottom style={{ fontSize: 20, color : weather?.data.instant.details.wind_speed_of_gust > terskel?.windGustMax ? "red" :  
-            weather?.data.instant.details.wind_speed_of_gust < terskel?.windGustMin ? "#0090a8" : isNaN(weather?.data.instant.details.wind_speed_of_gust) ? "#0090a8" : "#FFAF42"}}>
-                Vindkast: {(isNaN(weather?.data.instant.details.wind_speed_of_gust) === true ? "N/A" : weather?.data.instant.details.wind_speed_of_gust)}
-            </Typography>
-            <Typography gutterBottom style={{ fontSize: 20, color : probThunder > terskel?.probThunderMax ? "red" :  probThunder < terskel?.probThunderMin ? "#0090a8" : (probThunder <= 100 && probThunder >= 0) ? "#FFAF42" : "#0090a8"}}>
-                Sannsynlighet torden: {(probThunder <= 100 && probThunder >= 0) ? probThunder : "N/A"}
-            </Typography>
-            <Typography gutterBottom style={{ fontSize: 20, color : weather?.data.instant.details.relative_humidity > terskel?.humidityMax ? "red" :  weather?.data.instant.details.relative_humidity < terskel?.humidityMin ? "#0090a8" : "#FFAF42"}}>
-                Luftfuktighet: {weather?.data.instant.details.relative_humidity}
-            </Typography>
-            <Typography gutterBottom style={{ fontSize: 20, color : cw > terskel?.crosswindMax ? "red" :  cw < terskel?.crosswindMin ? "#0090a8" : "#FFAF42"}}>
-                Crosswind: {cw.toPrecision(2)}
-            </Typography>
-        </div>
-        <div style={{ width: '33%', minWidth: 'fit-content' }}>
+            <div style={{ width: '100%', minWidth: 'fit-content', marginBottom: '1em'}}>
+                <Typography gutterBottom style={{ display: 'flex', justifyContent: 'center', fontSize: 20, color : weather?.data.instant.details.air_temperature < terskel?.airTempMin ? "red" :  weather?.data.instant.details.air_temperature > terskel?.airTempMax ? "#0090a8" : "#FFAF42"}}>
+                    Effektiv lufttemperatur: {weather?.data.instant.details.air_temperature}
+                </Typography>
+                <Typography gutterBottom style={{ display: 'flex', justifyContent: 'center', fontSize: 20, color : precipitation_amount > terskel?.precipitationMax ? "red" :  precipitation_amount <= terskel?.precipitationMin ? "#0090a8" : "#FFAF42"}}>
+                    Nedbør: {precipitation_amount?.toPrecision(1)}
+                </Typography>
+                <Typography gutterBottom style={{ display: 'flex', justifyContent: 'center', fontSize: 20, color : weather?.data.instant.details.wind_speed > terskel?.windSpeedMax ? "red" :  weather?.data.instant.details.wind_speed < terskel?.windSpeedMin ? "#0090a8" : "#FFAF42"}}>
+                    Vindfart: {weather?.data.instant.details.wind_speed}
+                </Typography>
+                <Typography gutterBottom style={{ display: 'flex', justifyContent: 'center', fontSize: 20, color : weather?.data.instant.details.wind_speed_of_gust > terskel?.windGustMax ? "red" :  
+                weather?.data.instant.details.wind_speed_of_gust < terskel?.windGustMin ? "#0090a8" : isNaN(weather?.data.instant.details.wind_speed_of_gust) ? "#0090a8" : "#FFAF42"}}>
+                    Vindkast: {(isNaN(weather?.data.instant.details.wind_speed_of_gust) === true ? "N/A" : weather?.data.instant.details.wind_speed_of_gust)}
+                </Typography>
+                <Typography gutterBottom style={{ display: 'flex', justifyContent: 'center', fontSize: 20, color : probThunder > terskel?.probThunderMax ? "red" :  probThunder < terskel?.probThunderMin ? "#0090a8" : (probThunder <= 100 && probThunder >= 0) ? "#FFAF42" : "#0090a8"}}>
+                    Sannsynlighet torden: {(probThunder <= 100 && probThunder >= 0) ? probThunder : "N/A"}
+                </Typography>
+                <Typography gutterBottom style={{ display: 'flex', justifyContent: 'center', fontSize: 20, color : weather?.data.instant.details.relative_humidity > terskel?.humidityMax ? "red" :  weather?.data.instant.details.relative_humidity < terskel?.humidityMin ? "#0090a8" : "#FFAF42"}}>
+                    Luftfuktighet: {weather?.data.instant.details.relative_humidity}
+                </Typography>
+                <Typography gutterBottom style={{ display: 'flex', justifyContent: 'center', fontSize: 20, color : cw > terskel?.crosswindMax ? "red" :  cw < terskel?.crosswindMin ? "#0090a8" : "#FFAF42"}}>
+                    Crosswind: {cw.toPrecision(2)}
+                </Typography>
+            </div>
+        <div style={{ width: '100%', minWidth: 'fit-content' }}>
                     {/** Ikonet */}
                     {weather !== undefined &&
                         <div style={{width: "100%", display: 'flex', flexDirection: 'column', flexWrap:'wrap', justifyContent: 'center'}}>
@@ -149,7 +151,7 @@ function GrafikkPilot(props: {airport:airports, weather:LocationForecast, time: 
                                     : weather.data.instant.details.wind_from_direction}°
                             </Typography>
                             {nedbor !== "" &&
-                                <Typography>{nedbor}</Typography>
+                                <Typography sx={{ mb: 5}}>{nedbor}</Typography>
                             }
 
                         </div>
@@ -163,7 +165,7 @@ function GrafikkPilot(props: {airport:airports, weather:LocationForecast, time: 
                 </div>
             }
         </div>
-        <div style={{ width: '33%', minWidth: 'fit-content', position: 'relative' }}>
+        <div style={{ width: '100%', minWidth: 'fit-content', position: 'relative' }}>
             <img alt="compass rose" src="/Gray_compass_rose.svg" style={{height: '40px', position: 'absolute', bottom: 0, right: 0}}/>
             {/** Ikonet */}
                     {weather !== undefined && 
@@ -217,9 +219,8 @@ function GrafikkPilot(props: {airport:airports, weather:LocationForecast, time: 
                     <h2>Venligst vent</h2>
                 </div>
             }
+            </div>
         </div>
-        </div>
-        </Container>
         </div>
 
     </>
