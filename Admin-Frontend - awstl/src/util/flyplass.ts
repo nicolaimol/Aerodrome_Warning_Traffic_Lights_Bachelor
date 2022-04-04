@@ -52,7 +52,7 @@ export const oppdaterFlyplass = async (flyplass: flyplass, token: string): Promi
     }
 
 
-    let response = await axios.put("/api/airport", flyplass, config)
+    const response = await axios.put("/api/airport", flyplass, config)
         .then((response: any) => {
             return response.status
         })
