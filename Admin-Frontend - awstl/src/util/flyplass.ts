@@ -62,3 +62,25 @@ export const oppdaterFlyplass = async (flyplass: flyplass, token: string): Promi
 
     return response
 }
+
+export const slettFlyplass = async (icao: string, token: string): Promise<any> => {
+    let config = {
+        headers: {
+            "Authorization": `Bearer ${token}`,
+        },
+        data: {
+            icao: icao
+        }
+    }
+
+    const response = await axios.delete("/api/airport", config)
+        .then((response:any) => {
+            return response.status
+        })
+        .catch((error: any) => {
+            console.log(error.response)
+            return error.response.status
+        })
+
+    return response;
+}
