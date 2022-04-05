@@ -57,10 +57,6 @@ function generateStyle(value: number, max: number, min: number, revers: boolean,
 
     //const resten = revers ? partRevers : part
 
-    if (disabled) {
-        return {}
-    }
-
     const prosent = ((value - min)*100)/(max-min)
 
     let styles = null
@@ -89,7 +85,7 @@ function generateStyle(value: number, max: number, min: number, revers: boolean,
 
     const classes = styles()
 
-    return {
+    return !disabled ? {} : {
         thumb: classes.thumb,
         rail: classes.rail,
         track: classes.track,
