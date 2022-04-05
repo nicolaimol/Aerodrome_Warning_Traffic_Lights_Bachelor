@@ -10,7 +10,7 @@ function checkEqual(prev: any, next: any) {
 
 function SliderWrapper(props: any) {
 
-    console.log("render", props.field)
+    //console.log("render", props.field)
 
     const [values, setValue] = useState([props.minValue, props.maxValue])
     const [disabled, setDisabled] = useState<boolean>(props.disabled !== undefined ? props.disabled as boolean : false)
@@ -23,7 +23,7 @@ function SliderWrapper(props: any) {
 
     useEffect(() => {
         setValue([props.minValue, props.maxValue])
-        setDisabled(props.disabled)
+        setDisabled(!props.disabled)
     }, [props])
 
 
@@ -32,7 +32,7 @@ function SliderWrapper(props: any) {
     <Slider
 
         classes={
-            generateStyle(((values[1] + values[0])/2), props.max, props.min, props.reverse, disabled)
+            generateStyle(((values[1] + values[0])/2), props.max, props.min, props.reverse, props.disabled)
         }
 
         onChangeCommitted={props?.handleSliderEndring(props.field)}
