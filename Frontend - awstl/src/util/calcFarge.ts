@@ -10,7 +10,7 @@ export const calcFarge = ( data?: any, terskelverdier?: any, flyplass?: any, mor
     const yellow = []
     const red = []
 
-    console.log(terskelverdier!!);
+    //console.log(terskelverdier!!);
 
 
     if(terskelverdier.airTempActive){
