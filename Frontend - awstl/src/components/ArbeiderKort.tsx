@@ -28,7 +28,7 @@ function ArbeiderKort(props:arbeiderInfo) { {/** Tar inn props med interface til
                 </Box>
                 {/** Knapp */}
                 <Box textAlign='center'>
-                <Link to={'/' + props.arbeider.toLowerCase()}><Button className={styles.kortButton} variant="contained" >Sjekk</Button></Link>
+                <Link to={'/' + props.tittel.toLowerCase()}><Button className={styles.kortButton} variant="contained" >Sjekk</Button></Link>
 
                 </Box>
             </CardContent>
