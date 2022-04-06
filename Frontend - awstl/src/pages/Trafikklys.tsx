@@ -38,7 +38,7 @@ function Trafikklys() {
     <Container>
 
     <Typography sx={{ color: '#0090a8', fontSize: 40, textAlign: 'center', mt: 5}}>
-          Flygeleder
+          Flyplass
         </Typography>
         <Divider sx={{ mb: 5 }} />
 
