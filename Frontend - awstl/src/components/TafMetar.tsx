@@ -45,7 +45,7 @@ function TafMetar(props: any) {
     return (
         <div>
             { tafmetar != null &&
-                <TableContainer component={Paper}>
+                <TableContainer elevation={0} component={Paper}>
                     <Table >
                         <TableBody>
                             {
