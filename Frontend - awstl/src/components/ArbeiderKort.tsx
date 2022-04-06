@@ -1,10 +1,12 @@
 import React from 'react'
-
+import styles from '../style/Arbeiderkort.module.css'
 // Interface
 import arbeiderInfo from '../model/arbeiderInfo'
 
 // Material UI
 import { Card, CardContent, Typography, Box, Button } from '@mui/material'
+
+import {Link} from 'react-router-dom'
 
 
 function ArbeiderKort(props:arbeiderInfo) { {/** Tar inn props med interface til arbeiderinfo */}
@@ -14,11 +16,11 @@ function ArbeiderKort(props:arbeiderInfo) { {/** Tar inn props med interface til
             <CardContent>
                 {/** Tittel */}
                 <Typography sx={{ color: 'white' }} variant="h5">
-                    {props.arbeider}
+                    {props.tittel}
                 </Typography>
                 {/** Undertittel */}
                 <Typography sx={{ mb: 10, color: "white"}}>
-                    Her ser du mest relevant informasjon om du er {props.arbeider}
+                    {props.infoTekst}
                 </Typography>
                 {/** Ikon */}
                 <Box sx={{ mb: 10, color: 'white' }} textAlign='center'>
@@ -26,7 +28,8 @@ function ArbeiderKort(props:arbeiderInfo) { {/** Tar inn props med interface til
                 </Box>
                 {/** Knapp */}
                 <Box textAlign='center'>
-                    <Button variant="contained" sx={{background: 'white', color: '#0090a8' }} >Sjekk</Button>
+                <Link to={'/' + props.arbeider.toLowerCase()}><Button className={styles.kortButton} variant="contained" >Sjekk</Button></Link>
+
                 </Box>
             </CardContent>
         </Card>
