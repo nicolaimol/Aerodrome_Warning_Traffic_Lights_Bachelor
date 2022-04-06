@@ -12,16 +12,19 @@ import { Box } from '@mui/material'
 
 // Ikoner
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
-import EngineeringIcon from '@mui/icons-material/Engineering';
 import FlightIcon from '@mui/icons-material/Flight';
 
 function Arbeider() {
 
   // Array med de tre ikonene og tilhørende string
   const arbeiderne = [
-    ['Bakkemannskap', <EngineeringIcon sx={{ fontSize: 100 }}></ EngineeringIcon>], 
-    ['Flygeleder', <SupportAgentIcon sx={{ fontSize: 100 }}></ SupportAgentIcon>], 
-    ['Pilot', <FlightIcon sx={{ fontSize: 100 }}></ FlightIcon>]];
+    ['Flygeleder', <SupportAgentIcon sx={{ fontSize: 100 }}></ SupportAgentIcon>, 
+    'Denne siden gir et 72 timers varsel for en flyplass. Dette varselet vil bli vist som et trafikklys. Siden er hovedsakelig tiltenkt flygeledere og bakkemannskap. Man kan også endre terskelverdiene som varselet baseres på, samt huke de av om man ikke tenker de relevant',
+     'Flyplass'], 
+    ['Pilot', <FlightIcon sx={{ fontSize: 100 }}></ FlightIcon>,
+    'Her vil du få TAF of METAR for 2 flyplasser, og du kan se annen relevant informasjon om hver flyplass. Siden er tiltenkt piloter.',
+    'Rute']
+  ];
 
   return (
     <> 
@@ -29,7 +32,7 @@ function Arbeider() {
     <div id="arbeiderBox" className={styles.arbeiderGrid} /*sx={{ mt: 8, mb: 5 }}*/>
       
       {arbeiderne.map((personen) => { {/** Dynamisk lager et Arbeiderkort for hver av arbeiderne i arrayet */}
-        return <ArbeiderKort key={personen[0].toString()} arbeider={personen[0].toString()} ikonComp={personen[1]} />
+        return <ArbeiderKort key={personen[0].toString()} arbeider={personen[0].toString()} ikonComp={personen[1]} infoTekst={personen[2] as string} tittel={personen[3] as string} />
       })}
         
     </div>
