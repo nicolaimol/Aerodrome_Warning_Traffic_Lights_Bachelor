@@ -11,7 +11,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import allActions from './Actions';
 import { Typography, Box, Paper } from '@mui/material';
 import ReportGmailerrorredSharpIcon from '@mui/icons-material/ReportGmailerrorredSharp';
-import Bakkemanskap from './pages/Bakkemanskap';
 
 /***
  * Fargepalett!!!
@@ -221,7 +220,6 @@ function App() {
 
             */}
 
-          <Route path="/bakkemanskap" element={<Bakkemanskap />} />
           <Route path="/flygeleder" element={<Trafikklys />} />
           <Route path="/pilot" element={<Pilot />} />
           <Route path="/" element={<Hjem />} />
