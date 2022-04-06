@@ -12,6 +12,7 @@ import allActions from './Actions';
 import { Typography, Box, Paper } from '@mui/material';
 import ReportGmailerrorredSharpIcon from '@mui/icons-material/ReportGmailerrorredSharp';
 import Error from './pages/Error'
+import styles from './style/App.module.css'
 
 /***
  * Fargepalett!!!
@@ -159,8 +160,8 @@ function App() {
 
 
             { !error &&
-                <div style={{position: "fixed",  /*right: '.5em', top: '1.5em' */ right: '0', backgroundColor: 'white', zIndex: '100'}}>
-                    <Paper elevation={0} style={{display: 'flex', width: 'fit-content', padding: '1em', height: '32px', alignItems: 'center'}}>
+                <div className={styles.airport} style={{position: "fixed", right: '0', backgroundColor: 'white', zIndex: '100'}}>
+                    <Paper elevation={0} style={{display: 'flex', width: 'fit-content', padding: '1em', height: '30px', alignItems: 'center'}}>
                         {airport !== undefined &&
                             <span style={{color: "#0090a8"}}>{airport.navn}</span>
                         }
