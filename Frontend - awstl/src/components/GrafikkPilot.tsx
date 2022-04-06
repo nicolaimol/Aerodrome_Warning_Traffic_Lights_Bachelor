@@ -5,6 +5,7 @@ import airports from '../model/airports'
 import { LocationForecast, Timesery } from '../model/locfor'
 import Rullebane from './Rullebane';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
+import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
 
 function GrafikkPilot(props: {airport:airports, weather:LocationForecast, time: string}) {
 
@@ -110,7 +111,7 @@ function GrafikkPilot(props: {airport:airports, weather:LocationForecast, time: 
                     Effektiv lufttemperatur: {weather?.data.instant.details.air_temperature}
                 </Typography>
                 <Typography gutterBottom style={{ display: 'flex', justifyContent: 'center', fontSize: 20, color : precipitation_amount > terskel?.precipitationMax ? "red" :  precipitation_amount <= terskel?.precipitationMin ? "#0090a8" : "#FFAF42"}}>
-                    Nedbør: {precipitation_amount?.toPrecision(1)}
+                    Nedbør: {precipitation_amount?.toPrecision(1)} <ReportGmailerrorredIcon />
                 </Typography>
                 <Typography gutterBottom style={{ display: 'flex', justifyContent: 'center', fontSize: 20, color : weather?.data.instant.details.wind_speed > terskel?.windSpeedMax ? "red" :  weather?.data.instant.details.wind_speed < terskel?.windSpeedMin ? "#0090a8" : "#FFAF42"}}>
                     Vindfart: {weather?.data.instant.details.wind_speed}
