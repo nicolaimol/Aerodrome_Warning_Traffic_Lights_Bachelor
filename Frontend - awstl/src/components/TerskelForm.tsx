@@ -277,7 +277,7 @@ function TerskelForm() {
 
         />
       </div>
-      <div style={{ width: "calc(100% - 40px)", padding:"5px 20px" }}>
+      <div style={{ width: "calc(100% - 40px)", padding:"5px 20px",backgroundColor: "#dff2f6" }}>
           <span style={{color: "#0090a8", textAlign: 'justify', width: '100%'}}><Checkbox onChange={handleCheckboxEndring('crosswindActive')} checked={formVerdier.crosswindActive}/>Crosswind {terskel.crosswindMin}, {terskel.crosswindMax}</span>
         <SliderWrapper
 
