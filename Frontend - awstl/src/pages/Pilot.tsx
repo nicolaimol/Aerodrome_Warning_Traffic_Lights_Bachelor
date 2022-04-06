@@ -9,7 +9,7 @@ import PilotVelgDepArvl from '../components/PilotVelgDepArvl'
 import TafMetar from '../components/TafMetar'
 import GrafikkPilot from '../components/GrafikkPilot'
 import axios from 'axios'
-
+import styles from '../style/Pilot.module.css'
 
 
 function Pilot() {
@@ -67,7 +67,7 @@ function Pilot() {
   return (
     <>
     <Container>
-    <div style={{ display: 'flex', justifyContent: 'space-evenly', textAlign: 'center', flexFlow: 'row wrap', alignItems: 'center'}}>
+    <div style={{ display: 'flex', justifyContent: 'space-evenly', textAlign: 'center', flexWrap: 'wrap', alignItems: 'center'}}>
     </div>
 
     <Typography sx={{ color: '#0090a8', fontSize: 40, textAlign: 'center', mt: 5}}>
@@ -80,7 +80,7 @@ function Pilot() {
     <Divider sx={{ mb: 5 }} />
         <div style={{textAlign: 'center', color: '#0090a8', marginBottom: '1em'}}>
             <Typography sx={{ mb: 3 }} variant="h4">Taf metar</Typography>
-            <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2em'}}>
+            <div className={styles.tafmetar}>
                 { airport !== undefined && 
                         <TafMetar icao={airport.icao} />
                 }
@@ -99,18 +99,18 @@ function Pilot() {
       
     </Container>
 
-    <div style={{ display: 'flex', justifyContent: 'space-evenly', flexFlow: 'row wrap', backgroundColor: '#dff2f6'}}>
+    <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center', flexFlow: 'row wrap', backgroundColor: '#dff2f6'}}>
 
         <div style={{display: 'flex', maxWidth: '450px', minWidth: '280px', marginBottom: '1em'}}>
           {airport !== undefined && fromWeather !== undefined && 
             <GrafikkPilot airport={airport} weather={fromWeather} time={avgangstid}/>
           }
         </div>
-        <div style={{ display: 'flex', maxWidth: '450px', minWidth: '280px', marginBottom: '1em'}}>
-          { toAirport !== undefined && weatherToAirport !== undefined &&
-            <GrafikkPilot airport={toAirport} weather={weatherToAirport} time={ankomsttid} />
-            }
-        </div>
+        { toAirport !== undefined && weatherToAirport !== undefined &&
+            <div style={{ display: 'flex', maxWidth: '450px', minWidth: '280px', marginBottom: '1em'}}>
+                <GrafikkPilot airport={toAirport} weather={weatherToAirport} time={ankomsttid} />
+            </div>
+        }
       </div>
 
 
