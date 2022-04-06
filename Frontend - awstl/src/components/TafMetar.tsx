@@ -62,7 +62,7 @@ function TafMetar(props: any) {
             }
             { tafmetar == null &&
                 <Typography variant="h6">
-                    Taf og metar ikke ikke tilgjengelig
+                    Taf og metar er ikke tilgjengelig
                 </Typography>
 
             }
