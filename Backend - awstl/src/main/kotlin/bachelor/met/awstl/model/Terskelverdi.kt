@@ -3,12 +3,10 @@ package bachelor.met.awstl.model
 import bachelor.met.awstl.dto.TerskelverdiDto
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
+import org.springframework.boot.context.properties.bind.DefaultValue
 import java.sql.Timestamp
 import java.time.LocalDateTime
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.JoinColumn
-import javax.persistence.ManyToOne
+import javax.persistence.*
 
 @Entity
 class Terskelverdi() {
@@ -18,24 +16,31 @@ class Terskelverdi() {
 
     var airTempMin: Double = 0.0
     var airTempMax: Double = 0.0
+    @Column(columnDefinition="bit(1) default 1")
     var airTempActive: Boolean = true
     var precipitationMin: Double = 0.0
     var precipitationMax: Double = 0.0
+    @Column(columnDefinition="bit(1) default 1")
     var precipitationActive: Boolean = true
     var windSpeedMin: Double = 0.0
     var windSpeedMax: Double = 0.0
+    @Column(columnDefinition="bit(1) default 1")
     var windSpeedActive: Boolean = true
     var windGustMin: Double = 0.0
     var windGustMax: Double = 0.0
+    @Column(columnDefinition="bit(1) default 1")
     var windGustActive: Boolean = true
     var probThunderMin: Double = 0.0
     var probThunderMax: Double = 0.0
+    @Column(columnDefinition="bit(1) default 1")
     var probThunderActive: Boolean = true
     var humidityMin: Double = 0.0
     var humidityMax: Double = 0.0
+    @Column(columnDefinition="bit(1) default 1")
     var humidityActive: Boolean = true
     var crosswindMin: Double = 0.0
     var crosswindMax: Double = 0.0
+    @Column(columnDefinition="bit(1) default 1")
     var crosswindActive: Boolean = true
 
     @ManyToOne
