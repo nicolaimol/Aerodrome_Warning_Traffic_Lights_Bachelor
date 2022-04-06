@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import allActions from './Actions';
 import { Typography, Box, Paper } from '@mui/material';
 import ReportGmailerrorredSharpIcon from '@mui/icons-material/ReportGmailerrorredSharp';
+import Error from './pages/Error'
 
 /***
  * Fargepalett!!!
@@ -210,7 +211,7 @@ function App() {
 
 
 
-      <div style={{flexGrow: 1}}>
+      <div style={{flexGrow: 1, display: 'flex', flexDirection: 'column'}}>
         <Routes>
             {/*
 
@@ -223,6 +224,7 @@ function App() {
           <Route path="/flygeleder" element={<Trafikklys />} />
           <Route path="/pilot" element={<Pilot />} />
           <Route path="/" element={<Hjem />} />
+          <Route path="*" element={<Error />} />
         </Routes>
       </div>
         
