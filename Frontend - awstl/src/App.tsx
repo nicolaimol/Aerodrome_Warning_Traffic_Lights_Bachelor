@@ -221,8 +221,8 @@ function App() {
 
             */}
 
-          <Route path="/flygeleder" element={<Trafikklys />} />
-          <Route path="/pilot" element={<Pilot />} />
+          <Route path="/flyplass" element={<Trafikklys />} />
+          <Route path="/rute" element={<Pilot />} />
           <Route path="/" element={<Hjem />} />
           <Route path="*" element={<Error />} />
         </Routes>
