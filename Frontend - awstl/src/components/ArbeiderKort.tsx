@@ -12,8 +12,8 @@ import {Link} from 'react-router-dom'
 function ArbeiderKort(props:arbeiderInfo) { {/** Tar inn props med interface til arbeiderinfo */}
 
   return (
-    <Card sx={{ backgroundColor: '#0494ac'}}>
-            <CardContent style={{ display: 'flex', flexDirection: 'column'}}>
+    <Card sx={{ backgroundColor: '#0494ac'}} style={{display: 'flex'}}>
+            <CardContent style={{ display: 'flex', flexDirection: 'column', flexGrow: 1}}>
                 {/** Tittel */}
                 <div style={{display: 'flex', flexDirection: 'column', flexGrow: 1}}>
                     <Typography sx={{ color: 'white' }} variant="h5">
