@@ -53,11 +53,29 @@ function Tidslinje() {
     let scroll = document.getElementById("scrollableDiv")
 
     scroll?.addEventListener("wheel", (evt: any) => {
-        evt.preventDefault()
+        //evt.preventDefault()
+
         if (Math.abs(evt.deltaY) > Math.abs(evt.deltaX)) {
-            scroll!!.scrollLeft += evt.deltaY;
+
+            if ((evt.deltaY < 0 && scroll!!.scrollLeft == 0)) {
+                //evt.preventDefault()
+                //scroll!!.scrollLeft += (evt.deltaY/4);
+                return
+            }
+
+            if ((evt.deltaY > 0 && scroll!!.scrollLeft == 2144)) {
+                return
+            }
+
+            //console.log(evt.deltaY > 0 , scroll!!.scrollLeft == 2144)
+            evt.preventDefault()
+            scroll!!.scrollLeft += (evt.deltaY/4);
+
+
         } else {
-            scroll!!.scrollLeft += evt.deltaX;
+
+            evt.preventDefault()
+            scroll!!.scrollLeft += (evt.deltaX/4);
         }
 
     })

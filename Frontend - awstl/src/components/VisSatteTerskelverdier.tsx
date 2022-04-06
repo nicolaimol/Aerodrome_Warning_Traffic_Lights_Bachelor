@@ -63,7 +63,7 @@ function VisSatteTerskelverdier(props:{terskel: terskelData}) {
   return (
     <>
     <div style={{ display: 'flex', justifyContent: 'space-between', flexFlow: 'column wrap', width: '40%', color: '#0090a8', minWidth: '300px'}}>
-        <Typography variant='h4' gutterBottom>
+        <Typography style={{textAlign: 'center'}} variant='h4' gutterBottom>
             Satte terskelverdier
         </Typography>
         <Paper elevation={3} sx={{ pt: 5, pb: 5, mb: 5}} style={{ minHeight: '20vh', display: 'flex', justifyContent: 'space-evenly', flexGrow: 1 }} >
