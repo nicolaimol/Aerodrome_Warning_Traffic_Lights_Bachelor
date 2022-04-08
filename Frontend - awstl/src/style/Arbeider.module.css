@@ -1,0 +1,29 @@
+.arbeiderGrid {
+    display: grid;
+
+    gap: 1em;
+    width: 100%;
+    margin-bottom: 1em;
+}
+
+.arbeiderGrid:nth-child(1) {
+    grid-area: bakke;
+}
+
+.arbeiderGrid:nth-child(2) {
+    grid-area: fly;
+}
+
+.arbeiderGrid:nth-child(3) {
+    grid-area: pilot;
+}
+
+
+@media screen and (min-width: 700px) {
+    .arbeiderGrid {
+        grid-template-columns: 1fr 1fr;
+        gap: 3em;
+    }
+}
+
+

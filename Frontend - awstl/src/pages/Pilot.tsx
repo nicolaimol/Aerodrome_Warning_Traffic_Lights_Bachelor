@@ -1,71 +1,164 @@
-import { AppBar, Container, Divider, ThemeProvider, Typography } from '@mui/material'
+import { Container, Divider, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import {useSelector} from 'react-redux'
-import TrafikklysBox from '../components/TrafikklysBox'
+import {useDispatch, useSelector} from 'react-redux'
 import VisSatteTerskelverdier from '../components/VisSatteTerskelverdier'
 
-import Tidslinje from '../components/Tidslinje'
-import GrafikkTrafikklys from '../components/GrafikkTrafikklys'
-import DrawerTerskelverdier from '../components/DrawerTerskelverdier'
 import PilotFlyplassTo from '../components/PilotFlyplassTo'
 
-import { calcFarge } from '../util/calcFarge'
 import PilotVelgDepArvl from '../components/PilotVelgDepArvl'
-import { theme } from '../util/theme'
+import TafMetar from '../components/TafMetar'
+import GrafikkPilot from '../components/GrafikkPilot'
+import axios from 'axios'
+import styles from '../style/Pilot.module.css'
+
 
 function Pilot() {
+
+  const dispatch = useDispatch()
   
 
   const terskel = useSelector((state: any) => state.terskel.value)
-  const nowcast = useSelector((state: any) => state.nowcast.value)
   const airport = useSelector((state: any) => state.airport.value)
+  const fromWeather = useSelector((state: any) => state.weather.value)
+  const toAirportRedux = useSelector((state: any) => state.toAirport.value)
+  const [toAirport, setToAirport] = useState<any>(null)
 
-  const [color, setColor] = useState<string>("green")
+  const [nesteDag, setNesteDag] = useState<boolean>(false);
 
-  useEffect(() => {
-    const temp = nowcast?.nowcasts[0].properties.timeseries[0].data.instant.details.air_temperature
+  const [weatherToAirport, setWeatherToAirport] = useState<any>(undefined);
 
-    setColor(temp > terskel?.airTemp ? "green" : temp == terskel?.airTemp ? "yellow" : "red")
+    const updateAirportTo = (data: any) => {
+      console.log(data)
+      setToAirport(data)
+    }
 
-    setColor(calcFarge(nowcast?.nowcasts[0].properties.timeseries[0].data.instant.details, terskel!!, airport!!))
+  const dateNow = new Date().toLocaleString();
 
+  const tidNow = dateNow.split(' ')[1].split(':')[0] + ':' + dateNow.split(' ')[1].split(':')[1]
 
-  }, [terskel, nowcast])
+  let minutt:string = tidNow.split(':')[1];
+  let tilTime:string = tidNow.split(':')[0];
+
+  if (+minutt <= 30){
+    minutt = '30';
+  } else {
+    minutt = '00';
+    if (tilTime === '23'){
+      tilTime = '00';
+    } else {
+      tilTime = (+tilTime + 1).toString()
+      if (tilTime.split('').length > 2){
+        tilTime = '0' + tilTime;
+      }
+    }
+  }
+
+  const ankomstTime = (+tilTime === 23) ? '00' : (+tilTime < 9) ? ('0' + (+tilTime + 1).toString()) : (+tilTime + 1).toString();
+  const printAnkomstTid = ankomstTime + ':' + minutt;
+
+  const printTid = tilTime + ':' + minutt;
+
+    const [avgangstid, setAvgangstid] = useState<any>(printTid);
+    const [ankomsttid, setAnkomsttid] = useState<any>(printAnkomstTid);
+
+    useEffect(() => {
+      if (toAirport != null) {
+        const urlArvl = `/api/locationforecast?icao=${toAirport.icao}`
+
+      axios.get(urlArvl)
+            .then((response: any) => {
+              setWeatherToAirport(response.data)
+            })
+            .catch((error:any) => {
+                if (error.status === 400) {
+                  setWeatherToAirport(null)
+                }
+            })
+      }
+      
+      
+    }, [toAirport])
+
+    useEffect(() => {
+      console.log(toAirportRedux)
+      if( toAirportRedux !== undefined){
+        const reformatert = {
+          navn: toAirportRedux.label,
+          icao: toAirportRedux.icao,
+          rwy: toAirportRedux.rwy
+        }
+        setToAirport( reformatert )
+      }
+      
+    }, [toAirportRedux])
+
+    const oppdaterBool = () => {
+      const nummerAvg = +(avgangstid.split(':')[0] + avgangstid.split(':')[1])
+      const nummerAnk = +(ankomsttid.split(':')[0] + ankomsttid.split(':')[1])
+      //const tidHer = new Date().getHours().toLocaleString();
+
+      //console.log('tidHer', tidHer)
+      console.log('Jeg kjører');
+      if ((nummerAnk <= nummerAvg)){
+        setNesteDag(true);
+        console.log('Jeg blir satt til true')
+      } else (setNesteDag(false))
+
+    }
 
   return (
     <>
     <Container>
-    <div style={{ display: 'flex', justifyContent: 'space-evenly', textAlign: 'center', flexFlow: 'row wrap', alignItems: 'center'}}>
+    <div style={{ display: 'flex', justifyContent: 'space-evenly', textAlign: 'center', flexWrap: 'wrap', alignItems: 'center'}}>
     </div>
 
     <Typography sx={{ color: '#0090a8', fontSize: 40, textAlign: 'center', mt: 5}}>
-        Pilot
+        Rute
     </Typography>
     <Divider sx={{ mb: 5 }} />
 
-    <PilotFlyplassTo />
+    <PilotFlyplassTo update={updateAirportTo} />
+    <PilotVelgDepArvl updateTil={(tid:string) => {setAnkomsttid(tid); oppdaterBool()}} updateFra={(tid:string) => {setAvgangstid(tid); oppdaterBool()}} />
     <Divider sx={{ mb: 5 }} />
-    <PilotVelgDepArvl />
-    <Divider />
+        <div style={{textAlign: 'center', color: '#0090a8', marginBottom: '1em'}}>
+            <Typography sx={{ mb: 3 }} variant="h4">Taf metar</Typography>
+            <div className={styles.tafmetar}>
+                { airport !== undefined && 
+                        <TafMetar icao={airport.icao} />
+                }
+                {toAirportRedux !== undefined &&
+                  <TafMetar icao={toAirportRedux.icao} />
+                }
+            </div>
+        </div>
+    <Divider sx={{ mb: 5 }} />
 
-      <div style={{ display: 'flex', justifyContent: 'space-evenly', flexFlow: 'row wrap', alignItems: 'stretch'}}>
-        {terskel != undefined && 
+      <div style={{ display: 'flex', justifyContent: 'space-evenly', flexFlow: 'row wrap', alignItems: 'stretch', flexGrow: '1'}}>
+        {terskel !== undefined && 
         <VisSatteTerskelverdier terskel={terskel} />}
-        <TrafikklysBox farge={color} />
       </div>
       
-
-      <div>
-            <Typography sx={{ color: '#0090a8', fontSize: 30, textAlign: 'center'}}>
-                Tidslinje for de neste 72 timer
-            </Typography>
-            <Divider sx={{ mb: 5}} />
-        <Tidslinje />
-      </div>
+      
     </Container>
-      <GrafikkTrafikklys />
+
+    <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center', flexFlow: 'row wrap', backgroundColor: '#dff2f6'}}>
+
+        <div style={{display: 'flex', maxWidth: '450px', minWidth: '280px', marginBottom: '1em'}}>
+          {airport !== undefined && fromWeather !== undefined && 
+            <GrafikkPilot airport={airport} weather={fromWeather} time={avgangstid} nextDay={false}/>
+          }
+        </div>
+        { toAirport !== undefined && weatherToAirport !== undefined &&
+            <div style={{ display: 'flex', maxWidth: '450px', minWidth: '280px', marginBottom: '1em'}}>
+                <GrafikkPilot airport={toAirport} weather={weatherToAirport} time={ankomsttid} nextDay={nesteDag} />
+            </div>
+        }
+      </div>
+
+
     </ >
   )
 }
 
 export default Pilot
+

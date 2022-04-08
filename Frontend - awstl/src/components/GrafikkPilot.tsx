@@ -1,30 +1,60 @@
-import { Box, Container, Typography } from '@mui/material'
-import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
-import React, { useEffect, useState }from 'react'
-import { useSelector } from 'react-redux'
+import { Box, Container, Divider, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux';
+import airports from '../model/airports'
+import { LocationForecast, Timesery } from '../model/locfor'
 import Rullebane from './Rullebane';
+import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
-import Hex from './Hex';
 
-function GrafikkTrafikklys() {
+function GrafikkPilot(props: {airport:airports, weather:LocationForecast, time: string, nextDay: boolean}) {
+
+    const airport = props.airport;
+    console.log(airport);
+    let teller = 0;
+  
+    const [weather, setWeather] = useState<Timesery | null>(null)
+
+    useEffect(() => {
+        /*
+          props.weather.properties?.timeseries.forEach((it: any) => {
+              console.log(it.time.split("T")[1].split(":")[0] , props.time.split(":")[0], it.time.split("T")[1].split(":")[0] == props.time.split(":")[0])
+              if (it.time.split("T")[1].split(":")[0] == props.time.split(":")[0]) {
+                    setWeather(it)
+                    break
+              }
+          }) 
+          */
+          if ( props.weather?.properties?.timeseries !== undefined){
+            for (const it of props.weather.properties.timeseries) {
+                if (new Date(it.time.toString()).toLocaleString().split(", ")[1].split(":")[0] == props.time.split(":")[0]) {
+                        if (teller === 0 && props.nextDay){
+                           teller++; 
+                        } else {
+                            setWeather(it)
+                            break
+                        }
+                      
+                }
+            }            
+        }
+          
+    }, [props.time])
 
 
 
-
-    const weather = useSelector((state:any) => state.grafikk.value)
-    let airport = useSelector((state:any) => state.airport.value)
     const terskel = useSelector((state: any) => state.terskel.value);
 
-    if (airport === undefined) {
-        airport = {icao: "ENDU", navn: "Bardufoss Lufthan"}
-    }
 
     const [temperatureColor, setTemperatureColor] = useState<any>(null)
     const [ikonpath, setIkonpath] = useState<string>("")
     const [nedbor, setNedbor] = useState<string>("")
 
+    let cw:number;
+
     useEffect(() => {
-        let ikonpath2:string =  "/weatherIcons/";
+        if (weather != undefined) {
+            let ikonpath2:string =  "/weatherIcons/";
         if (weather?.data.next_1_hours != null)  ikonpath2 +=weather?.data.next_1_hours.summary.symbol_code + ".svg"; // Setter riktig ikon avhengig data
         else if (weather?.data.next_6_hours != null)  ikonpath2 +=weather?.data.next_6_hours.summary.symbol_code + ".svg"; // Setter riktig ikon avhengig data
         else  ikonpath2 +=weather?.data.next_12_hours.summary.symbol_code + ".svg"; // Setter riktig ikon avhengig data
@@ -33,29 +63,26 @@ function GrafikkTrafikklys() {
 
         if (weather?.data.next_1_hours != null) setNedbor(weather?.data.next_1_hours.details.precipitation_amount + "mm neste 1 time")
         else if (weather?.data.next_6_hours != null) setNedbor(weather?.data.next_6_hours.details.precipitation_amount + "mm neste 6 timer")
-        else if (weather?.data.next_12_hours != null) setNedbor(weather?.data.next_12_hours.details.precipitation_amount + "mm neste 12 timer")
+        }
+        
     }, [weather])
     
 
-
-//console.log(weather);
-
-    const windDir = weather?.data.instant.details.wind_from_direction > 0 ?
+    if (weather != undefined) {
+        const windDir = weather?.data.instant.details.wind_from_direction > 0 ?
         weather?.data.instant.details.wind_from_direction :
         360 + weather?.data.instant.details.wind_from_direction
 
-    const rwyDiff1 = Math.abs(10*Number(airport?.rwy?.split("/")[0]) - windDir)
-    const rwyDiff2 = Math.abs(10*Number(airport?.rwy?.split("/")[1]) - windDir)
+        const rwyDiff1 = Math.abs(10*Number(airport?.rwy?.split("/")[0]) - windDir)
+        const rwyDiff2 = Math.abs(10*Number(airport?.rwy?.split("/")[1]) - windDir)
 
-    //console.log(rwyDiff1, rwyDiff2)
-    const cw = weather?.data.instant.details.wind_speed * Math.sin
-    (   (Math.min(
+        cw = weather?.data.instant.details.wind_speed * Math.sin
+        ((Math.min(
             rwyDiff1 ,
             rwyDiff2
-        ) / 360) * 2 * Math.PI
-    )
-
-
+        ) / 360) * 2 * Math.PI)
+    } else {return <div>Feil i grafikk</div>}
+    
     let precipitation_amount = 0;
     let probThunder = 0
     if ( weather?.data.next_1_hours !== undefined) {
@@ -63,16 +90,13 @@ function GrafikkTrafikklys() {
         probThunder = weather?.data.next_1_hours?.details?.probability_of_thunder
     } else if (weather?.data.next_6_hours !== undefined) {
         precipitation_amount =  weather?.data?.next_6_hours?.details?.precipitation_amount / 6
-        probThunder = weather?.data?.next_6_hours?.details?.probability_of_thunder
-    } else {
-        precipitation_amount =  weather?.data?.next_12_hours?.details?.precipitation_amount / 12
-        probThunder = weather?.data?.next_12_hours?.details?.probability_of_thunder
     }
+
+
 
   return (
     <>
     <div style={{ backgroundColor: '#dff2f6', minHeight: '20vh', width: '100%', padding: '0 0 30px 0' }}>
-        <Container>
         {weather !== undefined &&
             <div>
                 <Typography sx={{fontSize: 30}} style={{display: 'flex', justifyContent: 'center', width: '100%', color: '#0090a8'}}>
@@ -81,63 +105,38 @@ function GrafikkTrafikklys() {
                 <Typography style={{display: 'flex', justifyContent: 'center', width: '100%', color: '#0090a8'}}>
                     {new Date(weather.time).toLocaleString()}
                 </Typography>
+                <Divider sx={{ mb: 5 }} />
             </div>
         }
         
             
 
         <div style={{display: 'flex', justifyContent: 'space-evenly', flexWrap:'wrap'}}>
-        <div style={{ width: '33%', minWidth: 'fit-content'}}>
-            <Typography gutterBottom style={{ fontSize: 20, color: "#0090a8", display: 'flex', alignItems:'center'}}>
-                Effektiv lufttemperatur: {weather?.data.instant.details.air_temperature}
-                { // color : weather?.data.instant.details.air_temperature < terskel?.airTempMin ? "red" :  weather?.data.instant.details.air_temperature > terskel?.airTempMax ? "#0090a8" : "#FFAF42"
-                    weather?.data.instant.details.air_temperature < terskel?.airTempMax &&
-                        <Hex color={weather?.data.instant.details.air_temperature < terskel?.airTempMin ? "red" : "#FFAF42"} />
-                  }
-            </Typography>
-            <Typography gutterBottom style={{ fontSize: 20, color:"#0090a8"}}>
-                Nedbør: {precipitation_amount?.toPrecision(1)}
-                {
-                    precipitation_amount > terskel?.precipitationMin &&
-                        <Hex color={precipitation_amount > terskel?.precipitationMax ? "red" : "#FFAF42"} />
-                }
-            </Typography>
-            <Typography gutterBottom style={{ fontSize: 20,  display: 'flex', alignItems:'center', color : weather?.data.instant.details.wind_speed > terskel?.windSpeedMax ? "red" :  weather?.data.instant.details.wind_speed < terskel?.windSpeedMin ? "#0090a8" : "#FFAF42"}}>
-                Vindfart: {weather?.data.instant.details.wind_speed}
-                { weather?.data.instant.details.wind_speed > terskel?.windSpeedMin &&
-                    //<Hex color={weather?.data.instant.details.wind_speed > terskel?.windSpeedMax ? "red" : "#FFAF42"} />
-                        ""
-                }
-            </Typography>
-            <Typography gutterBottom style={{ fontSize: 20, display: 'flex', alignItems:'center', color: "#0090a8"}}>
-                Vindkast: {(isNaN(weather?.data.instant.details.wind_speed_of_gust) === true ? "N/A" : weather?.data.instant.details.wind_speed_of_gust)}
-                { weather?.data.instant.details.wind_speed_of_gust > terskel?.windGustMin &&
-                    <Hex color={ weather?.data.instant.details.wind_speed_of_gust > terskel?.windGustMax ? "red" : "#FFAF42"} />
-                }
-            </Typography>
-            <Typography gutterBottom style={{ fontSize: 20, display: 'flex', alignItems:'center', color : probThunder > terskel?.probThunderMax ? "red" :  probThunder < terskel?.probThunderMin ? "#0090a8" : (probThunder <= 100 && probThunder >= 0) ? "#FFAF42" : "#0090a8"}}>
-                Sannsynlighet torden: {(probThunder <= 100 && probThunder >= 0) ? probThunder : "N/A"}
-                { probThunder >= terskel?.probThunderMin &&
-                    <Hex color={probThunder > terskel?.probThunderMax ? "red" : "FFAF42"} />
-
-                }
-            </Typography>
-            <Typography gutterBottom style={{ fontSize: 20, display: 'flex', alignItems:'center', color : weather?.data.instant.details.relative_humidity > terskel?.humidityMax ? "red" :  weather?.data.instant.details.relative_humidity < terskel?.humidityMin ? "#0090a8" : "#FFAF42"}}>
-                Luftfuktighet: {weather?.data.instant.details.relative_humidity}
-                { weather?.data.instant.details.relative_humidity > terskel?.humidityMin &&
-                    <Hex color={weather?.data.instant.details.relative_humidity > terskel?.humidityMax ? "red" : "#FFAF42"} />
-
-                }
-            </Typography>
-            <Typography gutterBottom style={{ fontSize: 20, display: 'flex', alignItems:'center', color : cw > terskel?.crosswindMax ? "red" :  cw < terskel?.crosswindMin ? "#0090a8" : "#FFAF42"}}>
-                Crosswind: {cw.toPrecision(2)}
-                { cw > terskel?.crosswindMin &&
-                    <Hex color={cw > terskel?.crosswindMax ? "red" : "#FFAF42"} />
-
-                }
-            </Typography>
-        </div>
-        <div style={{ width: '33%', minWidth: 'fit-content' }}>
+            <div style={{ width: '100%', minWidth: 'fit-content', marginBottom: '1em'}}>
+                <Typography gutterBottom style={{ display: 'flex', justifyContent: 'center', fontSize: 20, color : weather?.data.instant.details.air_temperature < terskel?.airTempMin ? "red" :  weather?.data.instant.details.air_temperature > terskel?.airTempMax ? "#0090a8" : "#FFAF42"}}>
+                    Effektiv lufttemperatur: {weather?.data.instant.details.air_temperature}
+                </Typography>
+                <Typography gutterBottom style={{ display: 'flex', justifyContent: 'center', fontSize: 20, color : precipitation_amount > terskel?.precipitationMax ? "red" :  precipitation_amount <= terskel?.precipitationMin ? "#0090a8" : "#FFAF42"}}>
+                    Nedbør: {precipitation_amount?.toPrecision(1)} <ReportGmailerrorredIcon />
+                </Typography>
+                <Typography gutterBottom style={{ display: 'flex', justifyContent: 'center', fontSize: 20, color : weather?.data.instant.details.wind_speed > terskel?.windSpeedMax ? "red" :  weather?.data.instant.details.wind_speed < terskel?.windSpeedMin ? "#0090a8" : "#FFAF42"}}>
+                    Vindfart: {weather?.data.instant.details.wind_speed}
+                </Typography>
+                <Typography gutterBottom style={{ display: 'flex', justifyContent: 'center', fontSize: 20, color : weather?.data.instant.details.wind_speed_of_gust > terskel?.windGustMax ? "red" :  
+                weather?.data.instant.details.wind_speed_of_gust < terskel?.windGustMin ? "#0090a8" : isNaN(weather?.data.instant.details.wind_speed_of_gust) ? "#0090a8" : "#FFAF42"}}>
+                    Vindkast: {(isNaN(weather?.data.instant.details.wind_speed_of_gust) === true ? "N/A" : weather?.data.instant.details.wind_speed_of_gust)}
+                </Typography>
+                <Typography gutterBottom style={{ display: 'flex', justifyContent: 'center', fontSize: 20, color : probThunder > terskel?.probThunderMax ? "red" :  probThunder < terskel?.probThunderMin ? "#0090a8" : (probThunder <= 100 && probThunder >= 0) ? "#FFAF42" : "#0090a8"}}>
+                    Sannsynlighet torden: {(probThunder <= 100 && probThunder >= 0) ? probThunder : "N/A"}
+                </Typography>
+                <Typography gutterBottom style={{ display: 'flex', justifyContent: 'center', fontSize: 20, color : weather?.data.instant.details.relative_humidity > terskel?.humidityMax ? "red" :  weather?.data.instant.details.relative_humidity < terskel?.humidityMin ? "#0090a8" : "#FFAF42"}}>
+                    Luftfuktighet: {weather?.data.instant.details.relative_humidity}
+                </Typography>
+                <Typography gutterBottom style={{ display: 'flex', justifyContent: 'center', fontSize: 20, color : cw > terskel?.crosswindMax ? "red" :  cw < terskel?.crosswindMin ? "#0090a8" : "#FFAF42"}}>
+                    Crosswind: {cw.toPrecision(2)}
+                </Typography>
+            </div>
+        <div style={{ width: '100%', minWidth: 'fit-content' }}>
                     {/** Ikonet */}
                     {weather !== undefined &&
                         <div style={{width: "100%", display: 'flex', flexDirection: 'column', flexWrap:'wrap', justifyContent: 'center'}}>
@@ -161,7 +160,7 @@ function GrafikkTrafikklys() {
                                     : weather.data.instant.details.wind_from_direction}°
                             </Typography>
                             {nedbor !== "" &&
-                                <Typography>{nedbor}</Typography>
+                                <Typography sx={{ mb: 5}}>{nedbor}</Typography>
                             }
 
                         </div>
@@ -175,10 +174,10 @@ function GrafikkTrafikklys() {
                 </div>
             }
         </div>
-        <div style={{ width: '33%', minWidth: 'fit-content', position: 'relative' }}>
+        <div style={{ width: '100%', minWidth: 'fit-content', position: 'relative' }}>
             <img alt="compass rose" src="/Gray_compass_rose.svg" style={{height: '40px', position: 'absolute', bottom: 0, right: 0}}/>
             {/** Ikonet */}
-                    {weather !== undefined &&
+                    {weather !== undefined && 
                         <div style={{width: "100%", display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
 
                         <div style={{ display: 'flex', justifyContent: 'center'}}>
@@ -190,8 +189,8 @@ function GrafikkTrafikklys() {
                     <Box style={{ display: 'flex', justifyContent: 'space-evenly', flexDirection: 'row', alignItems: 'center'}}>
                         
                         <div style={{ height: '230px', width: '230px', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative'}}>
-                            {
-                                airport.rwy.split(",").map((it: any) => {
+                            { 
+                                airport.rwy?.split(",").map((it: any) => {
 
                                     return <Rullebane key={it[0]} rullebane={it}></Rullebane>
 
@@ -229,12 +228,12 @@ function GrafikkTrafikklys() {
                     <h2>Venligst vent</h2>
                 </div>
             }
+            </div>
         </div>
         </div>
-        </Container>
-        </div>
+
     </>
   )
 }
 
-export default GrafikkTrafikklys
+export default GrafikkPilot

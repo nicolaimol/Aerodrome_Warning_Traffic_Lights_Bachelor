@@ -16,7 +16,7 @@ function VaerBox(props:weatherNowAirport) { // Værboksen tar inn props med 'wea
 
   return (
     <>
-    <Card sx={{ minWidth: 250, mb: 5, width: "20%", height: "fit-content" }}>
+    <Card sx={{ width: '100%', height: "fit-content" }}>
         <CardHeader
         sx={{ color: '#0090a8', height: "5em"}}
         /*
@@ -46,7 +46,7 @@ function VaerBox(props:weatherNowAirport) { // Værboksen tar inn props med 'wea
                     </div>
                     <div style={{display: 'flex', flexDirection: 'column', color: '#0090a8'}}>
                         <Typography>
-                            {props.properties.timeseries[0].data.instant.details.wind_speed}m/s 
+                            {props.properties.timeseries[0].data.instant.details.wind_speed} kt 
                         </Typography>
                         <Typography>
                             {props.properties.timeseries[0].data.instant.details.wind_from_direction < 0 

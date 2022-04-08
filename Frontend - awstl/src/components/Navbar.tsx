@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {Link} from 'react-router-dom'
 import MetLogo from '../media/met-logo.svg';
-import {useSelector} from 'react-redux'
 
 // Material UI ---
 
@@ -19,11 +18,11 @@ import MenuItem from '@mui/material/MenuItem';
 // Ikoner
 import MenuIcon from '@mui/icons-material/Menu';
 
-const pages = ['Hjem', "Flygeleder", "Pilot"]; // Legg til alle menu-items her
+const pages = ['Hjem', "Flyplass", "Rute"]; // Legg til alle menu-items her
 const links = new Map();
 links.set("Hjem", "/")
-links.set("Flygeleder", "/flygeleder")
-links.set("Pilot", "/pilot")
+links.set("Flyplass", "/flyplass")
+links.set("Rute", "/rute")
 
 
 
@@ -37,9 +36,6 @@ const Navbar = () => {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
-
-  const airport = useSelector((state:any) => state.airport.value)
-  const nowcast = useSelector((state: any) => state.nowcast.value)
 
   return (
     <AppBar position="static" style={{ background: 'white' }}>
@@ -88,9 +84,11 @@ const Navbar = () => {
               }}
             >
               {pages.map((page) => ( // Setter alle linkene inn i menyen
-                <MenuItem  key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center"><Link style={{ color: '#0090a8' }} to={links.get(page)}>{page}</Link></Typography>
-                </MenuItem>
+                <Link style={{ color: '#0090a8' }} to={links.get(page)} key={page}>
+                  <MenuItem onClick={handleCloseNavMenu}>
+                    <Typography textAlign="center">{page}</Typography>
+                  </MenuItem>
+                </Link>
               ))}
             </Menu>
           </Box>

@@ -14,10 +14,10 @@ import {
     useState,
     useEffect
 } from "react";
-import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux';
 import allActions from '../Actions';
 import { calcFarge } from '../util/calcFarge';
+import { Button, Slider } from '@mui/material';
 
 
 ChartJS.register(
@@ -30,9 +30,6 @@ ChartJS.register(
   Legend
 );
 
-//import { getLabelForValue } from 'chart.js/helpers';
-
-const ylabel = ['Rød', 'Grønn', 'Gul'];
 
 const getGradient = (ctx: any, chartArea: any) => {
     let width, height, gradient;
@@ -56,11 +53,29 @@ function Tidslinje() {
     let scroll = document.getElementById("scrollableDiv")
 
     scroll?.addEventListener("wheel", (evt: any) => {
-        evt.preventDefault()
+        //evt.preventDefault()
+
         if (Math.abs(evt.deltaY) > Math.abs(evt.deltaX)) {
-            scroll!!.scrollLeft += evt.deltaY;
+
+            if ((evt.deltaY < 0 && scroll!!.scrollLeft == 0)) {
+                //evt.preventDefault()
+                //scroll!!.scrollLeft += (evt.deltaY/4);
+                return
+            }
+
+            if ((evt.deltaY > 0 && scroll!!.scrollLeft == 2144)) {
+                return
+            }
+
+            //console.log(evt.deltaY > 0 , scroll!!.scrollLeft == 2144)
+            evt.preventDefault()
+            scroll!!.scrollLeft += (evt.deltaY/4);
+
+
         } else {
-            scroll!!.scrollLeft += evt.deltaX;
+
+            evt.preventDefault()
+            scroll!!.scrollLeft += (evt.deltaX/4);
         }
 
     })
@@ -69,92 +84,197 @@ function Tidslinje() {
     const terskel = useSelector((state: any) => state.terskel.value);
     const locfor = useSelector((state: any) => state.weather.value)
 
-    let url = ""
-    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') { // Uavhengig om det er local testing eller deployment så fungerer API kall
-        if (process.env.REACT_APP_URL_ENV == "prod") {
-            url = "/api/locationforecast?icao="
-        } else {
-            url = "http://localhost:8080/api/locationforecast?icao="
-        }
-    } else {
-        url = "/api/locationforecast?icao="
-    }
-
     const [ver, setVer] = useState<any>()
     const [labels, setLabels] = useState<any[]>([])
     const [dataset, setDataset] = useState<any[]>([])
 
 
     const [int, setInt] = useState<any>(null)
+    const [sliderValue, setSliderValue] = React.useState<number>(0);
     const [started, setStarted] = useState<boolean>(false)
-    const [startIndex, setStartIndex] = useState<number>(0)
 
 
     let index = 0;
     const start = () => {
-        index = startIndex
+        setStarted(true)
+
+        /*
+        index = sliderValue
+        setSliderValue(index);
         console.log(started)
         if (!started) {
             setInt(setInterval(update, 1000))
             setStarted(true)
         }
+         */
 
     }
 
-
     const update = () => {
+        /*
         dispatch(allActions.grafikkAction.setGrafikk(ver[index]))
         index = (index + 1) % ver.length
-        console.log(index)
+        setSliderValue(index-1)
+        console.log(sliderValue)
+         */
     }
 
     const stop = () => {
         setStarted(false)
+        /*
         clearInterval(int)
+        setInt(null)
+         */
     }
+
+    const tempSliderHandler = (event: Event, newValue: number | number[]) => {
+        setSliderValue(newValue as number);
+    };
+
+    useEffect(() => {
+        if (ver != undefined) {
+            dispatch(allActions.grafikkAction.setGrafikk(ver[sliderValue]))
+        }
+    }, [sliderValue])
+
+    useEffect(() => {
+
+        const inteval = setInterval(() => {
+            setStarted((statedIn: any) => {
+                //console.log(statedIn)
+
+                if (statedIn) {
+                    setSliderValue((oldValue: any) => {
+                        console.log(oldValue)
+                        return oldValue + 1;
+                    })
+                    /*
+                    setSliderValue((oldValue: any) => {
+                        setVer((oldVer: any) => {
+                            if (oldVer != undefined) {
+                                dispatch(allActions.grafikkAction.setGrafikk(oldVer[oldValue]))
+                            } else {
+                                console.log("ingen ver")
+                            }
+
+                            return oldVer
+                        })
+
+                        return oldValue
+                    })
+                     */
+
+                }
+                return statedIn
+            })
+        }, 1000)
+
+
+
+        return () => clearInterval(inteval)
+        /*{
+            console.log("exit")
+            setStarted((oldValue:any) => {
+                if (oldValue) {
+                    console.log("started")
+                    setInt((old: any) => {
+                        stop()
+                        clearInterval(old)
+                        console.log("old", old)
+                        return null
+                    })
+                } else {
+                    console.log("not started")
+                }
+
+                return false
+            })
+            console.log("done")
+        }
+         */
+    }, [])
+
 
     const dispatch = useDispatch()
 
 
     useEffect(()=> {
         if(!airport) return;
-        const herVer = locfor?.data.properties.timeseries
-        dispatch(allActions.grafikkAction.setGrafikk(herVer[0]))
-        setVer(herVer)
-        setLabels(herVer.map((it: any) => {
-            let string = new Date(it.time).toLocaleString();
-            let list = string.split(",")
-            //console.table(list)
+        const herVer = locfor?.properties.timeseries
+        if (herVer != undefined && herVer[0] != undefined) {
+            dispatch(allActions.grafikkAction.setGrafikk(herVer[0]))
 
-            let dato = list[0].split(".")
-            dato.splice(2, 1)
-            let datoString = dato.join(".")
-            //console.log(datoString)
-            list[0] = datoString
+            setVer(herVer)
+            setLabels(herVer.map((it: any) => {
+                let string = new Date(it.time).toLocaleString();
+                let list = string.split(",")
+                //console.table(list)
 
-            let tid = list[1].split(":")
-            tid.splice(1, 2)
-            let tidString = tid.join()
-            list[1] = tidString
-            return list.join(", kl:")
-        }))
-        setDataset(herVer.map((it: any) => {
-            const farge = calcFarge(it.data.instant.details, terskel, airport)
-            console.log(farge);
-            switch (farge) {
-                case "green" : return 1
-                case "yellow" : return 2
-                case "red": return 3
-                default : return 0
-            }
-        }))
+                let dato = list[0].split(".")
+                dato.splice(2, 1)
+                let datoString = dato.join(".")
+                //console.log(datoString)
+                list[0] = datoString
+
+                let tid = list[1].split(":")
+                tid.splice(1, 2)
+                let tidString = tid.join()
+                list[1] = tidString
+                return list.join(", kl:")
+            }))
+            setDataset(herVer.map((it: any) => {
+                let precipitation_amount = 0;
+                let probThunder = 0
+                if ( it.data.next_1_hours != undefined) {
+                    precipitation_amount =  it.data.next_1_hours.details.precipitation_amount
+                    probThunder = it.data.next_1_hours.details.probability_of_thunder
+                } else if (it.data.next_6_hours != undefined) {
+                    precipitation_amount =  it.data.next_6_hours.details.precipitation_amount / 6
+                    probThunder = it.data.next_6_hours.details.probability_of_thunder
+                } else {
+                    precipitation_amount =  it.data.next_12_hours.details.precipitation_amount / 12
+                    probThunder = it.data.next_12_hours.details.probability_of_thunder
+                }
+
+                const farge = calcFarge(it.data.instant.details, terskel, airport,
+                    {
+                        precipitation_amount: precipitation_amount,
+                        probThunder: probThunder
+                    })
+
+                switch (farge) {
+                    case "green" : return 1
+                    case "yellow" : return 2
+                    case "red": return 3
+                    default : return 0
+                }
+            }))
+        }
+
+
     }, [locfor])
     
 
     useEffect(() => {
         if (ver !== undefined) {
             setDataset(ver.map((it: any) => {
-                const farge = calcFarge(it.data.instant.details, terskel, airport)
+                let precipitation_amount = 0;
+                let probThunder = 0
+                if ( it.data.next_1_hours !== undefined) {
+                    precipitation_amount =  it.data.next_1_hours?.details.precipitation_amount
+                    probThunder = it.data.next_1_hours?.details.probability_of_thunder
+                } else if (it.data.next_6_hours !== undefined) {
+                    precipitation_amount =  it.data.next_6_hours?.details.precipitation_amount / 6
+                    probThunder = it.data.next_6_hours?.details.probability_of_thunder
+                } else {
+                    precipitation_amount =  it.data.next_12_hours?.details.precipitation_amount / 12
+                    probThunder = it.data.next_12_hours?.details.probability_of_thunder
+                }
+
+                const farge = calcFarge(it.data.instant.details, terskel, airport, {
+                    precipitation_amount: precipitation_amount,
+                    probThunder: probThunder
+                })
                     switch (farge) {
                         case "green" : return 1
                         case "yellow" : return 2
@@ -180,7 +300,7 @@ function Tidslinje() {
         },
         onClick: function (evt: any, ctx: any) {
             dispatch(allActions.grafikkAction.setGrafikk(ver[ctx[0].index]))
-            setStartIndex(ctx[0].index)
+            setSliderValue(ctx[0].index)
             //alert(`Du valgte ${labels[ctx[0].index]} med temp ${ver[ctx[0].index]}`)
         },
         scales: {
@@ -196,9 +316,10 @@ function Tidslinje() {
                         size: 30
                     },
                     color: ['green', 'yellow', 'red'],
+                    textStrokeColor: ['', 'black', ''],
+                    textStrokeWidth: 2,
                     precision: 0,
                     callback: function(value:any, index:number, ctx: any) {
-                        let string = ""
                         if (value === 1) {
                             return "Grønn"
                         } else if (value === 2) {
@@ -234,16 +355,21 @@ function Tidslinje() {
                     return getGradient(ctx, chartArea )
                 },
                 backgroundColor: dataset.map((it:any) => {
-                    return it < 2 ? "rgba(0,255,0, 0.5)": it == 2 ? "rgba(255,255,0, 0.5)" : "rgba(255,0,0, 0.5)"
+                    return it < 2 ? "rgba(0,255,0, 0.5)": it === 2 ? "rgba(255,255,0, 0.5)" : "rgba(255,0,0, 0.5)"
 
                 }),
                 color: dataset.map((it:any) => {
-                    return it > 2 ? "rgba(0,255,0, 0.5)": it == 2 ? "rgba(255,255,0, 0.5)" : "rgba(255,0,0, 0.5)"
+                    return it > 2 ? "rgba(0,255,0, 0.5)": it === 2 ? "rgba(255,255,0, 0.5)" : "rgba(255,0,0, 0.5)"
                 }),
                 tension: 0.1
             },
         ],
     };
+
+        //dispatch(allActions.grafikkAction.setGrafikk(ver[index]))
+        //index = (index + 1) % ver.length
+        //console.log(index)
+    
 
 
 
@@ -260,8 +386,29 @@ function Tidslinje() {
                 </div>
 
             </div>
-            <button onClick={start}>ANIMASJON</button>
-            <button onClick={stop}>STOPP</button>
+            <Button sx={{ mr: 2, backgroundColor: '#0494ac'}} variant="contained" onClick={start}>Animasjon</Button>
+            <Button sx={{ mr: 2, backgroundColor: '#0494ac'}} variant="contained" onClick={stop}>Stopp</Button>
+
+            {
+                ver !== undefined &&
+
+                <Slider
+
+                    //onChangeCommitted={tempSliderHandler}
+                    onChange={tempSliderHandler}
+                    defaultValue={0}
+                    value={sliderValue}
+                    step={1}
+                    min={0}
+                    max={ver.length - 1}
+
+                    //marks={SETT INN MARK FOR ALLE TIMER}
+                    valueLabelDisplay="auto"
+
+                />
+            }
+
+
         </div>
 
   )

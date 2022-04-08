@@ -53,7 +53,7 @@ const partRevers = {
     }
 }
 
-function generateStyle(value: number, max: number, min: number, revers: boolean) {
+function generateStyle(value: number, max: number, min: number, revers: boolean, disabled: boolean) {
 
     //const resten = revers ? partRevers : part
 
@@ -85,7 +85,7 @@ function generateStyle(value: number, max: number, min: number, revers: boolean)
 
     const classes = styles()
 
-    return {
+    return !disabled ? {} : {
         thumb: classes.thumb,
         rail: classes.rail,
         track: classes.track,

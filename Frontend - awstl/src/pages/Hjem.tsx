@@ -12,7 +12,7 @@ function Hjem() {
   return (
     <>
     <Banner />
-    <Container>
+    <Container sx={{mt: 5}}>
         <Arbeider />
     </Container>
     <RaskVaer />

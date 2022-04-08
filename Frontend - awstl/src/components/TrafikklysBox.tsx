@@ -5,7 +5,7 @@ import trafikklysFarge from '../model/trafikklysFarge';
 
 const greenLight = 
     <div style={{ display: 'flex', justifyContent: 'space-between', flexFlow: 'column wrap', width: '40%', color: '#0090a8', minWidth: '300px'}}>
-        <Typography variant='h4' gutterBottom>
+        <Typography style={{textAlign: 'center'}} variant='h4' gutterBottom>
             Trafikklys
         </Typography>
         <Paper elevation={3} sx={{ mb: 5}} style={{ color: '#0090a8', minHeight: '20vh', display: 'flex', justifyContent: 'space-evenly', flexDirection: 'column', alignItems: 'center'}} >
@@ -26,7 +26,7 @@ const greenLight =
 
 const yellowLight = 
     <div style={{ display: 'flex', justifyContent: 'space-between', flexFlow: 'column wrap', width: '40%', color: '#0090a8', minWidth: '300px'}}>
-        <Typography variant='h4' gutterBottom>
+        <Typography style={{textAlign: 'center'}} variant='h4' gutterBottom>
             Trafikklys
         </Typography>
         <Paper elevation={3} sx={{ mb: 5}} style={{ color: '#0090a8', minHeight: '20vh', display: 'flex', justifyContent: 'space-evenly', flexDirection: 'column', alignItems: 'center'}} >
@@ -47,7 +47,7 @@ const yellowLight =
 
 const redLight = 
     <div style={{ display: 'flex', justifyContent: 'space-between', flexFlow: 'column wrap', width: '40%', color: '#0090a8', minWidth: '300px'}}>
-        <Typography variant='h4' gutterBottom>
+        <Typography style={{textAlign: 'center'}} variant='h4' gutterBottom>
             Trafikklys
         </Typography>
         <Paper elevation={3} sx={{ mb: 5}} style={{ color: '#0090a8', minHeight: '20vh', display: 'flex', justifyContent: 'space-evenly', flexDirection: 'column', alignItems: 'center'}} >

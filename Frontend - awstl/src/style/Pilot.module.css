@@ -1,0 +1,24 @@
+.tafmetar {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2em
+}
+
+@media screen and (min-width: 850px) {
+    .tafmetar {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.fratil {
+    width: min-content;
+    justify-content: center;
+}
+
+
+@media screen and (min-width: 508px) {
+    .fratil {
+        width: 100%;
+        justify-content: space-evenly;
+    }
+}

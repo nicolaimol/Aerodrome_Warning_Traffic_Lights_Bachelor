@@ -1,0 +1,9 @@
+.airport {
+    display: none;
+}
+
+@media screen and (min-width: 850px) {
+    .airport {
+        display: block;
+    }
+}

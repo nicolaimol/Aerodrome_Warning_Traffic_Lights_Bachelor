@@ -1,34 +1,19 @@
-import { Slider, Divider, Button } from '@mui/material';
-import React, { useState, useEffect, useMemo, useCallback } from 'react'
+import { Divider, Button, Checkbox } from '@mui/material';
+import React, { useState, useEffect, useCallback } from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import allActions from '../Actions';
-import * as buffer from "buffer";
-import axios from 'axios'
-
 import { defaultVerdier } from '../App'
-import { generateStyle } from '../util/sliderStyleUtil'
 import SliderWrapper from './SliderWrapper';
 
 function TerskelForm() {
 
     const terskel = useSelector((state: any) => state.terskel.value)
-    const airport = useSelector((state: any) => state.airport.value)
 
-    const copy = JSON.parse(JSON.stringify(terskel))
-
-    //console.log("load", copy)
 
     const [formVerdier, setFormVerdier] = useState(terskel);
-    //console.log("init",formVerdier)
     const dispatch = useDispatch()
 
-    //console.log("rendering form")
-
-
     const handleSliderEndring = useCallback((navn: string) => (e: Event, verdi: any) => {
-        //console.log(verdi)
-
-        //console.log(navn, e, verdi)
 
         setFormVerdier((setForm: any) => {
 
@@ -39,50 +24,28 @@ function TerskelForm() {
             }
         })
 
-        //console.log("old", terskel)
-
-        /*
-        const newTerskel ={
-            ...terskel,
-            [navn + "Min"]: verdi[0],
-            [navn + "Max"]: verdi[1]
-        }
-
-         */
-
-        //console.log("new", newTerskel)
-        //dispatch(allActions.terskelActions.setTerskel(newTerskel))
-
-        /*
-        setFormVerdier({
-            ...formVerdier,
-            [navn + "Min"]: verdi[0],
-            [navn + "Max"]: verdi[1]
-        })
-         */
     }, [])
 
-    const handleSliderEndringSingleValue = (navn: string) => (e: Event, verdi: any) => {
+    const handleCheckboxEndring = (navn: string) => (e: any) => {
 
-        /*
-        setFormVerdier({
-          ...formVerdier,
-          [navn]: verdi,
+      setFormVerdier((setForm: any) => {
+        return {
+          ...setForm,
+          [navn]: e?.target?.checked!!
+        }
       })
-
-         */
+      
     }
+
     useEffect(() => {
         dispatch(allActions.terskelActions.setTerskel(formVerdier))
-        //console.log(formVerdier)
-        //console.log(terskel)
+
     }, [formVerdier])
 
 
     const tilbakestillTerskelverdier = () => {
 
         setFormVerdier(defaultVerdier)
-        //formVerdier = defaultVerdier
 
         dispatch(allActions.terskelActions.setTerskel(defaultVerdier));
     }
@@ -96,13 +59,15 @@ function TerskelForm() {
     <>
     <form onSubmit={handleSubmit}>
       <div style={{width: "calc(100% - 40px)", padding:"5px 20px", backgroundColor: "#dff2f6"}}>
-          <span style={{color: "#0090a8"}}>Lufttemperatur {terskel.airTempMin}, {terskel.airTempMax}</span>
+          <span style={{color: "#0090a8"}}><Checkbox onChange={handleCheckboxEndring('airTempActive')} checked={formVerdier.airTempActive}/>Lufttemperatur {terskel.airTempMin}, {terskel.airTempMax}</span>
             <SliderWrapper
                 minValue={terskel.airTempMin}
                 maxValue={terskel.airTempMax}
 
                 reverse={false}
                 field={"airTemp"}
+
+                disabled={formVerdier.airTempActive}
 
                 handleSliderEndring={handleSliderEndring}
 
@@ -136,7 +101,7 @@ function TerskelForm() {
             />
           </div>
       <div style={{ width: "calc(100% - 40px)", padding:"5px 20px" }}>
-          <span style={{color: "#0090a8"}}>Nedbør {terskel.precipitationMin}, {terskel.precipitationMax}</span>
+          <span style={{color: "#0090a8"}}><Checkbox onChange={handleCheckboxEndring('precipitationActive')} checked={formVerdier.precipitationActive}/>Nedbør {terskel.precipitationMin}, {terskel.precipitationMax}</span>
         <SliderWrapper
 
             minValue={terskel.precipitationMin}
@@ -144,6 +109,8 @@ function TerskelForm() {
 
             field={"precipitation"}
             reverse={true}
+
+            disabled={formVerdier.precipitationActive}
 
             handleSliderEndring={handleSliderEndring}
 
@@ -170,7 +137,7 @@ function TerskelForm() {
         />
       </div>
       <div style={{ width: "calc(100% - 40px)", padding:"5px 20px", backgroundColor: "#dff2f6" }}>
-          <span style={{color: "#0090a8"}}>Vindfart {terskel.windSpeedMin}, {terskel.windSpeedMax}</span>
+          <span style={{color: "#0090a8"}}><Checkbox onChange={handleCheckboxEndring('windSpeedActive')} checked={formVerdier.windSpeedActive}/>Vindfart {terskel.windSpeedMin}, {terskel.windSpeedMax}</span>
         <SliderWrapper
 
             minValue={terskel.windSpeedMin}
@@ -178,6 +145,8 @@ function TerskelForm() {
 
             field={"windSpeed"}
             reverse={true}
+
+            disabled={formVerdier.windSpeedActive}
 
             handleSliderEndring={handleSliderEndring}
 
@@ -203,11 +172,13 @@ function TerskelForm() {
         />
       </div>
       <div style={{ width: "calc(100% - 40px)", padding:"5px 20px" }}>
-          <span style={{color: "#0090a8"}}>Vindkast {terskel.windGustMin}, {terskel.windGustMax}</span>
+          <span style={{color: "#0090a8"}}><Checkbox onChange={handleCheckboxEndring('windGustActive')} checked={formVerdier.windGustActive}/>Vindkast {terskel.windGustMin}, {terskel.windGustMax}</span>
         <SliderWrapper
 
             minValue={terskel.windGustMin}
             maxValue={terskel.windGustMax}
+
+            disabled={formVerdier.windGustActive}
 
             field={"windGust"}
             reverse={true}
@@ -236,7 +207,7 @@ function TerskelForm() {
         />
       </div>
       <div style={{ width: "calc(100% - 40px)", padding:"5px 20px", backgroundColor: "#dff2f6" }}>
-          <span style={{color: "#0090a8"}}>Sannsynlighet torden {terskel.probThunderMin}, {terskel.probThunderMax}</span>
+          <span style={{color: "#0090a8"}}><Checkbox onChange={handleCheckboxEndring('probThunderActive')} checked={formVerdier.probThunderActive}/>Sannsynlighet torden {terskel.probThunderMin}, {terskel.probThunderMax}</span>
         <SliderWrapper
 
             minValue={terskel.probThunderMin}
@@ -245,6 +216,8 @@ function TerskelForm() {
             field={"probThunder"}
             reverse={true}
 
+            disabled={formVerdier.probThunderActive}
+
             handleSliderEndring={handleSliderEndring}
 
           step={1}
@@ -269,11 +242,13 @@ function TerskelForm() {
         />
       </div>
       <div style={{ width: "calc(100% - 40px)", padding:"5px 20px" }}>
-          <span style={{color: "#0090a8"}}>Luftfuktighet {terskel.humidityMin}, {terskel.humidityMax}</span>
+          <span style={{color: "#0090a8"}}><Checkbox onChange={handleCheckboxEndring('humidityActive')} checked={formVerdier.humidityActive}/>Luftfuktighet {terskel.humidityMin}, {terskel.humidityMax}</span>
         <SliderWrapper
 
             minValue={terskel.humidityMin}
             maxValue={terskel.humidityMax}
+
+            disabled={formVerdier.humidityActive}
 
             field={"humidity"}
           reverse={true}
@@ -281,38 +256,9 @@ function TerskelForm() {
             handleSliderEndring={handleSliderEndring}
 
           step={1}
-          min={40}
-          max={100}
-
-          marks={[
-            {
-              value: 40,
-              label: "40%",
-            },
-            {
-                value: 70,
-                label: "70%",
-
-            },
-            {
-              value: 100,
-              label: "100%",
-            },
-          ]}
-
-        />
-      </div>
-      <div style={{ width: "calc(100% - 40px)", padding:"5px 20px", backgroundColor: "#dff2f6" }}>
-          <span style={{color: "#0090a8"}}>Tåke</span>
-        <Slider
-
-            disabled
-
-          value={terskel.fog}
-          onChange={handleSliderEndringSingleValue("fog")}
-          step={1}
           min={0}
           max={100}
+
           marks={[
             {
               value: 0,
@@ -328,15 +274,17 @@ function TerskelForm() {
               label: "100%",
             },
           ]}
-          valueLabelDisplay="auto"
+
         />
       </div>
-      <div style={{ width: "calc(100% - 40px)", padding:"5px 20px" }}>
-          <span style={{color: "#0090a8", textAlign: 'justify', width: '100%'}}>Crosswind {terskel.crosswindMin}, {terskel.crosswindMax}</span>
+      <div style={{ width: "calc(100% - 40px)", padding:"5px 20px",backgroundColor: "#dff2f6" }}>
+          <span style={{color: "#0090a8", textAlign: 'justify', width: '100%'}}><Checkbox onChange={handleCheckboxEndring('crosswindActive')} checked={formVerdier.crosswindActive}/>Crosswind {terskel.crosswindMin}, {terskel.crosswindMax}</span>
         <SliderWrapper
 
             minValue={terskel.crosswindMin}
             maxValue={terskel.crosswindMax}
+          
+            disabled={formVerdier.crosswindActive}
 
             field={"crosswind"}
             reverse={true}

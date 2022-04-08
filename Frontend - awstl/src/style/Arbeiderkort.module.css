@@ -1,0 +1,9 @@
+.kortButton:hover, .kortButton:active, .kortButton:focus  {
+    background-color: #dff2f6!important;
+
+}
+
+.kortButton {
+    background-color: #FFFFFF!important;
+    color: #0090a8!important;
+}
