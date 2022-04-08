@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: awtl-keycloak-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: awtl-keycloak
+  template:
+    metadata:
+      labels:
+        app: awtl-keycloak
+    spec:
+      containers:
+      - name: awtl-keycloak
+        image: s341833/awtl-keycloak:latest
+        #args: ["-Djboss.http.port=80"]
+        ports:
+            - containerPort: 8080
+        env:
+        - name: KEYCLOAK_WELCOME_THEME
+          value: "met"
+        - name: DB_VENDOR
+          value: "POSTGRES"
+        - name: DB_ADDR
+          value: "postgres-clusterip"
+        - name: DB_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: postgres-db
+              key: db
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: postgres-user
+              key: user
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-password
+              key: password 
+        - name: KEYCLOAK_USER
+          valueFrom:
+            secretKeyRef:
+              name: keycloak-user
+              key: user
+        - name: KEYCLOAK_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: keycloak-password
+              key: password
+        - name: PROXY_ADDRESS_FORWARDING
+          value: 'true'
+        - name: KC_PROXY
+          value: 'edge'
+        - name: KC_HOSTNAME_STRICT_HTTPS
+          value: 'true'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: awtl-keycloak-clusterip
+spec:
+  type: ClusterIP
+  selector:
+    app: awtl-keycloak
+  ports:
+    - name: awtl-keycloak
+      protocol: TCP
+      port: 80
+      targetPort: 8080
