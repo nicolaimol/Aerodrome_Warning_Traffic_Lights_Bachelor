@@ -56,20 +56,25 @@ services:
     ports:
       - 5433:5432
   keycloak:
-    build: .
+#    build: .
+    image: s341833/awtl-keycloak
     container_name: keycloak
     ports:
       - 8081:8080
+#    volumes:
+#      - ./keycloak/config/standalone.xml:/opt/jboss/keycloak/standalone/configuration/standalone.xml
+#      - ./keycloak/themes:/opt/jboss/keycloak/themes:rw
     depends_on: 
       - postgres
     environment:
+      KEYCLOAK_WELCOME_THEME: met
       DB_VENDOR: POSTGRES
       DB_ADDR: postgres
       DB_DATABASE: keycloak
       DB_USER: keycloak
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: adminpassword
-      PROXY_ADDRESS_FORWARDING: true
+      PROXY_ADDRESS_FORWARDING: 'true'
   frontend:
     image: s341833/awtl-frontend
     
