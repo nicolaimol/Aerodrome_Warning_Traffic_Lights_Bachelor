@@ -1,0 +1,16 @@
+body {
+    background: #fff url(../img/background.png) repeat;
+}
+
+h3 a:link {
+    color: white!important;
+}
+
+a {
+    color: white!important;
+}
+
+.card-pf {
+    background-color: #0090A8;
+    color: white;
+}
