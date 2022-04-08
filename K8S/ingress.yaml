@@ -128,3 +128,17 @@ spec:
             name: nginx-metrics-clusterip
             port:
               number: 80
+      - pathType: Prefix
+        path: "/admin"
+        backend:
+          service:
+            name: awtl-admin-frontend-clusterip
+            port:
+              number: 80
+      - pathType: Prefix
+        path: "/keycloak"
+        backend:
+          service:
+            name: awtl-keycloak-clusterip
+            port:
+              number: 80

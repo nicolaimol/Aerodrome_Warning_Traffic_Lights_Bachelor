@@ -1,5 +1,6 @@
 package bachelor.met.awstl.controller
 
+import bachelor.met.awstl.dto.TerskelDeleteDto
 import bachelor.met.awstl.dto.TerskelverdiDto
 import bachelor.met.awstl.service.TerskelverdiService
 import org.slf4j.LoggerFactory
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseCookie
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.time.Duration
+import javax.annotation.security.RolesAllowed
 
 @RestController
 @RequestMapping(value = ["/api/terskel"])
@@ -79,8 +81,19 @@ class TerskelverdiController(val service: TerskelverdiService) {
         }
     }
 
+    @RolesAllowed(value = ["user", "admin"])
     @GetMapping(value = ["/all"])
     fun getAll(): ResponseEntity<Any> {
         return ResponseEntity.ok(service.getAll())
+    }
+
+    @RolesAllowed(value = ["admin"])
+    @DeleteMapping()
+    fun deleteById(@RequestBody dto: TerskelDeleteDto): ResponseEntity<Any> {
+        service.deleteById(dto.id)
+
+        logger.info(dto.id)
+
+        return ResponseEntity.ok().build()
     }
 }

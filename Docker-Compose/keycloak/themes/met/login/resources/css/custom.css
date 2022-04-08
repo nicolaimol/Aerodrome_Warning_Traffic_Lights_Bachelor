@@ -1,0 +1,15 @@
+body {
+    background: #fff url(../background.png) repeat!important;
+}
+
+p {
+    color: #0090A8!important;
+}
+
+.card-pf {
+    border-color: #0090A8!important;
+}
+
+.pf-c-buttom, .pf-m-primary {
+    background-color: #0090A8!important;
+}

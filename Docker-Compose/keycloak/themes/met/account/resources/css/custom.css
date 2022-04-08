@@ -1,0 +1,11 @@
+header {
+    background-color: #0090A8!important;
+}
+
+.pf-c-page__main-section {
+    background: #fff url(../background.png) repeat !important;
+}
+
+.pf-m-light {
+    background: white !important;
+}

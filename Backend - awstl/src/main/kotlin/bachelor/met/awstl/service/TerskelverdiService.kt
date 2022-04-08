@@ -67,6 +67,12 @@ class TerskelverdiService(val repo: ITerskelverdiRepo, val service: FlyplassServ
         return repo.findById(id).orElseThrow{ TerskelverdiNotFoundException("$id is not a valid id for terskelverdi") }
 
     }
+
+    fun deleteById(id: String) {
+        val teskel = getTerskelById(id)
+
+        repo.delete(teskel)
+    }
 }
 
 
