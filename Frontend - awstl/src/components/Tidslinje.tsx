@@ -316,6 +316,8 @@ function Tidslinje() {
                         size: 30
                     },
                     color: ['green', 'yellow', 'red'],
+                    textStrokeColor: ['', 'black', ''],
+                    textStrokeWidth: 2,
                     precision: 0,
                     callback: function(value:any, index:number, ctx: any) {
                         if (value === 1) {
