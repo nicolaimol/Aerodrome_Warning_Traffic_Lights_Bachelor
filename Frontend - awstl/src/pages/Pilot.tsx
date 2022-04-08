@@ -23,6 +23,8 @@ function Pilot() {
   const toAirportRedux = useSelector((state: any) => state.toAirport.value)
   const [toAirport, setToAirport] = useState<any>(null)
 
+  const [nesteDag, setNesteDag] = useState<boolean>(false);
+
   const [weatherToAirport, setWeatherToAirport] = useState<any>(undefined);
 
     const updateAirportTo = (data: any) => {
@@ -30,8 +32,34 @@ function Pilot() {
       setToAirport(data)
     }
 
-    const [avgangstid, setAvgangstid] = useState<any>('07:30');
-    const [ankomsttid, setAnkomsttid] = useState<any>('07:30');
+  const dateNow = new Date().toLocaleString();
+
+  const tidNow = dateNow.split(' ')[1].split(':')[0] + ':' + dateNow.split(' ')[1].split(':')[1]
+
+  let minutt:string = tidNow.split(':')[1];
+  let tilTime:string = tidNow.split(':')[0];
+
+  if (+minutt <= 30){
+    minutt = '30';
+  } else {
+    minutt = '00';
+    if (tilTime === '23'){
+      tilTime = '00';
+    } else {
+      tilTime = (+tilTime + 1).toString()
+      if (tilTime.split('').length > 2){
+        tilTime = '0' + tilTime;
+      }
+    }
+  }
+
+  const ankomstTime = (+tilTime === 23) ? '00' : (+tilTime < 9) ? ('0' + (+tilTime + 1).toString()) : (+tilTime + 1).toString();
+  const printAnkomstTid = ankomstTime + ':' + minutt;
+
+  const printTid = tilTime + ':' + minutt;
+
+    const [avgangstid, setAvgangstid] = useState<any>(printTid);
+    const [ankomsttid, setAnkomsttid] = useState<any>(printAnkomstTid);
 
     useEffect(() => {
       if (toAirport != null) {
@@ -64,6 +92,20 @@ function Pilot() {
       
     }, [toAirportRedux])
 
+    const oppdaterBool = () => {
+      const nummerAvg = +(avgangstid.split(':')[0] + avgangstid.split(':')[1])
+      const nummerAnk = +(ankomsttid.split(':')[0] + ankomsttid.split(':')[1])
+      //const tidHer = new Date().getHours().toLocaleString();
+
+      //console.log('tidHer', tidHer)
+      console.log('Jeg kjører');
+      if ((nummerAnk <= nummerAvg)){
+        setNesteDag(true);
+        console.log('Jeg blir satt til true')
+      } else (setNesteDag(false))
+
+    }
+
   return (
     <>
     <Container>
@@ -76,7 +118,7 @@ function Pilot() {
     <Divider sx={{ mb: 5 }} />
 
     <PilotFlyplassTo update={updateAirportTo} />
-    <PilotVelgDepArvl updateTil={(tid:string) => setAnkomsttid(tid)} updateFra={(tid:string) => setAvgangstid(tid)} />
+    <PilotVelgDepArvl updateTil={(tid:string) => {setAnkomsttid(tid); oppdaterBool()}} updateFra={(tid:string) => {setAvgangstid(tid); oppdaterBool()}} />
     <Divider sx={{ mb: 5 }} />
         <div style={{textAlign: 'center', color: '#0090a8', marginBottom: '1em'}}>
             <Typography sx={{ mb: 3 }} variant="h4">Taf metar</Typography>
@@ -103,12 +145,12 @@ function Pilot() {
 
         <div style={{display: 'flex', maxWidth: '450px', minWidth: '280px', marginBottom: '1em'}}>
           {airport !== undefined && fromWeather !== undefined && 
-            <GrafikkPilot airport={airport} weather={fromWeather} time={avgangstid}/>
+            <GrafikkPilot airport={airport} weather={fromWeather} time={avgangstid} nextDay={false}/>
           }
         </div>
         { toAirport !== undefined && weatherToAirport !== undefined &&
             <div style={{ display: 'flex', maxWidth: '450px', minWidth: '280px', marginBottom: '1em'}}>
-                <GrafikkPilot airport={toAirport} weather={weatherToAirport} time={ankomsttid} />
+                <GrafikkPilot airport={toAirport} weather={weatherToAirport} time={ankomsttid} nextDay={nesteDag} />
             </div>
         }
       </div>
