@@ -34,8 +34,39 @@ const CustomTextFieldTimeInput = styled(TextField)({
 
 function PilotVelgDepArvl(props: any) {
 
-  const [fra, setFra] = useState<string>("07:30")
-  const [til, setTil] = useState<string>("07:30")
+  // Denne logikken setter klokkeslett alltid til nærmeste halvtime framover i tid
+
+  const dateNow = new Date().toLocaleString();
+
+  const tidNow = dateNow.split(' ')[1].split(':')[0] + ':' + dateNow.split(' ')[1].split(':')[1]
+
+  let minutt:string = tidNow.split(':')[1];
+  let tilTime:string = tidNow.split(':')[0];
+
+  if (+minutt <= 30){
+    minutt = '30';
+  } else {
+    minutt = '00';
+    if (tilTime === '23'){
+      tilTime = '00';
+    } else {
+      tilTime = (+tilTime + 1).toString()
+      if (tilTime.split('').length > 2){
+        tilTime = '0' + tilTime;
+      }
+    }
+  }
+
+  const ankomstTime = (+tilTime === 23) ? '00' : (+tilTime < 9) ? ('0' + (+tilTime + 1).toString()) : (+tilTime + 1).toString();
+  const printAnkomstTid = ankomstTime + ':' + minutt;
+
+  const printTid = tilTime + ':' + minutt;
+
+  console.log('printTid', printTid);
+  console.log('ankomstPring', printAnkomstTid);
+
+  const [fra, setFra] = useState<string>(printTid)
+  const [til, setTil] = useState<string>(printAnkomstTid)
 
   const handleEndretTidFra = (event: any) => {
     setFra(event.target.value as string)
