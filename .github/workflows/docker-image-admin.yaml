@@ -1,4 +1,4 @@
-name: Docker Image CI Frontend
+name: Docker Image CI Admin Frontend
 
 on:
   push:
