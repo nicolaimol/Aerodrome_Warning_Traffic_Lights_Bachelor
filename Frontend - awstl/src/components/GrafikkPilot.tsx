@@ -10,7 +10,7 @@ import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
 function GrafikkPilot(props: {airport:airports, weather:LocationForecast, time: string, nextDay: boolean}) {
 
     const airport = props.airport;
-    let teller = 0;
+    
   
     const [weather, setWeather] = useState<Timesery | null>(null)
 
@@ -24,6 +24,7 @@ function GrafikkPilot(props: {airport:airports, weather:LocationForecast, time: 
               }
           }) 
           */
+          let teller = 0;
           if ( props.weather?.properties?.timeseries !== undefined){
             for (const it of props.weather.properties.timeseries) {
                 if (new Date(it.time.toString()).toLocaleString().split(", ")[1].split(":")[0] == props.time.split(":")[0]) {
@@ -38,7 +39,7 @@ function GrafikkPilot(props: {airport:airports, weather:LocationForecast, time: 
             }            
         }
           
-    }, [props.time])
+    }, [props.time, props.nextDay])
 
 
 
