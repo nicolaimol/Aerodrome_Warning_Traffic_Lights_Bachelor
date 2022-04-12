@@ -146,9 +146,9 @@
 <div id="spinner_screen" style="display:block; height:100%">
     <div style="width: 320px; height: 328px; text-align: center; position: absolute; top:0;	bottom: 0; left: 0;	right: 0; margin: auto;">
                 <#if properties.logo?has_content>
-                <img src="/keycloak/auth/resources/hsofq/account/met/public/met-logo-green.svg" alt="Logo" class="brand">
+                <img src="${resourceUrl}/public/met-logo-green.svg" alt="Logo" class="brand">
                 <#else>
-                <img src="/keycloak/auth/resources/hsofq/account/met/public/met-logo-green.svg" alt="Logo" class="brand">
+                <img src="${resourceUrl}/public/met-logo-green.svg" alt="Logo" class="brand">
                 </#if>
                 <p>${msg("loadingMessage")}</p>
                 <div >
@@ -172,9 +172,9 @@
           <a id="landingLogo" class="pf-c-page__header-brand-link" href="./resources/met-logo.svg">
           </#if>
             <#if properties.logo?has_content>
-            <img class="pf-c-brand brand" src="/keycloak/auth/resources/hsofq/account/met/public/met-logo.svg" alt="Logo">
+            <img class="pf-c-brand brand" src="${resourceUrl}/public/met-logo.svg" alt="Logo">
             <#else>
-            <img class="pf-c-brand brand" src="/keycloak/auth/resources/hsofq/account/met/public/met-logo.svg" alt="Logo">
+            <img class="pf-c-brand brand" src="${resourceUrl}/public/met-logo.svg" alt="Logo">
             </#if>
           </a>
         </div>
