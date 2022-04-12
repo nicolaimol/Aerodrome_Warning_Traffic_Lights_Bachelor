@@ -92,19 +92,31 @@ function Pilot() {
       
     }, [toAirportRedux])
 
-    const oppdaterBool = () => {
-      const nummerAvg = +(avgangstid.split(':')[0] + avgangstid.split(':')[1])
-      const nummerAnk = +(ankomsttid.split(':')[0] + ankomsttid.split(':')[1])
-      //const tidHer = new Date().getHours().toLocaleString();
+  
+    useEffect(() => {
+      const dateNowBool = new Date().toLocaleString();
 
-      //console.log('tidHer', tidHer)
+      const tidNowBool = dateNowBool.split(' ')[1].split(':')[0] + ':' + dateNowBool.split(' ')[1].split(':')[1]
+
       console.log('Jeg kjører');
-      if ((nummerAnk <= nummerAvg)){
-        setNesteDag(true);
-        console.log('Jeg blir satt til true')
-      } else (setNesteDag(false))
+      if ((avgangstid < ankomsttid)){
 
-    }
+        if ((tidNowBool > avgangstid) && (tidNowBool < ankomsttid)) {
+          setNesteDag(true);
+          console.log('Jeg blir satt til true');
+        } else setNesteDag(false);
+        
+      } else {
+
+        if ((tidNowBool < avgangstid) && (tidNowBool > ankomsttid)){
+          setNesteDag(false);
+        } else {
+          setNesteDag(true);
+          console.log('Jeg blir satt til true');
+        }
+      }
+      
+    }, [ankomsttid, avgangstid])
 
   return (
     <>
@@ -118,7 +130,7 @@ function Pilot() {
     <Divider sx={{ mb: 5 }} />
 
     <PilotFlyplassTo update={updateAirportTo} />
-    <PilotVelgDepArvl updateTil={(tid:string) => {setAnkomsttid(tid); oppdaterBool()}} updateFra={(tid:string) => {setAvgangstid(tid); oppdaterBool()}} />
+    <PilotVelgDepArvl updateTil={(tid:string) => {setAnkomsttid(tid)}} updateFra={(tid:string) => {setAvgangstid(tid)}} />
     <Divider sx={{ mb: 5 }} />
         <div style={{textAlign: 'center', color: '#0090a8', marginBottom: '1em'}}>
             <Typography sx={{ mb: 3 }} variant="h4">Taf metar</Typography>

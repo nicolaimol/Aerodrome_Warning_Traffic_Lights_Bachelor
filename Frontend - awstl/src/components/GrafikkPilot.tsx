@@ -10,7 +10,6 @@ import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
 function GrafikkPilot(props: {airport:airports, weather:LocationForecast, time: string, nextDay: boolean}) {
 
     const airport = props.airport;
-    console.log(airport);
     let teller = 0;
   
     const [weather, setWeather] = useState<Timesery | null>(null)
