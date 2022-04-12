@@ -19,7 +19,7 @@ export const hentFlyplasser = async (): Promise<flyplass[]> => {
         })
         .catch((error: any) => {
             console.log(error)
-            return null
+            return []
         })
     return data
 }
