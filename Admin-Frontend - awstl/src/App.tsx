@@ -13,7 +13,7 @@ import FlyplassFormAdd from "./components/FlyplassFormAdd";
 function App() {
   return (
           <div style={{display: 'flex',flexDirection:'column', minHeight: '100vh'}}>
-              <ReactKeycloakProvider authClient={keycloak}>
+              <ReactKeycloakProvider authClient={keycloak} initOptions={{onLoad: 'login-required'}}>
                   <Navbar />
                   <div style={{display: 'flex', flexGrow: 1, alignItems: 'center', justifyContent: 'center',}}>
                       <Routes>
