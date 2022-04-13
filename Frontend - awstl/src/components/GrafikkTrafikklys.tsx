@@ -89,48 +89,48 @@ function GrafikkTrafikklys() {
         <div style={{display: 'flex', justifyContent: 'space-evenly', flexWrap:'wrap'}}>
         <div style={{ width: '33%', minWidth: 'fit-content'}}>
             <Typography gutterBottom style={{ fontSize: 20, color: "#0090a8", display: 'flex', alignItems:'center'}}>
-                Effektiv lufttemperatur: {weather?.data.instant.details.air_temperature}
+                Effektiv lufttemperatur: {weather?.data.instant.details.air_temperature} °C
                 { // color : weather?.data.instant.details.air_temperature < terskel?.airTempMin ? "red" :  weather?.data.instant.details.air_temperature > terskel?.airTempMax ? "#0090a8" : "#FFAF42"
                     weather?.data.instant.details.air_temperature < terskel?.airTempMax &&
                         <Hex color={weather?.data.instant.details.air_temperature < terskel?.airTempMin ? "red" : "#FFAF42"} />
                   }
             </Typography>
-            <Typography gutterBottom style={{ fontSize: 20, color:"#0090a8"}}>
-                Nedbør: {precipitation_amount?.toPrecision(1)}
+            <Typography gutterBottom style={{ fontSize: 20, color:"#0090a8", display: 'flex', alignItems:'center'}}>
+                Nedbør: {isNaN(precipitation_amount) ? "N/A" : precipitation_amount?.toPrecision(2) + "mm"}
                 {
                     precipitation_amount > terskel?.precipitationMin &&
                         <Hex color={precipitation_amount > terskel?.precipitationMax ? "red" : "#FFAF42"} />
                 }
             </Typography>
-            <Typography gutterBottom style={{ fontSize: 20,  display: 'flex', alignItems:'center', color : weather?.data.instant.details.wind_speed > terskel?.windSpeedMax ? "red" :  weather?.data.instant.details.wind_speed < terskel?.windSpeedMin ? "#0090a8" : "#FFAF42"}}>
-                Vindfart: {weather?.data.instant.details.wind_speed}
+            <Typography gutterBottom style={{ fontSize: 20, color:"#0090a8",  display: 'flex', alignItems:'center'}}>
+                Vindfart: {weather?.data.instant.details.wind_speed} kt
                 { weather?.data.instant.details.wind_speed > terskel?.windSpeedMin &&
-                    //<Hex color={weather?.data.instant.details.wind_speed > terskel?.windSpeedMax ? "red" : "#FFAF42"} />
-                        ""
+                    <Hex color={weather?.data.instant.details.wind_speed > terskel?.windSpeedMax ? "red" : "#FFAF42"} />
+
                 }
             </Typography>
             <Typography gutterBottom style={{ fontSize: 20, display: 'flex', alignItems:'center', color: "#0090a8"}}>
-                Vindkast: {(isNaN(weather?.data.instant.details.wind_speed_of_gust) === true ? "N/A" : weather?.data.instant.details.wind_speed_of_gust)}
+                Vindkast: {(isNaN(weather?.data.instant.details.wind_speed_of_gust) === true ? "N/A" : weather?.data.instant.details.wind_speed_of_gust + " kt")}
                 { weather?.data.instant.details.wind_speed_of_gust > terskel?.windGustMin &&
                     <Hex color={ weather?.data.instant.details.wind_speed_of_gust > terskel?.windGustMax ? "red" : "#FFAF42"} />
                 }
             </Typography>
-            <Typography gutterBottom style={{ fontSize: 20, display: 'flex', alignItems:'center', color : probThunder > terskel?.probThunderMax ? "red" :  probThunder < terskel?.probThunderMin ? "#0090a8" : (probThunder <= 100 && probThunder >= 0) ? "#FFAF42" : "#0090a8"}}>
-                Sannsynlighet torden: {(probThunder <= 100 && probThunder >= 0) ? probThunder : "N/A"}
+            <Typography gutterBottom style={{ fontSize: 20, display: 'flex', alignItems:'center', color : "#0090a8"}}>
+                Sannsynlighet torden: {(probThunder <= 100 && probThunder >= 0) ? probThunder + "%" : "N/A"}
                 { probThunder >= terskel?.probThunderMin &&
                     <Hex color={probThunder > terskel?.probThunderMax ? "red" : "FFAF42"} />
 
                 }
             </Typography>
-            <Typography gutterBottom style={{ fontSize: 20, display: 'flex', alignItems:'center', color : weather?.data.instant.details.relative_humidity > terskel?.humidityMax ? "red" :  weather?.data.instant.details.relative_humidity < terskel?.humidityMin ? "#0090a8" : "#FFAF42"}}>
-                Luftfuktighet: {weather?.data.instant.details.relative_humidity}
+            <Typography gutterBottom style={{ fontSize: 20, display: 'flex', alignItems:'center', color : "#0090a8"}}>
+                Luftfuktighet: {weather?.data.instant.details.relative_humidity}%
                 { weather?.data.instant.details.relative_humidity > terskel?.humidityMin &&
                     <Hex color={weather?.data.instant.details.relative_humidity > terskel?.humidityMax ? "red" : "#FFAF42"} />
 
                 }
             </Typography>
-            <Typography gutterBottom style={{ fontSize: 20, display: 'flex', alignItems:'center', color : cw > terskel?.crosswindMax ? "red" :  cw < terskel?.crosswindMin ? "#0090a8" : "#FFAF42"}}>
-                Crosswind: {cw.toPrecision(2)}
+            <Typography gutterBottom style={{ fontSize: 20, display: 'flex', alignItems:'center', color : "#0090a8"}}>
+                Crosswind: {cw.toPrecision(2)} kt
                 { cw > terskel?.crosswindMin &&
                     <Hex color={cw > terskel?.crosswindMax ? "red" : "#FFAF42"} />
 
