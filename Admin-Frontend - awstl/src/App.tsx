@@ -23,12 +23,12 @@ function App() {
                               </SecureRoute>
                           } />
                           <Route path="/flyplass" element={
-                              <SecureRoute role="user">
+                              <SecureRoute role={["user"]}>
                                   <Flyplass />
                               </SecureRoute>
                           } />
                           <Route path="/terskelverdi" element={
-                              <SecureRoute role="admin" >
+                              <SecureRoute role={["admin"]} >
                                   <Terskel />
                               </SecureRoute>
                           } />
