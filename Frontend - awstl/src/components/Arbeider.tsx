@@ -13,6 +13,7 @@ import { Box } from '@mui/material'
 // Ikoner
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import FlightIcon from '@mui/icons-material/Flight';
+import MapIcon from '@mui/icons-material/Map';
 
 function Arbeider() {
 
@@ -23,7 +24,10 @@ function Arbeider() {
      'Flyplass'], 
     ['Pilot', <FlightIcon sx={{ fontSize: 100 }}></ FlightIcon>,
     'Her vil du få TAF of METAR for 2 flyplasser, og du kan se annen relevant informasjon om hver flyplass. Siden er tiltenkt piloter.',
-    'Rute']
+    'Rute'],
+    ['Kart', <MapIcon sx={{ fontSize: 100 }}></ MapIcon>,
+    'Her vil du se kart av type sigchart og vær',
+    'Kart']
   ];
 
   return (
