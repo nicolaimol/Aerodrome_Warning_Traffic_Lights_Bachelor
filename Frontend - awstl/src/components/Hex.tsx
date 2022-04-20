@@ -17,7 +17,7 @@ function Hex(props: any) {
             marginLeft: '0.5em'}}><span style={{
                     transform: props.color === 'red'
                         ? 'translateX(-6%) translateY(5%)'
-                        : 'translateX(-6%) translateY(15%)'}}>!</span></span>
+                        : 'translateX(-6%) translateY(12%)'}}>!</span></span>
     );
 }
 
