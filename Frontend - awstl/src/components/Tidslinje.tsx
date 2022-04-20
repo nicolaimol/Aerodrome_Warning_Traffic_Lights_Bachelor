@@ -167,7 +167,8 @@ function Tidslinje() {
                 }
                 return statedIn
             })
-        }, 1000)
+        },
+            3000)
 
 
 
