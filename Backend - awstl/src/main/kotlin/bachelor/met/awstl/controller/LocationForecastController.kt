@@ -1,8 +1,10 @@
 package bachelor.met.awstl.controller
 
 import bachelor.met.awstl.dto.LocationForecastDto
+import bachelor.met.awstl.enum.Cache
 import bachelor.met.awstl.exception.AirportNotFoundException
 import bachelor.met.awstl.service.LocationForecastService
+import bachelor.met.awstl.util.ExpireHeader
 import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.CrossOrigin
@@ -22,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(value = ["http://localhost:3001"])
-class LocationForecastController(val service: LocationForecastService) {
+class LocationForecastController(val service: LocationForecastService, val expireHeader: ExpireHeader) {
 
     val logger = LoggerFactory.getLogger(LocationForecastController::class.java)
 
@@ -42,9 +44,9 @@ class LocationForecastController(val service: LocationForecastService) {
     fun getLocationForecastIcao(@RequestParam(name = "icao")icao: String): ResponseEntity<LocationForecastDto> {
         val res = service.getForecast(icao)
 
-        res!!.properties!!.timeseries = res.properties!!.timeseries!!.filterIndexed {index, _ -> index < 58}.toTypedArray()
+        val headers = expireHeader.makeHeader(icao, Cache.LOCFOR)
 
-        return ResponseEntity.ok(res)
+        return ResponseEntity.ok().headers(headers).body(res)
 
     }
 }
