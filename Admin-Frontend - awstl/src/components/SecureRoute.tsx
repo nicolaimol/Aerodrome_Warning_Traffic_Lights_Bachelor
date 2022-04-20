@@ -6,7 +6,15 @@ function SecureRoute(props: any) {
 
     const { keycloak } = useKeycloak();
 
-    const isLoggedIn = keycloak.authenticated && (props.role != null ? keycloak.hasRealmRole(props.role) : true);
+    let isLoggedIn = keycloak.authenticated 
+    let hasRole = false;
+
+    for (const role in props.role) {
+        hasRole = hasRole || keycloak.hasRealmRole(role);
+    }
+    
+    isLoggedIn = isLoggedIn && hasRole;
+
 
     return isLoggedIn ? props.children : <Typography variant="h6">Du har ikke tilgang til denne siden</Typography>
 }
