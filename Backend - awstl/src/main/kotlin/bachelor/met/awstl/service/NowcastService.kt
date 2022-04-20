@@ -2,6 +2,7 @@ package bachelor.met.awstl.service
 
 import bachelor.met.awstl.dto.NowcastDto
 import bachelor.met.awstl.dto.nowcast.Nowcast
+import bachelor.met.awstl.enum.Cache
 import bachelor.met.awstl.mapper.FlyplassToFlyplassDto
 import bachelor.met.awstl.model.Flyplass
 import org.slf4j.Logger
@@ -14,7 +15,8 @@ import kotlin.collections.HashMap
 @Service
 class NowcastService(
     val httpService: HttpService,
-    val sercice: FlyplassService) {
+    val sercice: FlyplassService,
+    val cacheService: CacheService) {
 
     @Value("\${nowcast}")
     var url = ""
@@ -80,6 +82,9 @@ class NowcastService(
     ) {
         for (airport in airports) {
             val query = HashMap<String, String>()
+
+            cacheService.chechCache(airport.icao, Cache.NOWCAST)
+
             query["altitude"] = airport.altitude
             query["lat"] = airport.lat
             query["lon"] = airport.lon
@@ -98,7 +103,7 @@ class NowcastService(
     fun getForAirport(icao: String, query: HashMap<String, String>): Nowcast? {
         logger.info("Nowcast for $icao")
 
-        return httpService.hentData(url, Nowcast::class.java, query)
+        return httpService.hentData(url, Nowcast::class.java, query, icao, Cache.NOWCAST)
 
     }
 }

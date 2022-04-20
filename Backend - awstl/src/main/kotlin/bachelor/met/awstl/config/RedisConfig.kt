@@ -13,13 +13,13 @@ class RedisConfig {
     fun redisCacheManagerBuilderCustomizer() = RedisCacheManagerBuilderCustomizer { builder ->
         val configurationMap = HashMap<String, RedisCacheConfiguration>()
         configurationMap["locfor"] = RedisCacheConfiguration.defaultCacheConfig(Thread.currentThread().contextClassLoader)
-            .entryTtl(Duration.ofMinutes(1))
+            .entryTtl(Duration. ofHours(1))
         configurationMap["tafmetar"] = RedisCacheConfiguration.defaultCacheConfig(Thread.currentThread().contextClassLoader)
-            .entryTtl(Duration.ofMinutes(5))
+            .entryTtl(Duration.ofHours(1))
         configurationMap["flyplass"] = RedisCacheConfiguration.defaultCacheConfig(Thread.currentThread().contextClassLoader)
             .entryTtl(Duration.ofHours(24))
         configurationMap["nowcast"] = RedisCacheConfiguration.defaultCacheConfig(Thread.currentThread().contextClassLoader)
-            .entryTtl(Duration.ofMinutes(5))
+            .entryTtl(Duration.ofHours(1))
         builder.withInitialCacheConfigurations(configurationMap)
     }
 }
