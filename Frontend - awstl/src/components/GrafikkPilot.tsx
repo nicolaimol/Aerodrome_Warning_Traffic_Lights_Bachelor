@@ -6,6 +6,8 @@ import { LocationForecast, Timesery } from '../model/locfor'
 import Rullebane from './Rullebane';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import Hex from './Hex'
+import { crosswind } from '../util/calcCrosswind';
+
 
 function GrafikkPilot(props: {airport:airports, weather:LocationForecast, time: string, nextDay: boolean}) {
 
@@ -69,18 +71,9 @@ function GrafikkPilot(props: {airport:airports, weather:LocationForecast, time: 
     
 
     if (weather != undefined) {
-        const windDir = weather?.data.instant.details.wind_from_direction > 0 ?
-        weather?.data.instant.details.wind_from_direction :
-        360 + weather?.data.instant.details.wind_from_direction
+        
+        cw = crosswind(airport?.rwy!!, weather?.data.instant.details.wind_from_direction, weather?.data.instant.details.wind_speed);
 
-        const rwyDiff1 = Math.abs(10*Number(airport?.rwy?.split("/")[0]) - windDir)
-        const rwyDiff2 = Math.abs(10*Number(airport?.rwy?.split("/")[1]) - windDir)
-
-        cw = weather?.data.instant.details.wind_speed * Math.sin
-        ((Math.min(
-            rwyDiff1 ,
-            rwyDiff2
-        ) / 360) * 2 * Math.PI)
     } else {return <div>Feil i grafikk</div>}
     
     let precipitation_amount = 0;
