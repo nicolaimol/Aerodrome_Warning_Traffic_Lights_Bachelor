@@ -81,8 +81,6 @@ function generateStyle(value: number, max: number, min: number, revers: boolean,
         }));
     }
 
-
-
     const classes = styles()
 
     return !disabled ? {} : {
