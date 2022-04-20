@@ -5,6 +5,8 @@ import { useSelector } from 'react-redux'
 import Rullebane from './Rullebane';
 import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
 import Hex from './Hex';
+import { crosswind } from '../util/calcCrosswind';
+
 
 function GrafikkTrafikklys() {
 
@@ -37,23 +39,7 @@ function GrafikkTrafikklys() {
     }, [weather])
     
 
-
-//console.log(weather);
-
-    const windDir = weather?.data.instant.details.wind_from_direction > 0 ?
-        weather?.data.instant.details.wind_from_direction :
-        360 + weather?.data.instant.details.wind_from_direction
-
-    const rwyDiff1 = Math.abs(10*Number(airport?.rwy?.split("/")[0]) - windDir)
-    const rwyDiff2 = Math.abs(10*Number(airport?.rwy?.split("/")[1]) - windDir)
-
-    //console.log(rwyDiff1, rwyDiff2)
-    const cw = weather?.data.instant.details.wind_speed * Math.sin
-    (   (Math.min(
-            rwyDiff1 ,
-            rwyDiff2
-        ) / 360) * 2 * Math.PI
-    )
+    const cw = crosswind(airport?.rwy!!, weather?.data.instant.details.wind_from_direction, weather?.data.instant.details.wind_speed);
 
 
     let precipitation_amount = 0;
