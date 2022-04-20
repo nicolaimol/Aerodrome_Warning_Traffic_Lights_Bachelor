@@ -1,4 +1,4 @@
-
+import { crosswind } from './calcCrosswind';
 export const calcFarge = ( data?: any, terskelverdier?: any, flyplass?: any, more?: any ) => {
 
     if (data === undefined || terskelverdier === undefined || flyplass === undefined) {
@@ -84,7 +84,7 @@ export const calcFarge = ( data?: any, terskelverdier?: any, flyplass?: any, mor
 
     }
 
-    
+    /*
     const windDir = data?.wind_from_direction > 0 ?
         data?.wind_from_direction :
         360 + data?.wind_from_direction
@@ -98,6 +98,9 @@ export const calcFarge = ( data?: any, terskelverdier?: any, flyplass?: any, mor
         rwyDiff2
     ) / 360) * 2 * Math.PI
     )
+    */
+
+    const cw = crosswind(flyplass?.rwy, data?.wind_from_direction, data?.wind_speed);
 
 
     if (terskelverdier.crosswindActive) {
