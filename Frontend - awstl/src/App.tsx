@@ -6,6 +6,7 @@ import Footer from './components/Footer';
 import Hjem from './pages/Hjem';
 import Trafikklys from './pages/Trafikklys';
 import Pilot from './pages/Pilot';
+import Kart from './pages/Kart';
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import allActions from './Actions';
@@ -13,6 +14,7 @@ import { Typography, Box, Paper } from '@mui/material';
 import ReportGmailerrorredSharpIcon from '@mui/icons-material/ReportGmailerrorredSharp';
 import Error from './pages/Error'
 import styles from './style/App.module.css'
+
 
 /***
  * Fargepalett!!!
@@ -54,6 +56,11 @@ import styles from './style/App.module.css'
 };
 
 function App() {
+
+
+    //const stylet = generateStyle(50, 75, 25, false, true);
+    //console.log(stylet);
+
 
     const dispatch = useDispatch()
 
@@ -224,6 +231,7 @@ function App() {
 
           <Route path="/flyplass" element={<Trafikklys />} />
           <Route path="/rute" element={<Pilot />} />
+          <Route path="/kart" element={<Kart />} />
           <Route path="/" element={<Hjem />} />
           <Route path="*" element={<Error />} />
         </Routes>
