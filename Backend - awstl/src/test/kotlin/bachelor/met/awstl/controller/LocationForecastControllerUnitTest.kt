@@ -5,6 +5,7 @@ import bachelor.met.awstl.dto.locationforecast.Properties
 import bachelor.met.awstl.dto.locationforecast.Timeseries
 import bachelor.met.awstl.exception.AirportNotFoundException
 import bachelor.met.awstl.service.LocationForecastService
+import bachelor.met.awstl.util.ExpireHeader
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -19,11 +20,13 @@ class LocationForecastControllerUnitTest {
 
     private var service: LocationForecastService? = null
     private var controller: LocationForecastController? = null
+    private var expireHeader: ExpireHeader? = null
 
     @BeforeEach
     fun setUp() {
         service = Mockito.mock(LocationForecastService::class.java)
-        controller = LocationForecastController(service!!)
+        expireHeader = Mockito.mock(ExpireHeader::class.java)
+        controller = LocationForecastController(service!!, expireHeader!!)
     }
 
     @Test
