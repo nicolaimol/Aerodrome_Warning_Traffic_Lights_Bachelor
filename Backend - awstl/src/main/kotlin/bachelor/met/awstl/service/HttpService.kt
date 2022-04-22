@@ -5,7 +5,6 @@ import bachelor.met.awstl.exception.TafMetarNotAvailableException
 import bachelor.met.awstl.exception.UnknownHostException
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
-import org.springframework.http.HttpMethod
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
@@ -35,12 +34,8 @@ class HttpService(private val template: RestTemplate, private val cacheService: 
 
     fun <T> hentData(url: String, clazz: Class<T>, query: HashMap<String, String>, icao: String, type: Cache): T {
         try {
-            val headers = HttpHeaders()
-            headers.set("User-Agent", "awtl.met.no nicolaim@met.no")
 
-            val httpEntity:HttpEntity<Any> = HttpEntity<Any>(headers)
-
-            val result: ResponseEntity<T> = template.exchange(url, HttpMethod.GET, httpEntity, clazz, query)
+            val result: ResponseEntity<T> = template.getForEntity(url, clazz, query)
 
             cacheService.setTimeInCache(result.headers["expires"]?.get(0)!!, icao, type)
 
