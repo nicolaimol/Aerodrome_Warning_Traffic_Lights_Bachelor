@@ -7,11 +7,15 @@ import bachelor.met.awstl.mapper.FlyplassToFlyplassDto
 import bachelor.met.awstl.model.Flyplass
 import bachelor.met.awstl.repo.IFlyplassRepo
 import bachelor.met.awstl.util.FlyplassUpdate
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 
 @Service
 class FlyplassService(val repo: IFlyplassRepo, val cacheConfig: CacheConfig) {
+
+    val logger: Logger = LoggerFactory.getLogger(FlyplassService::class.java)
 
     @Cacheable(value = ["flyplass"], key = "#icao")
     fun getFlyplass(icao: String): Flyplass {
@@ -34,6 +38,9 @@ class FlyplassService(val repo: IFlyplassRepo, val cacheConfig: CacheConfig) {
         val flyplass = getFlyplass(icao)
 
         FlyplassUpdate.update(flyplass, newFlyplass)
+
+        logger.info("Updating flyplass $icao")
+
         repo.save(flyplass)
 
         cacheConfig.removeByNameAndId("flyplass", icao)
