@@ -18,12 +18,12 @@ function App() {
                   <div style={{display: 'flex', flexGrow: 1, alignItems: 'center', justifyContent: 'center',}}>
                       <Routes>
                           <Route path="/flyplass/ny" element={
-                              <SecureRoute>
+                              <SecureRoute role={["user", "admin"]}>
                                   <FlyplassFormAdd />
                               </SecureRoute>
                           } />
                           <Route path="/flyplass" element={
-                              <SecureRoute role={["user"]}>
+                              <SecureRoute role={["user", "admin", "test"]}>
                                   <Flyplass />
                               </SecureRoute>
                           } />
