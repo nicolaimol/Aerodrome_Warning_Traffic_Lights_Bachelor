@@ -4,7 +4,9 @@ import bachelor.met.awstl.dto.NowcastDto
 import bachelor.met.awstl.exception.AirportNotFoundException
 import bachelor.met.awstl.exception.handler.AirportNotFoundExceptionHandler
 import bachelor.met.awstl.exception.handler.InternalExceptionHandler
+import bachelor.met.awstl.service.CacheService
 import bachelor.met.awstl.service.NowcastService
+import bachelor.met.awstl.util.ExpireHeader
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
@@ -31,10 +33,16 @@ internal class NowcastControllerIntegrationTest {
     @MockBean
     var service: NowcastService? = null
 
+    @MockBean
+    var cacheService: CacheService? = null
+
+    @MockBean
+    var expireHeader: ExpireHeader? = null
+
     @BeforeAll
     fun setUp () {
         mockMvc = MockMvcBuilders
-            .standaloneSetup(NowcastController(service!!))
+            .standaloneSetup(NowcastController(service!!, cacheService!!, expireHeader!!))
             .setControllerAdvice(InternalExceptionHandler(), AirportNotFoundExceptionHandler())
             .build()
     }
