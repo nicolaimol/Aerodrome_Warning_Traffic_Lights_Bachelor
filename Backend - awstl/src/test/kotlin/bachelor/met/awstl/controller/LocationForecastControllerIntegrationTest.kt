@@ -7,6 +7,7 @@ import bachelor.met.awstl.exception.AirportNotFoundException
 import bachelor.met.awstl.exception.handler.AirportNotFoundExceptionHandler
 import bachelor.met.awstl.exception.handler.InternalExceptionHandler
 import bachelor.met.awstl.service.LocationForecastService
+import bachelor.met.awstl.util.ExpireHeader
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
@@ -33,10 +34,13 @@ internal class LocationForecastControllerIntegrationTest {
     @MockBean
     var service: LocationForecastService? = null
 
+    @MockBean
+    var expireHeader: ExpireHeader? = null
+
     @BeforeAll
     fun setUp () {
         mockMvc = MockMvcBuilders
-            .standaloneSetup(LocationForecastController(service!!))
+            .standaloneSetup(LocationForecastController(service!!, expireHeader!!))
             .setControllerAdvice(InternalExceptionHandler(), AirportNotFoundExceptionHandler())
             .build()
     }
