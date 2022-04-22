@@ -43,8 +43,7 @@ class RestConfig {
             "awtl.met.no nicolaim@met.no").requestFactory().build()
          */
 
-        return RestTemplate(requestFactory).apply {
-            builder.defaultHeader("user-agent",
-                "awtl.met.no nicolaim@met.no") }
+        val restTemplate = RestTemplate(requestFactory)
+        return restTemplate
     }
 }
