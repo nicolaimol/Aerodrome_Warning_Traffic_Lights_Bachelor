@@ -57,6 +57,11 @@ function FlyplassForm(props: any) {
             return
         }
 
+        if (value !== 200) {
+            setFeil("Noe gikk galt")
+            return
+        }
+
         props.done(flyplass)
     }
 
