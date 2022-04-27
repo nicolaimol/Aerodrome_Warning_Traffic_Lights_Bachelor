@@ -2,7 +2,9 @@ package bachelor.met.awstl.controller
 
 import bachelor.met.awstl.dto.NowcastDto
 import bachelor.met.awstl.exception.AirportNotFoundException
+import bachelor.met.awstl.service.CacheService
 import bachelor.met.awstl.service.NowcastService
+import bachelor.met.awstl.util.ExpireHeader
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.mockito.Mockito
@@ -16,11 +18,15 @@ class NowcastControllerUnitTest {
 
     var service: NowcastService? = null
     var controller: NowcastController? = null
+    var cacheService: CacheService? = null
+    var expireHeader: ExpireHeader? = null
 
     @BeforeEach
     fun setUp () {
         service = Mockito.mock(NowcastService::class.java)
-        controller = NowcastController(service!!)
+        cacheService = Mockito.mock(CacheService::class.java)
+        expireHeader = Mockito.mock(ExpireHeader::class.java)
+        controller = NowcastController(service!!, cacheService!!, expireHeader!!)
     }
 
     @Test

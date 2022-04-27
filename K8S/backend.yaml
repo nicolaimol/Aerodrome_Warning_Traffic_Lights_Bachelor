@@ -44,6 +44,13 @@ spec:
               key: password
         - name: REDIS_HOST
           value: "redis-clusterip"
+        - name: KEYCLOAK_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: keycloak-secret
+              key: secret
+        - name: KEYCLOAK_SERVER
+          value: "https://awtl-dev.met.no/keycloak/auth"
 ---
 apiVersion: v1
 kind: Service

@@ -9,8 +9,8 @@ function SecureRoute(props: any) {
     let isLoggedIn = keycloak.authenticated 
     let hasRole = false;
 
-    for (const role in props.role) {
-        hasRole = hasRole || keycloak.hasRealmRole(role);
+    for (const role of props.role) {
+        hasRole = (hasRole || keycloak.hasRealmRole(role));
     }
     
     isLoggedIn = isLoggedIn && hasRole;
