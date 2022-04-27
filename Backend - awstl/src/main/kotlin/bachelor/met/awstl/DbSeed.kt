@@ -4,16 +4,24 @@ import bachelor.met.awstl.repo.IFlyplassRepo
 import javax.annotation.PostConstruct
 import bachelor.met.awstl.model.Flyplass
 import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.core.io.ClassPathResource
+import org.springframework.core.io.ResourceLoader
 import org.springframework.stereotype.Component
 import org.springframework.util.ResourceUtils
 import java.io.BufferedReader
 import java.io.FileReader
+import java.io.InputStreamReader
 import java.lang.Exception
 import java.util.ArrayList
 
 @Component
 class DbSeed(private val repo: IFlyplassRepo) {
     var logger = LoggerFactory.getLogger(DbSeed::class.java)
+
+    @Autowired
+    var resourceLoader: ResourceLoader? = null
+
     @PostConstruct
     fun run() {
         if (repo.count() > 0) return
@@ -22,7 +30,7 @@ class DbSeed(private val repo: IFlyplassRepo) {
         var index = 0
         try {
             //BufferedReader(FileReader("src/main/resources/flyplasser_norge_csv.csv")).use { reader ->
-            BufferedReader(FileReader(ResourceUtils.getFile("classpath:flyplasser_norge_csv.csv"))).use { reader ->
+            BufferedReader(InputStreamReader(ClassPathResource("flyplasser_norge_csv.csv").inputStream)).use { reader ->
                 while (reader.readLine().also { line = it } != null) {
                     if (index == 0) {
                         index++
