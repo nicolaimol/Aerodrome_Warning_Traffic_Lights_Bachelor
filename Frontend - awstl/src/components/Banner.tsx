@@ -104,7 +104,7 @@ export default function Banner() {
       <Container sx={{ color: '#0090a8' }}>
         <div style={{ display: 'flex', justifyContent: 'space-evenly', flexFlow: 'row wrap', alignItems: 'center'}}> {/** Denne div-en inneholder tittel og AutoComplete komponent */}
         {/** Tittel */}
-          <Typography style={{ maxWidth: '60%', textAlign: 'center'}} sx={{ pt: 5}} component="h1" variant="h3" color="inherit" gutterBottom>
+          <Typography style={{ maxWidth: '60%', textAlign: 'left'}} sx={{ pt: 5}} component="h1" variant="h3" color="inherit" gutterBottom>
             Aerodrome Warning Traffic Light System
           </Typography>
           {/** AutoComplete */}
@@ -123,7 +123,7 @@ export default function Banner() {
             options={listAirport.sort((a:any, b:any) => -b.label.localeCompare(a.label))}
             // Listen grupperes også etter første bokstav
             groupBy={(relevantFlyplassData) => relevantFlyplassData.label.charAt(0).toString()}
-            sx={{ width: 300, backgroundColor: '#FFFFFF'}}
+            sx={{ width: 280, backgroundColor: '#FFFFFF'}}
             renderInput={(params) => <TextField {...params} label="Velg flyplass"
             // @ts-ignore
             />}
