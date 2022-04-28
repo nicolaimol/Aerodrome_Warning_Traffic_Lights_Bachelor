@@ -26,7 +26,7 @@ function Arbeider() {
     'Her vil du få TAF of METAR for 2 flyplasser, og du kan se annen relevant informasjon om hver flyplass. Siden er tiltenkt piloter.',
     'Rute'],
     ['Kart', <MapIcon sx={{ fontSize: 100 }}></ MapIcon>,
-    'Her vil du se kart av type sigchart og vær',
+    'Her vil du se kart av type sigchart og Radar (Nedbør)',
     'Kart']
   ];
 
