@@ -1,4 +1,4 @@
-import { Container, List, ListItem, ListItemButton, Collapse, ListItemText, Slider } from '@mui/material'
+import { Container, List, ListItem, ListItemButton, Collapse, ListItemText, Slider, Divider, Typography } from '@mui/material'
 
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
@@ -10,6 +10,8 @@ function Kart() {
     const [radarPos, setRadarPos] = React.useState('eastern_norway');
     const [open, setOpen] = React.useState(false);
     const [openTo, setOpenTo] = React.useState(false);
+
+    const [sliderBool, setSliderBool] = React.useState(false);
 
     const handleClick = () => {
         setOpen(!open);
@@ -98,8 +100,15 @@ function Kart() {
             minute = '0' + dato.getUTCMinutes();
         } else {minute = dato.getUTCMinutes();}
 
+        setSliderUrl(`https://api.met.no/weatherapi/radar/2.0/?type=preciptype&area=${radarPos}&time=${dato.getUTCFullYear()}-${month}-${day}T${hour}:${minute}:00Z`);
 
-        setSliderUrl(`https://api.met.no/weatherapi/radar/2.0/?type=preciptype&area=${radarPos}&time=${dato.getUTCFullYear()}-${month}-${day}T${hour}:${minute}:00Z`)
+        (window.innerWidth > 720) ? setSliderBool(false) : setSliderBool(true);
+
+        window.addEventListener('resize', () => {
+            (window.innerWidth > 720) ? setSliderBool(false) : setSliderBool(true);
+        });
+
+        return () => window.removeEventListener('resize', () => {});
 
     }, [])
 
@@ -178,6 +187,21 @@ function Kart() {
             {
                 value: 30,
                 label: '-2½ t',
+            },
+            {
+                value: 0,
+                label: '-3 t',
+            },
+          ];
+
+          const sliderMarksLabelMobile = [
+            {
+              value: 170,
+              label: 'Siste',
+            },
+            {
+                value: 90,
+                label: '-1½ t',
             },
             {
                 value: 0,
@@ -341,6 +365,10 @@ function Kart() {
   return (
     <>
         <Container>
+            <Typography sx={{ color: '#0090a8', fontSize: 40, textAlign: 'center', mt: 5}}>
+                Kart
+            </Typography>
+            <Divider sx={{ mb: 5 }} />
             <div style={{ marginTop: '2em', display: 'flex', justifyContent: 'space-evenly', textAlign: 'center', flexWrap: 'wrap', flexDirection: 'row'}}>
                 <div>
                     <List sx={{ mb: 5}} style={{ width: 'fit-content', minWidth: '250px', backgroundColor: '#0090a8', color: '#FFF'}}>
@@ -380,12 +408,13 @@ function Kart() {
                     onChange={handleSliderChange}
                     onChangeCommitted={handleSliderChangeCommit}
                     step={5}
-                    marks={sliderMarksLabel}
+                    marks={sliderBool ? sliderMarksLabelMobile : sliderMarksLabel}
                     valueLabelFormat={(value: number) => formatValue?.label}
                     min={0}
                     max={170}
                     valueLabelDisplay="auto"
                     style={{maxWidth: '80%'}}
+                    sx={{ mt: 5, mb: 5 }}
                 />
             </div>
 
