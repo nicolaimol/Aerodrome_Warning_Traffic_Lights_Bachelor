@@ -118,7 +118,7 @@ export default function Banner() {
         <div style={{ display: 'flex', justifyContent: 'space-evenly', flexFlow: 'row wrap', alignItems: 'center'}}> {/** Denne div-en inneholder tittel og AutoComplete komponent */}
         {/** Tittel */}
           <Typography style={{ maxWidth: '60%', textAlign: 'left'}} sx={{ pt: 5}} component="h1" variant={bannerMobileBool ? 'h4' : 'h3'} color="inherit" gutterBottom>
-            Aerodrome Warning Traffic Light System
+            Aerodrome Warning Traffic Light System (Prototype)
           </Typography>
           {/** AutoComplete */}
           <div className='AutoCompleteCustom' style={{ paddingBottom: '2em' }}>
