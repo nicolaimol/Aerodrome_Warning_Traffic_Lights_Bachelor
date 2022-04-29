@@ -222,3 +222,27 @@ spec:
       protocol: TCP
       port: 80
       targetPort: 9113
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: awtl-monitor-ingress
+spec:
+  rules:
+  - host: "awtl.met.no"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/prometheus"
+        backend:
+          service:
+            name: nginx-clusterip
+            port: 
+              number: 80
+      - pathType: Prefix
+        path: "/grafana"
+        backend:
+          service:
+            name: nginx-clusterip
+            port:
+              number: 80
