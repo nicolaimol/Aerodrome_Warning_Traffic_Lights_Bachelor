@@ -2,6 +2,7 @@
 <html>
     <head>
         <title>${msg("accountManagementTitle")}</title>
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 
         <meta charset="UTF-8">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -70,9 +71,9 @@
         </script>
 
         <#if properties.favIcon?has_content>
-        <link rel="icon" href="${resourceUrl}${properties.favIcon}" type="image/x-icon"/>
+        <link rel="icon" href="${resourceUrl}${properties.favIcon}" />
         <#else>
-        <link rel="icon" href="${resourceUrl}/public/favicon.ico" type="image/x-icon"/>
+        <link rel="icon" href="${resourceUrl}/public/favicon.ico" />
         </#if>
 
         <script src="${authUrl}js/keycloak.js"></script>
