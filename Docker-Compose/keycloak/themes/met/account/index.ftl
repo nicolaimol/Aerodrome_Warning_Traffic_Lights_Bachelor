@@ -70,10 +70,12 @@
         </script>
 
         <#if properties.favIcon?has_content>
-        <link rel="icon" href="${resourceUrl}${properties.favIcon}" type="image/x-icon"/>
+        <link rel="icon" href="${resourceUrl}${properties.favIcon}" />
         <#else>
-        <link rel="icon" href="${resourceUrl}/public/favicon.ico" type="image/x-icon"/>
+        <link rel="icon" href="${resourceUrl}/public/favicon.ico" />
         </#if>
+
+        <link8 rel="icon" type="image/x-icon" href="/favicon.ico" />
 
         <script src="${authUrl}js/keycloak.js"></script>
 
