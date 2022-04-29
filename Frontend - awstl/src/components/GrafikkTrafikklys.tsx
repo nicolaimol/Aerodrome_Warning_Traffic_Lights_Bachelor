@@ -75,10 +75,10 @@ function GrafikkTrafikklys() {
         <div style={{display: 'flex', justifyContent: 'space-evenly', flexWrap:'wrap'}}>
         <div style={{ width: '33%', minWidth: 'fit-content'}}>
             <Typography gutterBottom style={{ fontSize: 20, color: "#0090a8", display: 'flex', alignItems:'center'}}>
-                Effektiv lufttemperatur: {weather?.data.instant.details.air_temperature} °C
+                Effektiv lufttemperatur: {weather?.data.instant.details.effective_temperature} °C
                 { // color : weather?.data.instant.details.air_temperature < terskel?.airTempMin ? "red" :  weather?.data.instant.details.air_temperature > terskel?.airTempMax ? "#0090a8" : "#FFAF42"
-                    weather?.data.instant.details.air_temperature < terskel?.airTempMax &&
-                        <Hex color={weather?.data.instant.details.air_temperature < terskel?.airTempMin ? "red" : "#FFAF42"} />
+                    weather?.data.instant.details.effective_temperature < terskel?.airTempMax &&
+                        <Hex color={weather?.data.instant.details.effective_temperature < terskel?.airTempMin ? "red" : "#FFAF42"} />
                   }
             </Typography>
             <Typography gutterBottom style={{ fontSize: 20, color:"#0090a8", display: 'flex', alignItems:'center'}}>
