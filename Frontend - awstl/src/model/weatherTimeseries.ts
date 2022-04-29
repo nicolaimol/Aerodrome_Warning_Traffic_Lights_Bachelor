@@ -5,6 +5,7 @@ interface weatherTimeseries {
                 air_temperature:number
                 wind_from_direction:number
                 wind_speed:number
+                effective_temperature:number|null
 
             }
         },
