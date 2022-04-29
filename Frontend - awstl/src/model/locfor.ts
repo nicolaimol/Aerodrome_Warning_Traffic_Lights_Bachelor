@@ -54,6 +54,7 @@
         cloud_area_fraction_low: number;
         relative_humidity: number;
         dew_point_temperature: number;
+        effective_temperature: number|null;
     }
 
     export interface Instant {
