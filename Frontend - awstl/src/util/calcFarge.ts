@@ -14,9 +14,9 @@ export const calcFarge = ( data?: any, terskelverdier?: any, flyplass?: any, mor
 
 
     if(terskelverdier.airTempActive){
-        if (data?.air_temperature > terskelverdier?.airTempMax) {
+        if (data?.effective_temperature > terskelverdier?.airTempMax) {
         green.push("air temp")
-        } else if (data?.air_temperature < terskelverdier?.airTempMin) {
+        } else if (data?.effective_temperature < terskelverdier?.airTempMin) {
             //console.log("air temp", data?.air_temperature)
             red.push("air temp")
         } else {
