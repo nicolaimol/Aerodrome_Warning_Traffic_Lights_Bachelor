@@ -104,7 +104,7 @@ function PilotFlyplassTo(props: any) {
                             options={flyplasserList.sort((a:any, b:any) => -b.label.localeCompare(a.label))}
                             // Listen grupperes også etter første bokstav
                             groupBy={(relevantFlyplassData) => relevantFlyplassData?.label.charAt(0).toString()}
-                            sx={{ width: 300, backgroundColor: '#FFFFFF'}}
+                            sx={{ width: 280, backgroundColor: '#FFFFFF'}}
                             renderInput={(params) => <TextField {...params} label="Velg flyplass" />}
                         />
                     </div>
