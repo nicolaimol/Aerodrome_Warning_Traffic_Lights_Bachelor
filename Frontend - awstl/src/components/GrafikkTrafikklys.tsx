@@ -175,19 +175,22 @@ function GrafikkTrafikklys() {
 
                     <Box style={{ display: 'flex', justifyContent: 'space-evenly', flexDirection: 'row', alignItems: 'center'}}>
                         
-                        <div style={{ height: '230px', width: '230px', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative'}}>
+                        <div style={{ height: '230px', maxWidth: '100%', width: '230px', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative'}}>
+                            <div style={{display: 'flex', flexWrap: 'wrap', minWidth: '215px'}}>
                             {
-                                airport.rwy.split(",").map((it: any) => {
 
-                                    return <Rullebane key={it[0]} rullebane={it}></Rullebane>
+                                    airport.rwy.split(",").map((it: any) => {
 
-                                })
+                                        return <Rullebane key={it[0]} rullebane={it}></Rullebane>
+
+                                    })
+
                             }
-
+                            </div>
                             <div style={{position: 'absolute',
                                 right: (weather.data.instant.details.wind_from_direction > 0 && weather.data.instant.details.wind_from_direction < 180) ||
                                     (weather.data.instant.details.wind_from_direction < -360 && weather.data.instant.details.wind_from_direction > -180) ?
-                                    "-50px" : "250px",
+                                    "0px" : "90%",
                                 top: (weather.data.instant.details.wind_from_direction > 90 && weather.data.instant.details.wind_from_direction < 270) ||
                                     (weather.data.instant.details.wind_from_direction > -270 && weather.data.instant.details.wind_from_direction < -90) ?
                                     "150px" : "0px",

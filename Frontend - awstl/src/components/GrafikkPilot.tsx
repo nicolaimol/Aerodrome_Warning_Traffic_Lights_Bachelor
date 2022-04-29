@@ -222,7 +222,7 @@ function GrafikkPilot(props: {airport:airports, weather:LocationForecast, time: 
                             <div style={{position: 'absolute',
                                 right: (weather.data.instant.details.wind_from_direction > 0 && weather.data.instant.details.wind_from_direction < 180) ||
                                     (weather.data.instant.details.wind_from_direction < -360 && weather.data.instant.details.wind_from_direction > -180) ?
-                                    "-50px" : "250px",
+                                    "0px" : "90%",
                                 top: (weather.data.instant.details.wind_from_direction > 90 && weather.data.instant.details.wind_from_direction < 270) ||
                                     (weather.data.instant.details.wind_from_direction > -270 && weather.data.instant.details.wind_from_direction < -90) ?
                                     "150px" : "0px",
