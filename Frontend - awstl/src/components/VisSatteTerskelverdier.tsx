@@ -56,14 +56,26 @@ function VisSatteTerskelverdier(props:{terskel: terskelData}) {
 
   }, [props])
 
+  const [mobil, setMobil] = React.useState(false);
+
+  useEffect(() => {
+
+    (window.innerWidth > 400) ? setMobil(false) : setMobil(true);
+
+    window.addEventListener('resize', () => {
+      (window.innerWidth > 400) ? setMobil(false) : setMobil(true);
+    });
+
+    return () => window.removeEventListener('resize', () => {});
+  }, []);
   
 
 
 
   return (
     <>
-    <div style={{ display: 'flex', justifyContent: 'space-between', flexFlow: 'column wrap', width: '40%', color: '#0090a8', minWidth: '300px'}}>
-        <Typography style={{textAlign: 'center'}} variant='h4' gutterBottom>
+    <div style={{ display: 'flex', justifyContent: 'space-between', flexFlow: 'column wrap', width: '40%', color: '#0090a8', minWidth: '270px'}}>
+        <Typography style={{textAlign: 'center'}} variant={mobil ? "h5": "h4"} gutterBottom>
             Satte terskelverdier
         </Typography>
         <Paper elevation={3} sx={{ pt: 5, pb: 5, mb: 5}} style={{ minHeight: '20vh', display: 'flex', justifyContent: 'space-evenly', flexGrow: 1 }} >
