@@ -58,7 +58,6 @@ class SecurityConfig: KeycloakWebSecurityConfigurerAdapter() {
         http!!
             .csrf().disable()
             .authorizeRequests()
-            .antMatchers("/api/user/auth").authenticated()
             .anyRequest().permitAll()
     }
 
