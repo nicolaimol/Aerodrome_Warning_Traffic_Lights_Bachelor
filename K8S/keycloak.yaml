@@ -15,7 +15,6 @@ spec:
       containers:
       - name: awtl-keycloak
         image: s341833/awtl-keycloak:latest
-        #args: ["-Djboss.http.port=80"]
         ports:
             - containerPort: 8080
         env:
@@ -70,3 +69,20 @@ spec:
       protocol: TCP
       port: 80
       targetPort: 8080
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: awtl-keycloak-ingress
+spec:
+  rules:
+  - host: "awtl.met.no"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/keycloak"
+        backend:
+          service:
+            name: awtl-keycloak-clusterip
+            port:
+              number: 80
