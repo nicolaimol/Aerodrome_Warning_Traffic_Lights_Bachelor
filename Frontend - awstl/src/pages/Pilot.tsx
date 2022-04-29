@@ -67,6 +67,22 @@ function Pilot() {
 
       axios.get(urlArvl)
             .then((response: any) => {
+              response.data.properties.timeseries.map((data: any) => {
+
+                // calculate effective air temperature and set it to the instant object
+                //if (data.properties.timeseries[0].data.instant.details.air_temperature < 10 && data.properties.timeseries[0].data.instant.details.wind_speed > 1.33) {
+                        data.data.instant.details.effective_temperature = 
+                        (13.12 + (data.data.instant.details.air_temperature * 0.6215)
+                        - ((11.37 * Math.pow((data.data.instant.details.wind_speed * 3.6), 0.16)))
+                        + ((data.data.instant.details.air_temperature * 0.3965 ) * (Math.pow((data.data.instant.details.wind_speed * 3.6), 0.16)))).toPrecision(2)
+                     
+                    
+                //}
+
+
+                data.data.instant.details.wind_speed = (data.data.instant.details.wind_speed * 1.943844).toPrecision(2);
+                data.data.instant.details.wind_speed_of_gust = (data.data.instant.details.wind_speed_of_gust * 1.943844).toPrecision(2);
+            })
               setWeatherToAirport(response.data)
             })
             .catch((error:any) => {

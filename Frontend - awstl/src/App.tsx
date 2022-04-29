@@ -133,8 +133,17 @@ function App() {
             axios.get(`${urlNowcast}${airport.icao}`) // Henter værdata for 3 flyplasser + en egendefinert
                 .then((response) => {
                     response.data.nowcasts.map((data: any) =>{
+                        // calculate effective air temperature and set it to the instant object
+                        //if (data.properties.timeseries[0].data.instant.details.air_temperature < 10 && data.properties.timeseries[0].data.instant.details.wind_speed > 1.33) {
+                            data.properties.timeseries[0].data.instant.details.effective_temperature = 
+                            (13.12 + (data.properties.timeseries[0].data.instant.details.air_temperature * 0.6215)
+                             - ((11.37 * Math.pow((data.properties.timeseries[0].data.instant.details.wind_speed * 3.6), 0.16)))
+                             + ((data.properties.timeseries[0].data.instant.details.air_temperature * 0.3965 ) * (Math.pow((data.properties.timeseries[0].data.instant.details.wind_speed * 3.6), 0.16)))).toPrecision(2)
+                        //}
+
                         data.properties.timeseries[0].data.instant.details.wind_speed = (data.properties.timeseries[0].data.instant.details.wind_speed * 1.943844).toPrecision(2)
                         data.properties.timeseries[0].data.instant.details.wind_speed_of_gust = (data.properties.timeseries[0].data.instant.details.wind_speed_of_gust * 1.943844).toPrecision(2)
+                        
                     })
                     dispatch(allActions.nowcastAction.setNowcast(response.data))
                    
@@ -144,6 +153,18 @@ function App() {
                 .then((response:any) => {
                     
                     response.data.properties.timeseries.map((data: any) => {
+
+                        // calculate effective air temperature and set it to the instant object
+                        //if (data.properties.timeseries[0].data.instant.details.air_temperature < 10 && data.properties.timeseries[0].data.instant.details.wind_speed > 1.33) {
+                                data.data.instant.details.effective_temperature = 
+                                (13.12 + (data.data.instant.details.air_temperature * 0.6215)
+                                - ((11.37 * Math.pow((data.data.instant.details.wind_speed * 3.6), 0.16)))
+                                + ((data.data.instant.details.air_temperature * 0.3965 ) * (Math.pow((data.data.instant.details.wind_speed * 3.6), 0.16)))).toPrecision(2)
+                             
+                            
+                        //}
+
+
                         data.data.instant.details.wind_speed = (data.data.instant.details.wind_speed * 1.943844).toPrecision(2);
                         data.data.instant.details.wind_speed_of_gust = (data.data.instant.details.wind_speed_of_gust * 1.943844).toPrecision(2);
                     })
