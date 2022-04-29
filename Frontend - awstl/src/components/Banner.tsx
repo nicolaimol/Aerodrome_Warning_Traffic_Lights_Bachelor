@@ -97,6 +97,19 @@ export default function Banner() {
     }
   },[airportList])
 
+  const [bannerMobileBool, setBannerMobileBool] = React.useState(false); 
+
+  useEffect(() => {
+
+  (window.innerWidth > 400) ? setBannerMobileBool(false) : setBannerMobileBool(true);
+
+        window.addEventListener('resize', () => {
+            (window.innerWidth > 400) ? setBannerMobileBool(false) : setBannerMobileBool(true);
+        });
+
+        return () => window.removeEventListener('resize', () => {});
+    }, []);
+
   // @ts-ignore
   return (
     <>
@@ -104,7 +117,7 @@ export default function Banner() {
       <Container sx={{ color: '#0090a8' }}>
         <div style={{ display: 'flex', justifyContent: 'space-evenly', flexFlow: 'row wrap', alignItems: 'center'}}> {/** Denne div-en inneholder tittel og AutoComplete komponent */}
         {/** Tittel */}
-          <Typography style={{ maxWidth: '60%', textAlign: 'left'}} sx={{ pt: 5}} component="h1" variant="h3" color="inherit" gutterBottom>
+          <Typography style={{ maxWidth: '60%', textAlign: 'left'}} sx={{ pt: 5}} component="h1" variant={bannerMobileBool ? 'h4' : 'h3'} color="inherit" gutterBottom>
             Aerodrome Warning Traffic Light System
           </Typography>
           {/** AutoComplete */}
