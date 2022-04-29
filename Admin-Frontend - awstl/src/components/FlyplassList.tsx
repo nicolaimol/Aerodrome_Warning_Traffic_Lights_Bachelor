@@ -8,7 +8,7 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import {useEffect, useState} from "react";
-import {Button} from "@mui/material";
+import {Button, TextField} from "@mui/material";
 import {Add} from "@mui/icons-material";
 import {Link} from "react-router-dom";
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
@@ -129,6 +129,7 @@ export default function FlyplassList(props: any) {
         alert(`Error with code ${status}`)
     }
 
+    const [flyplassList, setFlyplassList] = useState<any[]>([])
     const [rows, setRows] = useState<Data[]>([{icao: "ENGM", navn: "Gardermoen", iata: "OSL", rwy: "01/19", lat: "60", lon: "10", altitude: "100"}])
 
     useEffect(() => {
@@ -141,6 +142,8 @@ export default function FlyplassList(props: any) {
             }
             return 0
         })
+
+        setFlyplassList(flyplasser)
 
         setRows(flyplasser.map((it: any) => {
             return createData(it.icao, it.navn, it.iata, it.rwy, it.lat, it.lon, it.altitude)
@@ -160,6 +163,21 @@ export default function FlyplassList(props: any) {
         setRowsPerPage(+event.target.value);
         setPage(0);
     };
+
+    const [search, setSearch] = useState<string>("")
+
+    const handleChangeSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSearch(event.target.value)
+    }
+
+    useEffect(() => {
+        const filtered = flyplassList.filter((it: any) => {
+            return it.navn.toLowerCase().includes(search.toLowerCase())
+        })
+        setRows(filtered.map((it: any) => {
+            return createData(it.icao, it.navn, it.iata, it.rwy, it.lat, it.lon, it.altitude)
+        }))
+    }, [search])
 
     return (
         <>
@@ -224,9 +242,12 @@ export default function FlyplassList(props: any) {
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
             />
-            <Link to="/flyplass/ny" style={{position: 'absolute', left: '.5em', bottom: '.5em'}} >
-                <Button variant="outlined" endIcon={<Add />}>Ny</Button>
-            </Link>
+            <div style={{display: "flex", position: 'absolute', left: '.5em', bottom: '.5em', alignItems: "end", gap: '1em'}}>
+                <Link to="/flyplass/ny"  >
+                    <Button variant="outlined" endIcon={<Add />}>Ny</Button>
+                </Link>
+                <TextField value={search} onChange={handleChangeSearch} style={{height: 'fit-content'}} id="standard-basic" label="Søk" variant="standard" />
+            </div>
         </Paper>
             <div>
                 <ConfirmDialog
