@@ -6,18 +6,18 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: prometheus
+      app: prometheus-awtl
   template:
     metadata:
       labels:
-        app: prometheus
+        app: prometheus-awtl
     spec:
       volumes:
         - name: prometheus-mount
           configMap:
             name: prometheus-config
       containers:
-        - name: prometheus
+        - name: prometheus-awtl
           image: prom/prometheus:latest
           ports:
             - containerPort: 9090
@@ -59,9 +59,9 @@ metadata:
 spec:
   type: ClusterIP
   selector:
-    app: prometheus
+    app: prometheus-awtl
   ports:
-    - name: prometheus
+    - name: prometheus-awtl
       protocol: TCP
       port: 80
       targetPort: 9090
@@ -87,8 +87,24 @@ metadata:
 data:
   grafana.ini: |
     [server]
-    root_url = %(protocol)s://%(domain)s:%(http_port)s/grafana/
+    root_url = https://awtl-dev.met.no/grafana
     serv_from_sub_path = true
+    [auth]
+    disable_login_form = true
+    [auth.generic_oauth]
+    enabled = true
+    scopes = openid email profile
+    name = Keycloak
+    tls_skip_verify_insecure = true
+    allow_sign_up = true
+    client_id = awtl-grafana
+    client_secret = 4SUtpx8xc24Oo5tkNjlCjFkjjF7ch76o
+    auth_url = https://awtl-dev.met.no/keycloak/auth/realms/awtl/protocol/openid-connect/auth
+    token_url = https://awtl-dev.met.no/keycloak/auth/realms/awtl/protocol/openid-connect/token
+    api_url = https://awtl-dev.met.no/keycloak/auth/realms/awtl/protocol/openid-connect/userinfo
+    sign_out_url = https://awtl-dev.met.no/keycloak/auth/realms/awtl/protocol/openid-connect/logout?redirect_uri=https://awtl-dev.met.no/grafana/
+    role_attribute_path = contains(realm_access.roles[*], 'admin') && 'Admin' || contains(realm_access.roles[*], 'editor') && 'Editor' || 'Viewer'
+
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -237,7 +253,7 @@ spec:
         backend:
           service:
             name: nginx-clusterip
-            port: 
+            port:
               number: 80
       - pathType: Prefix
         path: "/grafana"
