@@ -56,23 +56,13 @@ function Trafikklys() {
         <Divider sx={{ mb: 5 }} />
 
       <div style={{ display: 'flex', justifyContent: 'space-evenly', flexFlow: 'row wrap', alignItems: 'stretch'}}>
-        
+
       <TrafikklysBox farge={color} />  
       {terskel != undefined &&
         <VisSatteTerskelverdier terskel={terskel} />}
         
       </div>
 
-      <div style={{ paddingBottom: '1em', }}>
-          <Typography sx={{ color: '#0090a8', fontSize: 30, textAlign: 'center'}}>
-              Taf og Metar
-          </Typography>
-          <Divider sx={{ mb: 5}} />
-          <div style={{ marginLeft: '1em', marginRight: '1em' }}>
-            <TafMetar icao={airport?.icao} />
-          </div>
-        
-      </div >
       
 
       <div>
