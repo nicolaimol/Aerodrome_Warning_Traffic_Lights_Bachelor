@@ -368,7 +368,7 @@ function Kart() {
     <>
         <Container>
             <Typography sx={{ color: '#0090a8', fontSize: 40, textAlign: 'center', mt: 5}}>
-                Kart - {radarPosNorsk}
+                Kart - {!openTo ? radarPosNorsk: "Sigchart"}
             </Typography>
             <Divider sx={{ mb: 5 }} />
             <div style={{ marginTop: '2em', display: 'flex', justifyContent: 'space-evenly', textAlign: 'center', flexWrap: 'wrap', flexDirection: 'row'}}>
@@ -378,10 +378,10 @@ function Kart() {
                             <ListItemText primary="Sigchart" />
                         </ListItemButton>
                         <ListItemButton onClick={disabledGIFHandler}>
-                            <ListItemText primary={"Endre radar til " + (disabledGIF ? 'GIF' : 'statisk bilde')}  />
+                            <ListItemText primary={"Endre radar til " + (disabledGIF ? 'animasjon' : 'statisk bilde')}  />
                         </ListItemButton>
                         <ListItemButton onClick={handleClick}>
-                            <ListItemText primary="Radar" />
+                            <ListItemText primary="Værradar" />
                             {open ? <ExpandLess /> : <ExpandMore />}
                         </ListItemButton>
 
@@ -406,7 +406,7 @@ function Kart() {
                     defaultValue={170}
                     //getAriaValueText={}
                     value={sliderValue}
-                    disabled={!disabledGIF}
+                    disabled={!disabledGIF || openTo}
                     onChange={handleSliderChange}
                     onChangeCommitted={handleSliderChangeCommit}
                     step={5}
