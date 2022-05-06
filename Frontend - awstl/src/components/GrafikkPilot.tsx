@@ -204,7 +204,7 @@ function GrafikkPilot(props: {airport:airports, weather:LocationForecast, time: 
 
                         <div style={{ display: 'flex', justifyContent: 'center'}}>
                             <Typography gutterBottom style={{ fontSize: 20, color: '#0090a8'}}>
-                                Vindforhold til rullebane
+                                Vind i forhold til rullebane
                             </Typography>
                         </div>
 
