@@ -12,8 +12,9 @@ import {Link} from 'react-router-dom'
 function ArbeiderKort(props:arbeiderInfo) { {/** Tar inn props med interface til arbeiderinfo */}
 
   return (
-      <Link to={'/' + props.tittel.toLowerCase()}>
-        <Card className={styles.kortButton} sx={{ backgroundColor: '#0494ac'}} style={{display: 'flex'}}>
+      
+        <Card className={styles.kortButton} sx={{ backgroundColor: '#0494ac'}} style={{display: 'flex', flexGrow: 1}}>
+                <Link to={'/' + props.tittel.toLowerCase()}>
                 <CardContent style={{ display: 'flex', flexDirection: 'column', flexGrow: 1}}>
                     {/** Tittel */}
                     <div style={{display: 'flex', flexDirection: 'column', flexGrow: 1}}>
@@ -38,8 +39,9 @@ function ArbeiderKort(props:arbeiderInfo) { {/** Tar inn props med interface til
                     </Box>
                     */}
                 </CardContent>
+                </Link>
         </Card>
-    </Link>
+    
   )
 }
 
