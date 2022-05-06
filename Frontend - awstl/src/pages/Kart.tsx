@@ -8,6 +8,7 @@ import React, { SyntheticEvent, useEffect, useState } from 'react'
 function Kart() {
 
     const [radarPos, setRadarPos] = React.useState('eastern_norway');
+    const [radarPosNorsk, setRadarPosNorsk] = React.useState('Øst-Norge');
     const [open, setOpen] = React.useState(false);
     const [openTo, setOpenTo] = React.useState(false);
 
@@ -109,6 +110,7 @@ function Kart() {
         });
 
         return () => window.removeEventListener('resize', () => {});
+
 
     }, [])
 
@@ -366,7 +368,7 @@ function Kart() {
     <>
         <Container>
             <Typography sx={{ color: '#0090a8', fontSize: 40, textAlign: 'center', mt: 5}}>
-                Kart
+                Kart - {radarPosNorsk}
             </Typography>
             <Divider sx={{ mb: 5 }} />
             <div style={{ marginTop: '2em', display: 'flex', justifyContent: 'space-evenly', textAlign: 'center', flexWrap: 'wrap', flexDirection: 'row'}}>
@@ -387,7 +389,7 @@ function Kart() {
                     <List >
                         {steder.map(sted => (
                             <ListItem key={sted.pos}>
-                                <ListItemButton onClick={() => {setRadarPos(sted.pos); setOpenTo(false);}}>
+                                <ListItemButton onClick={() => {setRadarPos(sted.pos); setRadarPosNorsk(sted.navn); setOpenTo(false);}}>
                                     {sted.navn}
                                 </ListItemButton>
                             </ListItem>
