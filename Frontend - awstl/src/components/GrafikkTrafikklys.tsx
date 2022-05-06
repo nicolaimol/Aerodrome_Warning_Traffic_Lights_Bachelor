@@ -89,7 +89,7 @@ function GrafikkTrafikklys() {
                 }
             </Typography>
             <Typography gutterBottom style={{ fontSize: 20, color:"#0090a8",  display: 'flex', alignItems:'center'}}>
-                Vindfart: {weather?.data.instant.details.wind_speed} kt
+                Vindhastighet: {weather?.data.instant.details.wind_speed} kt
                 { weather?.data.instant.details.wind_speed > terskel?.windSpeedMin &&
                     <Hex color={weather?.data.instant.details.wind_speed > terskel?.windSpeedMax ? "red" : "#FFAF42"} />
 
