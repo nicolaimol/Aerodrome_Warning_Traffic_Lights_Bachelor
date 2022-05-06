@@ -113,7 +113,7 @@ export default function Banner() {
   // @ts-ignore
   return (
     <>
-    <div style={{ minHeight: 'fit-content', width: '100%', backgroundColor: '#dff2f6'}}> {/** banneret tar uansett halvparten av skjermen, men om den behøver mer vil den utvides */}
+    <div style={{ minHeight: 'fit-content', width: '100%', backgroundColor: '#dff2f6'}}> 
       <Container sx={{ color: '#0090a8' }}>
         <div style={{ display: 'flex', justifyContent: 'space-evenly', flexFlow: 'row wrap', alignItems: 'center'}}> {/** Denne div-en inneholder tittel og AutoComplete komponent */}
         {/** Tittel */}
