@@ -28,7 +28,7 @@ function Pilot() {
   const [weatherToAirport, setWeatherToAirport] = useState<any>(undefined);
 
     const updateAirportTo = (data: any) => {
-      console.log(data)
+
       setToAirport(data)
     }
 
@@ -96,7 +96,7 @@ function Pilot() {
     }, [toAirport])
 
     useEffect(() => {
-      console.log(toAirportRedux)
+
       if( toAirportRedux !== undefined){
         const reformatert = {
           navn: toAirportRedux.label,
@@ -114,12 +114,10 @@ function Pilot() {
 
       const tidNowBool = dateNowBool.split(' ')[1].split(':')[0] + ':' + dateNowBool.split(' ')[1].split(':')[1]
 
-      console.log('Jeg kjører');
       if ((avgangstid < ankomsttid)){
 
         if ((tidNowBool > avgangstid) && (tidNowBool < ankomsttid)) {
           setNesteDag(true);
-          console.log('Jeg blir satt til true');
         } else setNesteDag(false);
         
       } else {
@@ -128,7 +126,6 @@ function Pilot() {
           setNesteDag(false);
         } else {
           setNesteDag(true);
-          console.log('Jeg blir satt til true');
         }
       }
       
