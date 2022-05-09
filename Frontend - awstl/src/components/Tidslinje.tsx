@@ -50,7 +50,10 @@ const getGradient = (ctx: any, chartArea: any) => {
 
 function Tidslinje() {
 
+    const dispatch = useDispatch()
+
     let scroll = document.getElementById("scrollableDiv")
+    let index = 0;
 
     scroll?.addEventListener("wheel", (evt: any) => {
 
@@ -74,7 +77,6 @@ function Tidslinje() {
             evt.preventDefault()
             scroll!!.scrollLeft += (evt.deltaX/4);
         }
-
     })
 
     const airport:any = useSelector<string>((state:any) => state.airport.value)
@@ -84,146 +86,10 @@ function Tidslinje() {
     const [ver, setVer] = useState<any>()
     const [labels, setLabels] = useState<any[]>([])
     const [dataset, setDataset] = useState<any[]>([])
-
-
     const [int, setInt] = useState<any>(null)
     const [sliderValue, setSliderValue] = React.useState<number>(0);
     const [started, setStarted] = useState<boolean>(false)
 
-
-    let index = 0;
-    const start = () => {
-        setStarted(true)
-
-    }
-
-
-    const stop = () => {
-        setStarted(false)
-    }
-
-    const tempSliderHandler = (event: Event, newValue: number | number[]) => {
-        setSliderValue(newValue as number);
-    };
-
-    useEffect(() => {
-        if (ver != undefined) {
-            dispatch(allActions.grafikkAction.setGrafikk(ver[sliderValue]))
-        }
-    }, [sliderValue])
-
-    useEffect(() => {
-
-        const inteval = setInterval(() => {
-            setStarted((statedIn: any) => {
-
-                if (statedIn) {
-                    setSliderValue((oldValue: any) => {
-                        return oldValue + 1;
-                    })
-
-                }
-                return statedIn
-            })
-        },
-            3000)
-
-
-
-        return () => clearInterval(inteval)
-
-    }, [])
-
-
-    const dispatch = useDispatch()
-
-
-    useEffect(()=> {
-        if(!airport) return;
-        const herVer = locfor?.properties.timeseries
-        if (herVer != undefined && herVer[0] != undefined) {
-            dispatch(allActions.grafikkAction.setGrafikk(herVer[0]))
-
-            setVer(herVer)
-            setLabels(herVer.map((it: any) => {
-                let string = new Date(it.time).toLocaleString();
-                let list = string.split(",")
-
-                let dato = list[0].split(".")
-                dato.splice(2, 1)
-                let datoString = dato.join(".")
-                list[0] = datoString
-
-                let tid = list[1].split(":")
-                tid.splice(1, 2)
-                let tidString = tid.join()
-                list[1] = tidString
-                return list.join(", kl:")
-            }))
-            setDataset(herVer.map((it: any) => {
-                let precipitation_amount = 0;
-                let probThunder = 0
-                if ( it.data.next_1_hours != undefined) {
-                    precipitation_amount =  it.data.next_1_hours.details.precipitation_amount
-                    probThunder = it.data.next_1_hours.details.probability_of_thunder
-                } else if (it.data.next_6_hours != undefined) {
-                    precipitation_amount =  it.data.next_6_hours.details.precipitation_amount / 6
-                    probThunder = it.data.next_6_hours.details.probability_of_thunder
-                } else {
-                    precipitation_amount =  it.data.next_12_hours.details.precipitation_amount / 12
-                    probThunder = it.data.next_12_hours.details.probability_of_thunder
-                }
-
-                const farge = calcFarge(it.data.instant.details, terskel, airport,
-                    {
-                        precipitation_amount: precipitation_amount,
-                        probThunder: probThunder
-                    })
-
-                switch (farge) {
-                    case "green" : return 1
-                    case "yellow" : return 2
-                    case "red": return 3
-                    default : return 0
-                }
-            }))
-        }
-
-
-    }, [locfor])
-    
-
-    useEffect(() => {
-        if (ver !== undefined) {
-            setDataset(ver.map((it: any) => {
-                let precipitation_amount = 0;
-                let probThunder = 0
-                if ( it.data.next_1_hours !== undefined) {
-                    precipitation_amount =  it.data.next_1_hours?.details.precipitation_amount
-                    probThunder = it.data.next_1_hours?.details.probability_of_thunder
-                } else if (it.data.next_6_hours !== undefined) {
-                    precipitation_amount =  it.data.next_6_hours?.details.precipitation_amount / 6
-                    probThunder = it.data.next_6_hours?.details.probability_of_thunder
-                } else {
-                    precipitation_amount =  it.data.next_12_hours?.details.precipitation_amount / 12
-                    probThunder = it.data.next_12_hours?.details.probability_of_thunder
-                }
-
-                const farge = calcFarge(it.data.instant.details, terskel, airport, {
-                    precipitation_amount: precipitation_amount,
-                    probThunder: probThunder
-                })
-                    switch (farge) {
-                        case "green" : return 1
-                        case "yellow" : return 2
-                        case "red": return 3
-                        default : return 0
-                    }
-            }))
-        }
-    }, [terskel])
-
-    
     const options = {
         maintainAspectRatio: false,
         responsive: true,
@@ -303,31 +169,142 @@ function Tidslinje() {
         ],
     };
 
+    const start = () => {
+        setStarted(true)
+
+    }
+
+    const stop = () => {
+        setStarted(false)
+    }
+
+    const tempSliderHandler = (event: Event, newValue: number | number[]) => {
+        setSliderValue(newValue as number);
+    };
+
+    useEffect(() => {
+        if (ver != undefined) {
+            dispatch(allActions.grafikkAction.setGrafikk(ver[sliderValue]))
+        }
+    }, [sliderValue])
+
+    useEffect(() => {
+        const inteval = setInterval(() => {
+            setStarted((statedIn: any) => {
+
+                if (statedIn) {
+                    setSliderValue((oldValue: any) => {
+                        return oldValue + 1;
+                    })
+
+                }
+                return statedIn
+            })
+        },
+            3000)
+        return () => clearInterval(inteval)
+    }, [])
+
+    useEffect(()=> {
+        if(!airport) return;
+        const herVer = locfor?.properties.timeseries
+        if (herVer != undefined && herVer[0] != undefined) {
+            dispatch(allActions.grafikkAction.setGrafikk(herVer[0]))
+
+            setVer(herVer)
+            setLabels(herVer.map((it: any) => {
+                let string = new Date(it.time).toLocaleString();
+                let list = string.split(",")
+
+                let dato = list[0].split(".")
+                dato.splice(2, 1)
+                let datoString = dato.join(".")
+                list[0] = datoString
+
+                let tid = list[1].split(":")
+                tid.splice(1, 2)
+                let tidString = tid.join()
+                list[1] = tidString
+                return list.join(", kl:")
+            }))
+            setDataset(herVer.map((it: any) => {
+                let precipitation_amount = 0;
+                let probThunder = 0
+                if ( it.data.next_1_hours != undefined) {
+                    precipitation_amount =  it.data.next_1_hours.details.precipitation_amount
+                    probThunder = it.data.next_1_hours.details.probability_of_thunder
+                } else if (it.data.next_6_hours != undefined) {
+                    precipitation_amount =  it.data.next_6_hours.details.precipitation_amount / 6
+                    probThunder = it.data.next_6_hours.details.probability_of_thunder
+                } else {
+                    precipitation_amount =  it.data.next_12_hours.details.precipitation_amount / 12
+                    probThunder = it.data.next_12_hours.details.probability_of_thunder
+                }
+
+                const farge = calcFarge(it.data.instant.details, terskel, airport,
+                    {
+                        precipitation_amount: precipitation_amount,
+                        probThunder: probThunder
+                    })
+
+                switch (farge) {
+                    case "green" : return 1
+                    case "yellow" : return 2
+                    case "red": return 3
+                    default : return 0
+                }
+            }))
+        }
 
 
+    }, [locfor])
+    
+    useEffect(() => {
+        if (ver !== undefined) {
+            setDataset(ver.map((it: any) => {
+                let precipitation_amount = 0;
+                let probThunder = 0
+                if ( it.data.next_1_hours !== undefined) {
+                    precipitation_amount =  it.data.next_1_hours?.details.precipitation_amount
+                    probThunder = it.data.next_1_hours?.details.probability_of_thunder
+                } else if (it.data.next_6_hours !== undefined) {
+                    precipitation_amount =  it.data.next_6_hours?.details.precipitation_amount / 6
+                    probThunder = it.data.next_6_hours?.details.probability_of_thunder
+                } else {
+                    precipitation_amount =  it.data.next_12_hours?.details.precipitation_amount / 12
+                    probThunder = it.data.next_12_hours?.details.probability_of_thunder
+                }
 
+                const farge = calcFarge(it.data.instant.details, terskel, airport, {
+                    precipitation_amount: precipitation_amount,
+                    probThunder: probThunder
+                })
+                    switch (farge) {
+                        case "green" : return 1
+                        case "yellow" : return 2
+                        case "red": return 3
+                        default : return 0
+                    }
+            }))
+        }
+    }, [terskel])
+
+    
 
     // @ts-ignore
     return (
-
         <div>
-            
             <div id='scrollableDiv' style={{width: "100%", overflowX: 'scroll', marginBottom: "5em"}}>
                 <div style={{width: '3000px', height: '500px'}}>
                     {/* @ts-ignore*/}
                     <Line options={options} data={data} />
                 </div>
-
             </div>
             <Button sx={{ mr: 2, backgroundColor: '#0494ac'}} variant="contained" onClick={start}>Animasjon</Button>
             <Button sx={{ mr: 2, backgroundColor: '#0494ac'}} variant="contained" onClick={stop}>Stopp</Button>
-
             {
                 ver !== undefined &&
-
                 <Slider
-
-                    //onChangeCommitted={tempSliderHandler}
                     onChange={tempSliderHandler}
                     defaultValue={0}
                     value={sliderValue}
@@ -335,13 +312,9 @@ function Tidslinje() {
                     min={0}
                     max={ver.length - 1}
 
-                    //marks={SETT INN MARK FOR ALLE TIMER}
                     valueLabelDisplay="auto"
-
                 />
             }
-
-
         </div>
 
   )
