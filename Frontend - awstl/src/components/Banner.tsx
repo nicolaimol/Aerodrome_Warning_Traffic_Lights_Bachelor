@@ -38,7 +38,6 @@ const useStyles = makeStyles((theme) => ({ // Lager style til AutoComplete kompo
 
 export default function Banner() {
 
-  //const [flyplasserList, setFlyplasserList] = useState<flyplasser[]>([]); // Vi skal kunne lage en liste med alle flyplasser som passer til interfacet 'flyplasser'
 
   const classes = useStyles(); // bruker stylingen laget ovenfor
 
@@ -47,14 +46,13 @@ export default function Banner() {
 
   const dispatch = useDispatch(); // statemanager
   const handleChange = (event: React.ChangeEvent<any>, value: any) => {
-    console.log(value)
     if (value !== null) {
       dispatch(allActions.airportAction.setAirport({icao: value.icao, navn: value.label, rwy: value.rwy}))
       const obj = terskel
       obj.flyplass = {icao: value.icao, navn: value.label}
       axios.post(urlTerskel, obj)
           .then((response:any) => {
-              console.log(response)
+
           })
           .catch((error: any) => {
             console.log(error)
@@ -84,8 +82,6 @@ export default function Banner() {
 
   useEffect(() => {
     if (airportList !== undefined) {
-      console.log(airportList)
-      console.log(airportRedux)
 
       setListAirport(airportList.map((it:any) => {
         return {
@@ -113,7 +109,7 @@ export default function Banner() {
   // @ts-ignore
   return (
     <>
-    <div style={{ minHeight: 'fit-content', width: '100%', backgroundColor: '#dff2f6'}}> {/** banneret tar uansett halvparten av skjermen, men om den behøver mer vil den utvides */}
+    <div style={{ minHeight: 'fit-content', width: '100%', backgroundColor: '#dff2f6'}}> 
       <Container sx={{ color: '#0090a8' }}>
         <div style={{ display: 'flex', justifyContent: 'space-evenly', flexFlow: 'row wrap', alignItems: 'center'}}> {/** Denne div-en inneholder tittel og AutoComplete komponent */}
         {/** Tittel */}

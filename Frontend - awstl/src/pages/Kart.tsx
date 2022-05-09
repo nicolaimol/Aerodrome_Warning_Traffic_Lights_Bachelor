@@ -8,6 +8,7 @@ import React, { SyntheticEvent, useEffect, useState } from 'react'
 function Kart() {
 
     const [radarPos, setRadarPos] = React.useState('eastern_norway');
+    const [radarPosNorsk, setRadarPosNorsk] = React.useState('Øst-Norge');
     const [open, setOpen] = React.useState(false);
     const [openTo, setOpenTo] = React.useState(false);
 
@@ -110,22 +111,16 @@ function Kart() {
 
         return () => window.removeEventListener('resize', () => {});
 
+
     }, [])
 
     
     const [sliderUrl, setSliderUrl] = React.useState<string>("");
 
-    //let sliderUrl = `https://api.met.no/weatherapi/radar/2.0/?type=preciptype&area=central_norway&time=${dato.getUTCFullYear()}-${month}-${day}T${hour}:${minute}:00Z`;
-    //               https://api.met.no/weatherapi/radar/2.0/?type=accumulated_01h&area=central_norway&time=2022-04-22T05:00:00Z
-    console.log(sliderUrl);
-
     const [sliderValue, setSliderValue] = React.useState<number>(180);
 
     const handleSliderChange = (event: Event, newValue: number | number[]) => {
-        //const date = new Date(Math.round(new Date().getTime() / (1000*60*5))* (1000*60*5))
-        //date.setMinutes(date.getMinutes() - (180 - (newValue as number)))
 
-        //setDato(date);
         setSliderValue(newValue as number);
     };
 
@@ -140,7 +135,6 @@ function Kart() {
     useEffect(() => {
         let month, day, hour, minute;
 
-        console.log(dato);
 
             if (dato.getUTCMonth() < 10) {
                 month = '0' + (dato.getUTCMonth() + 1);
@@ -366,7 +360,7 @@ function Kart() {
     <>
         <Container>
             <Typography sx={{ color: '#0090a8', fontSize: 40, textAlign: 'center', mt: 5}}>
-                Kart
+                Kart - {!openTo ? radarPosNorsk: "Sigchart"}
             </Typography>
             <Divider sx={{ mb: 5 }} />
             <div style={{ marginTop: '2em', display: 'flex', justifyContent: 'space-evenly', textAlign: 'center', flexWrap: 'wrap', flexDirection: 'row'}}>
@@ -376,10 +370,10 @@ function Kart() {
                             <ListItemText primary="Sigchart" />
                         </ListItemButton>
                         <ListItemButton onClick={disabledGIFHandler}>
-                            <ListItemText primary={"Endre radar til " + (disabledGIF ? 'GIF' : 'statisk bilde')}  />
+                            <ListItemText primary={"Endre radar til " + (disabledGIF ? 'animasjon' : 'statisk bilde')}  />
                         </ListItemButton>
                         <ListItemButton onClick={handleClick}>
-                            <ListItemText primary="Radar" />
+                            <ListItemText primary="Værradar" />
                             {open ? <ExpandLess /> : <ExpandMore />}
                         </ListItemButton>
 
@@ -387,7 +381,7 @@ function Kart() {
                     <List >
                         {steder.map(sted => (
                             <ListItem key={sted.pos}>
-                                <ListItemButton onClick={() => {setRadarPos(sted.pos); setOpenTo(false);}}>
+                                <ListItemButton onClick={() => {setRadarPos(sted.pos); setRadarPosNorsk(sted.navn); setOpenTo(false);}}>
                                     {sted.navn}
                                 </ListItemButton>
                             </ListItem>
@@ -404,7 +398,7 @@ function Kart() {
                     defaultValue={170}
                     //getAriaValueText={}
                     value={sliderValue}
-                    disabled={!disabledGIF}
+                    disabled={!disabledGIF || openTo}
                     onChange={handleSliderChange}
                     onChangeCommitted={handleSliderChangeCommit}
                     step={5}

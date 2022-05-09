@@ -34,7 +34,7 @@ function VisSatteTerskelverdier(props:{terskel: terskelData}) {
       terskelverdier.push(['Nedbør', `${props.terskel.precipitationMin}, ${props.terskel.precipitationMax}`, 'mm'])
     }
     if (props.terskel.windSpeedActive){
-      terskelverdier.push(['Vindfart', `${props.terskel.windSpeedMin}, ${props.terskel.windSpeedMax}`, 'kt'])
+      terskelverdier.push(['Vindhastighet', `${props.terskel.windSpeedMin}, ${props.terskel.windSpeedMax}`, 'kt'])
     }
     if (props.terskel.windGustActive){
       terskelverdier.push(['Vindkast', `${props.terskel.windGustMin}, ${props.terskel.windGustMax}`, 'kt'])

@@ -62,9 +62,6 @@ function PilotVelgDepArvl(props: any) {
 
   const printTid = tilTime + ':' + minutt;
 
-  console.log('AvgangsTid', printTid);
-  console.log('AnkomstTid', printAnkomstTid);
-
   const [fra, setFra] = useState<string>(printTid)
   const [til, setTil] = useState<string>(printAnkomstTid)
 
@@ -75,7 +72,6 @@ function PilotVelgDepArvl(props: any) {
 
   const handleEndretTidTil = (event: any) => {
   setTil(event.target.value as string)
-    console.log(event.target.value)
     props.updateTil(event.target.value as string)
   }
 

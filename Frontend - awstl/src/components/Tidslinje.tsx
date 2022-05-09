@@ -53,13 +53,11 @@ function Tidslinje() {
     let scroll = document.getElementById("scrollableDiv")
 
     scroll?.addEventListener("wheel", (evt: any) => {
-        //evt.preventDefault()
 
         if (Math.abs(evt.deltaY) > Math.abs(evt.deltaX)) {
 
             if ((evt.deltaY < 0 && scroll!!.scrollLeft == 0)) {
-                //evt.preventDefault()
-                //scroll!!.scrollLeft += (evt.deltaY/4);
+
                 return
             }
 
@@ -67,7 +65,6 @@ function Tidslinje() {
                 return
             }
 
-            //console.log(evt.deltaY > 0 , scroll!!.scrollLeft == 2144)
             evt.preventDefault()
             scroll!!.scrollLeft += (evt.deltaY/4);
 
@@ -98,33 +95,11 @@ function Tidslinje() {
     const start = () => {
         setStarted(true)
 
-        /*
-        index = sliderValue
-        setSliderValue(index);
-        console.log(started)
-        if (!started) {
-            setInt(setInterval(update, 1000))
-            setStarted(true)
-        }
-         */
-
     }
 
-    const update = () => {
-        /*
-        dispatch(allActions.grafikkAction.setGrafikk(ver[index]))
-        index = (index + 1) % ver.length
-        setSliderValue(index-1)
-        console.log(sliderValue)
-         */
-    }
 
     const stop = () => {
         setStarted(false)
-        /*
-        clearInterval(int)
-        setInt(null)
-         */
     }
 
     const tempSliderHandler = (event: Event, newValue: number | number[]) => {
@@ -141,28 +116,11 @@ function Tidslinje() {
 
         const inteval = setInterval(() => {
             setStarted((statedIn: any) => {
-                //console.log(statedIn)
 
                 if (statedIn) {
                     setSliderValue((oldValue: any) => {
-                        console.log(oldValue)
                         return oldValue + 1;
                     })
-                    /*
-                    setSliderValue((oldValue: any) => {
-                        setVer((oldVer: any) => {
-                            if (oldVer != undefined) {
-                                dispatch(allActions.grafikkAction.setGrafikk(oldVer[oldValue]))
-                            } else {
-                                console.log("ingen ver")
-                            }
-
-                            return oldVer
-                        })
-
-                        return oldValue
-                    })
-                     */
 
                 }
                 return statedIn
@@ -173,26 +131,7 @@ function Tidslinje() {
 
 
         return () => clearInterval(inteval)
-        /*{
-            console.log("exit")
-            setStarted((oldValue:any) => {
-                if (oldValue) {
-                    console.log("started")
-                    setInt((old: any) => {
-                        stop()
-                        clearInterval(old)
-                        console.log("old", old)
-                        return null
-                    })
-                } else {
-                    console.log("not started")
-                }
 
-                return false
-            })
-            console.log("done")
-        }
-         */
     }, [])
 
 
@@ -209,12 +148,10 @@ function Tidslinje() {
             setLabels(herVer.map((it: any) => {
                 let string = new Date(it.time).toLocaleString();
                 let list = string.split(",")
-                //console.table(list)
 
                 let dato = list[0].split(".")
                 dato.splice(2, 1)
                 let datoString = dato.join(".")
-                //console.log(datoString)
                 list[0] = datoString
 
                 let tid = list[1].split(":")
@@ -302,7 +239,6 @@ function Tidslinje() {
         onClick: function (evt: any, ctx: any) {
             dispatch(allActions.grafikkAction.setGrafikk(ver[ctx[0].index]))
             setSliderValue(ctx[0].index)
-            //alert(`Du valgte ${labels[ctx[0].index]} med temp ${ver[ctx[0].index]}`)
         },
         scales: {
             y: {
@@ -367,10 +303,6 @@ function Tidslinje() {
         ],
     };
 
-        //dispatch(allActions.grafikkAction.setGrafikk(ver[index]))
-        //index = (index + 1) % ver.length
-        //console.log(index)
-    
 
 
 

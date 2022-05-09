@@ -137,7 +137,7 @@ function TerskelForm() {
         />
       </div>
       <div style={{ width: "calc(100% - 40px)", padding:"5px 20px", backgroundColor: "#dff2f6" }}>
-          <span style={{color: "#0090a8"}}><Checkbox onChange={handleCheckboxEndring('windSpeedActive')} checked={formVerdier.windSpeedActive}/>Vindfart {terskel.windSpeedMin}, {terskel.windSpeedMax}</span>
+          <span style={{color: "#0090a8"}}><Checkbox onChange={handleCheckboxEndring('windSpeedActive')} checked={formVerdier.windSpeedActive}/>Vindhastighet {terskel.windSpeedMin}, {terskel.windSpeedMax}</span>
         <SliderWrapper
 
             minValue={terskel.windSpeedMin}

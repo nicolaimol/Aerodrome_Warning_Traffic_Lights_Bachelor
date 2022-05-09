@@ -26,7 +26,8 @@ function TafMetar(props: any) {
                 setTafmetar(response.data)
             })
             .catch((error:any) => {
-                if (error.status === 400) {
+                console.log(error.response)
+                if (error.response.status === 400) {
                     setTafmetar(null)
                 }
             })
@@ -45,14 +46,14 @@ function TafMetar(props: any) {
     return (
         <div>
             { tafmetar != null &&
-                <TableContainer elevation={0} component={Paper}>
+                <TableContainer style={props.styles !== undefined ? props.styles: {}} elevation={0} component={Paper}>
                     <Table >
                         <TableBody>
                             {
                                 rows.map((row: any) => (
-                                    <TableRow key={row.name} >
-                                        <TableCell component="th" scope="row" >{row.name}</TableCell>
-                                        <TableCell>{row.value}</TableCell>
+                                    <TableRow key={row.name}  >
+                                        <TableCell style={props.styles !== undefined ? props.styles : {} } component="th" scope="row" >{row.name}</TableCell>
+                                        <TableCell style={props.styles !== undefined ? props.styles : {} }>{row.value}</TableCell>
                                     </TableRow>
                                 ))
                             }
@@ -61,7 +62,7 @@ function TafMetar(props: any) {
                 </TableContainer>
             }
             { tafmetar == null &&
-                <Typography variant="h6">
+                <Typography style={props.styles !== undefined ? props.styles : {} } variant="h6">
                     Taf og metar er ikke tilgjengelig
                 </Typography>
 
