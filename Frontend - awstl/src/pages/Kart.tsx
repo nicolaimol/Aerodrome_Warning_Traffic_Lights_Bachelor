@@ -117,17 +117,10 @@ function Kart() {
     
     const [sliderUrl, setSliderUrl] = React.useState<string>("");
 
-    //let sliderUrl = `https://api.met.no/weatherapi/radar/2.0/?type=preciptype&area=central_norway&time=${dato.getUTCFullYear()}-${month}-${day}T${hour}:${minute}:00Z`;
-    //               https://api.met.no/weatherapi/radar/2.0/?type=accumulated_01h&area=central_norway&time=2022-04-22T05:00:00Z
-    console.log(sliderUrl);
-
     const [sliderValue, setSliderValue] = React.useState<number>(180);
 
     const handleSliderChange = (event: Event, newValue: number | number[]) => {
-        //const date = new Date(Math.round(new Date().getTime() / (1000*60*5))* (1000*60*5))
-        //date.setMinutes(date.getMinutes() - (180 - (newValue as number)))
 
-        //setDato(date);
         setSliderValue(newValue as number);
     };
 
@@ -142,7 +135,6 @@ function Kart() {
     useEffect(() => {
         let month, day, hour, minute;
 
-        console.log(dato);
 
             if (dato.getUTCMonth() < 10) {
                 month = '0' + (dato.getUTCMonth() + 1);
