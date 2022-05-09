@@ -40,11 +40,9 @@ function DrawerTerskelverdier() {
 
         obj.flyplass = airport
 
-        console.log(obj)
-
         axios.post(url, obj)
             .then((response) => {
-                console.log(response)
+
             })
             .catch((error) => {
                 console.log(error)
