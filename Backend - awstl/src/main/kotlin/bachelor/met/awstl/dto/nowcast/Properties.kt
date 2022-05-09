@@ -4,5 +4,5 @@ import java.io.Serializable
 
 class Properties: Serializable {
 
-    lateinit var timeseries: Array<Timeseries>
+    var timeseries: Array<Timeseries>? = null
 }
