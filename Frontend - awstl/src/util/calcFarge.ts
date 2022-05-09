@@ -25,7 +25,7 @@ export const calcFarge = ( data?: any, terskelverdier?: any, flyplass?: any, mor
     if (terskelverdier.precipitationActive){
         if (more.precipitation_amount > terskelverdier?.precipitationMax) {
             red.push("precipitation")
-        } else if (more.precipitation_amount < terskelverdier?.precipitationMin || more.precipitation_amount == 0) {
+        } else if (more.precipitation_amount < terskelverdier?.precipitationMin || more.precipitation_amount == 0 || more.precipitation_amount == null) {
             green.push("precipitation")
         } else {
             yellow.push("precipitation")
@@ -57,7 +57,7 @@ export const calcFarge = ( data?: any, terskelverdier?: any, flyplass?: any, mor
     if (terskelverdier.probThunderActive){
         if (more.probThunder > terskelverdier?.probThunderMax) {
             red.push("prob thunder")
-        } else if (more.probThunder < terskelverdier?.probThunderMin) {
+        } else if (more.probThunder < terskelverdier?.probThunderMin || more.probThunder === undefined) {
             green.push("prob thunder")
         } else {
             yellow.push("prob thunder")
@@ -87,7 +87,6 @@ export const calcFarge = ( data?: any, terskelverdier?: any, flyplass?: any, mor
             yellow.push("crosswind")
         }
     }
-
     
     if (red.length > 0 || yellow.length >= 4) return "red";
     if (yellow.length > 0) return "yellow";
