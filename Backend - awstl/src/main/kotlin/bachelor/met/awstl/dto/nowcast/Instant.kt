@@ -4,5 +4,5 @@ import java.io.Serializable
 
 class Instant: Serializable {
 
-    lateinit var details: Details
+    var details: HashMap<String, Double>? = null
 }
