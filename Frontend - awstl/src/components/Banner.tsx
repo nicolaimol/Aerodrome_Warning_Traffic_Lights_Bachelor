@@ -40,11 +40,18 @@ export default function Banner() {
 
 
   const classes = useStyles(); // bruker stylingen laget ovenfor
-
-  const terskel = useSelector((state:any) => state.terskel.value)
   const urlTerskel = "/api/terskel"
 
   const dispatch = useDispatch(); // statemanager
+
+  const [bannerMobileBool, setBannerMobileBool] = React.useState(false);
+  const [listAirport, setListAirport] = useState([])
+  const [selectedAirport, setSelectedAirport] = useState<any>(null)
+
+  const terskel = useSelector((state:any) => state.terskel.value)
+  const airportRedux = useSelector((state:any) => state.airport.value)
+  const airportList = useSelector((state:any) => state.airportList.value)
+
   const handleChange = (event: React.ChangeEvent<any>, value: any) => {
     if (value !== null) {
       dispatch(allActions.airportAction.setAirport({icao: value.icao, navn: value.label, rwy: value.rwy}))
@@ -59,13 +66,6 @@ export default function Banner() {
           })
     }
   }
-
-
-
-  const airportRedux = useSelector((state:any) => state.airport.value)
-  const airportList = useSelector((state:any) => state.airportList.value)
-  const [listAirport, setListAirport] = useState([])
-  const [selectedAirport, setSelectedAirport] = useState<any>(null)
 
   useEffect(() => {
     if (airportRedux != null) {
@@ -93,8 +93,6 @@ export default function Banner() {
     }
   },[airportList])
 
-  const [bannerMobileBool, setBannerMobileBool] = React.useState(false); 
-
   useEffect(() => {
 
   (window.innerWidth > 400) ? setBannerMobileBool(false) : setBannerMobileBool(true);
@@ -112,7 +110,7 @@ export default function Banner() {
     <div style={{ minHeight: 'fit-content', width: '100%', backgroundColor: '#dff2f6'}}> 
       <Container sx={{ color: '#0090a8' }}>
         <div style={{ display: 'flex', justifyContent: 'space-evenly', flexFlow: 'row wrap', alignItems: 'center'}}> {/** Denne div-en inneholder tittel og AutoComplete komponent */}
-        {/** Tittel */}
+          {/** Tittel */}
           <Typography style={{ maxWidth: '60%', textAlign: 'left'}} sx={{ pt: 5}} component="h1" variant={bannerMobileBool ? 'h4' : 'h3'} color="inherit" gutterBottom>
             Aerodrome Warning Traffic Light System (prototype*)
           </Typography>
@@ -137,20 +135,17 @@ export default function Banner() {
             renderInput={(params) => <TextField {...params} label="Velg flyplass"
             // @ts-ignore
             />}
-          />
+            />
           </div>
-          
         </div>
         <p>*Dette er en tjeneste som er en prototype og ikke operasjonell</p>
 
         {/** Beskrivelse av nettsiden */}
-
-      <Typography sx={{ pb: 5}} style={{textAlign: 'center'}} variant="h5" color="inherit" paragraph>
-        Dette er en tjeneste for å fortelle om det er trygt med aktivitet på en flyplass i Norge.
-      </Typography>
+        <Typography sx={{ pb: 5}} style={{textAlign: 'center'}} variant="h5" color="inherit" paragraph>
+          Dette er en tjeneste for å fortelle om det er trygt med aktivitet på en flyplass i Norge.
+        </Typography>
     </Container>
     </div>
-    
     </>
   );
 }
