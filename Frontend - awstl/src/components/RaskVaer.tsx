@@ -55,7 +55,7 @@ function RaskVaer() {
       <div className={styles.vaerGrid}>
         { vdata != null && 
           vdata.nowcasts.map((flyplass, index) => {
-            return <VaerBox key={index} properties={flyplass.properties} airports={vdata.airports[index]} ></VaerBox>
+            return <VaerBox key={index} properties={flyplass.properties} airports={vdata.airports[index]} stjerne={ index === 0 ? true : false} ></VaerBox>
           })}
       </div>  
     </Container>
