@@ -6,5 +6,6 @@ interface weatherNowAirport {
         timeseries: weatherTimeseries[]
     }
     airports: airports
+    stjerne: boolean
 }
 export default weatherNowAirport;
