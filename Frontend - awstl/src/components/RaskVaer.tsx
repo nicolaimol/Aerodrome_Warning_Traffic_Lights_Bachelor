@@ -40,38 +40,6 @@ function RaskVaer() {
       setVData(nowcast)
   },[nowcast])
 
-  /*
-  useEffect(() => {
-    if (nowcast === null || nowcast === undefined) {
-      axios.get(`${url}ENDU`) // Henter værdata for 3 flyplasser + en egendefinert
-      .then((response) => {
-        setVData(response.data); // Setter værdata
-        dispatch(allActions.nowcastAction.setNowcast(response.data))
-        console.log("henter fra server")
-      })
-    } else {
-      console.log("har fra redux") // Trenger ikke så lenge vi allerede har dataen
-      setVData(nowcast)
-    }
-  },[])
-
-   */
-
-    /*
-  useEffect(() => {
-    if (time > 0 && airportRedux != null && airportRedux != undefined) {
-      axios.get(`${url}${airportRedux?.icao}`)
-        .then((response: any) => {
-          setVData(response.data);
-          dispatch(allActions.nowcastAction.setNowcast(response.data))
-          console.log("henter fra server")
-      })
-    } 
-    setTime(1)
-  }, [airportRedux])
-
-     */
-
 
   return (
     <>
@@ -90,7 +58,6 @@ function RaskVaer() {
             })}
         </div>
         
-        { /* <VaerBox navn="Gardermoen" beskrivelse="Hei" temperatur={1} styrke="100" retning="øst" ikonNavn="clearsky_polartwilight.svg"/> */ }
     </Container>
     </>
   )
