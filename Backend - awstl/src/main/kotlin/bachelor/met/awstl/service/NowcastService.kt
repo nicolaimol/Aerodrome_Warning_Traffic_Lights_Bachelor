@@ -1,7 +1,8 @@
 package bachelor.met.awstl.service
 
+import bachelor.met.awstl.dto.LocationForecastDto
 import bachelor.met.awstl.dto.NowcastDto
-import bachelor.met.awstl.dto.nowcast.Nowcast
+import bachelor.met.awstl.dto.nowcast.*
 import bachelor.met.awstl.enum.Cache
 import bachelor.met.awstl.mapper.FlyplassToFlyplassDto
 import bachelor.met.awstl.model.Flyplass
@@ -10,22 +11,27 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
+import org.springframework.web.client.HttpClientErrorException
 import kotlin.collections.HashMap
 
 @Service
 class NowcastService(
-    val httpService: HttpService,
-    val sercice: FlyplassService,
-    val cacheService: CacheService) {
+    private val httpService: HttpService,
+    private val sercice: FlyplassService,
+    private val cacheService: CacheService,
+    private val locforService: LocationForecastService) {
 
     @Value("\${nowcast}")
     var url = ""
+
+    @Value("\${location.forecast}")
+    var locationForecast = ""
 
     val logger: Logger = LoggerFactory.getLogger(NowcastService::class.java)
 
 
     fun getNowcast(icao: String): NowcastDto {
-        val dto = NowcastDto();
+        val dto = NowcastDto()
         val stdFlyplasser = arrayListOf("ENGM", "ENBR", "ENVA")
 
         if (icao.uppercase() in stdFlyplasser) {
@@ -45,17 +51,6 @@ class NowcastService(
 
             getWeather(airports, dto)
 
-            /*
-            dto.nowcasts.forEach { it ->
-                it.properties.timeseries.forEach { innerIt ->
-                    run {
-                        val element = innerIt.data.instant.details
-                        element.wind_speed = element.wind_speed * 1.943844
-                        element.wind_speed_of_gust = element.wind_speed_of_gust * 1.943844
-                    }
-                }
-            }
-             */
 
             return dto
 
@@ -91,7 +86,7 @@ class NowcastService(
 
 
             getForAirport(airport.icao, query)?.let {
-                it.properties.timeseries = it.properties.timeseries.copyOfRange(0, 1);
+                it.properties?.timeseries = it.properties?.timeseries?.copyOfRange(0, 1);
                 dto.nowcasts.add(it)
             }
             dto.airports.add(FlyplassToFlyplassDto.convert(airport))
@@ -102,8 +97,38 @@ class NowcastService(
     @Cacheable(value = ["nowcast"], key = "#icao")
     fun getForAirport(icao: String, query: HashMap<String, String>): Nowcast? {
         logger.info("Nowcast for $icao")
+        try {
+            return httpService.hentData(url, Nowcast::class.java, query, icao, Cache.NOWCAST)
+        }
+        /***
+         * if nowcast is not available for airport, try to get it from location forecast
+         * use only the first forecast
+         */
+        catch (e: HttpClientErrorException.UnprocessableEntity) {
+            logger.error("No nowcast for $icao")
+            val alt = locforService.getForecast(icao)
+            val nowcast = Nowcast()
 
-        return httpService.hentData(url, Nowcast::class.java, query, icao, Cache.NOWCAST)
+            val instant = Instant()
+            instant.details = alt?.properties?.timeseries?.get(0)?.data?.instant?.details!!
+
+            val data = Data()
+            data.instant = instant
+            val nextOneHours = NextOneHours()
+            nextOneHours.summary = Summary()
+            nextOneHours!!.summary!!.symbol_code = alt?.properties?.timeseries?.get(0)?.data?.next_1_hours?.summary?.symbol_code!!
+            data.next_1_hours = nextOneHours
+
+            val timeseries = Timeseries()
+            timeseries.data = data
+
+            val properties = Properties()
+            properties.timeseries = arrayOf(timeseries, Timeseries())
+
+            nowcast.properties = properties
+
+            return nowcast
+        }
 
     }
 }
