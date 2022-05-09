@@ -83,9 +83,14 @@ function App() {
         urlAirport = '/api/airport'
     }
 
-
-
     const [error, setError] = useState(false)
+    const nowcast = useSelector((state: any) => state.nowcast.value)
+    const airport = useSelector((state: any) => state.airport.value)
+
+    let ikonpath:string = "/weatherIcons/";
+    ikonpath += nowcast?.nowcasts[0].properties.timeseries[0].data.next_1_hours.summary.symbol_code + ".svg"; // Setter riktig ikon avhengig data
+    let temperatureColor = nowcast?.nowcasts[0].properties.timeseries[0].data.instant.details.air_temperature < 0 ? '#006edb' : '#c80a0a'; // Er det pluss eller minus grader? farge avhenger av dette
+
 
     useEffect(() => {
 
@@ -118,10 +123,6 @@ function App() {
             })
 
     }, [])
-
-
-    const nowcast = useSelector((state: any) => state.nowcast.value)
-    const airport = useSelector((state: any) => state.airport.value)
 
     useEffect(() => {
         if (airport !== undefined && airport.icao !== undefined) {
@@ -169,12 +170,6 @@ function App() {
         }
 
     },[airport])
-
-    let ikonpath:string = "/weatherIcons/";
-    ikonpath += nowcast?.nowcasts[0].properties.timeseries[0].data.next_1_hours.summary.symbol_code + ".svg"; // Setter riktig ikon avhengig data
-
-    let temperatureColor = nowcast?.nowcasts[0].properties.timeseries[0].data.instant.details.air_temperature < 0 ? '#006edb' : '#c80a0a'; // Er det pluss eller minus grader? farge avhenger av dette
-
 
     return (
     <div className="outer" style={{display: 'flex', minHeight: "100vh", flexDirection: "column", position: "relative"}}>
@@ -230,10 +225,6 @@ function App() {
                 </div>
 
             }
-
-
-
-
       <div style={{flexGrow: 1, display: 'flex', flexDirection: 'column'}}>
         <Routes>
             {/*
@@ -243,7 +234,6 @@ function App() {
                 <Route path="/  " element={<ShowInput />} />
 
             */}
-
           <Route path="/flyplass" element={<Trafikklys />} />
           <Route path="/rute" element={<Pilot />} />
           <Route path="/kart" element={<Kart />} />
@@ -251,15 +241,8 @@ function App() {
           <Route path="*" element={<Error />} />
         </Routes>
       </div>
-        
-      
-      
-
       <Footer />
-
     </div>
-
-      
   );
 }
 
