@@ -23,7 +23,7 @@ function VaerBox(props:weatherNowAirport) { // Værboksen tar inn props med 'wea
             avatar={ <StarIcon></StarIcon> } Denne skal kun på favoritt!!
         */
        /** Kortets tittel (denne printes) */
-            title={props.airports.navn}
+        title={props.airports.navn}
         />
         <div style={{ display: 'flex', justifyContent: 'center'}}> {/** Div med hele kortet */}
             <CardContent>
@@ -57,7 +57,6 @@ function VaerBox(props:weatherNowAirport) { // Værboksen tar inn props med 'wea
                 </Box>
             </CardContent>
         </div>
-        
     </Card>
     </>
   )
