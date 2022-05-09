@@ -4,5 +4,5 @@ import java.io.Serializable
 
 class Nowcast: Serializable {
 
-    lateinit var properties: Properties
+    var properties: Properties? = null
 }
