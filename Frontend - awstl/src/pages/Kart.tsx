@@ -7,21 +7,17 @@ import React, { SyntheticEvent, useEffect, useState } from 'react'
 
 function Kart() {
 
+    const startDato = new Date()
+
     const [radarPos, setRadarPos] = React.useState('eastern_norway');
     const [radarPosNorsk, setRadarPosNorsk] = React.useState('Øst-Norge');
     const [open, setOpen] = React.useState(false);
     const [openTo, setOpenTo] = React.useState(false);
-
     const [sliderBool, setSliderBool] = React.useState(false);
-
-    const handleClick = () => {
-        setOpen(!open);
-      };
-
-    const handleClickTo = () => {
-        setOpenTo(true);
-    };
-
+    const [dato, setDato] = React.useState<Date>(new Date(Math.round(startDato.getTime() / (1000*60*5))* (1000*60*5)));
+    const [sliderUrl, setSliderUrl] = React.useState<string>("");
+    const [sliderValue, setSliderValue] = React.useState<number>(180);
+    const [disabledGIF, setDisabledGIF] = React.useState<boolean>(true);
 
     const steder = [{
         navn: 'Øst-Norge',
@@ -72,92 +68,7 @@ function Kart() {
         pos: 'southwestern_norway',
     },]
 
-   
-
-    const startDato = new Date()
-    const [dato, setDato] = React.useState<Date>(new Date(Math.round(startDato.getTime() / (1000*60*5))* (1000*60*5)));
-
-    
-
-    useEffect(() => {
-        let month, day, hour, minute;
-
-        dato.setMinutes(dato.getMinutes() - 10);
-        //dato.setMonth(dato.getMonth() + 1);
-
-        if (dato.getUTCMonth() < 10) {
-            month = '0' + (dato.getUTCMonth() + 1);
-        } else {month = (dato.getUTCMonth() + 1);}
-
-        if (dato.getUTCDate() < 10) {
-            day = '0' + dato.getUTCDate();
-        } else {day = dato.getUTCDate();}
-
-        if (dato.getUTCHours() < 10) {
-            hour = '0' + dato.getUTCHours();
-        } else {hour = dato.getUTCHours();}
-
-        if ((dato.getUTCMinutes()) < 10) {
-            minute = '0' + dato.getUTCMinutes();
-        } else {minute = dato.getUTCMinutes();}
-
-        setSliderUrl(`https://api.met.no/weatherapi/radar/2.0/?type=preciptype&area=${radarPos}&time=${dato.getUTCFullYear()}-${month}-${day}T${hour}:${minute}:00Z`);
-
-        (window.innerWidth > 720) ? setSliderBool(false) : setSliderBool(true);
-
-        window.addEventListener('resize', () => {
-            (window.innerWidth > 720) ? setSliderBool(false) : setSliderBool(true);
-        });
-
-        return () => window.removeEventListener('resize', () => {});
-
-
-    }, [])
-
-    
-    const [sliderUrl, setSliderUrl] = React.useState<string>("");
-
-    const [sliderValue, setSliderValue] = React.useState<number>(180);
-
-    const handleSliderChange = (event: Event, newValue: number | number[]) => {
-
-        setSliderValue(newValue as number);
-    };
-
-    const handleSliderChangeCommit = (event: Event | SyntheticEvent, newValue: number | number[]) => {
-        const date = new Date(Math.round(new Date().getTime() / (1000*60*5))* (1000*60*5))
-        date.setMinutes(date.getMinutes() - (180 - (newValue as number)))
-
-        setDato(date);
-
-    }
-
-    useEffect(() => {
-        let month, day, hour, minute;
-
-
-            if (dato.getUTCMonth() < 10) {
-                month = '0' + (dato.getUTCMonth() + 1);
-            } else {month = (dato.getUTCMonth() + 1);}
-        
-            if (dato.getUTCDate() < 10) {
-                day = '0' + dato.getUTCDate();
-            } else {day = dato.getUTCDate();}
-        
-            if (dato.getUTCHours() < 10) {
-                hour = '0' + dato.getUTCHours();
-            } else {hour = dato.getUTCHours();}
-        
-            if ((dato.getUTCMinutes()) < 10) {
-                minute = '0' + dato.getUTCMinutes();
-            } else {minute = dato.getUTCMinutes();}
-
-            setSliderUrl(`https://api.met.no/weatherapi/radar/2.0/?type=preciptype&area=${radarPos}&time=${dato.getUTCFullYear()}-${month}-${day}T${hour}:${minute}:00Z`);
-
-
-        },[dato, radarPos]);
-
-        const sliderMarksLabel = [
+    const sliderMarksLabel = [
             {
               value: 170,
               label: 'Siste',
@@ -186,9 +97,9 @@ function Kart() {
                 value: 0,
                 label: '-3 t',
             },
-          ];
+    ];
 
-          const sliderMarksLabelMobile = [
+    const sliderMarksLabelMobile = [
             {
               value: 170,
               label: 'Siste',
@@ -201,9 +112,9 @@ function Kart() {
                 value: 0,
                 label: '-3 t',
             },
-          ];
+    ];
 
-        const sliderMarks = [
+    const sliderMarks = [
             {
               value: 170,
               label: '10 minutt siden',
@@ -344,18 +255,95 @@ function Kart() {
                 value: 0,
                 label: '3 timer siden',
             },
-          ];
+    ];
 
-          const formatValue = sliderMarks.find(mark => mark.value === sliderValue);
+    const handleClick = () => {
+        setOpen(!open);
+      };
 
-          //https://api.met.no/weatherapi/radar/2.0/?type=preciptype&area=southern_nordland&time=2022-04-27T05:05:00Z
-          //https://api.met.no/weatherapi/radar/2.0/?type=preciptype&area=southern_nordland&time=2022-04-27T07:25:00Z
+    const handleClickTo = () => {
+        setOpenTo(true);
+    };
 
-          const [disabledGIF, setDisabledGIF] = React.useState<boolean>(true);
+    const handleSliderChange = (event: Event, newValue: number | number[]) => {
+        setSliderValue(newValue as number);
+    };
 
-          const disabledGIFHandler = () => {
-            setDisabledGIF(!disabledGIF);
-        };
+    const handleSliderChangeCommit = (event: Event | SyntheticEvent, newValue: number | number[]) => {
+        const date = new Date(Math.round(new Date().getTime() / (1000*60*5))* (1000*60*5))
+        date.setMinutes(date.getMinutes() - (180 - (newValue as number)))
+
+        setDato(date);
+
+    }
+
+    const disabledGIFHandler = () => {
+        setDisabledGIF(!disabledGIF);
+    };
+
+    const formatValue = sliderMarks.find(mark => mark.value === sliderValue);
+
+    useEffect(() => {
+        let month, day, hour, minute;
+
+        dato.setMinutes(dato.getMinutes() - 10);
+        //dato.setMonth(dato.getMonth() + 1);
+
+        if (dato.getUTCMonth() < 10) {
+            month = '0' + (dato.getUTCMonth() + 1);
+        } else {month = (dato.getUTCMonth() + 1);}
+
+        if (dato.getUTCDate() < 10) {
+            day = '0' + dato.getUTCDate();
+        } else {day = dato.getUTCDate();}
+
+        if (dato.getUTCHours() < 10) {
+            hour = '0' + dato.getUTCHours();
+        } else {hour = dato.getUTCHours();}
+
+        if ((dato.getUTCMinutes()) < 10) {
+            minute = '0' + dato.getUTCMinutes();
+        } else {minute = dato.getUTCMinutes();}
+
+        setSliderUrl(`https://api.met.no/weatherapi/radar/2.0/?type=preciptype&area=${radarPos}&time=${dato.getUTCFullYear()}-${month}-${day}T${hour}:${minute}:00Z`);
+
+        (window.innerWidth > 720) ? setSliderBool(false) : setSliderBool(true);
+
+        window.addEventListener('resize', () => {
+            (window.innerWidth > 720) ? setSliderBool(false) : setSliderBool(true);
+        });
+
+        return () => window.removeEventListener('resize', () => {});
+
+
+    }, [])
+
+    useEffect(() => {
+        let month, day, hour, minute;
+
+
+            if (dato.getUTCMonth() < 10) {
+                month = '0' + (dato.getUTCMonth() + 1);
+            } else {month = (dato.getUTCMonth() + 1);}
+        
+            if (dato.getUTCDate() < 10) {
+                day = '0' + dato.getUTCDate();
+            } else {day = dato.getUTCDate();}
+        
+            if (dato.getUTCHours() < 10) {
+                hour = '0' + dato.getUTCHours();
+            } else {hour = dato.getUTCHours();}
+        
+            if ((dato.getUTCMinutes()) < 10) {
+                minute = '0' + dato.getUTCMinutes();
+            } else {minute = dato.getUTCMinutes();}
+
+            setSliderUrl(`https://api.met.no/weatherapi/radar/2.0/?type=preciptype&area=${radarPos}&time=${dato.getUTCFullYear()}-${month}-${day}T${hour}:${minute}:00Z`);
+
+
+    },[dato, radarPos]);
+
+    
   return (
     <>
         <Container>
@@ -391,7 +379,6 @@ function Kart() {
                     </Collapse>
                     </List>
                 </div>
-                
                 <img style={{objectFit: 'contain', maxWidth: '100%', width: '50em'}} alt='radar' src={openTo ? 'https://api.met.no/weatherapi/sigcharts/2.0/norway' : disabledGIF ? sliderUrl : `https://api.met.no/weatherapi/radar/2.0/?area=${radarPos}&content=animation&type=preciptype`} />
                 <Slider
                     aria-label="Select time"
@@ -411,10 +398,7 @@ function Kart() {
                     sx={{ mt: 5, mb: 5 }}
                 />
             </div>
-
-            
         </Container>
-
     </>
   )
 }
