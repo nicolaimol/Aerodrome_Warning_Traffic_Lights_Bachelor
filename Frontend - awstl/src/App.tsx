@@ -57,11 +57,6 @@ import styles from './style/App.module.css'
 
 function App() {
 
-
-    //const stylet = generateStyle(50, 75, 25, false, true);
-    //console.log(stylet);
-
-
     const dispatch = useDispatch()
 
     let url = ""
@@ -171,7 +166,6 @@ function App() {
                     dispatch(allActions.weatherActions.setWeather(response.data))
                 }) 
 
-            console.log("henter fra server")
         }
 
     },[airport])
