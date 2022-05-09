@@ -17,15 +17,7 @@ function GrafikkPilot(props: {airport:airports, weather:LocationForecast, time: 
     const [weather, setWeather] = useState<Timesery | null>(null)
 
     useEffect(() => {
-        /*
-          props.weather.properties?.timeseries.forEach((it: any) => {
-              console.log(it.time.split("T")[1].split(":")[0] , props.time.split(":")[0], it.time.split("T")[1].split(":")[0] == props.time.split(":")[0])
-              if (it.time.split("T")[1].split(":")[0] == props.time.split(":")[0]) {
-                    setWeather(it)
-                    break
-              }
-          }) 
-          */
+
           let teller = 0;
           if ( props.weather?.properties?.timeseries !== undefined){
             for (const it of props.weather.properties.timeseries) {
@@ -42,7 +34,6 @@ function GrafikkPilot(props: {airport:airports, weather:LocationForecast, time: 
         }
           
     }, [props.time, props.nextDay])
-
 
 
     const terskel = useSelector((state: any) => state.terskel.value);
