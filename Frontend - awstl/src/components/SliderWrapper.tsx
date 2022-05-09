@@ -10,7 +10,6 @@ function checkEqual(prev: any, next: any) {
 
 function SliderWrapper(props: any) {
 
-    //console.log("render", props.field)
 
     const [values, setValue] = useState([props.minValue, props.maxValue])
     const [disabled, setDisabled] = useState<boolean>(props.disabled !== undefined ? props.disabled as boolean : false)
@@ -54,5 +53,3 @@ function SliderWrapper(props: any) {
 }
 
 export default React.memo(SliderWrapper, checkEqual)
-//export default React.memo(SliderWrapper)
-//export default SliderWrapper
