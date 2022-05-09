@@ -20,6 +20,16 @@ function TafMetar(props: any) {
     const url = `/api/tafmetar?icao=${props.icao}`
     const [tafmetar, setTafmetar] = useState<any>(null)
 
+    function createData(name: string, value: any) {
+        return { name, value};
+    }
+
+    const rows = [
+        createData('Taf', tafmetar?.taf),
+        createData('Metar', tafmetar?.metar),
+
+    ];
+    
     useEffect(() => {
         axios.get(url)
             .then((response: any) => {
@@ -32,16 +42,6 @@ function TafMetar(props: any) {
                 }
             })
     }, [props])
-
-    function createData(name: string, value: any) {
-        return { name, value};
-    }
-
-    const rows = [
-        createData('Taf', tafmetar?.taf),
-        createData('Metar', tafmetar?.metar),
-
-    ];
 
     return (
         <div>
@@ -65,7 +65,6 @@ function TafMetar(props: any) {
                 <Typography style={props.styles !== undefined ? props.styles : {} } variant="h6">
                     Taf og metar er ikke tilgjengelig
                 </Typography>
-
             }
         </div>
     );
