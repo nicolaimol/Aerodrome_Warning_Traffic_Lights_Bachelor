@@ -84,6 +84,7 @@ function App() {
     }
 
     const [error, setError] = useState(false)
+    const [activeAirport, setActiveAirport] = useState<any>({})
     const nowcast = useSelector((state: any) => state.nowcast.value)
     const airport = useSelector((state: any) => state.airport.value)
 
@@ -122,16 +123,70 @@ function App() {
                 dispatch(allActions.airportListAction.setAirportList(response.data))
             })
 
+
+        const interval = setInterval(() => {
+            setActiveAirport((old: any) => {
+
+                axios.get(`${urlNowcast}${old.icao}`) // Henter værdata for 3 flyplasser + en egendefinert
+                    .then((response) => {
+                        response.data.nowcasts.map((data: any) =>{
+                            // calculate effective air temperature and set it to the instant object
+                            //if (data.properties.timeseries[0].data.instant.details.air_temperature < 10 && data.properties.timeseries[0].data.instant.details.wind_speed > 1.33) {
+                            data.properties.timeseries[0].data.instant.details.effective_temperature =
+                                (13.12 + (data.properties.timeseries[0].data.instant.details.air_temperature * 0.6215)
+                                    - ((11.37 * Math.pow((data.properties.timeseries[0].data.instant.details.wind_speed * 3.6), 0.16)))
+                                    + ((data.properties.timeseries[0].data.instant.details.air_temperature * 0.3965 ) * (Math.pow((data.properties.timeseries[0].data.instant.details.wind_speed * 3.6), 0.16)))).toPrecision(2)
+                            //}
+
+                            data.properties.timeseries[0].data.instant.details.wind_speed = (data.properties.timeseries[0].data.instant.details.wind_speed * 1.943844).toPrecision(2)
+                            data.properties.timeseries[0].data.instant.details.wind_speed_of_gust = (data.properties.timeseries[0].data.instant.details.wind_speed_of_gust * 1.943844).toPrecision(2)
+
+                        })
+                        dispatch(allActions.nowcastAction.setNowcast(response.data))
+
+                    })
+
+                axios.get(`${urlLocfor}${old.icao}`)
+                    .then((response:any) => {
+
+                        response.data.properties.timeseries.map((data: any) => {
+
+                            // calculate effective air temperature and set it to the instant object
+                            //if (data.properties.timeseries[0].data.instant.details.air_temperature < 10 && data.properties.timeseries[0].data.instant.details.wind_speed > 1.33) {
+                            data.data.instant.details.effective_temperature =
+                                (13.12 + (data.data.instant.details.air_temperature * 0.6215)
+                                    - ((11.37 * Math.pow((data.data.instant.details.wind_speed * 3.6), 0.16)))
+                                    + ((data.data.instant.details.air_temperature * 0.3965 ) * (Math.pow((data.data.instant.details.wind_speed * 3.6), 0.16)))).toPrecision(2)
+
+
+                            //}
+
+
+                            data.data.instant.details.wind_speed = (data.data.instant.details.wind_speed * 1.943844).toPrecision(2);
+                            data.data.instant.details.wind_speed_of_gust = (data.data.instant.details.wind_speed_of_gust * 1.943844).toPrecision(2);
+                        })
+                        dispatch(allActions.weatherActions.setWeather(response.data))
+                    })
+
+                return old
+            })
+        }, 100_000_000)
+
+
+        return () => clearInterval(interval)
+
     }, [])
 
     useEffect(() => {
         if (airport !== undefined && airport.icao !== undefined) {
+
+            setActiveAirport(airport)
             axios.get(`${urlNowcast}${airport.icao}`) // Henter værdata for 3 flyplasser + en egendefinert
                 .then((response) => {
                     response.data.nowcasts.map((data: any) =>{
                         // calculate effective air temperature and set it to the instant object
                         //if (data.properties.timeseries[0].data.instant.details.air_temperature < 10 && data.properties.timeseries[0].data.instant.details.wind_speed > 1.33) {
-                            data.properties.timeseries[0].data.instant.details.effective_temperature = 
+                            data.properties.timeseries[0].data.instant.details.effective_temperature =
                             (13.12 + (data.properties.timeseries[0].data.instant.details.air_temperature * 0.6215)
                              - ((11.37 * Math.pow((data.properties.timeseries[0].data.instant.details.wind_speed * 3.6), 0.16)))
                              + ((data.properties.timeseries[0].data.instant.details.air_temperature * 0.3965 ) * (Math.pow((data.properties.timeseries[0].data.instant.details.wind_speed * 3.6), 0.16)))).toPrecision(2)
@@ -139,25 +194,25 @@ function App() {
 
                         data.properties.timeseries[0].data.instant.details.wind_speed = (data.properties.timeseries[0].data.instant.details.wind_speed * 1.943844).toPrecision(2)
                         data.properties.timeseries[0].data.instant.details.wind_speed_of_gust = (data.properties.timeseries[0].data.instant.details.wind_speed_of_gust * 1.943844).toPrecision(2)
-                        
+
                     })
                     dispatch(allActions.nowcastAction.setNowcast(response.data))
-                   
+
                 })
 
             axios.get(`${urlLocfor}${airport.icao}`)
                 .then((response:any) => {
-                    
+
                     response.data.properties.timeseries.map((data: any) => {
 
                         // calculate effective air temperature and set it to the instant object
                         //if (data.properties.timeseries[0].data.instant.details.air_temperature < 10 && data.properties.timeseries[0].data.instant.details.wind_speed > 1.33) {
-                                data.data.instant.details.effective_temperature = 
+                                data.data.instant.details.effective_temperature =
                                 (13.12 + (data.data.instant.details.air_temperature * 0.6215)
                                 - ((11.37 * Math.pow((data.data.instant.details.wind_speed * 3.6), 0.16)))
                                 + ((data.data.instant.details.air_temperature * 0.3965 ) * (Math.pow((data.data.instant.details.wind_speed * 3.6), 0.16)))).toPrecision(2)
-                             
-                            
+
+
                         //}
 
 
@@ -165,7 +220,7 @@ function App() {
                         data.data.instant.details.wind_speed_of_gust = (data.data.instant.details.wind_speed_of_gust * 1.943844).toPrecision(2);
                     })
                     dispatch(allActions.weatherActions.setWeather(response.data))
-                }) 
+                })
 
         }
 
