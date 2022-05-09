@@ -2,23 +2,16 @@ import '../App.css';
 import React from 'react'
 import styles from '../style/Arbeider.module.css'
 
-// Komponenter
 import ArbeiderKort from './ArbeiderKort';
 
-// MATERIAL UI ---
-
-// MUI Komponenter
 import { Box, Card, CardContent, Typography } from '@mui/material'
 
-// Ikoner
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import FlightIcon from '@mui/icons-material/Flight';
 import MapIcon from '@mui/icons-material/Map';
 import TafMetar from './TafMetar';
 
 import {useDispatch, useSelector} from 'react-redux'
-
-
 
 function Arbeider() {
 
@@ -48,22 +41,20 @@ function Arbeider() {
         return <ArbeiderKort key={personen[0].toString()} arbeider={personen[0].toString()} ikonComp={personen[1]} infoTekst={personen[2] as string} tittel={personen[3] as string} />
       })}
 
-  <Card sx={{ backgroundColor: '#0494ac'}} style={{display: 'flex'}}>
-                  <CardContent style={{ display: 'flex', flexDirection: 'column', flexGrow: 1}}>
-                      {/** Tittel */}
-                      <div style={{display: 'flex', flexDirection: 'column', flexGrow: 1}}>
-                          <Typography sx={{ color: 'white' }} variant="h5">
-                          Taf og metar
-                          </Typography>
-                          <div style={{ marginTop: '2em'}}>
-                            <TafMetar icao={airport?.icao} styles={{ backgroundColor: '#0494ac', color: 'white'}} />
-                          </div>
-                          
-                      </div>
-                  </CardContent>
-    </Card>
-        
-    </div>
+      <Card sx={{ backgroundColor: '#0494ac'}} style={{display: 'flex'}}>
+        <CardContent style={{ display: 'flex', flexDirection: 'column', flexGrow: 1}}>
+          {/** Tittel */}
+          <div style={{display: 'flex', flexDirection: 'column', flexGrow: 1}}>
+            <Typography sx={{ color: 'white' }} variant="h5">
+              Taf og metar
+            </Typography>
+            <div style={{ marginTop: '2em'}}>
+              <TafMetar icao={airport?.icao} styles={{ backgroundColor: '#0494ac', color: 'white'}} />
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+  </div>
     </>
 
   )
