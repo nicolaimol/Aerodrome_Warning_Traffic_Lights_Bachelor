@@ -106,7 +106,7 @@ class NowcastService(
          */
         catch (e: HttpClientErrorException.UnprocessableEntity) {
             logger.error("No nowcast for $icao")
-            val alt = locforService.getForecast(icao)
+            val alt = httpService.hentData(locationForecast, LocationForecastDto::class.java, query, icao, Cache.NOWCAST)
             val nowcast = Nowcast()
 
             val instant = Instant()
