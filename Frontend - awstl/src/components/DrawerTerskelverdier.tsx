@@ -10,6 +10,11 @@ import allActions from '../Actions';
 
 function DrawerTerskelverdier() {
 
+    const formVerdier = useSelector((state: any) => state.terskel.value)
+    const airport = useSelector((state: any) => state.airport.value)
+
+    const dispatch = useDispatch()
+
     type Anchor = 'left'
 
     const [state, setState] = React.useState({
@@ -27,11 +32,6 @@ function DrawerTerskelverdier() {
     } else {
         url = "/api/terskel"
     }
-
-    const formVerdier = useSelector((state: any) => state.terskel.value)
-    const airport = useSelector((state: any) => state.airport.value)
-
-    const dispatch = useDispatch()
 
     const update = () => {
         //dispatch(allActions.terskelActions.setTerskel(formVerdier))
