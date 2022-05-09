@@ -23,9 +23,11 @@ function RaskVaer() {
 
   const nowcast = useSelector((state:any) => state.nowcast.value)
   const airportRedux = useSelector((state:any) => state.airport.value)
+
   const dispatch = useDispatch()
 
   let url = ""
+
   if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') { // Uavhengig om det er local testing eller deployment så fungerer API kall
       if (process.env.REACT_APP_URL_ENV == "prod") {
           url = '/api/nowcast?icao='
@@ -45,19 +47,17 @@ function RaskVaer() {
     <>
     <Container>
       {/** Avbrekker som viser at under fortelles været akkurat nå */}
-            <Typography sx={{ color: '#0090a8', fontSize: 30, textAlign: 'center'}}>
-                Været akkurat nå
-            </Typography>
-            <Divider sx={{ mb: 5}} />
-
-        {/** Lager en 'VaerBox' komponent for hver flyplass vi har hentet værdata fra */}
-        <div className={styles.vaerGrid}>
-          { vdata != null && 
-            vdata.nowcasts.map((flyplass, index) => {
-              return <VaerBox key={index} properties={flyplass.properties} airports={vdata.airports[index]} ></VaerBox>
-            })}
-        </div>
-        
+      <Typography sx={{ color: '#0090a8', fontSize: 30, textAlign: 'center'}}>
+        Været akkurat nå
+      </Typography>
+      <Divider sx={{ mb: 5}} />
+      {/** Lager en 'VaerBox' komponent for hver flyplass vi har hentet værdata fra */}
+      <div className={styles.vaerGrid}>
+        { vdata != null && 
+          vdata.nowcasts.map((flyplass, index) => {
+            return <VaerBox key={index} properties={flyplass.properties} airports={vdata.airports[index]} ></VaerBox>
+          })}
+      </div>  
     </Container>
     </>
   )
