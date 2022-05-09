@@ -74,9 +74,9 @@ function TerskelList(props: any) {
 
         const terskelList = props.list.sort((a:any, b:any) => {
             if (a.updateAt < b.updateAt) {
-                return -1
-            } else if (a.updateAt > b.updateat) {
                 return 1
+            } else if (a.updateAt > b.updateat) {
+                return -1
             }
             return 0
         })
