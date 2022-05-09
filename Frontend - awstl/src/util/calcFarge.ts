@@ -10,14 +10,11 @@ export const calcFarge = ( data?: any, terskelverdier?: any, flyplass?: any, mor
     const yellow = []
     const red = []
 
-    //console.log(terskelverdier!!);
-
 
     if(terskelverdier.airTempActive){
         if (data?.effective_temperature > terskelverdier?.airTempMax) {
         green.push("air temp")
         } else if (data?.effective_temperature < terskelverdier?.airTempMin) {
-            //console.log("air temp", data?.air_temperature)
             red.push("air temp")
         } else {
             yellow.push("air temp")
@@ -27,7 +24,6 @@ export const calcFarge = ( data?: any, terskelverdier?: any, flyplass?: any, mor
 
     if (terskelverdier.precipitationActive){
         if (more.precipitation_amount > terskelverdier?.precipitationMax) {
-            //console.log("precipitation", data?.precipitation_amount)
             red.push("precipitation")
         } else if (more.precipitation_amount < terskelverdier?.precipitationMin || more.precipitation_amount == 0) {
             green.push("precipitation")
@@ -39,7 +35,6 @@ export const calcFarge = ( data?: any, terskelverdier?: any, flyplass?: any, mor
 
     if(terskelverdier.windSpeedActive) {
         if (data?.wind_speed > terskelverdier?.windSpeedMax) {
-            //console.log("wind speed", data?.wind_speed)
             red.push("wind speed")
         } else if (data?.wind_speed < terskelverdier?.windSpeedMin) {
             green.push("wind speed")
@@ -50,20 +45,17 @@ export const calcFarge = ( data?: any, terskelverdier?: any, flyplass?: any, mor
 
     if (terskelverdier.windGustActive){
         if (data?.wind_speed_of_gust > terskelverdier?.windGustMax) {
-            //console.log("wind speed of gust", data?.wind_speed_of_gust)
             red.push("wind gust")
         } else if (data?.wind_speed_of_gust < terskelverdier?.windGustMin || isNaN(data?.wind_speed_of_gust)) {
 
             green.push("wind gust")
         } else {
-            //console.log("wind speed of gust", data?.wind_speed_of_gust)
             yellow.push("wind gust")
         }
     }
 
     if (terskelverdier.probThunderActive){
         if (more.probThunder > terskelverdier?.probThunderMax) {
-            //console.log("prob thunder", more.probThunder)
             red.push("prob thunder")
         } else if (more.probThunder < terskelverdier?.probThunderMin) {
             green.push("prob thunder")
@@ -74,7 +66,6 @@ export const calcFarge = ( data?: any, terskelverdier?: any, flyplass?: any, mor
 
     if (terskelverdier.humidityActive) {
         if (data?.relative_humidity > terskelverdier?.humidityMax) {
-            //console.log("humidity", data?.relative_humidity)
             red.push("humidity")
         } else if (data?.relative_humidity < terskelverdier?.humidityMin) {
             green.push("humidity")
@@ -84,28 +75,11 @@ export const calcFarge = ( data?: any, terskelverdier?: any, flyplass?: any, mor
 
     }
 
-    /*
-    const windDir = data?.wind_from_direction > 0 ?
-        data?.wind_from_direction :
-        360 + data?.wind_from_direction
-
-    const rwyDiff1 = Math.abs(10*Number(flyplass?.rwy?.split("/")[0]) - windDir)
-    const rwyDiff2 = Math.abs(10*Number(flyplass?.rwy?.split("/")[1]) - windDir)
-
-    const cw = data?.wind_speed * Math.sin
-    (   (Math.min(
-        rwyDiff1 ,
-        rwyDiff2
-    ) / 360) * 2 * Math.PI
-    )
-    */
-
     const cw = crosswind(flyplass?.rwy, data?.wind_from_direction, data?.wind_speed);
 
 
     if (terskelverdier.crosswindActive) {
         if (cw > terskelverdier?.crosswindMax) {
-            //console.log("crosswind", cw)
             red.push("crosswind")
         } else if (cw < terskelverdier?.crosswindMin) {
             green.push("crosswind")
