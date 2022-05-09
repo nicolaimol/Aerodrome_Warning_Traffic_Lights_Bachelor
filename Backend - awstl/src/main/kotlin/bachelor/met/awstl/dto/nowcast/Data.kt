@@ -4,6 +4,6 @@ import java.io.Serializable
 
 class Data: Serializable {
 
-    lateinit var instant: Instant
-    lateinit var next_1_hours: NextOneHours
+    var instant: Instant? = null
+    var next_1_hours: NextOneHours? = null
 }
