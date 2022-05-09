@@ -6,6 +6,7 @@ import weatherNowAirport from '../model/weatherNowAirport'
 // Material UI
 import { Card, CardContent, Typography, CardHeader, Box} from '@mui/material'
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
+import StarIcon from '@mui/icons-material/Star';
 
 function VaerBox(props:weatherNowAirport) { // Værboksen tar inn props med 'weatherNowAirport interfacet
 
@@ -18,11 +19,11 @@ function VaerBox(props:weatherNowAirport) { // Værboksen tar inn props med 'wea
     <>
     <Card sx={{ width: '100%', height: "fit-content" }}>
         <CardHeader
-        sx={{ color: '#0090a8', height: "5em"}}
-        /*
-            avatar={ <StarIcon></StarIcon> } Denne skal kun på favoritt!!
-        */
+        sx={{ color: '#0090a8', height: "4em"}}
+        
+        avatar={ props.stjerne === true ? <StarIcon></StarIcon> : (<></>)} 
        /** Kortets tittel (denne printes) */
+        titleTypographyProps={{variant:'h6' }}
         title={props.airports.navn}
         />
         <div style={{ display: 'flex', justifyContent: 'center'}}> {/** Div med hele kortet */}
