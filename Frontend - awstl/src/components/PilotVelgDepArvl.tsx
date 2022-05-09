@@ -30,14 +30,11 @@ const CustomTextFieldTimeInput = styled(TextField)({
   },
 });
 
-
-
 function PilotVelgDepArvl(props: any) {
 
   // Denne logikken setter klokkeslett alltid til nærmeste halvtime framover i tid
 
   const dateNow = new Date().toLocaleString();
-
   const tidNow = dateNow.split(' ')[1].split(':')[0] + ':' + dateNow.split(' ')[1].split(':')[1]
 
   let minutt:string = tidNow.split(':')[1];
@@ -80,24 +77,24 @@ function PilotVelgDepArvl(props: any) {
     <ThemeProvider theme={theme}>
       <div style={{ display: 'flex', justifyContent: 'center', flexFlow: 'column wrap', textAlign: 'center'}}>
         <Typography sx={{ mb: 3 }} variant='h5' color='primary'>
-                Velg tidspunkt for avgang og ankomst
-            </Typography>
-            <div style={{ display: 'flex', justifyContent: 'space-evenly', flexFlow: 'row wrap'}}>
-                <CustomTextFieldTimeInput
-                id="time"
-                label="Avgang"
-                type="time"
-                onChange={handleEndretTidFra}
-                value={fra}
-                InputLabelProps={{
-                shrink: true,
-                }}
-                inputProps={{
-                step: 300, // 5 min
-                }}
-                sx={{ width: 150, mb: 5 }}
-            />
-            <CustomTextFieldTimeInput 
+          Velg tidspunkt for avgang og ankomst
+        </Typography>
+        <div style={{ display: 'flex', justifyContent: 'space-evenly', flexFlow: 'row wrap'}}>
+          <CustomTextFieldTimeInput
+            id="time"
+            label="Avgang"
+            type="time"
+            onChange={handleEndretTidFra}
+            value={fra}
+            InputLabelProps={{
+            shrink: true,
+            }}
+            inputProps={{
+            step: 300, // 5 min
+            }}
+            sx={{ width: 150, mb: 5 }}
+          />
+          <CustomTextFieldTimeInput 
             id="time"
             label="Ankomst"
             type="time"
@@ -110,14 +107,10 @@ function PilotVelgDepArvl(props: any) {
             step: 300, // 5 min
             }}
             sx={{ width: 150, mb: 5 }}
-            />
-
-            </div>
-    </div>
+          />
+        </div>
+      </div>
     </ThemeProvider>
-    
-    
-    
     </>
   )
 }
