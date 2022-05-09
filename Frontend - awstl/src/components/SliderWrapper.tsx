@@ -10,21 +10,17 @@ function checkEqual(prev: any, next: any) {
 
 function SliderWrapper(props: any) {
 
-
     const [values, setValue] = useState([props.minValue, props.maxValue])
     const [disabled, setDisabled] = useState<boolean>(props.disabled !== undefined ? props.disabled as boolean : false)
-
 
     const changeVisual = (event?: Event, verdi?: any) => {
         setValue(verdi)
     }
 
-
     useEffect(() => {
         setValue([props.minValue, props.maxValue])
         setDisabled(!props.disabled)
     }, [props])
-
 
     return (
 
@@ -47,9 +43,6 @@ function SliderWrapper(props: any) {
         marks={props.marks}
         valueLabelDisplay="auto"
     />
-
     )
-
 }
-
 export default React.memo(SliderWrapper, checkEqual)
