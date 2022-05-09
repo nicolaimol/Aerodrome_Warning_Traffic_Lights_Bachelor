@@ -38,8 +38,8 @@ function GrafikkPilot(props: {airport:airports, weather:LocationForecast, time: 
                 }
             }            
         }
-          
-    }, [props.time, props.nextDay])
+          console.log("update weather")
+    }, [props.airport, props.time, props.nextDay])
 
     useEffect(() => {
         if (weather != undefined) {
@@ -175,56 +175,70 @@ function GrafikkPilot(props: {airport:airports, weather:LocationForecast, time: 
                 </div>
             }
         </div>
-        <div style={{ width: '100%', minWidth: 'fit-content', position: 'relative' }}>
-            <img alt="compass rose" src="/Gray_compass_rose.svg" style={{height: '40px', position: 'absolute', bottom: 0, right: 0}}/>
-            {/** Ikonet */}
-                {weather !== undefined && 
-                    <div style={{width: "100%", display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
-
-                    <div style={{ display: 'flex', justifyContent: 'center'}}>
-                        <Typography gutterBottom style={{ fontSize: 20, color: '#0090a8'}}>
+            <div style={{ width: '33%', minWidth: 'fit-content', position: 'relative' }}>
+                <img alt="compass rose" src="/Gray_compass_rose.svg" style={{height: '40px', position: 'absolute', bottom: 0, right: 0}}/>
+                {/** Ikonet */}
+                {<div style={{width: "100%", display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+                    <div style={{display: 'flex', justifyContent: 'center'}}>
+                        <Typography gutterBottom style={{fontSize: 20, color: '#0090a8'}}>
                             Vind i forhold til rullebane
                         </Typography>
                     </div>
-
-                    <Box style={{ display: 'flex', justifyContent: 'space-evenly', flexDirection: 'row', alignItems: 'center'}}>
-                        
-                        <div style={{ height: '230px', width: '230px', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative'}}>
-                            { 
-                                airport.rwy?.split(",").map((it: any) => {
-                                    return <Rullebane key={it[0]} rullebane={it}></Rullebane>
-                                })
-                            }
-
-                            <div style={{position: 'absolute',
+                    <Box style={{
+                        display: 'flex',
+                        justifyContent: 'space-evenly',
+                        flexDirection: 'row',
+                        alignItems: 'center'
+                    }}>
+                        <div style={{
+                            height: '230px',
+                            maxWidth: '100%',
+                            width: '230px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            position: 'relative'
+                        }}>
+                            <div style={{display: 'flex', flexWrap: 'wrap', minWidth: '215px'}}>
+                                {
+                                    airport !== undefined &&
+                                    airport.rwy?.split(",").map((it: any) => {
+                                        return <Rullebane key={it[0]} rullebane={it}></Rullebane>
+                                    })
+                                }
+                            </div>
+                            <div style={{
+                                position: 'absolute',
                                 right: (weather.data.instant.details.wind_from_direction > 0 && weather.data.instant.details.wind_from_direction < 180) ||
-                                    (weather.data.instant.details.wind_from_direction < -360 && weather.data.instant.details.wind_from_direction > -180) ?
+                                (weather.data.instant.details.wind_from_direction < -360 && weather.data.instant.details.wind_from_direction > -180) ?
                                     "0px" : "90%",
                                 top: (weather.data.instant.details.wind_from_direction > 90 && weather.data.instant.details.wind_from_direction < 270) ||
-                                    (weather.data.instant.details.wind_from_direction > -270 && weather.data.instant.details.wind_from_direction < -90) ?
+                                (weather.data.instant.details.wind_from_direction > -270 && weather.data.instant.details.wind_from_direction < -90) ?
                                     "150px" : "0px",
                                 textAlign: 'center',
                                 color: '#0090a8'
                             }}>
-
-                                <Typography style={{position: 'absolute', top: -5,left: "calc(50%-100px)", zIndex: 1, }}>
+                                <Typography
+                                    style={{position: 'absolute', top: -10, left: "calc(50%-100px)", zIndex: 1,}}>
                                     {weather.data.instant.details.wind_speed}kt
                                 </Typography>
-                                <div style={{ position: 'relative', zIndex: 0,
-                                transform: `rotate(${weather.data.instant.details.wind_from_direction + 90}deg)`}}>
-                                    <ArrowRightAltIcon sx={{ fontSize: 40 }}></ArrowRightAltIcon>
+                                <div style={{
+                                    position: 'relative', zIndex: 0,
+                                    transform: `rotate(${weather.data.instant.details.wind_from_direction + 90}deg)`
+                                }}>
+                                    <ArrowRightAltIcon sx={{fontSize: 40}}></ArrowRightAltIcon>
                                 </div>
                             </div>
                         </div>
                     </Box>
                 </div>
-            }
-            
-            {weather === undefined &&
-                <div>
-                    <h2>Venligst vent</h2>
-                </div>
-            }
+                }
+
+                {weather === undefined &&
+                    <div>
+                        <h2>Venligst vent</h2>
+                    </div>
+                }
             </div>
         </div>
         </div>
