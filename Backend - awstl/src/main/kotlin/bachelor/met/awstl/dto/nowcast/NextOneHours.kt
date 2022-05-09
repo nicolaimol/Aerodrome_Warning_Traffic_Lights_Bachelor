@@ -4,5 +4,5 @@ import java.io.Serializable
 
 class NextOneHours: Serializable {
 
-    lateinit var summary: Summary
+    var summary: Summary? = null
 }
