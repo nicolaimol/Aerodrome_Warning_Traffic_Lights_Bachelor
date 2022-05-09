@@ -2,9 +2,6 @@ import * as React from 'react';
 import {Link} from 'react-router-dom'
 import MetLogo from '../media/met-logo.svg';
 
-// Material UI ---
-
-// komponenter
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -15,7 +12,6 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 
-// Ikoner
 import MenuIcon from '@mui/icons-material/Menu';
 
 const pages = ['Hjem', "Flyplass", "Rute", "Kart"]; // Legg til alle menu-items her
@@ -28,6 +24,7 @@ links.set("Kart", "/kart")
 
 
 const Navbar = () => {
+
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -49,8 +46,6 @@ const Navbar = () => {
             sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
           >
             <Link style={{ paddingTop: 3 }} to={links.get('Hjem')}><img src={MetLogo} alt="Met logo"/></Link>
-            
-
           </Typography>
 
           {/* Denne boksen håndterer navigasjonsbaren for burgermeny */}
