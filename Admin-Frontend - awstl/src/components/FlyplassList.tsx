@@ -173,6 +173,8 @@ export default function FlyplassList(props: any) {
     useEffect(() => {
         const filtered = flyplassList.filter((it: any) => {
             return it.navn.toLowerCase().includes(search.toLowerCase())
+                || it.icao.toLowerCase().includes(search.toLowerCase())
+                || it.iata.toLowerCase().includes(search.toLowerCase())
         })
         setRows(filtered.map((it: any) => {
             return createData(it.icao, it.navn, it.iata, it.rwy, it.lat, it.lon, it.altitude)

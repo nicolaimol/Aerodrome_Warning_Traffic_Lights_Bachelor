@@ -49,7 +49,10 @@ function Arbeider() {
               Taf og metar
             </Typography>
             <div style={{ marginTop: '2em'}}>
-              <TafMetar icao={airport?.icao} styles={{ backgroundColor: '#0494ac', color: 'white'}} />
+              {
+                airport !== undefined &&
+                  <TafMetar icao={airport?.icao} styles={{ backgroundColor: '#0494ac', color: 'white'}} />
+              }
             </div>
           </div>
         </CardContent>

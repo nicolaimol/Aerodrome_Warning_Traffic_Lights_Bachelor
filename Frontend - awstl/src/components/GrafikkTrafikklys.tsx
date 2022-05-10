@@ -178,7 +178,7 @@ function GrafikkTrafikklys() {
                                     textAlign: 'center',
                                     color: '#0090a8'
                                 }}>
-                                    <Typography style={{position: 'absolute', top: -5,left: "calc(50%-100px)", zIndex: 1, }}>
+                                    <Typography style={{position: 'absolute', top: -10,left: "calc(50%-100px)", zIndex: 1, }}>
                                         {weather.data.instant.details.wind_speed}kt
                                     </Typography>
                                     <div style={{ position: 'relative', zIndex: 0,

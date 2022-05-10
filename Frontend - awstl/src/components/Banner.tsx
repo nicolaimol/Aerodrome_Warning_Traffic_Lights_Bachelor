@@ -138,7 +138,7 @@ export default function Banner() {
             />
           </div>
         </div>
-        <p>*Dette er en tjeneste som er en prototype og ikke operasjonell</p>
+        <p>*Dette er en tjeneste som er en prototype og er ikke operasjonell</p>
 
         {/** Beskrivelse av nettsiden */}
         <Typography sx={{ pb: 5}} style={{textAlign: 'center'}} variant="h5" color="inherit" paragraph>
