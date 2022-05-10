@@ -95,6 +95,11 @@ function App() {
 
     useEffect(() => {
 
+        axios.get(urlAirport)
+            .then((response: any) => {
+                dispatch(allActions.airportListAction.setAirportList(response.data))
+            })
+
         axios.get(url)
             .then((response: any) => {
                 const flyplass = response.data.flyplass
@@ -108,19 +113,26 @@ function App() {
                 if (error.response.status === 502) {
                     setError(true)
                 } else {
+
+                    const standard = {
+                        flyplass: {
+                            icao: "ENGM"
+                        },
+                        ...defaultVerdier
+                    }
+                    axios.post(url, standard)
+                        .then((response: any) => {
+                            
+                        })
+
                     dispatch(allActions.airportAction.setAirport({
-                        icao: "ENDU",
-                        navn: "Bardufoss lufthavn",
-                        rwy: "11/28"
+                        icao: "ENGM",
+                        navn: "Oslo lufthavn, Gardermoen",
+                        rwy: "01/19"
                     }))
                 }
 
                 dispatch(allActions.terskelActions.setTerskel(defaultVerdier))
-            })
-
-        axios.get(urlAirport)
-            .then((response: any) => {
-                dispatch(allActions.airportListAction.setAirportList(response.data))
             })
 
 
