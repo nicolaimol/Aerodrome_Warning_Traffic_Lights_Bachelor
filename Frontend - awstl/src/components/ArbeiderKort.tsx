@@ -10,7 +10,7 @@ function ArbeiderKort(props:arbeiderInfo) { {/** Tar inn props med interface til
   return (
       
         <Card className={styles.kortButton} sx={{ backgroundColor: '#0494ac'}} style={{display: 'flex', flexGrow: 1}}>
-            <Link style={{ width: '100%' }} to={'/' + props.tittel.toLowerCase()}>
+            <Link style={{ width: '100%', display: 'flex' }} to={'/' + props.tittel.toLowerCase()}>
                 <CardContent style={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
                     {/** Tittel */}
                     <div style={{display: 'flex', flexDirection: 'column', flexGrow: 1}}>
