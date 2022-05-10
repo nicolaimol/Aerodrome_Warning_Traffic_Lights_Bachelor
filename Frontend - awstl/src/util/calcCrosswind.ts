@@ -2,7 +2,7 @@ export const crosswind = (rwy: string, windDirection: number, windSpeed: number)
 
     if (rwy.split(",").length > 1){
 
-        return Math.max(...rwy.split(",").map((it: any) => {
+        return Math.max(...rwy?.split(",").map((it: any) => {
             return crosswind(it, windDirection, windSpeed)
         }))
         /*return Math.min(
