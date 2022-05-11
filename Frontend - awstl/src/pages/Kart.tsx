@@ -377,9 +377,9 @@ function Kart() {
                     </List>
                 </div>
                 <img style={{objectFit: 'contain', maxWidth: '100%', width: '50em'}} alt='radar' src={openTo ? 'https://api.met.no/weatherapi/sigcharts/2.0/norway' : disabledGIF ? sliderUrl : `https://api.met.no/weatherapi/radar/2.0/?area=${radarPos}&content=animation&type=preciptype`} />
-                <div style={{display:"flex", flexDirection: 'row', flexWrap: 'wrap'}}>
-                            <Button onClick={disabledGIFHandler}>
-                                {"Endre radar til " + (disabledGIF ? 'animasjon' : 'statisk bilde')}
+                <div style={{display:"flex", flexDirection: 'row', flexWrap: 'wrap', width: '100%', alignItems: 'center'}}>
+                            <Button style={{width: '9em', height: '4em'}} onClick={disabledGIFHandler}>
+                                {"Vis som " + (disabledGIF ? 'animasjon' : 'statisk bilde')}
                             </Button>
 
                     <Slider
