@@ -145,7 +145,10 @@ function GrafikkPilot(props: {airport:airports, weather:LocationForecast, time: 
                 <div style={{width: "100%", display: 'flex', flexDirection: 'column', flexWrap:'wrap', justifyContent: 'center'}}>
                             
                     <Box style={{ display: 'flex', justifyContent: 'center', maxHeight: '100px'}} >
-                        <img style={{width: '50%'}} src={ikonpath} alt={ikonpath} />
+                        { (!ikonpath.includes("undefined")) &&
+                            <img style={{width: '50%'}} src={ikonpath} alt={ikonpath} />
+                        }
+                        
                     </Box>
 
                     <Box>
