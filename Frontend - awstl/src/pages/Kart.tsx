@@ -1,4 +1,4 @@
-import { Container, List, ListItem, ListItemButton, Collapse, ListItemText, Slider, Divider, Typography } from '@mui/material'
+import { Container, List, ListItem, ListItemButton, Collapse, ListItemText, Slider, Divider, Typography, Button } from '@mui/material'
 
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
@@ -357,9 +357,6 @@ function Kart() {
                         <ListItemButton onClick={handleClickTo}>
                             <ListItemText primary="Sigchart" />
                         </ListItemButton>
-                        <ListItemButton onClick={disabledGIFHandler}>
-                            <ListItemText primary={"Endre radar til " + (disabledGIF ? 'animasjon' : 'statisk bilde')}  />
-                        </ListItemButton>
                         <ListItemButton onClick={handleClick}>
                             <ListItemText primary="Værradar" />
                             {open ? <ExpandLess /> : <ExpandMore />}
@@ -380,23 +377,29 @@ function Kart() {
                     </List>
                 </div>
                 <img style={{objectFit: 'contain', maxWidth: '100%', width: '50em'}} alt='radar' src={openTo ? 'https://api.met.no/weatherapi/sigcharts/2.0/norway' : disabledGIF ? sliderUrl : `https://api.met.no/weatherapi/radar/2.0/?area=${radarPos}&content=animation&type=preciptype`} />
-                <Slider
-                    aria-label="Select time"
-                    defaultValue={170}
-                    //getAriaValueText={}
-                    value={sliderValue}
-                    disabled={!disabledGIF || openTo}
-                    onChange={handleSliderChange}
-                    onChangeCommitted={handleSliderChangeCommit}
-                    step={5}
-                    marks={sliderBool ? sliderMarksLabelMobile : sliderMarksLabel}
-                    valueLabelFormat={(value: number) => formatValue?.label}
-                    min={0}
-                    max={170}
-                    valueLabelDisplay="auto"
-                    style={{maxWidth: '80%'}}
-                    sx={{ mt: 5, mb: 5 }}
-                />
+                <div style={{display:"flex", flexDirection: 'row', flexWrap: 'wrap'}}>
+                            <Button onClick={disabledGIFHandler}>
+                                {"Endre radar til " + (disabledGIF ? 'animasjon' : 'statisk bilde')}
+                            </Button>
+
+                    <Slider
+                        aria-label="Select time"
+                        defaultValue={170}
+                        //getAriaValueText={}
+                        value={sliderValue}
+                        disabled={!disabledGIF || openTo}
+                        onChange={handleSliderChange}
+                        onChangeCommitted={handleSliderChangeCommit}
+                        step={5}
+                        marks={sliderBool ? sliderMarksLabelMobile : sliderMarksLabel}
+                        valueLabelFormat={(value: number) => formatValue?.label}
+                        min={0}
+                        max={170}
+                        valueLabelDisplay="auto"
+                        style={{maxWidth: '80%'}}
+                        sx={{ mt: 5, mb: 5 }}
+                    />
+                </div>
             </div>
         </Container>
     </>
