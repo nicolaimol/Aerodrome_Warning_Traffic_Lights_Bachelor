@@ -25,8 +25,8 @@ function TafMetar(props: any) {
     }
 
     const rows = [
-        createData('Taf', tafmetar?.taf),
-        createData('Metar', tafmetar?.metar),
+        createData('TAF', tafmetar?.taf),
+        createData('METAR', tafmetar?.metar),
 
     ];
     
@@ -63,7 +63,7 @@ function TafMetar(props: any) {
             }
             { tafmetar == null &&
                 <Typography style={props.styles !== undefined ? props.styles : {} } variant="h6">
-                    Taf og metar er ikke tilgjengelig
+                    TAF og METAR er ikke tilgjengelig
                 </Typography>
             }
         </div>

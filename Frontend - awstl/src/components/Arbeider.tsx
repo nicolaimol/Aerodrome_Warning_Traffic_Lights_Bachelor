@@ -46,7 +46,7 @@ function Arbeider() {
           {/** Tittel */}
           <div style={{display: 'flex', flexDirection: 'column', flexGrow: 1}}>
             <Typography sx={{ color: 'white' }} variant="h5">
-              Taf og metar
+              TAF og METAR
             </Typography>
             <div style={{ marginTop: '2em'}}>
               {

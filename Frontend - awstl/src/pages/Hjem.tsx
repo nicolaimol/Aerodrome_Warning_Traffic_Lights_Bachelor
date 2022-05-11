@@ -18,7 +18,7 @@ function Hjem() {
     <RaskVaer />
       {nowcast == undefined &&
           <Container sx={{mb: 5}}>
-            <div style={{display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: '3em'}}>
+            <div style={{display: "flex", flexWrap: 'wrap', justifyContent: 'space-evenly' }}>
               <div>
                 <Card sx={{ minWidth: 250, mb: 5, width: "100%", height: "fit-content" }}>
                   <Typography variant="h1">

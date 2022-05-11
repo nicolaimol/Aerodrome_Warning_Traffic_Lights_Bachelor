@@ -130,7 +130,7 @@ function Pilot() {
       <PilotVelgDepArvl updateTil={(tid:string) => {setAnkomsttid(tid)}} updateFra={(tid:string) => {setAvgangstid(tid)}} />
       <Divider sx={{ mb: 5 }} />
         <div style={{textAlign: 'center', color: '#0090a8', marginBottom: '1em'}}>
-          <Typography sx={{ mb: 3 }} variant="h4">Taf metar</Typography>
+          <Typography sx={{ mb: 3 }} variant="h4">TAF METAR</Typography>
           <div className={styles.tafmetar}>
             { airport !== undefined && 
               <TafMetar icao={airport.icao} />

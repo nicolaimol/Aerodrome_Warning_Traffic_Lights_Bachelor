@@ -308,6 +308,7 @@ function Tidslinje() {
                     onChange={tempSliderHandler}
                     defaultValue={0}
                     value={sliderValue}
+                    valueLabelFormat={(value: number) => labels[value]}
                     step={1}
                     min={0}
                     max={ver.length - 1}
