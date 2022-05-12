@@ -18,7 +18,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import allActions from '../Actions';
 import { calcFarge } from '../util/calcFarge';
 import { Button, Slider } from '@mui/material';
-import { generateSimpleStyle} from '../util/sliderStyleUtil';
+import { generateSimpleStyle } from '../util/sliderStyleUtil'
 
 
 ChartJS.register(
@@ -52,6 +52,8 @@ const getGradient = (ctx: any, chartArea: any) => {
 function Tidslinje() {
 
     const dispatch = useDispatch()
+
+    const classesSimple = generateSimpleStyle();
 
     let scroll = document.getElementById("scrollableDiv")
     let index = 0;
@@ -306,7 +308,7 @@ function Tidslinje() {
             {
                 ver !== undefined &&
                 <Slider
-                    classes={ generateSimpleStyle()}
+                    classes={classesSimple}
                     onChange={tempSliderHandler}
                     defaultValue={0}
                     value={sliderValue}
@@ -314,7 +316,6 @@ function Tidslinje() {
                     step={1}
                     min={0}
                     max={ver.length - 1}
-
                     valueLabelDisplay="auto"
                 />
             }
