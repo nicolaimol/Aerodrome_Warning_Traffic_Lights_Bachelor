@@ -94,4 +94,30 @@ function generateStyle(value: number, max: number, min: number, revers: boolean,
 
 }
 
-export { generateStyle }
+function generateSimpleStyle(){
+    const styles = makeStyles((theme:any) => ({
+        thumb: {
+            background: "#0090a8"
+        },
+        track: {
+            background: "#0494ac",
+            opacity: 1,
+            border: "none"
+        },
+        rail: {
+            opacity: 1,
+            background: "#dff2f6"
+        }
+    }));
+
+    const classes = styles()
+
+    return {
+        thumb: classes.thumb,
+        rail: classes.rail,
+        track: classes.track
+    }
+
+}
+
+export { generateStyle, generateSimpleStyle }
