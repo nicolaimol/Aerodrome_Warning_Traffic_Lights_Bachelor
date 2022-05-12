@@ -3,6 +3,7 @@ import { Container, List, ListItem, ListItemButton, Collapse, ListItemText, Slid
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import React, { SyntheticEvent, useEffect, useState } from 'react'
+import { generateSimpleStyle} from '../util/sliderStyleUtil'
 
 
 function Kart() {
@@ -377,8 +378,8 @@ function Kart() {
                     </List>
                 </div>
                 <img style={{objectFit: 'contain', maxWidth: '100%', width: '50em'}} alt='radar' src={openTo ? 'https://api.met.no/weatherapi/sigcharts/2.0/norway' : disabledGIF ? sliderUrl : `https://api.met.no/weatherapi/radar/2.0/?area=${radarPos}&content=animation&type=preciptype`} />
-                <div style={{display:"flex", flexDirection: 'row', flexWrap: 'wrap', width: '100%', alignItems: 'center'}}>
-                            <Button style={{width: '9em', height: '4em'}} onClick={disabledGIFHandler}>
+                <div style={{display:"flex", flexDirection: 'row', flexWrap: 'wrap', width: '100%', alignItems: 'center', gap: '1em', justifyContent: 'center', marginTop: '2em' }}>
+                            <Button style={{width: '9em', height: '4em', color:'#FFFFFF', backgroundColor:'#0494ac' }} onClick={disabledGIFHandler}>
                                 {"Vis som " + (disabledGIF ? 'animasjon' : 'statisk bilde')}
                             </Button>
 
@@ -386,6 +387,7 @@ function Kart() {
                         aria-label="Select time"
                         defaultValue={170}
                         //getAriaValueText={}
+                        classes={generateSimpleStyle()}
                         value={sliderValue}
                         disabled={!disabledGIF || openTo}
                         onChange={handleSliderChange}
@@ -397,7 +399,7 @@ function Kart() {
                         max={170}
                         valueLabelDisplay="auto"
                         style={{maxWidth: '80%'}}
-                        sx={{ mt: 5, mb: 5 }}
+                        sx={{ mb: 5 }}
                     />
                 </div>
             </div>
