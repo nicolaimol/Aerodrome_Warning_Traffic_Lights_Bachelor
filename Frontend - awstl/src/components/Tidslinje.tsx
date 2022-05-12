@@ -18,6 +18,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import allActions from '../Actions';
 import { calcFarge } from '../util/calcFarge';
 import { Button, Slider } from '@mui/material';
+import { generateSimpleStyle} from '../util/sliderStyleUtil';
 
 
 ChartJS.register(
@@ -305,6 +306,7 @@ function Tidslinje() {
             {
                 ver !== undefined &&
                 <Slider
+                    classes={ generateSimpleStyle()}
                     onChange={tempSliderHandler}
                     defaultValue={0}
                     value={sliderValue}
