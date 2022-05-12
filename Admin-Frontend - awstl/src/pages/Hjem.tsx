@@ -11,24 +11,22 @@ function Hjem(props: any) {
                     </Typography>
                     <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2em'}}>
                         <Card style={{backgroundColor: "#0494ac", color: "white"}}>
-                            <CardContent style={{display: 'flex', flexDirection:'column', alignItems:'center', gap: '1em'}}>
+                            <Link to="/flyplass" style={{display: 'flex', flexGrow: 1, color: 'white'}}>
+                            <CardContent style={{display: 'flex', flexDirection:'column', alignItems:'center', gap: '1em', width: '100%'}}>
                                 <Typography variant="h5">
                                     Flyplass
                                 </Typography>
-                                <Link to="/flyplass">
-                                    <Button style={{color: "white"}} variant="text">Velg</Button>
-                                </Link>
                             </CardContent>
+                            </Link>
                         </Card>
                         <Card style={{backgroundColor: "#0494ac", color: "white"}}>
-                            <CardContent style={{display: 'flex', flexDirection:'column', alignItems:'center', gap: '1em'}}>
-                                <Typography variant="h5">
-                                    Standard Terskelverdi
-                                </Typography>
-                                <Link to="/terskelverdi">
-                                    <Button style={{color: "white"}} variant="text">Velg</Button>
-                                </Link>
-                            </CardContent>
+                            <Link to="/terskelverdi" style={{display: 'flex', flexGrow: 1, color: 'white'}}>
+                                <CardContent style={{display: 'flex', flexDirection:'column', alignItems:'center', gap: '1em', width: '100%'}}>
+                                    <Typography variant="h5">
+                                        Terskelverdier
+                                    </Typography>
+                                </CardContent>
+                            </Link>
                         </Card>
                     </div>
         </div>

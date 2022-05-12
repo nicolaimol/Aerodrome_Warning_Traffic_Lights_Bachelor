@@ -8,9 +8,7 @@ function FlyplassForm(props: any) {
     const keycloak = useKeycloak()
 
     const [icao, setIcao] = useState<string>(props.flyplass.icao)
-    const icaoChange = (e: any) =>{
-        setIcao(e.target.value)
-    }
+
     const [navn, setNavn] = useState<string>(props.flyplass.navn)
     const navnChange = (e: any) =>{
         setNavn(e.target.value)
@@ -73,7 +71,7 @@ function FlyplassForm(props: any) {
         <Card style={{minWidth: 'fit-content', width: "50%", minHeight: 'fit-content'}} sx={{padding: 5}}>
             <CardContent style={{display: 'flex', flexDirection: 'column', flexGrow: 1, height: '100%', alignItems: 'space-between'}} >
                 <div style={{display: 'flex', flexDirection: 'column', flexGrow: 1, justifyContent: 'space-evenly', gap:'1em', marginBottom: '1em'}}>
-                    <TextField onChange={icaoChange} value={icao} id="standard-required-icao" label="Icao" variant="standard" />
+                    <TextField disabled value={icao} id="standard-required-icao" label="Icao" variant="standard" />
                     <TextField onChange={navnChange} value={navn} id="standard-required-navn" label="Navn" variant="standard"/>
                     <TextField onChange={iataChange} value={iata} id="standard-required-iata" label="Iata" variant="standard" />
                     <TextField onChange={rwyChange} value={rwy} id="standard-required-rwy" label="Runway" variant="standard"/>
