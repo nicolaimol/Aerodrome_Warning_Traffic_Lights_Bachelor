@@ -11,26 +11,20 @@ function Hjem(props: any) {
                     </Typography>
                     <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2em'}}>
                         <Card style={{backgroundColor: "#0494ac", color: "white"}}>
-                            <Link to="/flyplass" style={{display: 'flex'}}>
-                            <CardContent style={{display: 'flex', flexDirection:'column', alignItems:'center', gap: '1em'}}>
+                            <Link to="/flyplass" style={{display: 'flex', flexGrow: 1, color: 'white'}}>
+                            <CardContent style={{display: 'flex', flexDirection:'column', alignItems:'center', gap: '1em', width: '100%'}}>
                                 <Typography variant="h5">
                                     Flyplass
                                 </Typography>
-                                
-                                    <Button style={{color: "white"}} variant="text">Velg</Button>
-                                
                             </CardContent>
                             </Link>
                         </Card>
                         <Card style={{backgroundColor: "#0494ac", color: "white"}}>
-                            <Link to="/terskelverdi" style={{display: 'flex'}}>
-                                <CardContent style={{display: 'flex', flexDirection:'column', alignItems:'center', gap: '1em'}}>
+                            <Link to="/terskelverdi" style={{display: 'flex', flexGrow: 1, color: 'white'}}>
+                                <CardContent style={{display: 'flex', flexDirection:'column', alignItems:'center', gap: '1em', width: '100%'}}>
                                     <Typography variant="h5">
                                         Terskelverdier
                                     </Typography>
-                                    
-                                        <Button style={{color: "white"}} variant="text">Velg</Button>
-                                    
                                 </CardContent>
                             </Link>
                         </Card>
