@@ -76,7 +76,7 @@ class TerskelControllerUnitTest {
 
         val dto = TerskelverdiDto()
 
-        Mockito.`when`(service!!.updateTerskelverdi("test", dto)).thenReturn(null)
+        Mockito.doNothing().`when`(service!!).updateTerskelverdi("test", dto)
 
         val result = controller!!.setTerskel("test",dto)
 
