@@ -46,6 +46,4 @@ class NowcastController(val service: NowcastService, val cacheService: CacheServ
         return ResponseEntity.ok().headers(header).cacheControl(CacheControl.empty()).body(ret)
     }
 
-
-
 }
