@@ -45,7 +45,7 @@ internal class TafMetarControllerIntegrationTest {
     @Test
     fun getTafMetarSuccess() {
 
-        Mockito.`when`(service!!.getMetar("test")).thenReturn(TafMetarDto("taf", "metar"))
+        Mockito.`when`(service!!.getTafMetar("test")).thenReturn(TafMetarDto("taf", "metar"))
 
         mockMvc!!.perform(
             MockMvcRequestBuilders
@@ -60,7 +60,7 @@ internal class TafMetarControllerIntegrationTest {
 
     @Test
     fun getTafMetarBadRequest() {
-        Mockito.`when`(service!!.getMetar("test")).thenThrow(AirportNotFoundException("feil"))
+        Mockito.`when`(service!!.getTafMetar("test")).thenThrow(AirportNotFoundException("feil"))
 
         mockMvc!!.perform(
             MockMvcRequestBuilders
@@ -76,7 +76,7 @@ internal class TafMetarControllerIntegrationTest {
     @Test
     fun getTafMetarInternalError() {
 
-        Mockito.`when`(service!!.getMetar("test")).thenThrow(IllegalArgumentException("feil"))
+        Mockito.`when`(service!!.getTafMetar("test")).thenThrow(IllegalArgumentException("feil"))
 
         mockMvc!!.perform(
             MockMvcRequestBuilders
