@@ -10,6 +10,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.cache.annotation.Cacheable
+import org.springframework.data.redis.RedisConnectionFailureException
 import org.springframework.stereotype.Service
 import org.springframework.web.client.HttpClientErrorException
 import kotlin.collections.HashMap
@@ -85,17 +86,25 @@ class NowcastService(
             query["lon"] = airport.lon
 
 
-            getForAirport(airport.icao, query)?.let {
-                it.properties?.timeseries = it.properties?.timeseries?.copyOfRange(0, 1);
-                dto.nowcasts.add(it)
+            try {
+                getForAirportCache(airport.icao, query)?.let {
+                    it.properties?.timeseries = it.properties?.timeseries?.copyOfRange(0, 1);
+                    dto.nowcasts.add(it)
+                }
+                dto.airports.add(FlyplassToFlyplassDto.convert(airport))
+            } catch (e: RedisConnectionFailureException) {
+                logger.error("Redis unavailable")
+                getForAirportDefault(airport.icao, query)?.let {
+                    it.properties?.timeseries = it.properties?.timeseries?.copyOfRange(0, 1);
+                    dto.nowcasts.add(it)
+                }
             }
-            dto.airports.add(FlyplassToFlyplassDto.convert(airport))
+
 
         }
     }
 
-    @Cacheable(value = ["nowcast"], key = "#icao")
-    fun getForAirport(icao: String, query: HashMap<String, String>): Nowcast? {
+    private fun getForAirport(icao: String, query: HashMap<String, String>): Nowcast? {
         logger.info("Nowcast for $icao")
         try {
             return httpService.hentData(url, Nowcast::class.java, query, icao, Cache.NOWCAST)
@@ -129,6 +138,14 @@ class NowcastService(
 
             return nowcast
         }
+    }
 
+    private fun getForAirportDefault(icao: String, query: HashMap<String, String>): Nowcast? {
+        return getForAirport(icao, query)
+    }
+
+    @Cacheable(value = ["nowcast"], key = "#icao")
+    fun getForAirportCache(icao: String, query: HashMap<String, String>): Nowcast? {
+        return getForAirport(icao, query)
     }
 }
