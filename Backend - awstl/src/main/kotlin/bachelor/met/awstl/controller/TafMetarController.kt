@@ -28,7 +28,7 @@ class TafMetarController(val service: TafMetarService) {
     @GetMapping("/tafmetar")
     fun getTafMetar(@RequestParam("icao") icao: String): ResponseEntity<TafMetarDto> {
 
-        val tafmetar = service.getMetar(icao)
+        val tafmetar = service.getTafMetar(icao)
 
         return ResponseEntity.ok(tafmetar)
 
