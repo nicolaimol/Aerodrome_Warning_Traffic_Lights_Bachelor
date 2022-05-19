@@ -27,7 +27,7 @@ class TafMetarControllerUnitTest {
     fun getTafMetarSuccess() {
         val dto = TafMetarDto("taf", "metar")
 
-        Mockito.`when`(service!!.getMetar("test")).thenReturn(dto)
+        Mockito.`when`(service!!.getTafMetar("test")).thenReturn(dto)
         val result = controller!!.getTafMetar("test")
 
         assertThat(result.body).isEqualTo(dto)
@@ -38,7 +38,7 @@ class TafMetarControllerUnitTest {
     @Test
     fun getTafMetarBadRequest() {
 
-        Mockito.`when`(service!!.getMetar("test")).thenThrow(AirportNotFoundException("feil"))
+        Mockito.`when`(service!!.getTafMetar("test")).thenThrow(AirportNotFoundException("feil"))
         val exception = assertThrows<AirportNotFoundException> {
             val result = controller!!.getTafMetar("test")
         }
@@ -51,7 +51,7 @@ class TafMetarControllerUnitTest {
     @Test
     fun getTafMetarInternalError() {
 
-        Mockito.`when`(service!!.getMetar("test")).thenThrow(IllegalArgumentException("feil"))
+        Mockito.`when`(service!!.getTafMetar("test")).thenThrow(IllegalArgumentException("feil"))
 
         val exception = assertThrows<IllegalArgumentException> {
             val result = controller!!.getTafMetar("test")
