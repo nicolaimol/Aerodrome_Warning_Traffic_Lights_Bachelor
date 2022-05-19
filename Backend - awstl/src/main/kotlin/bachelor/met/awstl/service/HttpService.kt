@@ -15,6 +15,8 @@ import kotlin.reflect.typeOf
 @Service
 class HttpService(private val template: RestTemplate, private val cacheService: CacheService) {
 
+    /*
+    @Deprecated("use with new params")
     fun <T> hentData(url: String, clazz: Class<T>, query: HashMap<String, String>): T {
         try {
 
@@ -31,7 +33,7 @@ class HttpService(private val template: RestTemplate, private val cacheService: 
             throw NullPointerException(e.message)
         }
     }
-
+     */
     fun <T> hentData(url: String, clazz: Class<T>, query: HashMap<String, String>, icao: String, type: Cache): T {
         try {
 
@@ -44,8 +46,11 @@ class HttpService(private val template: RestTemplate, private val cacheService: 
         } catch (e: ResourceAccessException) {
             throw UnknownHostException(e.message)
         } catch (e: NullPointerException) {
-            when (clazz) {
-                String::class.java -> throwTafMetarException()
+            when (type) {
+                Cache.TAFMETAR -> throwTafMetarException()
+                else -> {
+                    throw NullPointerException(e.message)
+                }
             }
 
             throw NullPointerException(e.message)
