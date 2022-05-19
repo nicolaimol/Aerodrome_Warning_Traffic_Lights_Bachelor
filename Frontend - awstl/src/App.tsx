@@ -150,8 +150,8 @@ function App() {
                                     + ((data.properties.timeseries[0].data.instant.details.air_temperature * 0.3965 ) * (Math.pow((data.properties.timeseries[0].data.instant.details.wind_speed * 3.6), 0.16)))).toPrecision(2)
                             //}
 
-                            data.properties.timeseries[0].data.instant.details.wind_speed = (data.properties.timeseries[0].data.instant.details.wind_speed * 1.943844).toPrecision(2)
-                            data.properties.timeseries[0].data.instant.details.wind_speed_of_gust = (data.properties.timeseries[0].data.instant.details.wind_speed_of_gust * 1.943844).toPrecision(2)
+                            data.properties.timeseries[0].data.instant.details.wind_speed = (data.properties.timeseries[0].data.instant.details.wind_speed * 1.943846).toPrecision(2)
+                            data.properties.timeseries[0].data.instant.details.wind_speed_of_gust = (data.properties.timeseries[0].data.instant.details.wind_speed_of_gust * 1.943846).toPrecision(2)
 
                         })
                         dispatch(allActions.nowcastAction.setNowcast(response.data))
@@ -174,8 +174,8 @@ function App() {
                             //}
 
 
-                            data.data.instant.details.wind_speed = (data.data.instant.details.wind_speed * 1.943844).toPrecision(2);
-                            data.data.instant.details.wind_speed_of_gust = (data.data.instant.details.wind_speed_of_gust * 1.943844).toPrecision(2);
+                            data.data.instant.details.wind_speed = (data.data.instant.details.wind_speed * 1.943846).toPrecision(2);
+                            data.data.instant.details.wind_speed_of_gust = (data.data.instant.details.wind_speed_of_gust * 1.943846).toPrecision(2);
                         })
                         dispatch(allActions.weatherActions.setWeather(response.data))
                     })
@@ -204,8 +204,8 @@ function App() {
                              + ((data.properties.timeseries[0].data.instant.details.air_temperature * 0.3965 ) * (Math.pow((data.properties.timeseries[0].data.instant.details.wind_speed * 3.6), 0.16)))).toPrecision(2)
                         //}
 
-                        data.properties.timeseries[0].data.instant.details.wind_speed = (data.properties.timeseries[0].data.instant.details.wind_speed * 1.943844).toPrecision(2)
-                        data.properties.timeseries[0].data.instant.details.wind_speed_of_gust = (data.properties.timeseries[0].data.instant.details.wind_speed_of_gust * 1.943844).toPrecision(2)
+                        data.properties.timeseries[0].data.instant.details.wind_speed = (data.properties.timeseries[0].data.instant.details.wind_speed * 1.943846).toPrecision(2)
+                        data.properties.timeseries[0].data.instant.details.wind_speed_of_gust = (data.properties.timeseries[0].data.instant.details.wind_speed_of_gust * 1.943846).toPrecision(2)
 
                     })
                     dispatch(allActions.nowcastAction.setNowcast(response.data))
@@ -228,8 +228,8 @@ function App() {
                         //}
 
 
-                        data.data.instant.details.wind_speed = (data.data.instant.details.wind_speed * 1.943844).toPrecision(2);
-                        data.data.instant.details.wind_speed_of_gust = (data.data.instant.details.wind_speed_of_gust * 1.943844).toPrecision(2);
+                        data.data.instant.details.wind_speed = (data.data.instant.details.wind_speed * 1.943846).toPrecision(2);
+                        data.data.instant.details.wind_speed_of_gust = (data.data.instant.details.wind_speed_of_gust * 1.943846).toPrecision(2);
                     })
                     dispatch(allActions.weatherActions.setWeather(response.data))
                 })

@@ -70,8 +70,8 @@ function Pilot() {
               - ((11.37 * Math.pow((data.data.instant.details.wind_speed * 3.6), 0.16)))
               + ((data.data.instant.details.air_temperature * 0.3965 ) * (Math.pow((data.data.instant.details.wind_speed * 3.6), 0.16)))).toPrecision(2)
 
-            data.data.instant.details.wind_speed = (data.data.instant.details.wind_speed * 1.943844).toPrecision(2);
-            data.data.instant.details.wind_speed_of_gust = (data.data.instant.details.wind_speed_of_gust * 1.943844).toPrecision(2);
+            data.data.instant.details.wind_speed = (data.data.instant.details.wind_speed * 1.943846).toPrecision(2);
+            data.data.instant.details.wind_speed_of_gust = (data.data.instant.details.wind_speed_of_gust * 1.943846).toPrecision(2);
           })
           setWeatherToAirport(response.data)
         })
