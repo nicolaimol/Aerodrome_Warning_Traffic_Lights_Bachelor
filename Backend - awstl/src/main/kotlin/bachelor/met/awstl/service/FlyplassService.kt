@@ -10,6 +10,7 @@ import bachelor.met.awstl.util.FlyplassUpdate
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.cache.annotation.Cacheable
+import org.springframework.dao.QueryTimeoutException
 import org.springframework.stereotype.Service
 
 @Service
@@ -18,20 +19,31 @@ class FlyplassService(val repo: IFlyplassRepo, val cacheConfig: CacheConfig) {
     val logger: Logger = LoggerFactory.getLogger(FlyplassService::class.java)
 
     @Cacheable(value = ["flyplass"], key = "#icao")
-    fun getFlyplass(icao: String): Flyplass {
+    fun getFlyplassCache(icao: String): Flyplass {
 
         return repo.findById(icao.uppercase()).orElseThrow { AirportNotFoundException("Airport with icao $icao not found")}
 
     }
 
+    fun getFlyplassDefault(icao: String): Flyplass {
+
+        return repo.findById(icao.uppercase()).orElseThrow { AirportNotFoundException("Airport with icao $icao not found")}
+
+    }
+
+    fun getFlyplass(icao: String): Flyplass {
+        logger.info("Getting flyplass with icao $icao")
+        try {
+            return getFlyplassCache(icao)
+        } catch (e: QueryTimeoutException) {
+            logger.error("Query timeout for $icao")
+            return getFlyplassDefault(icao)
+        }
+    }
+
     @Cacheable(value = ["flyplass"], key = "'all'")
     fun getAllFlyplass(): List<Flyplass> {
         return repo.findAll()
-    }
-
-    @Cacheable(value = ["flyplassvalid"], key = "#icao")
-    fun validateIcao(icao: String): Boolean {
-        return repo.findById(icao.uppercase()).isPresent
     }
 
     fun updateFlyplass(icao: String, newFlyplass: Flyplass) {
