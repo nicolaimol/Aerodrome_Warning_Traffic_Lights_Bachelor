@@ -20,7 +20,12 @@ class LocationForecastService(val httpService: HttpService, val flyplass: Flypla
         logger.info("validating cache for $icao and locfor")
         cacheService.chechCache(icao, Cache.LOCFOR)
 
-        return getForecastCache(icao)
+        return try {
+            getForecastCache(icao)
+        } catch (e: Exception) {
+            logger.warn("error getting forecast for with cache $icao")
+            getLocationForeacastDefault(icao)
+        }
     }
 
 
@@ -42,18 +47,29 @@ class LocationForecastService(val httpService: HttpService, val flyplass: Flypla
 
         val unformed = httpService.hentData(url, LocationForecastDto::class.java, queryParams, icao, Cache.LOCFOR)
 
-        /*
-        unformed.properties!!.timeseries!!.forEach { it ->
-            val el = it.data!!.instant!!.details!!
-            el["wind_speed"] = el["wind_speed"]!! * 1.943844
-            el["wind_speed_of_gust"] = el["wind_speed_of_gust"]!! * 1.943844
-        }
-         */
 
         unformed.properties!!.timeseries = unformed.properties!!.timeseries!!.filterIndexed {index, _ -> index < 58}.toTypedArray()
 
         return unformed
 
+    }
+
+    fun getLocationForeacastDefault(icao: String): LocationForecastDto? {
+        val airport = flyplass.getFlyplass(icao)
+
+        val queryParams: HashMap<String, String> = HashMap();
+        queryParams["altitude"] = airport.altitude
+        queryParams["lat"] = airport.lat
+        queryParams["lon"] = airport.lon
+
+        logger.info("Getting location forecast for $icao from api.met.no")
+
+        val unformed = httpService.hentData(url, LocationForecastDto::class.java, queryParams, icao, Cache.LOCFOR)
+
+
+        unformed.properties!!.timeseries = unformed.properties!!.timeseries!!.filterIndexed {index, _ -> index < 58}.toTypedArray()
+
+        return unformed
     }
 
 
