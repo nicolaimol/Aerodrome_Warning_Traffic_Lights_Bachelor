@@ -167,7 +167,7 @@ function GrafikkTrafikklys() {
                             <div style={{ height: '230px', maxWidth: '100%', width: '230px', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative'}}>
                                 <div style={{display: 'flex', flexWrap: 'wrap', minWidth: '215px'}}>
                                 {
-                                    airport.rwy.split(",").map((it: any) => {
+                                    airport.rwy.map((it: any) => {
                                         return <Rullebane key={it[0]} rullebane={it}></Rullebane>
                                     })
                                 }
