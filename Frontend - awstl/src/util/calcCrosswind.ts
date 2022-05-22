@@ -1,8 +1,8 @@
 export const crosswind = (rwy: any[], windDirection: number, windSpeed: number): number => {
 
-        return Math.max(...rwy?.map((it: any) => {
+        return rwy !== undefined ?  Math.max(...rwy?.map((it: any) => {
             return crosswindRunway(it.rwy, windDirection, windSpeed)
-        }))
+        })) : 1
 
 
 

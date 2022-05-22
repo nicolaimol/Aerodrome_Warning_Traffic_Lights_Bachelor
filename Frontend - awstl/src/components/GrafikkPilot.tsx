@@ -206,7 +206,7 @@ function GrafikkPilot(props: {airport:airports, weather:LocationForecast, time: 
                                 {
                                     airport !== undefined &&
                                     airport.rwy?.map((it: any) => {
-                                        return <Rullebane key={it[0]} rullebane={it}></Rullebane>
+                                        return <Rullebane key={it.rwy} rullebane={it}></Rullebane>
                                     })
                                 }
                             </div>
