@@ -128,7 +128,7 @@ function App() {
                     dispatch(allActions.airportAction.setAirport({
                         icao: "ENGM",
                         navn: "Oslo lufthavn, Gardermoen",
-                        rwy: "01/19"
+                        rwy: [{rwy: "01/19"}]
                     }))
                 }
 
