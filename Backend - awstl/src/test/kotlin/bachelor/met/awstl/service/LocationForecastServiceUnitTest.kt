@@ -5,6 +5,7 @@ import bachelor.met.awstl.dto.locationforecast.Properties
 import bachelor.met.awstl.dto.locationforecast.Timeseries
 import bachelor.met.awstl.enum.Cache
 import bachelor.met.awstl.model.Flyplass
+import bachelor.met.awstl.model.Rullebane
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
@@ -34,7 +35,7 @@ class LocationForecastServiceUnitTest{
         map["lon"] = "2"
         map["altitude"] = "3"
 
-        val flyplass = Flyplass("ENGM", "tets", "test", "3", "1","2", "")
+        val flyplass = Flyplass("ENGM", "tets", "test", "3", "1","2", arrayOf(Rullebane("")))
         val dto = LocationForecastDto()
         dto.type = "test"
 
@@ -66,7 +67,7 @@ class LocationForecastServiceUnitTest{
         map["lon"] = "2"
         map["altitude"] = "3"
 
-        val flyplass = Flyplass("ENGM", "tets", "test", "3", "1","2", "")
+        val flyplass = Flyplass("ENGM", "tets", "test", "3", "1","2", arrayOf(Rullebane("")))
         val dto = LocationForecastDto()
         dto.type = "test"
 

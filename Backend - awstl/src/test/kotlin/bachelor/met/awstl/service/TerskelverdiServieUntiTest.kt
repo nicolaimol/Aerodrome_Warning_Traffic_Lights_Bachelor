@@ -4,6 +4,7 @@ import bachelor.met.awstl.dto.FlyplassDto
 import bachelor.met.awstl.dto.TerskelverdiDto
 import bachelor.met.awstl.exception.TerskelverdiNotFoundException
 import bachelor.met.awstl.model.Flyplass
+import bachelor.met.awstl.model.Rullebane
 import bachelor.met.awstl.model.Terskelverdi
 import bachelor.met.awstl.repo.ITerskelverdiRepo
 import org.assertj.core.api.Assertions.assertThat
@@ -99,8 +100,8 @@ class TerskelverdiServieUntiTest {
         val spy = Mockito.spy(service)
         val terskel = Terskelverdi()//Mockito.spy(Terskelverdi())
         val dto = TerskelverdiDto()
-        dto.flyplass = FlyplassDto("Oslo", "ENGM", arrayOf("01/19"))
-        val flyplass = Flyplass("ENGM", "Oslo", "OSL", "", "", "", arrayOf("01/19"))
+        dto.flyplass = FlyplassDto("Oslo", "ENGM", arrayOf(Rullebane("")))
+        val flyplass = Flyplass("ENGM", "Oslo", "OSL", "", "", "", arrayOf(Rullebane("")))
 
         Mockito.doReturn(terskel).`when`(spy)!!.getTerskelById("test")
         Mockito.doReturn(flyplass).`when`(flyplassService)!!.getFlyplass(dto.flyplass!!.icao!!)
@@ -123,9 +124,9 @@ class TerskelverdiServieUntiTest {
         val spy = Mockito.spy(service)
 
         val dto = TerskelverdiDto()
-        dto.flyplass = FlyplassDto("Oslo", "ENGM", arrayOf("01/19"))
+        dto.flyplass = FlyplassDto("Oslo", "ENGM", arrayOf(Rullebane("")))
         val terskel = Terskelverdi("test", dto)
-        val flyplass = Flyplass("ENGM", "Oslo", "OSL", "", "", "", arrayOf("01/19"))
+        val flyplass = Flyplass("ENGM", "Oslo", "OSL", "", "", "", arrayOf(Rullebane("")))
 
 
         Mockito.doReturn("test").`when`(spy)!!.random()

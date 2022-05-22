@@ -1,7 +1,9 @@
 package bachelor.met.awstl.controller
 
 import bachelor.met.awstl.model.Flyplass
+import bachelor.met.awstl.model.Rullebane
 import bachelor.met.awstl.repo.IFlyplassRepo
+import bachelor.met.awstl.repo.IRullebaneRepo
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
@@ -28,6 +30,9 @@ class TafMetarControllerAcceptanceTest {
     @Autowired
     var repo: IFlyplassRepo? = null
 
+    @Autowired
+    var rullebaneRepo: IRullebaneRepo? = null
+
     var redisServer: RedisServer? = null
 
     @BeforeAll
@@ -40,7 +45,7 @@ class TafMetarControllerAcceptanceTest {
         }
 
         val engm = Flyplass("ENGM", "Oslo Lufthavn, Gardermoen",
-            "OSL", "100", "60", "10", "01/19")
+            "OSL", "100", "60", "10", arrayOf(rullebaneRepo!!.save(Rullebane(""))))
         repo!!.save(engm)
     }
 

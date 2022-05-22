@@ -1,7 +1,9 @@
 package bachelor.met.awstl.controller
 
 import bachelor.met.awstl.model.Flyplass
+import bachelor.met.awstl.model.Rullebane
 import bachelor.met.awstl.repo.IFlyplassRepo
+import bachelor.met.awstl.repo.IRullebaneRepo
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
@@ -28,6 +30,9 @@ class NowcastControllerAccepanceTest {
     @Autowired
     var repo: IFlyplassRepo? = null
 
+    @Autowired
+    var rullebaneRepo: IRullebaneRepo? = null
+
     var redisServer: RedisServer? = null
 
     @BeforeAll
@@ -40,16 +45,16 @@ class NowcastControllerAccepanceTest {
         }
 
         val engm = Flyplass("ENGM", "Oslo Lufthavn, Gardermoen",
-            "OSL", "100", "60", "10", "01/19")
+            "OSL", "100", "60", "10", arrayOf(rullebaneRepo!!.save(Rullebane(""))))
 
         val enbr = Flyplass("ENBR", "Bergen Lufthavn, Flesland",
-            "BGO", "166", "60.3", "5.22", "17/35")
+            "BGO", "166", "60.3", "5.22", arrayOf(rullebaneRepo!!.save(Rullebane(""))))
 
         val enva = Flyplass("ENVA", "Trondheim Lufthavn, Værnes",
-            "TRD", "56", "63.45", "10.91", "09/27")
+            "TRD", "56", "63.45", "10.91", arrayOf(rullebaneRepo!!.save(Rullebane(""))))
 
         val enzv = Flyplass("ENZV", "Stavanger Lufthavn, Sola",
-            "SVG", "29", "58.88", "5.63", "18/36")
+            "SVG", "29", "58.88", "5.63", arrayOf(rullebaneRepo!!.save(Rullebane(""))))
         repo!!.saveAll(listOf(engm, enbr, enva, enzv))
     }
 

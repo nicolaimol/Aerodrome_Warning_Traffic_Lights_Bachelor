@@ -6,6 +6,7 @@ import bachelor.met.awstl.dto.locationforecast.*
 import bachelor.met.awstl.dto.nowcast.Nowcast
 import bachelor.met.awstl.enum.Cache
 import bachelor.met.awstl.model.Flyplass
+import bachelor.met.awstl.model.Rullebane
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -37,7 +38,7 @@ class NowcastServiceUnitTest {
 
     @Test
     fun testGetNowcast() {
-        val flyplass = Flyplass("ENGM", "Oslo", "OSL", "", "", "", "")
+        val flyplass = Flyplass("ENGM", "Oslo", "OSL", "", "", "", arrayOf(Rullebane("")))
 
         val spy = Mockito.spy(service)
         val dto = NowcastDto()
@@ -100,7 +101,7 @@ class NowcastServiceUnitTest {
 
     @Test
     fun testGetWeatherRedisFail() {
-        val flyplass = Flyplass("ENGM", "Oslo", "OSL", "", "", "", "")
+        val flyplass = Flyplass("ENGM", "Oslo", "OSL", "", "", "", arrayOf(Rullebane("")))
         val dto = NowcastDto()
         val nowcast = Nowcast()
         val spy = Mockito.spy(service)

@@ -3,6 +3,7 @@ package bachelor.met.awstl.service
 import bachelor.met.awstl.dto.TafMetarDto
 import bachelor.met.awstl.enum.Cache
 import bachelor.met.awstl.model.Flyplass
+import bachelor.met.awstl.model.Rullebane
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
@@ -45,7 +46,7 @@ class TafMetarServiceUnitTest {
     @Test
     fun testGetTafMetarDefault() {
         val dto = TafMetarDto()
-        val flyplass = Flyplass("ENGM", "Oslo", "OSL", "", "", "", "")
+        val flyplass = Flyplass("ENGM", "Oslo", "OSL", "", "", "", arrayOf(Rullebane("")))
         val map = HashMap<String, String>()
         map["icao"] = "ENGM"
 
@@ -71,7 +72,7 @@ class TafMetarServiceUnitTest {
     @Test
     fun testGetTafMetarDefaultFail() {
         val dto = TafMetarDto()
-        val flyplass = Flyplass("ENGM", "Oslo", "OSL", "", "", "", "")
+        val flyplass = Flyplass("ENGM", "Oslo", "OSL", "", "", "", arrayOf(Rullebane("")))
         val map = HashMap<String, String>()
         map["icao"] = "ENGM"
 
@@ -93,7 +94,7 @@ class TafMetarServiceUnitTest {
     @Test
     fun testGetTafMetarCache() {
         val dto = TafMetarDto()
-        val flyplass = Flyplass("ENGM", "Oslo", "OSL", "", "", "", "")
+        val flyplass = Flyplass("ENGM", "Oslo", "OSL", "", "", "", arrayOf(Rullebane("")))
         val map = HashMap<String, String>()
         map["icao"] = "ENGM"
 
@@ -119,7 +120,7 @@ class TafMetarServiceUnitTest {
     @Test
     fun testGetTafMetarCacheFail() {
         val dto = TafMetarDto()
-        val flyplass = Flyplass("ENGM", "Oslo", "OSL", "", "", "", "")
+        val flyplass = Flyplass("ENGM", "Oslo", "OSL", "", "", "", arrayOf(Rullebane("")))
         val map = HashMap<String, String>()
         map["icao"] = "ENGM"
 
