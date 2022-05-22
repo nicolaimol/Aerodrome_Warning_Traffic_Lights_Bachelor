@@ -205,7 +205,7 @@ function GrafikkPilot(props: {airport:airports, weather:LocationForecast, time: 
                             <div style={{display: 'flex', flexWrap: 'wrap', minWidth: '215px'}}>
                                 {
                                     airport !== undefined &&
-                                    airport.rwy?.split(",").map((it: any) => {
+                                    airport.rwy?.map((it: any) => {
                                         return <Rullebane key={it[0]} rullebane={it}></Rullebane>
                                     })
                                 }
