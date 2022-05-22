@@ -1,15 +1,14 @@
-export const crosswind = (rwy: string, windDirection: number, windSpeed: number): number => {
+export const crosswind = (rwy: any[], windDirection: number, windSpeed: number): number => {
 
-    if (rwy?.split(",").length > 1){
-
-        return Math.max(...rwy?.split(",").map((it: any) => {
-            return crosswind(it, windDirection, windSpeed)
+        return Math.max(...rwy?.map((it: any) => {
+            return crosswindRunway(it.rwy, windDirection, windSpeed)
         }))
-        /*return Math.min(
-            crosswind(rwy.split(",")[0], windDirection, windSpeed),
-            crosswind(rwy.split(",")[1], windDirection, windSpeed)
-        )*/
-    } else {
+
+
+
+
+}
+const crosswindRunway = (rwy: string, windDirection: number, windSpeed: number): number => {
         const windDir = windDirection > 0 ?
             windDirection :
             360 + windDirection
@@ -25,5 +24,4 @@ export const crosswind = (rwy: string, windDirection: number, windSpeed: number)
         )
 
         return cw
-    }
 }
