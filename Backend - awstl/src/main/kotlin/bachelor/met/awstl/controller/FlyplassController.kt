@@ -45,7 +45,7 @@ class FlyplassController(var service: FlyplassService) {
     @RolesAllowed(value = ["admin", "user"])
     fun updateAirport(@RequestBody flyplass: Flyplass): ResponseEntity<Any> {
 
-        service.updateFlyplass(flyplass.icao, flyplass)
+        service.updateFlyplass(flyplass.icao!!, flyplass)
 
         return ResponseEntity.ok().build()
     }

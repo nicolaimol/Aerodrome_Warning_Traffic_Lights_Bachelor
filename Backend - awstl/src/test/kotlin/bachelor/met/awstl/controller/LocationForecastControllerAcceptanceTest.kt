@@ -1,6 +1,7 @@
 package bachelor.met.awstl.controller
 
 import bachelor.met.awstl.model.Flyplass
+import bachelor.met.awstl.model.Rullebane
 import bachelor.met.awstl.repo.IFlyplassRepo
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
@@ -39,7 +40,7 @@ class LocationForecastControllerAcceptanceTest {
         }
 
         val engm = Flyplass("ENGM", "Oslo Lufthavn, Gardermoen",
-            "OSL", "100", "60", "10", "01/19")
+            "OSL", "100", "60", "10", arrayOf(Rullebane("")))
 
         repo!!.save(engm)
     }

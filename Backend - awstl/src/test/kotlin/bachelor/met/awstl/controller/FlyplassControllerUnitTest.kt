@@ -2,6 +2,7 @@ package bachelor.met.awstl.controller
 
 import bachelor.met.awstl.dto.FlyplassSlettDto
 import bachelor.met.awstl.model.Flyplass
+import bachelor.met.awstl.model.Rullebane
 import bachelor.met.awstl.service.FlyplassService
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -39,7 +40,7 @@ class FlyplassControllerUnitTest {
     fun testGetFlyplasserDto() {
         controller!!.getAllAirportsDto()
 
-        val flyplass = Flyplass("ENGM", "Oslo", "OSL", "01/10", "59.91273", "10.74609", "01/19")
+        val flyplass = Flyplass("ENGM", "Oslo", "OSL", "01/10", "59.91273", "10.74609", arrayOf(Rullebane("")))
 
         Mockito.`when`(service!!.getAllFlyplass()).thenReturn(listOf( flyplass ))
 
@@ -53,7 +54,7 @@ class FlyplassControllerUnitTest {
     fun testAddFlyplass() {
 
 
-        val flyplass = Flyplass("ENGM", "Oslo", "OSL", "01/10", "59.91273", "10.74609", "01/19")
+        val flyplass = Flyplass("ENGM", "Oslo", "OSL", "01/10", "59.91273", "10.74609", arrayOf(Rullebane("")))
 
         val result = controller!!.addAirport(flyplass)
 
@@ -64,11 +65,11 @@ class FlyplassControllerUnitTest {
     @Test
     fun testUpdateFlyplass() {
 
-        val flyplass = Flyplass("ENGM", "Oslo", "OSL", "01/10", "59.91273", "10.74609", "01/19")
+        val flyplass = Flyplass("ENGM", "Oslo", "OSL", "01/10", "59.91273", "10.74609", arrayOf(Rullebane("")))
 
         val result = controller!!.updateAirport(flyplass)
 
-        Mockito.verify(service, times(1))!!.updateFlyplass(flyplass.icao, flyplass)
+        Mockito.verify(service, times(1))!!.updateFlyplass(flyplass.icao!!, flyplass)
         assertThat(result.statusCode).isEqualTo(HttpStatus.OK)
     }
 

@@ -46,11 +46,8 @@ class HttpService(private val template: RestTemplate, private val cacheService: 
         } catch (e: ResourceAccessException) {
             throw UnknownHostException(e.message)
         } catch (e: NullPointerException) {
-            when (type) {
-                Cache.TAFMETAR -> throwTafMetarException()
-                else -> {
-                    throw NullPointerException(e.message)
-                }
+            if (type === Cache.TAFMETAR) {
+                throwTafMetarException()
             }
 
             throw NullPointerException(e.message)

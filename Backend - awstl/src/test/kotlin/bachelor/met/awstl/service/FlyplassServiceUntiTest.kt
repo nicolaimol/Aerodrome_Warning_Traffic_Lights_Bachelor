@@ -3,6 +3,7 @@ package bachelor.met.awstl.service
 import bachelor.met.awstl.config.CacheConfig
 import bachelor.met.awstl.exception.AirportNotFoundException
 import bachelor.met.awstl.model.Flyplass
+import bachelor.met.awstl.model.Rullebane
 import bachelor.met.awstl.repo.IFlyplassRepo
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -36,7 +37,7 @@ class FlyplassServiceUntiTest {
     fun testGetFlyplassCacheOk() {
         Mockito.`when`(repo!!.findById("TEST")).thenReturn(
             Optional.of(
-                Flyplass("test", "test", "test","test", "", "", "")))
+                Flyplass("test", "test", "test","test", "", "", arrayOf(Rullebane("")))))
 
         service!!.getFlyplassCache("test")
 
@@ -59,7 +60,7 @@ class FlyplassServiceUntiTest {
     fun testGetFlyplassDefaultOk() {
         Mockito.`when`(repo!!.findById("TEST")).thenReturn(
             Optional.of(
-                Flyplass("test", "test", "test","test", "", "", "")))
+                Flyplass("test", "test", "test","test", "", "", arrayOf(Rullebane("")))))
 
         service!!.getFlyplassDefault("test")
 
@@ -85,7 +86,7 @@ class FlyplassServiceUntiTest {
 
         Mockito.`when`(repo!!.findById("TEST")).thenReturn(
             Optional.of(
-                Flyplass("test", "test", "test","test", "", "", "")))
+                Flyplass("test", "test", "test","test", "", "", arrayOf(Rullebane("")))))
 
         serviceSpy.getFlyplass("test")
 
@@ -99,7 +100,7 @@ class FlyplassServiceUntiTest {
 
         Mockito.`when`(repo!!.findById("TEST")).thenReturn(
             Optional.of(
-                Flyplass("test", "test", "test","test", "", "", "")))
+                Flyplass("test", "test", "test","test", "", "", arrayOf(Rullebane("")))))
 
         Mockito.`when`(serviceSpy!!.getFlyplassCache("test")).thenThrow(QueryTimeoutException::class.java)
 
@@ -115,7 +116,7 @@ class FlyplassServiceUntiTest {
 
     @Test
     fun testUpdateFlyplassOk() {
-        val flyplass = Flyplass("test", "test", "test","test", "", "", "")
+        val flyplass = Flyplass("test", "test", "test","test", "", "", arrayOf(Rullebane("")))
         Mockito.`when`(repo!!.save(flyplass)).thenReturn(flyplass)
         Mockito.`when`(repo!!.findById("TEST")).thenReturn(Optional.of(flyplass))
 
@@ -131,11 +132,11 @@ class FlyplassServiceUntiTest {
 
     @Test
     fun testDeleteFlyplassOk() {
-        val flyplass = Flyplass("test", "test", "test","test", "", "", "")
+        val flyplass = Flyplass("test", "test", "test","test", "", "", arrayOf(Rullebane("")))
 
         service!!.deleteFlyplass("test")
 
-        Mockito.verify(repo, Mockito.times(1))!!.deleteById(flyplass.icao)
+        Mockito.verify(repo, Mockito.times(1))!!.deleteById(flyplass.icao!!)
         Mockito.verify(config, Mockito.times(1))!!
             .removeByNameAndId("flyplass", "test")
         Mockito.verify(config, Mockito.times(1))!!
@@ -144,7 +145,7 @@ class FlyplassServiceUntiTest {
 
     @Test
     fun testAddFlyplassOk() {
-        val flyplass = Flyplass("test", "test", "test","test", "", "", "")
+        val flyplass = Flyplass("test", "test", "test","test", "", "", arrayOf(Rullebane("")))
 
         Mockito.`when`(repo!!.save(flyplass)).thenReturn(flyplass)
 
