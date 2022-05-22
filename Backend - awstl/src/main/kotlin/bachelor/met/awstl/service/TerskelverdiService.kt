@@ -19,19 +19,23 @@ class TerskelverdiService(val repo: ITerskelverdiRepo, val service: FlyplassServ
         var random: String? = null
 
         while (random == null) {
-            random = UUID.randomUUID().toString()
+            random = random()
             if (repo.findById(random).isPresent) {
                 random = null
             }
         }
         logger.info("New id: $random")
         val terskel = Terskelverdi(random, terskeDto)
-        terskel.flyplass = service.getFlyplass(terskeDto.flyplass!!.icao)
+        terskel.flyplass = service.getFlyplass(terskeDto.flyplass!!.icao!!)
 
         repo.save(terskel)
 
         return Base64.getEncoder().encodeToString(random.encodeToByteArray())
 
+    }
+
+    fun random() : String {
+        return UUID.randomUUID().toString()
     }
 
     fun getTerskelverdi(base: String): TerskelverdiDto {
@@ -51,7 +55,7 @@ class TerskelverdiService(val repo: ITerskelverdiRepo, val service: FlyplassServ
         val obj = getTerskelById(id)
 
         obj.update(dto)
-        obj.flyplass = service.getFlyplass(dto.flyplass!!.icao)
+        obj.flyplass = service.getFlyplass(dto.flyplass!!.icao!!)
 
         repo.save(obj)
 
@@ -63,7 +67,7 @@ class TerskelverdiService(val repo: ITerskelverdiRepo, val service: FlyplassServ
         return repo.findAll()
     }
 
-    private fun getTerskelById(id: String): Terskelverdi {
+    fun getTerskelById(id: String): Terskelverdi {
         return repo.findById(id).orElseThrow{ TerskelverdiNotFoundException("$id is not a valid id for terskelverdi") }
 
     }
