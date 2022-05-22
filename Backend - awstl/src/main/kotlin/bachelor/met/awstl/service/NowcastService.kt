@@ -19,8 +19,7 @@ import kotlin.collections.HashMap
 class NowcastService(
     private val httpService: HttpService,
     private val sercice: FlyplassService,
-    private val cacheService: CacheService,
-    private val locforService: LocationForecastService) {
+    private val cacheService: CacheService) {
 
     @Value("\${nowcast}")
     var url = ""
@@ -72,29 +71,29 @@ class NowcastService(
 
     }
 
-    private fun getWeather(
+    fun getWeather(
         airports: Array<Flyplass>,
         dto: NowcastDto
     ) {
         for (airport in airports) {
             val query = HashMap<String, String>()
 
-            cacheService.chechCache(airport.icao, Cache.NOWCAST)
+            cacheService.chechCache(airport.icao!!, Cache.NOWCAST)
 
-            query["altitude"] = airport.altitude
-            query["lat"] = airport.lat
-            query["lon"] = airport.lon
+            query["altitude"] = airport.altitude!!
+            query["lat"] = airport.lat!!
+            query["lon"] = airport.lon!!
 
 
             try {
-                getForAirportCache(airport.icao, query)?.let {
+                getForAirportCache(airport.icao!!, query)?.let {
                     it.properties?.timeseries = it.properties?.timeseries?.copyOfRange(0, 1);
                     dto.nowcasts.add(it)
                 }
                 dto.airports.add(FlyplassToFlyplassDto.convert(airport))
             } catch (e: RedisConnectionFailureException) {
                 logger.error("Redis unavailable")
-                getForAirportDefault(airport.icao, query)?.let {
+                getForAirportDefault(airport.icao!!, query)?.let {
                     it.properties?.timeseries = it.properties?.timeseries?.copyOfRange(0, 1);
                     dto.nowcasts.add(it)
                 }
@@ -104,8 +103,7 @@ class NowcastService(
         }
     }
 
-    private fun getForAirport(icao: String, query: HashMap<String, String>): Nowcast? {
-        logger.info("Nowcast for $icao")
+    fun getForAirport(icao: String, query: HashMap<String, String>): Nowcast? {
         try {
             return httpService.hentData(url, Nowcast::class.java, query, icao, Cache.NOWCAST)
         }
@@ -117,35 +115,32 @@ class NowcastService(
             logger.error("No nowcast for $icao")
             val alt = httpService.hentData(locationForecast, LocationForecastDto::class.java, query, icao, Cache.NOWCAST)
             val nowcast = Nowcast()
-
             val instant = Instant()
-            instant.details = alt?.properties?.timeseries?.get(0)?.data?.instant?.details!!
-
+            instant.details = alt.properties?.timeseries?.get(0)?.data?.instant?.details!!
             val data = Data()
             data.instant = instant
             val nextOneHours = NextOneHours()
             nextOneHours.summary = Summary()
             nextOneHours!!.summary!!.symbol_code = alt?.properties?.timeseries?.get(0)?.data?.next_1_hours?.summary?.symbol_code!!
             data.next_1_hours = nextOneHours
-
             val timeseries = Timeseries()
             timeseries.data = data
-
             val properties = Properties()
             properties.timeseries = arrayOf(timeseries, Timeseries())
-
             nowcast.properties = properties
 
             return nowcast
         }
     }
 
-    private fun getForAirportDefault(icao: String, query: HashMap<String, String>): Nowcast? {
+    fun getForAirportDefault(icao: String, query: HashMap<String, String>): Nowcast? {
+        logger.info("Nowcast for $icao default")
         return getForAirport(icao, query)
     }
 
     @Cacheable(value = ["nowcast"], key = "#icao")
     fun getForAirportCache(icao: String, query: HashMap<String, String>): Nowcast? {
+        logger.info("Nowcast for $icao cache")
         return getForAirport(icao, query)
     }
 }
