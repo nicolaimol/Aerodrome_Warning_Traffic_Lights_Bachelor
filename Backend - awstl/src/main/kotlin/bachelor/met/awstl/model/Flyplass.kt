@@ -3,22 +3,27 @@ package bachelor.met.awstl.model
 import java.io.Serializable
 import javax.persistence.Entity
 import javax.persistence.Id
+import javax.persistence.JoinColumns
+import javax.persistence.OneToMany
+import javax.persistence.OrderColumn
 
 @Entity
 class Flyplass(): Serializable {
 
     @Id
-    lateinit var icao: String
+    var icao: String? = null
 
-    lateinit var navn: String
+    var navn: String? = null
     var iata: String? = null
-    lateinit var altitude: String
-    lateinit var lat: String
-    lateinit var lon: String
+    var altitude: String? = null
+    var lat: String? = null
+    var lon: String? = null
 
-    lateinit var rwy: String
+    @OneToMany
+    @OrderColumn
+    var rwy: Array<Rullebane>? = null
 
-    constructor(icao: String, navn: String, iata: String, altitude: String, lat: String, lon: String, rwy: String): this() {
+    constructor(icao: String, navn: String, iata: String, altitude: String, lat: String, lon: String, rwy: Array<Rullebane>): this() {
         this.icao = icao
         this.navn = navn
         this.iata = iata
