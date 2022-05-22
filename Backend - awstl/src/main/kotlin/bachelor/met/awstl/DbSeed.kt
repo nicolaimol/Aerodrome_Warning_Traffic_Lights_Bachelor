@@ -3,24 +3,20 @@ package bachelor.met.awstl
 import bachelor.met.awstl.repo.IFlyplassRepo
 import javax.annotation.PostConstruct
 import bachelor.met.awstl.model.Flyplass
+import bachelor.met.awstl.model.Rullebane
+import bachelor.met.awstl.repo.IRullebaneRepo
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.io.ClassPathResource
-import org.springframework.core.io.ResourceLoader
 import org.springframework.stereotype.Component
-import org.springframework.util.ResourceUtils
 import java.io.BufferedReader
-import java.io.FileReader
 import java.io.InputStreamReader
 import java.lang.Exception
 import java.util.ArrayList
 
 @Component
-class DbSeed(private val repo: IFlyplassRepo) {
+class DbSeed(private val repo: IFlyplassRepo, private val rullebaneRepo: IRullebaneRepo) {
     var logger = LoggerFactory.getLogger(DbSeed::class.java)
 
-    @Autowired
-    var resourceLoader: ResourceLoader? = null
 
     @PostConstruct
     fun run() {
@@ -48,7 +44,7 @@ class DbSeed(private val repo: IFlyplassRepo) {
                             "%.3f",
                             item[6].split("[,]".toRegex()).toTypedArray()[1].trim { it <= ' ' }.toDouble()
                         ).replace(",", "."),
-                        item[5]
+                        item[5].split("[,]").map { it -> rullebaneRepo.save(Rullebane(it)) }.toTypedArray()
                     )
                     list.add(flyplass)
 
