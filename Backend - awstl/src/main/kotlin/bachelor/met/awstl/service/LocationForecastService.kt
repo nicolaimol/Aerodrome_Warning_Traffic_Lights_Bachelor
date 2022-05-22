@@ -39,9 +39,9 @@ class LocationForecastService(val httpService: HttpService, val flyplass: Flypla
         val airport = flyplass.getFlyplass(icao)
 
         val queryParams: HashMap<String, String> = HashMap();
-        queryParams["altitude"] = airport.altitude
-        queryParams["lat"] = airport.lat
-        queryParams["lon"] = airport.lon
+        queryParams["altitude"] = airport.altitude!!
+        queryParams["lat"] = airport.lat!!
+        queryParams["lon"] = airport.lon!!
 
         logger.info("Getting location forecast for $icao from api.met.no")
 
@@ -58,9 +58,9 @@ class LocationForecastService(val httpService: HttpService, val flyplass: Flypla
         val airport = flyplass.getFlyplass(icao)
 
         val queryParams: HashMap<String, String> = HashMap();
-        queryParams["altitude"] = airport.altitude
-        queryParams["lat"] = airport.lat
-        queryParams["lon"] = airport.lon
+        queryParams["altitude"] = airport.altitude!!
+        queryParams["lat"] = airport.lat!!
+        queryParams["lon"] = airport.lon!!
 
         logger.info("Getting location forecast for $icao from api.met.no")
 
