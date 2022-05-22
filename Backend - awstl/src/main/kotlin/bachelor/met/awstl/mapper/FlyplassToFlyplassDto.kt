@@ -6,9 +6,9 @@ import bachelor.met.awstl.model.Flyplass
 class FlyplassToFlyplassDto {
 
     companion object {
-        fun convert(flyplass: Flyplass): FlyplassDto {
+        fun convert(flyplass: Flyplass?): FlyplassDto {
 
-            return FlyplassDto(flyplass.navn, flyplass.icao, flyplass.rwy)
+            return FlyplassDto(flyplass?.navn, flyplass?.icao, flyplass?.rwy)
 
         }
     }
