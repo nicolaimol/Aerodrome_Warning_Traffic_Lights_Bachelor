@@ -52,7 +52,7 @@ class TafMetarService(val httpService: HttpService, val service: FlyplassService
 
     }
 
-    private fun getTafMetarDefault(icao: String): TafMetarDto {
+    fun getTafMetarDefault(icao: String): TafMetarDto {
         logger.info("Getting taf metar for $icao")
 
         service.getFlyplass(icao)
