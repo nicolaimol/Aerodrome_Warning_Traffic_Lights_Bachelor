@@ -54,6 +54,6 @@ class TerskelverdiDto(){
         this.crosswindMax = terskel.crosswindMax
         this.crosswindActive = terskel.crosswindActive
 
-        this.flyplass = FlyplassToFlyplassDto.convert(terskel.flyplass!!)
+        this.flyplass = FlyplassToFlyplassDto.convert(terskel.flyplass)
     }
 }
