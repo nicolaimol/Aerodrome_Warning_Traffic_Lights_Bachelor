@@ -28,18 +28,6 @@ class LocationForecastController(val service: LocationForecastService, val expir
 
     val logger = LoggerFactory.getLogger(LocationForecastController::class.java)
 
-    //@GetMapping("/test")
-    fun getLocationForecast(): ResponseEntity<Any> {
-
-        val res = service.getForecast("engm")
-
-        res!!.properties!!.timeseries =
-            res.properties!!.timeseries!!.filterIndexed { index, _ -> index < 10 }.toTypedArray()
-
-        return ResponseEntity.ok(res)
-
-    }
-
     @GetMapping(value = ["/locationforecast"])
     fun getLocationForecastIcao(@RequestParam(name = "icao")icao: String): ResponseEntity<LocationForecastDto> {
         val res = service.getForecast(icao)
