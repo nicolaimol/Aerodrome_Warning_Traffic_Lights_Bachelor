@@ -47,7 +47,7 @@ function FlyplassFormAdd(props: any) {
             icao: icao,
             navn: navn,
             iata: iata,
-            rwy: rwy,
+            rwy: [{id: -1, rwy: rwy}],
             lat: lat,
             lon: lon,
             altitude: altitude

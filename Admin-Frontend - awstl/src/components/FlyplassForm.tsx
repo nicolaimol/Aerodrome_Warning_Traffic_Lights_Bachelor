@@ -17,9 +17,19 @@ function FlyplassForm(props: any) {
     const iataChange = (e: any) =>{
         setIata(e.target.value)
     }
-    const [rwy, setRwy] = useState<string>(props.flyplass.rwy)
-    const rwyChange = (e: any) =>{
-        setRwy(e.target.value)
+    const [rwy, setRwy] = useState<any[]>(props.flyplass.rwy)
+    const rwyChange = (e: any, id: number) =>{
+        console.log(e.target)
+        setRwy((old: any) => {
+            for (const it of old) {
+                if (it.id === id) {
+                    it.rwy = e.target.value
+                }
+            }
+
+            return [...old];
+        })
+
     }
     const [lat, setLat] = useState<string>(props.flyplass.lat)
     const latChange = (e: any) =>{
@@ -74,7 +84,12 @@ function FlyplassForm(props: any) {
                     <TextField disabled value={icao} id="standard-required-icao" label="Icao" variant="standard" />
                     <TextField onChange={navnChange} value={navn} id="standard-required-navn" label="Navn" variant="standard"/>
                     <TextField onChange={iataChange} value={iata} id="standard-required-iata" label="Iata" variant="standard" />
-                    <TextField onChange={rwyChange} value={rwy} id="standard-required-rwy" label="Runway" variant="standard"/>
+                    {
+                        rwy.map((it: any) => {
+                            return <TextField key={it.id} onChange={(e) => rwyChange(e, it.id)} value={it.rwy} id="standard-required-rwy" label="Runway" variant="standard"/>
+                        })
+                    }
+
                     <TextField onChange={latChange} value={lat} id="standard-required-lat" label="Latitude" variant="standard" />
                     <TextField onChange={lonChange} value={lon} id="standard-required-lon" label="Longitude" variant="standard"/>
                     <TextField onChange={altitudeChange} value={altitude} id="standard-required-alt" label="Altitude" variant="standard" />

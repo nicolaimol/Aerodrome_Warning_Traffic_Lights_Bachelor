@@ -106,6 +106,7 @@ export default function FlyplassList(props: any) {
     const keycloak = useKeycloak()
 
     const setFlyplass = (flyplass: Data) => {
+        console.log(flyplass)
         props.changeFlyplass(flyplass)
     }
 
@@ -113,7 +114,6 @@ export default function FlyplassList(props: any) {
 
         setSlettIcao(icao)
         setConfirmOpen(true)
-
 
     }
 
@@ -130,7 +130,8 @@ export default function FlyplassList(props: any) {
     }
 
     const [flyplassList, setFlyplassList] = useState<any[]>([])
-    const [rows, setRows] = useState<Data[]>([{icao: "ENGM", navn: "Gardermoen", iata: "OSL", rwy: "01/19", lat: "60", lon: "10", altitude: "100"}])
+    const [rows, setRows] = useState<Data[]>([])
+    const [filtered, setFiltered] = useState<any[]>(flyplassList)
 
     useEffect(() => {
 
@@ -144,6 +145,7 @@ export default function FlyplassList(props: any) {
         })
 
         setFlyplassList(flyplasser)
+        setFiltered(flyplasser)
 
         setRows(flyplasser.map((it: any) => {
             return createData(it.icao, it.navn, it.iata, it.rwy.map((it: any) => it.rwy).sort((a: any, b:any) => a - b).join(", "), it.lat, it.lon, it.altitude)
@@ -171,11 +173,11 @@ export default function FlyplassList(props: any) {
     }
 
     useEffect(() => {
-        const filtered = flyplassList.filter((it: any) => {
+        setFiltered(flyplassList.filter((it: any) => {
             return it.navn.toLowerCase().includes(search.toLowerCase())
                 || it.icao.toLowerCase().includes(search.toLowerCase())
                 || it.iata.toLowerCase().includes(search.toLowerCase())
-        })
+        }))
         setRows(filtered.map((it: any) => {
             return createData(it.icao, it.navn, it.iata, it.rwy, it.lat, it.lon, it.altitude)
         }))
@@ -202,7 +204,7 @@ export default function FlyplassList(props: any) {
                     <TableBody>
                         {rows
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                            .map((row) => {
+                            .map((row, index: number) => {
                                 return (
                                     <TableRow hover role="checkbox" tabIndex={-1} key={row.icao}>
                                         {columns.map((column) => {
@@ -222,7 +224,7 @@ export default function FlyplassList(props: any) {
                                             } else {
                                                 return (
                                                     <TableCell key={column.id} align={column.align}>
-                                                        <Button onClick={() => setFlyplass(row)} variant="text">Endre</Button>
+                                                        <Button onClick={() => setFlyplass(filtered[index])} variant="text">Endre</Button>
                                                     </TableCell>
 
                                                 )

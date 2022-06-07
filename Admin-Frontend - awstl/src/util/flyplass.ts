@@ -4,10 +4,15 @@ export interface flyplass{
     icao: string,
     navn: string,
     iata: string,
-    rwy: string,
+    rwy: rwy[],
     lat: string,
     lon: string,
     altitude: string
+}
+
+interface rwy {
+    id: number,
+    rwy: string
 }
 
 export const hentFlyplasser = async (): Promise<flyplass[]> => {

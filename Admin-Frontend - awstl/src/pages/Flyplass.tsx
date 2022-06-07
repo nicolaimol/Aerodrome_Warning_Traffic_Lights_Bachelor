@@ -42,6 +42,11 @@ function Flyplass(props: any) {
     }
 
     const avbryt = () => {
+        console.log(flyplassList.length)
+
+        setFlyplassList((oldList: any) => {
+            return oldList
+        })
         setFlyplass(null)
     }
 
