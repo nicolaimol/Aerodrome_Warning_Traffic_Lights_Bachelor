@@ -5,7 +5,9 @@ import bachelor.met.awstl.dto.FlyplassDto
 import bachelor.met.awstl.exception.AirportNotFoundException
 import bachelor.met.awstl.mapper.FlyplassToFlyplassDto
 import bachelor.met.awstl.model.Flyplass
+import bachelor.met.awstl.model.Rullebane
 import bachelor.met.awstl.repo.IFlyplassRepo
+import bachelor.met.awstl.repo.IRullebaneRepo
 import bachelor.met.awstl.util.FlyplassUpdate
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -14,7 +16,7 @@ import org.springframework.dao.QueryTimeoutException
 import org.springframework.stereotype.Service
 
 @Service
-class FlyplassService(val repo: IFlyplassRepo, val cacheConfig: CacheConfig) {
+class FlyplassService(val repo: IFlyplassRepo, val cacheConfig: CacheConfig, val rullebaneRepo: IRullebaneRepo) {
 
     val logger: Logger = LoggerFactory.getLogger(FlyplassService::class.java)
 
@@ -52,6 +54,10 @@ class FlyplassService(val repo: IFlyplassRepo, val cacheConfig: CacheConfig) {
         FlyplassUpdate.update(flyplass, newFlyplass)
 
         logger.info("Updating flyplass $icao")
+
+        for (rullebane: Rullebane in flyplass.rwy!!) {
+            rullebaneRepo.save(rullebane)
+        }
 
         repo.save(flyplass)
 

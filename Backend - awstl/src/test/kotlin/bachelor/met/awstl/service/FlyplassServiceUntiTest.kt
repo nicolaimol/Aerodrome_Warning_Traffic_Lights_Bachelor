@@ -5,6 +5,7 @@ import bachelor.met.awstl.exception.AirportNotFoundException
 import bachelor.met.awstl.model.Flyplass
 import bachelor.met.awstl.model.Rullebane
 import bachelor.met.awstl.repo.IFlyplassRepo
+import bachelor.met.awstl.repo.IRullebaneRepo
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
@@ -18,13 +19,15 @@ class FlyplassServiceUntiTest {
 
     var service: FlyplassService? = null
     var repo: IFlyplassRepo? = null
+    var rullebaneRepo: IRullebaneRepo? = null
     var config: CacheConfig? = null
 
     @BeforeEach
     fun setup() {
         repo = Mockito.mock(IFlyplassRepo::class.java)
         config = Mockito.mock(CacheConfig::class.java)
-        service = FlyplassService(repo!!, config!!)
+        rullebaneRepo = Mockito.mock(IRullebaneRepo::class.java)
+        service = FlyplassService(repo!!, config!!, rullebaneRepo!!)
     }
 
     @Test

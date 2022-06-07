@@ -44,8 +44,9 @@ class DbSeed(private val repo: IFlyplassRepo, private val rullebaneRepo: IRulleb
                             "%.3f",
                             item[6].split("[,]".toRegex()).toTypedArray()[1].trim { it <= ' ' }.toDouble()
                         ).replace(",", "."),
-                        item[5].split("[,]").map { it -> rullebaneRepo.save(Rullebane(it)) }.toTypedArray()
+                        item[5].split("[,]".toRegex()).map { rullebaneRepo.save(Rullebane(it)) }.toTypedArray()
                     )
+                    logger.info(flyplass.icao + " " + flyplass.rwy!!.size.toString())
                     list.add(flyplass)
 
                 }
