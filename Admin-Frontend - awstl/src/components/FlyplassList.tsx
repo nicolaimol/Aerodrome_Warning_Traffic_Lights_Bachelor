@@ -173,14 +173,19 @@ export default function FlyplassList(props: any) {
     }
 
     useEffect(() => {
-        setFiltered(flyplassList.filter((it: any) => {
+        console.log(search)
+
+        const toFilter = flyplassList.filter((it: any) => {
             return it.navn.toLowerCase().includes(search.toLowerCase())
                 || it.icao.toLowerCase().includes(search.toLowerCase())
                 || it.iata.toLowerCase().includes(search.toLowerCase())
-        }))
-        setRows(filtered.map((it: any) => {
+        })
+
+        setFiltered(toFilter)
+        setRows(toFilter.map((it: any) => {
             return createData(it.icao, it.navn, it.iata, it.rwy.map((it: any) => it.rwy).sort((a: any, b:any) => a - b).join(", "), it.lat, it.lon, it.altitude)
         }))
+
     }, [search])
 
     return (
@@ -194,7 +199,6 @@ export default function FlyplassList(props: any) {
                                 <TableCell
                                     key={column.id}
                                     align={column.align}
-                                    //style={{ minWidth: column.minWidth }}
                                 >
                                     {column.label}
                                 </TableCell>
@@ -208,14 +212,14 @@ export default function FlyplassList(props: any) {
                                 return (
                                     <TableRow hover role="checkbox" tabIndex={-1} key={row.icao}>
                                         {columns.map((column) => {
-                                            if (column.id != 'velg' && column.id != 'slett') {
+                                            if (column.id !== 'velg' && column.id !== 'slett') {
                                                 const value = row[column.id];
                                                 return (
                                                     <TableCell key={column.id} align={column.align}>
                                                         {value}
                                                     </TableCell>
                                                 );
-                                            } else if (column.id == 'slett') {
+                                            } else if (column.id === 'slett') {
                                                 return (
                                                     <TableCell key={column.id} align={column.align}>
                                                         <Button startIcon={<DeleteOutlineIcon />} onClick={() => slett(row.icao)} variant="text" color="error">Slett</Button>
