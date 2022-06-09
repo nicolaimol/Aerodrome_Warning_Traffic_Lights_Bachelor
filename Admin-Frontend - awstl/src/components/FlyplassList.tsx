@@ -179,7 +179,7 @@ export default function FlyplassList(props: any) {
                 || it.iata.toLowerCase().includes(search.toLowerCase())
         }))
         setRows(filtered.map((it: any) => {
-            return createData(it.icao, it.navn, it.iata, it.rwy, it.lat, it.lon, it.altitude)
+            return createData(it.icao, it.navn, it.iata, it.rwy.map((it: any) => it.rwy).sort((a: any, b:any) => a - b).join(", "), it.lat, it.lon, it.altitude)
         }))
     }, [search])
 
